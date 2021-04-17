@@ -21,8 +21,7 @@ BBSPost _$BBSPostFromJson(Map<String, dynamic> json) {
     ..report = json['report'] as int;
 }
 
-Map<String, dynamic> _$BBSPostToJson(BBSPost instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$BBSPostToJson(BBSPost instance) => <String, dynamic>{
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,
       'objectId': instance.objectId,
