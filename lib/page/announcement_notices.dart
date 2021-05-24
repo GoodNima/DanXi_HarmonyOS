@@ -77,9 +77,8 @@ class _AnnouncementListState extends State<AnnouncementList> {
           );
         },
         loadingBuilder: Container(
-            child: Center(
-          child: Text(S.of(context).loading),
-        )),
+          child: Center(child: PlatformCircularProgressIndicator()),
+        ),
         errorBuilder: GestureDetector(
           onTap: () {
             refreshSelf();
