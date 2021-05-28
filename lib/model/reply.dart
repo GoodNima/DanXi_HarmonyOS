@@ -20,15 +20,16 @@ part 'reply.g.dart';
 
 @JsonSerializable()
 class Reply {
-  int id;
-  String content;
-  String username;
-  int reply_to;
-  String date_created;
-  int discussion;
+  final int id;
+  final String content;
+  final String username;
+  final int reply_to;
+  final String date_created;
+  final int discussion;
+  final bool is_me;
 
   Reply(this.id, this.content, this.username, this.reply_to, this.date_created,
-      this.discussion);
+      this.discussion, this.is_me);
 
   factory Reply.fromJson(Map<String, dynamic> json) => _$ReplyFromJson(json);
 
