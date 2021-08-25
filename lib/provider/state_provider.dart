@@ -15,7 +15,9 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import 'package:dan_xi/master_detail/editor_object.dart';
 import 'package:dan_xi/model/person.dart';
+import 'package:dan_xi/widget/bbs_editor.dart';
 import 'package:flutter/cupertino.dart';
 
 /// Manage global states of the app.
@@ -31,7 +33,11 @@ class StateProvider {
   /// The user's basic information.
   static final ValueNotifier<PersonInfo> personInfo = ValueNotifier(null);
 
+  /// Caches of [BBSEditor].
+  static final Map<EditorObject, String> editorCache = {};
+
   static void initialize() {
     personInfo.value = null;
+    editorCache.clear();
   }
 }
