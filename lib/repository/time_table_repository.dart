@@ -89,9 +89,9 @@ class TimeTableRepository extends BaseRepositoryWithDio {
   Future<TimeTable> loadTimeTableRemotely_UG(PersonInfo info,
       {DateTime? startTime}) {
     return Retrier.tryAsyncWithFix(
-            () => _loadTimeTableRemotely_UG(startTime: startTime),
-            (exception) async =>
-        await UISLoginTool.loginUIS(dio!, LOGIN_URL, cookieJar!, info, true));
+        () => _loadTimeTableRemotely_UG(startTime: startTime),
+        (exception) async => await UISLoginTool.loginUIS(
+            dio!, LOGIN_URL, cookieJar!, info, true));
   }
 
   Future<TimeTable> _loadTimeTableRemotely_UG({DateTime? startTime}) async {
@@ -99,15 +99,15 @@ class TimeTableRepository extends BaseRepositoryWithDio {
         TIME_TABLE_UG_URL + DateTime.now().millisecondsSinceEpoch.toString(),
         options: Options(headers: {
           "cookie":
-          "REDACTED_HISTORICAL_CREDENTIAL"
-              "REDACTED_HISTORICAL_CREDENTIAL"
-              "REDACTED_HISTORICAL_CREDENTIAL"
-              "REDACTED_HISTORICAL_CREDENTIAL"
               "REDACTED_HISTORICAL_CREDENTIAL"
         }));
-    return TimeTable.fromUGjson(startTime, CoursePage.data);
+    print(CoursePage.data);
+    return TimeTable.fromUGjson(
+        startTime,
+        CoursePage.data is Map
+            ? CoursePage.data
+            : jsonDecode(CoursePage.data.toString()));
   }
-
 
   Future<TimeTable> loadTimeTableLocally(PersonInfo? info,
       {DateTime? startTime, bool forceLoadFromRemote = false}) async {
