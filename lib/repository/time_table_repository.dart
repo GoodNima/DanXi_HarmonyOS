@@ -42,8 +42,9 @@ class TimeTableRepository extends BaseRepositoryWithDio {
       'https://jwfw.fudan.edu.cn/eams/stdExamTable!examTable.action';
   static const String HOST = "https://jwfw.fudan.edu.cn/eams/";
   static const String KEY_TIMETABLE_CACHE = "timetable";
-  static const String TIME_TABLE_UG_URL =
-      'http://yjsxk.fudan.edu.cn/yjsxkapp/sys/xsxkappfudan/xsxkCourse/loadKbxx.do?_=';
+
+
+
 
   TimeTableRepository._();
 
@@ -86,27 +87,10 @@ class TimeTableRepository extends BaseRepositoryWithDio {
         tablePage.data.toString());
   }
 
-  Future<TimeTable> loadTimeTableRemotely_UG(PersonInfo info,
-      {DateTime? startTime}) {
-    return Retrier.tryAsyncWithFix(
-            () => _loadTimeTableRemotely_UG(startTime: startTime),
-            (exception) async =>
-        await UISLoginTool.loginUIS(dio!, LOGIN_URL, cookieJar!, info, true));
-  }
 
-  Future<TimeTable> _loadTimeTableRemotely_UG({DateTime? startTime}) async {
-    Response CoursePage = await dio!.get(
-        TIME_TABLE_UG_URL + DateTime.now().millisecondsSinceEpoch.toString(),
-        options: Options(headers: {
-          "cookie":
-          "REDACTED_HISTORICAL_CREDENTIAL"
-              "REDACTED_HISTORICAL_CREDENTIAL"
-              "REDACTED_HISTORICAL_CREDENTIAL"
-              "REDACTED_HISTORICAL_CREDENTIAL"
-              "REDACTED_HISTORICAL_CREDENTIAL"
-        }));
-    return TimeTable.fromUGjson(startTime, CoursePage.data);
-  }
+
+
+
 
 
   Future<TimeTable> loadTimeTableLocally(PersonInfo? info,
