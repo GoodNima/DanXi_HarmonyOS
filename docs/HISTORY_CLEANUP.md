@@ -23,22 +23,23 @@ main 在净化后历史节点上另有本记录的文档提交。tag 名称仍�
 
 ## 文件列表提交备注规范化
 
-2026-10-14 按项目所有者要求，main 上本项目的提交标题统一使用简洁、具体的英文说明，省略类型与模块前缀。GitHub 文件列表显示对应路径最近一次实际变更的提交标题，不提供独立的文件备注字段。六个相关节点的 Git tree、作者、提交者、日期和时区逐项保持一致，仅调整说明和后继父编号；随后更新本维护记录与协作规范。
+2026-10-14 按项目所有者最终要求，main 上本项目的提交标题使用简洁英文说明，并加短类别前缀：`app:`、`docs:`、`history:`、`release:`。前缀不带括号模块名。GitHub 文件列表显示对应路径最近一次实际变更的提交标题，不提供独立文件备注字段。
 
-| 原记录编号 | 当前 main 对应编号 | 英文说明 |
-| --- | --- | --- |
-| 1e7390848306b19bd7d5df5d97e6e33486db9787 | d36f4e62632559a570a49cc63557fcea0d2ac5db | Initialize HarmonyOS app sources and build configuration |
-| 09e0aa7694fa89827549224796f76cbfcc8b682d | 5755a285731d10c767b1a60eb977aa89ae7b02f2 | Preserve sideload guidance and cleanup history |
-| a0e8c17ccba4cc29c85afe9e2fb047b47d8bf3fa | 6361cbd969e20757385e8905b94842e101923d7d | Record cleanup mapping and release provenance |
-| 120293030276a4f41154766d1e86cb31489e7739 | 6ca15bedee82ac9be9f181aa4e3ea329e5614ebd | Clarify GitHub retention of old commit objects |
-| c83ff6d188e43e6c8dc8b87e80cc6451463c206b | 20cf492c43eabe94a51afbedd4098ad28a9006a2 | Simplify release notes and document the update workflow |
-| 419f1f5957c3e0ffeee97a692eaf94159dcd0b26 | 1f6553cbd32c8d863914b08d5abf0e5af2b71790 | Document repository commit messages and provenance |
+本次为七个本项目提交增加前缀；各自 Git tree、作者、提交者、日期和时区逐项保持一致，仅修改说明和后继父编号。随后更新本追溯记录及协作规范。
 
-表中前五行从本轮备注维护前的原记录对应到最终英文主线；最后一行是本轮维护记录节点的说明调整。此前历史净化映射继续作为当时的操作记录保留。3403 个上游原始提交保持原编号，LICENSE 的原上游说明继续保留。
+| 原记录编号 | 无前缀英文阶段 | 当前 main 对应编号 | 英文说明 |
+| --- | --- | --- | --- |
+| 1e7390848306b19bd7d5df5d97e6e33486db9787 | d36f4e62632559a570a49cc63557fcea0d2ac5db | a6e2ada00d4c3d250236a99fbd1718dfbfd7d3a1 | app: Initialize HarmonyOS app sources and build configuration |
+| 09e0aa7694fa89827549224796f76cbfcc8b682d | 5755a285731d10c767b1a60eb977aa89ae7b02f2 | 0d585b0856e083bc4fc49066bae4ac070fb0926c | history: Preserve sideload guidance and cleanup history |
+| a0e8c17ccba4cc29c85afe9e2fb047b47d8bf3fa | 6361cbd969e20757385e8905b94842e101923d7d | 983bb1d01424ad7a771bd3923a056a689024d612 | history: Record cleanup mapping and release provenance |
+| 120293030276a4f41154766d1e86cb31489e7739 | 6ca15bedee82ac9be9f181aa4e3ea329e5614ebd | 99f7597776f79a6f271fc45478f985711e90fa29 | history: Clarify GitHub retention of old commit objects |
+| c83ff6d188e43e6c8dc8b87e80cc6451463c206b | 20cf492c43eabe94a51afbedd4098ad28a9006a2 | 8931f023482f44b33be31275cf7e5a522b07e641 | release: Simplify release notes and document the update workflow |
+| 419f1f5957c3e0ffeee97a692eaf94159dcd0b26 | 1f6553cbd32c8d863914b08d5abf0e5af2b71790 | bd9ff87b91f720b93dbd2da27262eaee5c7f0f0c | docs: Document repository commit messages and provenance |
+| 09f537266a3c73b14b60262ce86dc057479c7a46 | 09f537266a3c73b14b60262ce86dc057479c7a46 | e453e2fbd9a8339f86289800ac56b84d3dc623ec | docs: Use clear English commit messages for repository files |
 
-已发布 `v0.1.33.30-alpha` 仍指向 `1e7390848306b19bd7d5df5d97e6e33486db9787`，Release 来源和安装包不变。该净化来源节点与表中 `d36f4e62632559a570a49cc63557fcea0d2ac5db` 的文件树相同，但已发布 tag 不再是调整后 main 的祖先；保留它用于原包来源追溯。
+此前净化及备注维护的对应关系继续保留。3403 个上游原始提交保持原编号，LICENSE 的原上游说明继续保留。已发布 `v0.1.33.30-alpha` 仍指向 `1e7390848306b19bd7d5df5d97e6e33486db9787`，Release 来源和安装包不变；其文件树与无前缀英文导入节点及当前 `a6e2ada00d4c3d250236a99fbd1718dfbfd7d3a1` 一致。已发布 tag 不再是调整后 main 的祖先，继续保留用于原包来源追溯。
 
-此次说明调整没有恢复已移除的191项目标材料，不增加应用交付次数。后续提交按实际变更写英文动作与结果；已有克隆按下方要求保留本地工作后重新克隆。完整回退备份与中间编号对应仅存于维护者本机。
+此次备注维护没有恢复已移除的191项目标材料，不增加应用交付次数。后续按真实变化选用短前缀并写明动作与结果；协作者按下方要求保留本地工作后重新克隆。完整回退备份仅保存在维护者本机。
 
 ## 安装包与版本
 
