@@ -54,7 +54,7 @@ git switch -c fix/short-description
 3. 提交并向本仓库 `main` 发起 PR，说明问题、行为变化、影响模块、来源、验证及剩余限制。
 4. 按审阅修正；维护者集中处理合并、版本和 Release，避免并行 PR 争用同一版本字段。
 
-提交标题采用 `类型(模块): 中文动作与结果`，例如 `fix(forum): 修复引用楼层定位`、`feat(campus): 增加场馆预约入口`、`docs(release): 完善版本更新流程`。GitHub 文件列表使用路径最近一次变更的提交标题；说明应准确概括该次修改，便于维护者查阅。不要改写他人的在途提交或已发布 tag；应用交付的版本更新按 [版本政策](docs/VERSION_HISTORY.md) 执行。
+提交标题使用简洁、具体的英文动作与结果，例如 `Fix quoted floor navigation`、`Add venue reservation entry`、`Document the version update workflow`，省略类型与模块前缀。GitHub 文件列表使用路径最近一次变更的提交标题；说明应准确概括该次修改，便于维护者查阅。不要改写他人的在途提交或已发布 tag；应用交付的版本更新按 [版本政策](docs/VERSION_HISTORY.md) 执行。
 
 ## 上游移植与许可
 
