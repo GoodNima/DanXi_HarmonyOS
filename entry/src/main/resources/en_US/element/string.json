@@ -1,0 +1,4040 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "DanXi - Fudan campus assistant"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "DanXi"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "DanXi"
+    },
+    {
+      "name": "bus_weekday",
+      "value": "Weekday"
+    },
+    {
+      "name": "bus_holiday",
+      "value": "Weekend / holiday"
+    },
+    {
+      "name": "bus_start",
+      "value": "From"
+    },
+    {
+      "name": "bus_end",
+      "value": "To"
+    },
+    {
+      "name": "bus_swap",
+      "value": "Swap"
+    },
+    {
+      "name": "bus_all",
+      "value": "Show all departures"
+    },
+    {
+      "name": "bus_upcoming",
+      "value": "Upcoming departures only"
+    },
+    {
+      "name": "bus_time_note",
+      "value": "Times show departures from each end; a double arrow means both directions. Select Holiday manually on public holidays."
+    },
+    {
+      "name": "bus_same_station",
+      "value": "Choose different departure and arrival stops"
+    },
+    {
+      "name": "bus_empty",
+      "value": "No departures match. Change the day type or show all."
+    },
+    {
+      "name": "card_recent",
+      "value": "Recent"
+    },
+    {
+      "name": "card_7_days",
+      "value": "7 days"
+    },
+    {
+      "name": "card_15_days",
+      "value": "15 days"
+    },
+    {
+      "name": "card_30_days",
+      "value": "30 days"
+    },
+    {
+      "name": "card_progress",
+      "value": "Loading transactions %s"
+    },
+    {
+      "name": "card_loading",
+      "value": "Loading campus card…"
+    },
+    {
+      "name": "card_low_balance",
+      "value": "Balance below ¥20"
+    },
+    {
+      "name": "card_records_days",
+      "value": "Transactions in the last %d days"
+    },
+    {
+      "name": "account_undergraduate",
+      "value": "Fudan undergraduate"
+    },
+    {
+      "name": "account_postgraduate",
+      "value": "Fudan graduate student"
+    },
+    {
+      "name": "account_type",
+      "value": "Academic account type"
+    },
+    {
+      "name": "app_preferences",
+      "value": "Appearance & notifications"
+    },
+    {
+      "name": "settings_back",
+      "value": "Back"
+    },
+    {
+      "name": "theme_mode",
+      "value": "Theme mode"
+    },
+    {
+      "name": "theme_system",
+      "value": "Follow system"
+    },
+    {
+      "name": "theme_light",
+      "value": "Light"
+    },
+    {
+      "name": "theme_dark",
+      "value": "Dark"
+    },
+    {
+      "name": "graduate_start",
+      "value": "Graduate timetable: first teaching Monday"
+    },
+    {
+      "name": "save_settings",
+      "value": "Save"
+    },
+    {
+      "name": "notification_settings",
+      "value": "Notifications"
+    },
+    {
+      "name": "notification_allowed",
+      "value": "System notifications: allowed"
+    },
+    {
+      "name": "notification_denied",
+      "value": "System notifications: not allowed"
+    },
+    {
+      "name": "notification_unknown",
+      "value": "System notification permission unavailable"
+    },
+    {
+      "name": "notification_permission",
+      "value": "Request notification permission"
+    },
+    {
+      "name": "notification_system_hint",
+      "value": "Adjust sound, vibration and notification access in System settings → Notifications & status bar → DanXi."
+    },
+    {
+      "name": "notification_login",
+      "value": "Log in to the forum to choose notification types."
+    },
+    {
+      "name": "notification_mention",
+      "value": "Mentions and replies"
+    },
+    {
+      "name": "notification_favorite",
+      "value": "Subscribed posts"
+    },
+    {
+      "name": "notification_report",
+      "value": "Report outcomes"
+    },
+    {
+      "name": "notification_delivery",
+      "value": "Notification types sync with your forum account. Background push is not yet available in this version."
+    },
+    {
+      "name": "graduate_scores_note",
+      "value": "Graduate course grades and per-course GPA (the graduate service does not provide undergraduate GPA rankings or exam schedules)"
+    },
+    {
+      "name": "graduate_week_hint",
+      "value": "Set the first teaching Monday in Me → Academic account type to show the current teaching week."
+    },
+    {
+      "name": "theme_choice_hint",
+      "value": "Follow system matches the system theme. Immersive material always follows the system setting."
+    },
+    {
+      "name": "caution_menu_title",
+      "value": "Read-with-care content"
+    },
+    {
+      "name": "caution_settings_title",
+      "value": "Content with starred (read with care) tags"
+    },
+    {
+      "name": "caution_choice_hint",
+      "value": "Starred tags indicate content to read with care. Content is collapsed by default; this setting syncs with your forum account."
+    },
+    {
+      "name": "caution_fold",
+      "value": "Collapse"
+    },
+    {
+      "name": "caution_hide",
+      "value": "Hide"
+    },
+    {
+      "name": "caution_show",
+      "value": "Show"
+    },
+    {
+      "name": "caution_fold_hint",
+      "value": "Tap to read"
+    },
+    {
+      "name": "caution_hide_hint",
+      "value": "Hide from feed"
+    },
+    {
+      "name": "caution_show_hint",
+      "value": "Show full content"
+    },
+    {
+      "name": "account_choice_hint",
+      "value": "Choose your actual academic account type. Graduates can view course grades and per-course GPA; undergraduate rankings and exam schedules are not available in the graduate service."
+    },
+    {
+      "name": "graduate_start_hint",
+      "value": "Choose the first teaching Monday to calculate the current week of the graduate timetable."
+    },
+    {
+      "name": "forum_settings",
+      "value": "Forum settings"
+    },
+    {
+      "name": "forum_compose",
+      "value": "New post"
+    },
+    {
+      "name": "forum_cancel",
+      "value": "Cancel"
+    },
+    {
+      "name": "forum_publish",
+      "value": "Publish"
+    },
+    {
+      "name": "forum_publishing",
+      "value": "Publishing"
+    },
+    {
+      "name": "forum_post",
+      "value": "Post"
+    },
+    {
+      "name": "ui_enter_the_monday_of_the_first_teaching_week_e_g_",
+      "value": "Enter the Monday of the first teaching week, e.g. 2026-09-07"
+    },
+    {
+      "name": "ui_semester_start_saved",
+      "value": "Semester start saved"
+    },
+    {
+      "name": "ui_adjust_permission_sound_and_vibration_in_system_",
+      "value": "Adjust permission, sound and vibration in System settings → Notifications & status bar → DanXi"
+    },
+    {
+      "name": "ui_handan",
+      "value": "Handan"
+    },
+    {
+      "name": "ui_jiangwan",
+      "value": "Jiangwan"
+    },
+    {
+      "name": "ui_shuttle_departures",
+      "value": "School Bus"
+    },
+    {
+      "name": "ui_bus",
+      "value": "Bus"
+    },
+    {
+      "name": "ui_classrooms",
+      "value": "Empty Classrooms"
+    },
+    {
+      "name": "ui_exam_schedule",
+      "value": "Exam schedule"
+    },
+    {
+      "name": "ui_grades_gpa",
+      "value": "Grades & GPA"
+    },
+    {
+      "name": "ui_timetable",
+      "value": "Timetable"
+    },
+    {
+      "name": "ui_campus",
+      "value": "Campus"
+    },
+    {
+      "name": "ui_notices",
+      "value": "Notices"
+    },
+    {
+      "name": "ui_exams",
+      "value": "Exams"
+    },
+    {
+      "name": "ui_campus_card",
+      "value": "Campus card"
+    },
+    {
+      "name": "ui_unavailable",
+      "value": " unavailable"
+    },
+    {
+      "name": "ui_reload",
+      "value": "Reload"
+    },
+    {
+      "name": "ui_log_in_to_campus_account",
+      "value": "Log in to campus account"
+    },
+    {
+      "name": "ui_could_not_open_login_please_try_again",
+      "value": "Could not open login. Please try again."
+    },
+    {
+      "name": "ui_could_not_load_academic_notices",
+      "value": "Could not load academic notices"
+    },
+    {
+      "name": "ui_source_jwc_fudan_edu_cn_may_require_campus_netwo",
+      "value": "Source: jwc.fudan.edu.cn (may require campus network)"
+    },
+    {
+      "name": "ui_fenglin",
+      "value": "Fenglin"
+    },
+    {
+      "name": "ui_zhangjiang",
+      "value": "Zhangjiang"
+    },
+    {
+      "name": "ui_today_s_classrooms_choose_a_building",
+      "value": "Today's classrooms · Choose a building"
+    },
+    {
+      "name": "ui_seats",
+      "value": " seats"
+    },
+    {
+      "name": "ui_unknown_capacity",
+      "value": "Unknown capacity"
+    },
+    {
+      "name": "ui_grade",
+      "value": "Grade "
+    },
+    {
+      "name": "ui_gpa",
+      "value": " · GPA "
+    },
+    {
+      "name": "ui_credits",
+      "value": " · Credits "
+    },
+    {
+      "name": "ui_rank",
+      "value": "Rank "
+    },
+    {
+      "name": "ui_credits_30",
+      "value": "Credits "
+    },
+    {
+      "name": "ui_cohort",
+      "value": " cohort · "
+    },
+    {
+      "name": "ui_period",
+      "value": "Period "
+    },
+    {
+      "name": "ui_",
+      "value": ""
+    },
+    {
+      "name": "ui_no_loaded_courses_for_today",
+      "value": "No loaded courses for today"
+    },
+    {
+      "name": "ui_no_classes_today",
+      "value": "No classes today!"
+    },
+    {
+      "name": "ui_card_balance",
+      "value": "Card Balance"
+    },
+    {
+      "name": "ui_no_transactions_in_this_date_range",
+      "value": "No transactions in this date range"
+    },
+    {
+      "name": "ui_complete_verification_on_fudan_s_official_page_y",
+      "value": "Complete verification on Fudan's official page. You will return automatically."
+    },
+    {
+      "name": "ui_verification_has_ended_return_to_login_and_try_a",
+      "value": "Verification has ended. Return to login and try again."
+    },
+    {
+      "name": "ui_could_not_initialize_verification_tap_retry",
+      "value": "Could not initialize verification. Tap Retry."
+    },
+    {
+      "name": "ui_could_not_open_verification_tap_retry",
+      "value": "Could not open verification. Tap Retry."
+    },
+    {
+      "name": "ui_verify_on_fudan_s_official_page_return_is_automa",
+      "value": "Verify on Fudan's official page; return is automatic. Pinch to zoom."
+    },
+    {
+      "name": "ui_verify_on_fudan_s_official_page_pinch_to_zoom",
+      "value": "Verify on Fudan's official page. Pinch to zoom."
+    },
+    {
+      "name": "ui_the_graduate_system_has_not_returned_a_timetable",
+      "value": "The graduate system has not returned a timetable. Retry or load it later."
+    },
+    {
+      "name": "ui_no_login_session_was_received_from_the_campus_se",
+      "value": "No login session was received from the campus service. Retry or log in again."
+    },
+    {
+      "name": "ui_verification_is_not_ready_yet_retry_later_or_log",
+      "value": "Verification is not ready yet. Retry later or log in again."
+    },
+    {
+      "name": "ui_could_not_reload_verification_check_your_connect",
+      "value": "Could not reload verification. Check your connection and retry."
+    },
+    {
+      "name": "ui_loading_fudan_verification",
+      "value": "Loading Fudan verification…"
+    },
+    {
+      "name": "ui_verification_is_loading_slowly_check_your_connec",
+      "value": "Verification is loading slowly. Check your connection or tap Retry."
+    },
+    {
+      "name": "ui_fudan_verification",
+      "value": "Fudan verification"
+    },
+    {
+      "name": "ui_retry",
+      "value": "Retry"
+    },
+    {
+      "name": "ui_could_not_load_verification_check_your_connectio",
+      "value": "Could not load verification. Check your connection and retry."
+    },
+    {
+      "name": "ui_verification_is_temporarily_unavailable_try_agai",
+      "value": "Verification is temporarily unavailable. Try again later."
+    },
+    {
+      "name": "ui_missing_post_information",
+      "value": "Missing post information"
+    },
+    {
+      "name": "ui_could_not_open_the_quoted_post",
+      "value": "Could not open the quoted post"
+    },
+    {
+      "name": "ui_this_floor_was_deleted_or_is_unavailable",
+      "value": "This floor was deleted or is unavailable"
+    },
+    {
+      "name": "ui_enter_a_reply",
+      "value": "Enter a reply"
+    },
+    {
+      "name": "ui_reply_sent",
+      "value": "Reply sent"
+    },
+    {
+      "name": "ui_like",
+      "value": "Like "
+    },
+    {
+      "name": "ui_dislike",
+      "value": "Dislike "
+    },
+    {
+      "name": "ui_anonymous",
+      "value": "Anonymous"
+    },
+    {
+      "name": "ui_this_floor_was_deleted",
+      "value": "This floor was deleted"
+    },
+    {
+      "name": "ui_say_something",
+      "value": "Say something…"
+    },
+    {
+      "name": "ui_sending",
+      "value": "Sending"
+    },
+    {
+      "name": "ui_reply",
+      "value": "Reply"
+    },
+    {
+      "name": "ui_loading_failed",
+      "value": "Failed to load"
+    },
+    {
+      "name": "ui_read_with_care",
+      "value": "Read with care"
+    },
+    {
+      "name": "ui_this_post_has_starred_tags_its_content_is_collap",
+      "value": "This post has starred tags. Its content is collapsed."
+    },
+    {
+      "name": "ui_view_content",
+      "value": "View content"
+    },
+    {
+      "name": "ui_replies",
+      "value": " replies"
+    },
+    {
+      "name": "ui_views",
+      "value": " views"
+    },
+    {
+      "name": "ui_loading_failed_tap_to_retry",
+      "value": "Loading failed. Tap to retry"
+    },
+    {
+      "name": "ui_scroll_up_for_more_replies",
+      "value": "Scroll up for more replies"
+    },
+    {
+      "name": "ui_locating_tap_to_cancel",
+      "value": "Locating · Tap to cancel"
+    },
+    {
+      "name": "ui_could_not_locate_tap_to_retry",
+      "value": "Could not locate · Tap to retry"
+    },
+    {
+      "name": "ui_post_details",
+      "value": "Post details"
+    },
+    {
+      "name": "ui_enter_some_content",
+      "value": "Enter some content"
+    },
+    {
+      "name": "ui_choose_a_section",
+      "value": "Choose a section"
+    },
+    {
+      "name": "ui_post_published",
+      "value": "Post published"
+    },
+    {
+      "name": "ui_choose_section",
+      "value": "Choose section"
+    },
+    {
+      "name": "ui_section",
+      "value": "Section"
+    },
+    {
+      "name": "ui_tags",
+      "value": "Tags"
+    },
+    {
+      "name": "ui_optional_up_to_one",
+      "value": "(Optional, up to one)"
+    },
+    {
+      "name": "ui_search_tags",
+      "value": "Search tags"
+    },
+    {
+      "name": "ui_no_matching_tags_you_can_publish_without_one",
+      "value": "No matching tags. You can publish without one."
+    },
+    {
+      "name": "ui_previous",
+      "value": "Previous"
+    },
+    {
+      "name": "ui_next",
+      "value": "Next"
+    },
+    {
+      "name": "detail_image_previous",
+      "value": "Previous"
+    },
+    {
+      "name": "detail_image_next",
+      "value": "Next"
+    },
+    {
+      "name": "ui_original_image_saved",
+      "value": "Original image saved"
+    },
+    {
+      "name": "ui_could_not_save_check_your_connection_and_storage",
+      "value": "Could not save. Check your connection and storage, then retry."
+    },
+    {
+      "name": "ui_could_not_load_image",
+      "value": "Could not load image"
+    },
+    {
+      "name": "ui_saving",
+      "value": "Saving…"
+    },
+    {
+      "name": "ui_download_original",
+      "value": "Download original"
+    },
+    {
+      "name": "gallery_original_loading",
+      "value": "Loading original…"
+    },
+    {
+      "name": "gallery_original_failed_preview",
+      "value": "Original unavailable; preview retained"
+    },
+    {
+      "name": "ui_enter_your_forum_email",
+      "value": "Enter your forum email"
+    },
+    {
+      "name": "ui_enter_your_password",
+      "value": "Enter your password"
+    },
+    {
+      "name": "ui_logged_in",
+      "value": "Logged in"
+    },
+    {
+      "name": "ui_log_in_to_forum",
+      "value": "Log in to forum"
+    },
+    {
+      "name": "ui_use_your_danxi_forum_account_separate_from_uis",
+      "value": "Use your DanXi forum account (separate from UIS)"
+    },
+    {
+      "name": "ui_email",
+      "value": "Email"
+    },
+    {
+      "name": "ui_password",
+      "value": "Password"
+    },
+    {
+      "name": "ui_logging_in",
+      "value": "Logging in…"
+    },
+    {
+      "name": "ui_log_in",
+      "value": "Login"
+    },
+    {
+      "name": "ui_register_on_the_forum_website_this_is_separate_f",
+      "value": "Register on the forum website. This is separate from your Fudan UIS account."
+    },
+    {
+      "name": "ui_could_not_open_post_please_retry",
+      "value": "Could not open post. Please retry."
+    },
+    {
+      "name": "ui_read_with_care_content_collapsed_tap_to_expand",
+      "value": "Read with care · Content collapsed; tap to expand"
+    },
+    {
+      "name": "ui_log_in_to_browse_the_forum",
+      "value": "Log in to browse the forum"
+    },
+    {
+      "name": "ui_a_fduhole_com_account_is_required_please_log_in",
+      "value": "A fduhole.com account is required. Please log in."
+    },
+    {
+      "name": "ui_search_forum",
+      "value": "Search forum"
+    },
+    {
+      "name": "ui_clear",
+      "value": "Clear"
+    },
+    {
+      "name": "ui_no_matching_content",
+      "value": "No matching content"
+    },
+    {
+      "name": "ui_try_a_different_keyword",
+      "value": "Try a different keyword"
+    },
+    {
+      "name": "ui_no_posts_to_display",
+      "value": "No posts to display"
+    },
+    {
+      "name": "ui_posts_on_this_page_are_hidden_you_can_load_more",
+      "value": "Posts on this page are hidden. You can load more."
+    },
+    {
+      "name": "ui_forum",
+      "value": "Forum"
+    },
+    {
+      "name": "ui_could_not_open_editor_please_retry",
+      "value": "Could not open editor. Please retry."
+    },
+    {
+      "name": "ui_all",
+      "value": "All"
+    },
+    {
+      "name": "ui_loading",
+      "value": "Loading…"
+    },
+    {
+      "name": "ui_scroll_up_to_load_more",
+      "value": "Scroll up to load more"
+    },
+    {
+      "name": "ui_please_log_in_to_the_forum_first",
+      "value": "Please log in to the forum first"
+    },
+    {
+      "name": "ui_me",
+      "value": "Me"
+    },
+    {
+      "name": "ui_enter_your_student_id",
+      "value": "Enter your student ID"
+    },
+    {
+      "name": "ui_login_failed",
+      "value": "Login failed"
+    },
+    {
+      "name": "ui_login_incomplete_check_your_connection_and_retry",
+      "value": "Login incomplete. Check your connection and retry."
+    },
+    {
+      "name": "ui_fudan_campus_assistant",
+      "value": "Fudan campus assistant"
+    },
+    {
+      "name": "ui_student_id",
+      "value": "ID"
+    },
+    {
+      "name": "ui_log_in_with_your_fudan_id_official_verification_",
+      "value": "Log in with your Fudan ID. Official verification will open if needed."
+    },
+    {
+      "name": "ui_continue_as_guest",
+      "value": "Continue as guest"
+    },
+    {
+      "name": "ui_could_not_save_theme_please_retry",
+      "value": "Could not save theme. Please retry."
+    },
+    {
+      "name": "ui_could_not_save_account_type_please_retry",
+      "value": "Could not save account type. Please retry."
+    },
+    {
+      "name": "ui_choose_the_monday_of_the_first_teaching_week",
+      "value": "Choose the Monday of the first teaching week"
+    },
+    {
+      "name": "ui_could_not_save_semester_start_please_retry",
+      "value": "Could not save semester start. Please retry."
+    },
+    {
+      "name": "ui_graduate",
+      "value": "Graduate"
+    },
+    {
+      "name": "ui_undergraduate",
+      "value": "Undergraduate"
+    },
+    {
+      "name": "ui_choose",
+      "value": "Choose"
+    },
+    {
+      "name": "ui_logged_out",
+      "value": "Logged out"
+    },
+    {
+      "name": "ui_could_not_log_out",
+      "value": "Could not log out"
+    },
+    {
+      "name": "ui_cohort_145",
+      "value": " cohort"
+    },
+    {
+      "name": "ui_welcome_to_danxi",
+      "value": "Welcome to DanXi"
+    },
+    {
+      "name": "ui_log_in_to_view_grades_timetables_and_campus_serv",
+      "value": "Log in to view grades, timetables and campus services"
+    },
+    {
+      "name": "ui_general",
+      "value": "General"
+    },
+    {
+      "name": "ui_monday_of_the_first_teaching_week",
+      "value": "Monday of the first teaching week"
+    },
+    {
+      "name": "ui_choose_semester_start",
+      "value": "Choose semester start"
+    },
+    {
+      "name": "ui_language",
+      "value": "Language"
+    },
+    {
+      "name": "ui__156",
+      "value": "Simplified Chinese"
+    },
+    {
+      "name": "ui_coming_soon",
+      "value": "Coming soon"
+    },
+    {
+      "name": "ui_system_permission_forum_notification_types",
+      "value": "System permission & forum notification types"
+    },
+    {
+      "name": "ui_dashboard_order",
+      "value": "Dashboard order"
+    },
+    {
+      "name": "ui_default_order",
+      "value": "Default order"
+    },
+    {
+      "name": "ui_about",
+      "value": "About"
+    },
+    {
+      "name": "ui_about_danxi",
+      "value": "About DanXi"
+    },
+    {
+      "name": "ui_danxi_for_harmonyos_v",
+      "value": "DanXi for HarmonyOS v"
+    },
+    {
+      "name": "ui_open_source_licenses",
+      "value": "Open source licenses"
+    },
+    {
+      "name": "ui_diagnostics",
+      "value": "Diagnostics"
+    },
+    {
+      "name": "ui_log_out",
+      "value": "Logout"
+    },
+    {
+      "name": "ui_loading_168",
+      "value": "Loading..."
+    },
+    {
+      "name": "ui_no_data",
+      "value": "No data"
+    },
+    {
+      "name": "ui_image_unavailable",
+      "value": " · Image unavailable]"
+    },
+    {
+      "name": "ui_could_not_open_image_please_retry",
+      "value": "Could not open image. Please retry."
+    },
+    {
+      "name": "ui_quoted_content",
+      "value": "Quoted content"
+    },
+    {
+      "name": "ui_quoted_content_collapsed",
+      "value": "Quoted content collapsed:"
+    },
+    {
+      "name": "ui_expand_content",
+      "value": "Expand content"
+    },
+    {
+      "name": "ui_go_to_quoted_floor",
+      "value": "Go to quoted floor"
+    },
+    {
+      "name": "ui_close",
+      "value": "Close"
+    },
+    {
+      "name": "ui_quote",
+      "value": "Quote "
+    },
+    {
+      "name": "ui_quote_not_found_tap_to_retry",
+      "value": "Quote not found. Tap to retry"
+    },
+    {
+      "name": "ui_loading_quote",
+      "value": "Loading quote…"
+    },
+    {
+      "name": "ui_tap_to_view_quote",
+      "value": "Tap to view quote"
+    },
+    {
+      "name": "ui_quoted_content_collapsed_tap_to_view",
+      "value": "Quoted content collapsed; tap to view"
+    },
+    {
+      "name": "language_zh_cn",
+      "value": "简体中文"
+    },
+    {
+      "name": "language_zh_tw",
+      "value": "繁體中文"
+    },
+    {
+      "name": "language_en",
+      "value": "English"
+    },
+    {
+      "name": "language_ja",
+      "value": "日本語"
+    },
+    {
+      "name": "language_choice_hint",
+      "value": "Changes apply immediately. Unsupported system languages use Simplified Chinese."
+    },
+    {
+      "name": "language_save_failed",
+      "value": "Could not save language. Please retry."
+    },
+    {
+      "name": "layout_default",
+      "value": "Default order"
+    },
+    {
+      "name": "layout_custom",
+      "value": "Custom order"
+    },
+    {
+      "name": "layout_hint",
+      "value": "Hold a module to reorder. Check modules to show them; keep at least one. Tap Done to apply."
+    },
+    {
+      "name": "layout_keep_one",
+      "value": "Keep at least one campus module"
+    },
+    {
+      "name": "layout_reset",
+      "value": "Reset"
+    },
+    {
+      "name": "layout_done",
+      "value": "Done"
+    },
+    {
+      "name": "layout_save_failed",
+      "value": "Could not save order. Please retry."
+    },
+    {
+      "name": "announcement_open_failed",
+      "value": "Could not open the notice. Check your browser and retry."
+    },
+    {
+      "name": "feature_announcement",
+      "value": "Academic Affairs Notices"
+    },
+    {
+      "name": "feature_bus",
+      "value": "Bus"
+    },
+    {
+      "name": "feature_empty_classroom",
+      "value": "Classroom schedule"
+    },
+    {
+      "name": "feature_exam",
+      "value": "Exams"
+    },
+    {
+      "name": "feature_gpa",
+      "value": "GPA"
+    },
+    {
+      "name": "feature_timetable",
+      "value": "Timetable"
+    },
+    {
+      "name": "feature_card",
+      "value": "Card"
+    },
+    {
+      "name": "campus_handan",
+      "value": "Handan"
+    },
+    {
+      "name": "campus_fenglin",
+      "value": "Fenglin"
+    },
+    {
+      "name": "campus_jiangwan",
+      "value": "Jiangwan"
+    },
+    {
+      "name": "campus_zhangjiang",
+      "value": "Zhangjiang"
+    },
+    {
+      "name": "weekday_mon",
+      "value": "Mon"
+    },
+    {
+      "name": "weekday_tue",
+      "value": "Tue"
+    },
+    {
+      "name": "weekday_wed",
+      "value": "Wed"
+    },
+    {
+      "name": "weekday_thu",
+      "value": "Thu"
+    },
+    {
+      "name": "weekday_fri",
+      "value": "Fri"
+    },
+    {
+      "name": "weekday_sat",
+      "value": "Sat"
+    },
+    {
+      "name": "weekday_sun",
+      "value": "Sun"
+    },
+    {
+      "name": "time_just_now",
+      "value": "Just now"
+    },
+    {
+      "name": "time_minutes_ago",
+      "value": "%dm ago"
+    },
+    {
+      "name": "time_hours_ago",
+      "value": "%dh ago"
+    },
+    {
+      "name": "time_days_ago",
+      "value": "%dd ago"
+    },
+    {
+      "name": "forum_webvpn_login_required",
+      "value": "The forum is not reachable directly on this network. Off-campus access uses Fudan WebVPN. Sign in to your Fudan account; your forum login is retained."
+    },
+    {
+      "name": "webvpn_auto",
+      "value": "Automatically use WebVPN"
+    },
+    {
+      "name": "webvpn_hint",
+      "value": "Prefer direct access; use Fudan WebVPN and shared verification when direct access fails. Turning this off uses direct access only."
+    },
+    {
+      "name": "webvpn_save_failed",
+      "value": "Could not save proxy preference. Please retry."
+    },
+    {
+      "name": "calendar_auto",
+      "value": "Automatic"
+    },
+    {
+      "name": "calendar_manual",
+      "value": "Choose date"
+    },
+    {
+      "name": "calendar_sync_now",
+      "value": "Sync current semester"
+    },
+    {
+      "name": "calendar_choice_hint",
+      "value": "Sync reads the official calendar for today’s semester and replaces the selected date with its first teaching Monday. Choose a date manually for other semesters. There is no background sync. Fudan verification is used if required."
+    },
+    {
+      "name": "calendar_date_unknown",
+      "value": "Semester date unavailable. Sync or choose a Monday."
+    },
+    {
+      "name": "calendar_syncing",
+      "value": "Reading official calendar…"
+    },
+    {
+      "name": "calendar_sync_failed",
+      "value": "Calendar sync unavailable; existing dates are retained. Retry or choose a manual date."
+    },
+    {
+      "name": "calendar_unrecognized",
+      "value": "Official calendar dates could not be reliably read. Existing dates are retained; inspect the source or choose a manual date."
+    },
+    {
+      "name": "calendar_login_required",
+      "value": "Fudan verification is required for this calendar"
+    },
+    {
+      "name": "calendar_source",
+      "value": "Source"
+    },
+    {
+      "name": "calendar_source_account",
+      "value": "Academic-system semester dates"
+    },
+    {
+      "name": "calendar_source_official",
+      "value": "Official university calendar"
+    },
+    {
+      "name": "calendar_source_open",
+      "value": "View official calendar"
+    },
+    {
+      "name": "timetable_week",
+      "value": "Week {week}"
+    },
+    {
+      "name": "timetable_today",
+      "value": "This week"
+    },
+    {
+      "name": "timetable_week_view",
+      "value": "Week view"
+    },
+    {
+      "name": "timetable_agenda",
+      "value": "Agenda"
+    },
+    {
+      "name": "timetable_add",
+      "value": "Add course"
+    },
+    {
+      "name": "timetable_edit",
+      "value": "Edit"
+    },
+    {
+      "name": "timetable_remove",
+      "value": "Remove from timetable"
+    },
+    {
+      "name": "timetable_save",
+      "value": "Save course"
+    },
+    {
+      "name": "timetable_semester_date",
+      "value": "Semester date and calendar sync"
+    },
+    {
+      "name": "timetable_export",
+      "value": "Export to Calendar"
+    },
+    {
+      "name": "timetable_restore",
+      "value": "Restore academic courses"
+    },
+    {
+      "name": "timetable_local_hint",
+      "value": "Adding, editing or removing changes this device’s timetable only, not enrollment records. Restore hidden academic courses from the menu."
+    },
+    {
+      "name": "timetable_invalid",
+      "value": "Enter a course name, valid periods 1–15 and teaching weeks 1–30."
+    },
+    {
+      "name": "timetable_save_failed",
+      "value": "Could not save timetable changes. Please retry."
+    },
+    {
+      "name": "timetable_exported",
+      "value": "Calendar saved; it can be imported into your calendar app"
+    },
+    {
+      "name": "timetable_export_failed",
+      "value": "Calendar could not be saved. Please retry."
+    },
+    {
+      "name": "timetable_load_failed",
+      "value": "Timetable could not load. Pull down to retry."
+    },
+    {
+      "name": "timetable_loading",
+      "value": "Syncing courses…"
+    },
+    {
+      "name": "timetable_empty",
+      "value": "No courses returned for this semester. Refresh or add local courses."
+    },
+    {
+      "name": "timetable_guest",
+      "value": "Log in with Fudan ID to import academic courses, or add local courses now."
+    },
+    {
+      "name": "timetable_date_hint",
+      "value": "Semester start is unknown. Tap to sync or set it manually; this is a preview of the selected week."
+    },
+    {
+      "name": "timetable_outside_term",
+      "value": "Today is outside this semester’s teaching weeks; showing the selected week."
+    },
+    {
+      "name": "timetable_no_class_day",
+      "value": "No courses on this day"
+    },
+    {
+      "name": "timetable_updated",
+      "value": "Last synced"
+    },
+    {
+      "name": "timetable_course_name",
+      "value": "Course name (required)"
+    },
+    {
+      "name": "timetable_teacher",
+      "value": "Teacher"
+    },
+    {
+      "name": "timetable_room",
+      "value": "Room / location"
+    },
+    {
+      "name": "timetable_code",
+      "value": "Course code (optional)"
+    },
+    {
+      "name": "timetable_first_unit",
+      "value": "First period"
+    },
+    {
+      "name": "timetable_last_unit",
+      "value": "Last period"
+    },
+    {
+      "name": "timetable_weeks",
+      "value": "Teaching weeks"
+    },
+    {
+      "name": "timetable_weeks_hint",
+      "value": "Example: 1-18 or 1,3,5-8; comma-separated, weeks 1–30."
+    },
+    {
+      "name": "timetable_semester_unavailable",
+      "value": "Selected semester is unavailable. Reload the semester list."
+    },
+    {
+      "name": "detail_content_required",
+      "value": "Enter some content"
+    },
+    {
+      "name": "detail_operation_success",
+      "value": "Done"
+    },
+    {
+      "name": "detail_copied",
+      "value": "Copied"
+    },
+    {
+      "name": "detail_delete_floor",
+      "value": "Delete reply"
+    },
+    {
+      "name": "detail_delete_note",
+      "value": "This reply cannot be restored by you after deletion."
+    },
+    {
+      "name": "detail_confirm",
+      "value": "Confirm"
+    },
+    {
+      "name": "detail_admin",
+      "value": "Moderator tools"
+    },
+    {
+      "name": "detail_admin_note",
+      "value": "This changes server content. Check the target and action."
+    },
+    {
+      "name": "detail_missing_division",
+      "value": "Section unavailable. Refresh and retry."
+    },
+    {
+      "name": "detail_favorite",
+      "value": "Save post"
+    },
+    {
+      "name": "detail_unfavorite",
+      "value": "Unsave post"
+    },
+    {
+      "name": "detail_subscribe",
+      "value": "Subscribe to replies"
+    },
+    {
+      "name": "detail_unsubscribe",
+      "value": "Unsubscribe"
+    },
+    {
+      "name": "detail_subscription_note",
+      "value": "New reply alerts follow your forum notification settings."
+    },
+    {
+      "name": "detail_show_all",
+      "value": "Show all replies"
+    },
+    {
+      "name": "detail_only_op",
+      "value": "Only original poster"
+    },
+    {
+      "name": "detail_only_author",
+      "value": "Only this author"
+    },
+    {
+      "name": "detail_to_top",
+      "value": "Go to first post"
+    },
+    {
+      "name": "detail_to_end",
+      "value": "Go to latest reply"
+    },
+    {
+      "name": "detail_copy_hole",
+      "value": "Copy post ID"
+    },
+    {
+      "name": "detail_copy_floor",
+      "value": "Copy reply ID"
+    },
+    {
+      "name": "detail_copy_time",
+      "value": "Copy posting time"
+    },
+    {
+      "name": "detail_copy_content",
+      "value": "Copy text"
+    },
+    {
+      "name": "detail_select_text",
+      "value": "Select text"
+    },
+    {
+      "name": "detail_share_post",
+      "value": "Choose replies to share"
+    },
+    {
+      "name": "detail_share_floor",
+      "value": "Copy reply for sharing"
+    },
+    {
+      "name": "detail_share_note",
+      "value": "Select replies to copy. Load more to include later replies."
+    },
+    {
+      "name": "detail_copy_selected",
+      "value": "Copy selected replies"
+    },
+    {
+      "name": "detail_load_more",
+      "value": "Load more replies"
+    },
+    {
+      "name": "detail_summary",
+      "value": "AI summary"
+    },
+    {
+      "name": "detail_summary_pending",
+      "value": "Summary is not ready. Try again later."
+    },
+    {
+      "name": "detail_summary_note",
+      "value": "AI summaries may be inaccurate. Open the cited replies to verify."
+    },
+    {
+      "name": "detail_summary_refresh",
+      "value": "Regenerate summary"
+    },
+    {
+      "name": "detail_hide",
+      "value": "Hide post on this device"
+    },
+    {
+      "name": "detail_hide_note",
+      "value": "Hidden only on this device. Restore it in forum settings."
+    },
+    {
+      "name": "detail_reply_floor",
+      "value": "Reply to this floor"
+    },
+    {
+      "name": "detail_full_editor",
+      "value": "Open full editor"
+    },
+    {
+      "name": "detail_history",
+      "value": "Edit history"
+    },
+    {
+      "name": "detail_no_history",
+      "value": "No edit history"
+    },
+    {
+      "name": "detail_edit",
+      "value": "Edit content"
+    },
+    {
+      "name": "detail_report",
+      "value": "Report reply"
+    },
+    {
+      "name": "detail_report_note",
+      "value": "Explain your report. Moderators will apply community rules."
+    },
+    {
+      "name": "detail_markdown_note",
+      "value": "Supports Markdown, LaTeX and stickers. Preview before sending."
+    },
+    {
+      "name": "detail_preview",
+      "value": "Preview"
+    },
+    {
+      "name": "detail_submit",
+      "value": "Submit"
+    },
+    {
+      "name": "detail_lock",
+      "value": "Lock / unlock post"
+    },
+    {
+      "name": "detail_freeze",
+      "value": "Freeze / unfreeze post"
+    },
+    {
+      "name": "detail_hide_server",
+      "value": "Hide / restore post"
+    },
+    {
+      "name": "detail_delete_force",
+      "value": "Permanently delete post"
+    },
+    {
+      "name": "detail_pin",
+      "value": "Pin / unpin post"
+    },
+    {
+      "name": "detail_tags_division",
+      "value": "Edit tags and section"
+    },
+    {
+      "name": "detail_special_tag",
+      "value": "Set special label"
+    },
+    {
+      "name": "detail_fold_floor",
+      "value": "Set collapse reasons"
+    },
+    {
+      "name": "detail_sensitive",
+      "value": "Mark sensitive"
+    },
+    {
+      "name": "detail_unmark_sensitive",
+      "value": "Remove sensitive mark"
+    },
+    {
+      "name": "detail_penalty",
+      "value": "Set mute duration (days)"
+    },
+    {
+      "name": "detail_reason_note",
+      "value": "Enter details. One collapse reason per line; mute duration is a nonnegative number of days."
+    },
+    {
+      "name": "detail_more",
+      "value": "More actions"
+    },
+    {
+      "name": "detail_op",
+      "value": "OP"
+    },
+    {
+      "name": "detail_me",
+      "value": "Me"
+    },
+    {
+      "name": "detail_modified",
+      "value": "Edited"
+    },
+    {
+      "name": "detail_reply_unavailable",
+      "value": "Replies are unavailable while this post is locked, frozen or hidden."
+    },
+    {
+      "name": "detail_all_loaded",
+      "value": "All replies loaded"
+    },
+    {
+      "name": "detail_filter_none",
+      "value": "No replies match this filter"
+    },
+    {
+      "name": "detail_restore_hidden",
+      "value": "Restore locally hidden posts"
+    },
+    {
+      "name": "detail_helpful",
+      "value": "Helpful summary"
+    },
+    {
+      "name": "detail_unhelpful",
+      "value": "Report summary issue"
+    },
+    {
+      "name": "detail_image_add",
+      "value": "Add image"
+    },
+    {
+      "name": "detail_image_uploading",
+      "value": "Uploading image…"
+    },
+    {
+      "name": "detail_image_upload_failed",
+      "value": "Image upload failed. Check your connection, forum sign-in and access to the selected photo, then try again. Your draft was kept."
+    },
+    {
+      "name": "detail_image_too_long",
+      "value": "Your draft is close to the character limit. Shorten it before adding an image. Your draft was kept."
+    },
+    {
+      "name": "detail_content_limit",
+      "value": "Content is limited to 2000 characters. Shorten it before adding more."
+    },
+    {
+      "name": "feature_academic",
+      "value": "Exams & Results"
+    },
+    {
+      "name": "academic_overview",
+      "value": "Exams & grades"
+    },
+    {
+      "name": "academic_grades",
+      "value": "Course grades"
+    },
+    {
+      "name": "academic_ranking",
+      "value": "GPA & ranking"
+    },
+    {
+      "name": "academic_semester",
+      "value": "Choose semester"
+    },
+    {
+      "name": "academic_semester_missing",
+      "value": "This semester is unavailable. Please choose another."
+    },
+    {
+      "name": "academic_my_gpa",
+      "value": "Local GPA"
+    },
+    {
+      "name": "academic_my_gpa_unavailable",
+      "value": "Not enough retrieved course data to calculate GPA"
+    },
+    {
+      "name": "academic_gpa_note",
+      "value": "Calculated locally: Σ(published course GP × credits) ÷ included credits, for the retrieved list only, not a degree audit or cumulative GPA. P/NP, marked undergraduate transfer grades and identified graduate remedial, compulsory-component or assessment-only courses are excluded. Missing GP or credits are not estimated."
+    },
+    {
+      "name": "academic_rank_all",
+      "value": "All majors"
+    },
+    {
+      "name": "academic_rank_same",
+      "value": "Same major"
+    },
+    {
+      "name": "academic_percentile",
+      "value": "Percentile (current scope)"
+    },
+    {
+      "name": "academic_gradepoint",
+      "value": "Course grade point"
+    },
+    {
+      "name": "academic_other_exams",
+      "value": "Other exams and course grades"
+    },
+    {
+      "name": "academic_empty_grades",
+      "value": "No published course grades"
+    },
+    {
+      "name": "academic_empty_rank",
+      "value": "No published GPA ranking"
+    },
+    {
+      "name": "academic_export_exams",
+      "value": "Export exam calendar"
+    },
+    {
+      "name": "academic_export_unavailable",
+      "value": "No exams have valid published dates and times to export."
+    },
+    {
+      "name": "academic_retry",
+      "value": "Reload academic data"
+    },
+    {
+      "name": "academic_grade_not_for_exam",
+      "value": "Make-up or deferred exams do not use the original exam grade"
+    },
+    {
+      "name": "academic_fallback_note",
+      "value": "Showing all grades from the data center. Semester navigation, exams and GPA ranking are unavailable in this mode."
+    },
+    {
+      "name": "academic_exam_date",
+      "value": "Date"
+    },
+    {
+      "name": "academic_exam_time",
+      "value": "Time"
+    },
+    {
+      "name": "academic_exam_room",
+      "value": "Location"
+    },
+    {
+      "name": "academic_exam_note",
+      "value": "Exam notes"
+    },
+    {
+      "name": "academic_grade",
+      "value": "Grade"
+    },
+    {
+      "name": "academic_gpa",
+      "value": "GPA"
+    },
+    {
+      "name": "academic_credits",
+      "value": "Credits"
+    },
+    {
+      "name": "academic_rank",
+      "value": "Rank"
+    },
+    {
+      "name": "classroom_periods",
+      "value": "View period availability"
+    },
+    {
+      "name": "classroom_period_free",
+      "value": "Period %1$d: available"
+    },
+    {
+      "name": "classroom_period_occupied",
+      "value": "Period %1$d: %2$s"
+    },
+    {
+      "name": "classroom_no_rows",
+      "value": "No classroom data for this building"
+    },
+    {
+      "name": "classroom_busy",
+      "value": "All periods are occupied today"
+    },
+    {
+      "name": "classroom_free_summary",
+      "value": "Available periods: %1$s"
+    },
+    {
+      "name": "academic_semester_label",
+      "value": "Semester"
+    },
+    {
+      "name": "forum_divisions_loading",
+      "value": "Loading sections"
+    },
+    {
+      "name": "forum_divisions_retry",
+      "value": "Sections failed · Retry"
+    },
+    {
+      "name": "campus_welcome_national_day",
+      "value": "Happy National Day!"
+    },
+    {
+      "name": "campus_welcome_late",
+      "value": "The dead of midnight is the noon of thought."
+    },
+    {
+      "name": "campus_welcome_morning",
+      "value": "Every dawn is a new sunrise."
+    },
+    {
+      "name": "campus_welcome_noon",
+      "value": "Rise and shine."
+    },
+    {
+      "name": "campus_welcome_afternoon",
+      "value": "The afternoon knows what the morning never suspected."
+    },
+    {
+      "name": "campus_welcome_evening",
+      "value": "Goodnight stars, goodnight air, goodnight noises everywhere."
+    },
+    {
+      "name": "campus_welcome_name",
+      "value": "Welcome, {name}"
+    },
+    {
+      "name": "campus_welcome_guest",
+      "value": "Welcome to DanXi"
+    },
+    {
+      "name": "campus_no_notices",
+      "value": "No new notices"
+    },
+    {
+      "name": "campus_preview_open",
+      "value": "View details"
+    },
+    {
+      "name": "campus_preview_classroom",
+      "value": "Choose a campus, building and date to find free periods"
+    },
+    {
+      "name": "campus_preview_academic",
+      "value": "Exams, grades and GPA"
+    },
+    {
+      "name": "campus_preview_timetable",
+      "value": "View your schedule or add a course"
+    },
+    {
+      "name": "campus_preview_bus",
+      "value": "Choose departure and destination campuses"
+    },
+    {
+      "name": "campus_preview_card",
+      "value": "Balance and transaction history"
+    },
+    {
+      "name": "campus_preview_retry",
+      "value": "Tap to reload"
+    },
+    {
+      "name": "campus_preview_failed",
+      "value": "Preview unavailable. Retry or open details."
+    },
+    {
+      "name": "campus_preview_loading",
+      "value": "Loading preview…"
+    },
+    {
+      "name": "campus_card_refresh",
+      "value": "Refresh"
+    },
+    {
+      "name": "campus_move_up",
+      "value": "Move card earlier"
+    },
+    {
+      "name": "campus_move_down",
+      "value": "Move card later"
+    },
+    {
+      "name": "campus_size_compact",
+      "value": "Compact horizontal card"
+    },
+    {
+      "name": "campus_size_small",
+      "value": "Small"
+    },
+    {
+      "name": "campus_size_large",
+      "value": "Large"
+    },
+    {
+      "name": "campus_remove_card",
+      "value": "Remove card"
+    },
+    {
+      "name": "campus_edit_note",
+      "value": "Hold a card to move it. While holding, use another finger to scroll the page."
+    },
+    {
+      "name": "campus_restore_layout",
+      "value": "Restore default layout"
+    },
+    {
+      "name": "campus_add_card",
+      "value": "Add"
+    },
+    {
+      "name": "campus_edit_layout",
+      "value": "Edit layout"
+    },
+    {
+      "name": "campus_classroom_count",
+      "value": "{count} available rooms"
+    },
+    {
+      "name": "campus_academic_count",
+      "value": "Grades for {count} courses"
+    },
+    {
+      "name": "ui_could_not_open_details",
+      "value": "Could not open details. Please retry."
+    },
+    {
+      "name": "classroom_morning",
+      "value": "Morning"
+    },
+    {
+      "name": "classroom_afternoon",
+      "value": "Afternoon"
+    },
+    {
+      "name": "classroom_evening",
+      "value": "Evening"
+    },
+    {
+      "name": "classroom_campus",
+      "value": "Campus"
+    },
+    {
+      "name": "classroom_building",
+      "value": "Building"
+    },
+    {
+      "name": "classroom_date",
+      "value": "Date"
+    },
+    {
+      "name": "classroom_time_range",
+      "value": "Time range"
+    },
+    {
+      "name": "classroom_whole_day",
+      "value": "All day"
+    },
+    {
+      "name": "classroom_range",
+      "value": "Periods %1$d–%2$d"
+    },
+    {
+      "name": "classroom_only_free",
+      "value": "Only available rooms"
+    },
+    {
+      "name": "classroom_display_settings",
+      "value": "Display"
+    },
+    {
+      "name": "classroom_remember_building",
+      "value": "Remember last building"
+    },
+    {
+      "name": "classroom_high_contrast",
+      "value": "High-contrast period grid"
+    },
+    {
+      "name": "classroom_settings_note",
+      "value": "The last building is saved separately for each campus. In high-contrast mode, filled cells mean occupied and outlined cells mean available, so color is not required."
+    },
+    {
+      "name": "classroom_filter_note",
+      "value": "Choose a range and enable available-only to find rooms free throughout it. Dates run from yesterday through the next 14 days."
+    },
+    {
+      "name": "classroom_result_count",
+      "value": "%1$d of %2$d rooms"
+    },
+    {
+      "name": "classroom_free",
+      "value": "Available"
+    },
+    {
+      "name": "classroom_occupied",
+      "value": "Occupied"
+    },
+    {
+      "name": "classroom_matrix_note",
+      "value": "Numbers are periods. The outline marks today's current period. Tap a period to view its use."
+    },
+    {
+      "name": "classroom_period_unknown",
+      "value": "Period %1$d: no data"
+    },
+    {
+      "name": "classroom_hide_periods",
+      "value": "Hide usage details"
+    },
+    {
+      "name": "classroom_loading",
+      "value": "Updating room availability"
+    },
+    {
+      "name": "classroom_filter_empty",
+      "value": "No room is free throughout this range. Choose another range or turn off the availability filter."
+    },
+    {
+      "name": "timetable_edit_title",
+      "value": "Edit course"
+    },
+    {
+      "name": "timetable_editor_intro",
+      "value": "Course name, meeting time and teaching weeks are required. Other fields are optional."
+    },
+    {
+      "name": "timetable_editor_optional",
+      "value": "Optional"
+    },
+    {
+      "name": "timetable_weekday",
+      "value": "Day of week"
+    },
+    {
+      "name": "timetable_select_weekday",
+      "value": "Choose a teaching day"
+    },
+    {
+      "name": "timetable_editor_period_hint",
+      "value": "Select period"
+    },
+    {
+      "name": "timetable_editor_weeks_placeholder",
+      "value": "Enter weeks or a range"
+    },
+    {
+      "name": "timetable_editor_error_name",
+      "value": "Enter a course name"
+    },
+    {
+      "name": "timetable_editor_error_weekday",
+      "value": "Choose a teaching day"
+    },
+    {
+      "name": "timetable_editor_error_first_unit",
+      "value": "Enter a start period from 1 to 15"
+    },
+    {
+      "name": "timetable_editor_error_last_unit",
+      "value": "Enter an end period from 1 to 15"
+    },
+    {
+      "name": "timetable_editor_error_order",
+      "value": "The end period cannot precede the start period"
+    },
+    {
+      "name": "timetable_editor_error_weeks",
+      "value": "Enter valid teaching weeks from 1 to 30, such as 1-18 or 1,3,5-8"
+    },
+    {
+      "name": "timetable_editor_local_note",
+      "value": "Saved to this device only. Official course registrations are unaffected."
+    },
+    {
+      "name": "classroom_save_failed",
+      "value": "Could not save the setting. Please retry."
+    },
+    {
+      "name": "profile_current_campus",
+      "value": "Current campus"
+    },
+    {
+      "name": "profile_campus_hint",
+      "value": "Default campus for campus cards, classrooms and buses. You can still change it on each page."
+    },
+    {
+      "name": "profile_save_failed",
+      "value": "Could not save settings. Please retry."
+    },
+    {
+      "name": "profile_logout_hint",
+      "value": "Sign out of the campus account and clear local login sessions. Courses, campus layout and general settings will be kept."
+    },
+    {
+      "name": "forum_account_id",
+      "value": "Signed in · ID %d"
+    },
+    {
+      "name": "forum_signed_in",
+      "value": "Signed in to the forum"
+    },
+    {
+      "name": "forum_signed_out",
+      "value": "Not signed in to the forum"
+    },
+    {
+      "name": "forum_account_hint",
+      "value": "Forum and Fudan campus accounts are separate."
+    },
+    {
+      "name": "forum_logout_hint",
+      "value": "Sign out of the forum. Campus services remain available."
+    },
+    {
+      "name": "forum_browsing_settings",
+      "value": "Browsing and notifications"
+    },
+    {
+      "name": "forum_sort_title",
+      "value": "Default sorting"
+    },
+    {
+      "name": "forum_sort_replied",
+      "value": "Recently replied"
+    },
+    {
+      "name": "forum_sort_created",
+      "value": "Recently posted"
+    },
+    {
+      "name": "forum_clean_title",
+      "value": "Clean mode"
+    },
+    {
+      "name": "forum_clean_hint",
+      "value": "Hide selected emoji using the original app rules. Post text is kept intact."
+    },
+    {
+      "name": "forum_summary_hint",
+      "value": "Show AI summary in supported post details."
+    },
+    {
+      "name": "forum_hidden_tags",
+      "value": "Blocked tags"
+    },
+    {
+      "name": "forum_hidden_tag_count",
+      "value": "%d tags blocked"
+    },
+    {
+      "name": "forum_hidden_tags_hint",
+      "value": "Posts with these tags are hidden from the feed. Tap selected tags to remove them, or enter a tag name to add it."
+    },
+    {
+      "name": "forum_tag_search",
+      "value": "Search or enter a tag"
+    },
+    {
+      "name": "forum_tag_add",
+      "value": "Add"
+    },
+    {
+      "name": "forum_account_content",
+      "value": "My forum activity"
+    },
+    {
+      "name": "forum_my_posts",
+      "value": "My posts"
+    },
+    {
+      "name": "forum_my_replies",
+      "value": "My replies"
+    },
+    {
+      "name": "forum_favorites",
+      "value": "Favorites"
+    },
+    {
+      "name": "forum_subscriptions",
+      "value": "Subscriptions"
+    },
+    {
+      "name": "forum_view_history",
+      "value": "Viewing history"
+    },
+    {
+      "name": "forum_history_hint",
+      "value": "Stored on this device only, up to 500 recent entries."
+    },
+    {
+      "name": "forum_punishments",
+      "value": "Moderation history"
+    },
+    {
+      "name": "forum_change_password",
+      "value": "Change password"
+    },
+    {
+      "name": "forum_display_storage",
+      "value": "Appearance and storage"
+    },
+    {
+      "name": "forum_background",
+      "value": "Forum background"
+    },
+    {
+      "name": "forum_background_hint",
+      "value": "Choose a local image for a subtle background."
+    },
+    {
+      "name": "forum_background_set",
+      "value": "Set · Tap to replace"
+    },
+    {
+      "name": "forum_background_remove",
+      "value": "Remove background"
+    },
+    {
+      "name": "forum_background_limit",
+      "value": "Background image must be under 20 MB"
+    },
+    {
+      "name": "forum_clear_cache",
+      "value": "Clear image cache"
+    },
+    {
+      "name": "forum_clear_cache_hint",
+      "value": "Clear downloaded images while keeping accounts and settings."
+    },
+    {
+      "name": "forum_cache_cleared",
+      "value": "Image cache cleared"
+    },
+    {
+      "name": "forum_clear_history",
+      "value": "Clear"
+    },
+    {
+      "name": "forum_clear_history_hint",
+      "value": "Clear local viewing history? Server posts are kept."
+    },
+    {
+      "name": "forum_account_empty",
+      "value": "No entries yet"
+    },
+    {
+      "name": "forum_punishment_revoked",
+      "value": "Revoked"
+    },
+    {
+      "value": "Fudan account",
+      "name": "account_signed_in"
+    },
+    {
+      "value": "Fudan ID · %s",
+      "name": "account_fudan_id"
+    },
+    {
+      "value": "Account avatar",
+      "name": "account_avatar"
+    },
+    {
+      "value": "Signed in to Fudan",
+      "name": "account_verified"
+    },
+    {
+      "value": "A blue outline and check mark show the current card. Tap another size to resize, or an unused card to add it.",
+      "name": "campus_catalog_note"
+    },
+    {
+      "value": "A warm welcome to the Lunar New Year",
+      "name": "campus_welcome_lunar_eve"
+    },
+    {
+      "value": "Happy Lunar New Year!",
+      "name": "campus_welcome_spring"
+    },
+    {
+      "value": "Happy Lantern Festival!",
+      "name": "campus_welcome_lantern"
+    },
+    {
+      "value": "Wishing you a peaceful Dragon Boat Festival",
+      "name": "campus_welcome_dragon"
+    },
+    {
+      "value": "Happy Mid-Autumn Festival!",
+      "name": "campus_welcome_midautumn"
+    },
+    {
+      "value": "Happy New Year!",
+      "name": "campus_welcome_new_year"
+    },
+    {
+      "value": "Happy Labour Day!",
+      "name": "campus_welcome_labour"
+    },
+    {
+      "value": "Happy Teachers’ Day!",
+      "name": "campus_welcome_teachers"
+    },
+    {
+      "name": "forum_activities_title",
+      "value": "Show activities"
+    },
+    {
+      "name": "forum_activities_hint",
+      "value": "Show official activities in the forum feed. Tap for details. The area collapses when there are no activities; turning this off hides it."
+    },
+    {
+      "name": "forum_activities_cached",
+      "value": "Updates are unavailable. Showing previously fetched activities."
+    },
+    {
+      "name": "forum_activities_unavailable",
+      "value": "Activities are unavailable. Please try again later."
+    },
+    {
+      "name": "forum_activities_all",
+      "value": "View all activities"
+    },
+    {
+      "name": "forum_activity_open",
+      "value": "View"
+    },
+    {
+      "name": "forum_messages",
+      "value": "Messages"
+    },
+    {
+      "name": "forum_show_unread",
+      "value": "Unread"
+    },
+    {
+      "name": "forum_message_no_detail",
+      "value": "This message has no further details."
+    },
+    {
+      "name": "forum_message_ack_failed",
+      "value": "Message status could not sync. Pull down to retry."
+    },
+    {
+      "name": "forum_activities_loading",
+      "value": "Loading activities"
+    },
+    {
+      "name": "forum_activities_source",
+      "value": "Official DanXi activities"
+    },
+    {
+      "name": "forum_activities_empty",
+      "value": "No activities"
+    },
+    {
+      "name": "forum_activities_empty_hint",
+      "value": "No activities are currently published. Refresh later."
+    },
+    {
+      "name": "forum_activities_retry_hint",
+      "value": "Official activities could not load. Tap to retry."
+    },
+    {
+      "name": "feature_evaluation",
+      "value": "Teaching evaluation"
+    },
+    {
+      "name": "feature_campus_access",
+      "value": "Campus access"
+    },
+    {
+      "name": "feature_sports",
+      "value": "Venue Reservation"
+    },
+    {
+      "name": "feature_life_code",
+      "value": "Fudan Life Code"
+    },
+    {
+      "name": "feature_developer_notice",
+      "value": "Developer announcements"
+    },
+    {
+      "name": "feature_dining",
+      "value": "Canteen queue numbers"
+    },
+    {
+      "name": "feature_library",
+      "value": "Library occupancy"
+    },
+    {
+      "name": "feature_electricity",
+      "value": "Dormitory electricity"
+    },
+    {
+      "name": "live_dining_title",
+      "value": "Canteen queue numbers"
+    },
+    {
+      "name": "live_library_title",
+      "value": "Library visitors"
+    },
+    {
+      "name": "live_electricity_title",
+      "value": "Dorm electricity"
+    },
+    {
+      "name": "live_developer_title",
+      "value": "Developer announcements"
+    },
+    {
+      "name": "live_sign_in_hint",
+      "value": "Sign in to your Fudan account to view this campus service."
+    },
+    {
+      "name": "live_load_error",
+      "value": "Data could not be loaded. Check your connection and retry."
+    },
+    {
+      "name": "live_dining_outside",
+      "value": "Outside dining service hours"
+    },
+    {
+      "name": "live_dining_hint",
+      "value": "All reported windows are grouped by campus and canteen. Counts indicate dining activity, not a live queue. Relative crowding compares each canteen’s count against its peak reference."
+    },
+    {
+      "name": "live_library_hint",
+      "value": "Visitor counts, remaining admission capacity and opening hours come from the library. Pull to refresh."
+    },
+    {
+      "name": "live_electricity_hint",
+      "value": "Your campus account determines the dorm shown. Historical usage is supplied by the Data Center and may update at a different time."
+    },
+    {
+      "name": "live_developer_hint",
+      "value": "Original DanXi developer announcements with publication dates. Switch between current and historical notices."
+    },
+    {
+      "name": "live_no_notices",
+      "value": "No announcements"
+    },
+    {
+      "name": "live_visitors",
+      "value": "Visitors inside"
+    },
+    {
+      "name": "live_remaining_kwh",
+      "value": "Remaining · kWh"
+    },
+    {
+      "name": "live_used_kwh",
+      "value": "Used · kWh"
+    },
+    {
+      "name": "live_least_busy",
+      "value": "Least busy"
+    },
+    {
+      "name": "live_most_busy",
+      "value": "Most busy"
+    },
+    {
+      "name": "live_notice_range",
+      "value": "Announcement range"
+    },
+    {
+      "name": "live_latest",
+      "value": "Current notices"
+    },
+    {
+      "name": "live_history",
+      "value": "All notices"
+    },
+    {
+      "name": "live_view_full",
+      "value": "Read full notice"
+    },
+    {
+      "name": "live_query_campus",
+      "value": "Campus"
+    },
+    {
+      "name": "live_transactions",
+      "value": "Transactions"
+    },
+    {
+      "name": "live_peak_reference",
+      "value": "Peak reference: %d"
+    },
+    {
+      "name": "live_usage_history",
+      "value": "Daily usage"
+    },
+    {
+      "name": "live_last_days",
+      "value": "Latest %d records"
+    },
+    {
+      "name": "live_open_error",
+      "value": "Could not open the link. Try again later."
+    },
+    {
+      "name": "utility_evaluation",
+      "value": "Course reviews"
+    },
+    {
+      "name": "utility_access",
+      "value": "Campus access"
+    },
+    {
+      "name": "utility_life_code",
+      "value": "Fudan life code"
+    },
+    {
+      "name": "utility_sports",
+      "value": "Venue Reservation"
+    },
+    {
+      "name": "utility_code_entry",
+      "value": "View life code"
+    },
+    {
+      "name": "utility_code_preview_hint",
+      "value": "Fetch the current code on opening"
+    },
+    {
+      "name": "utility_not_provided",
+      "value": "Not provided by the university"
+    },
+    {
+      "name": "utility_no_access",
+      "value": "No campus-access records"
+    },
+    {
+      "name": "utility_sports_summary",
+      "value": "Morning %s · Required %s · Optional %s"
+    },
+    {
+      "name": "utility_login_value",
+      "value": "Sign in to check"
+    },
+    {
+      "name": "utility_forum_login_hint",
+      "value": "Use your forum account to view reviews"
+    },
+    {
+      "name": "utility_campus_login_hint",
+      "value": "Verify your Fudan identity in details"
+    },
+    {
+      "name": "utility_access_permission",
+      "value": "Access permission"
+    },
+    {
+      "name": "utility_card_status",
+      "value": "Account status"
+    },
+    {
+      "name": "utility_access_expiry",
+      "value": "Valid until"
+    },
+    {
+      "name": "utility_access_hint",
+      "value": "Shows campus-card access rights and expiry published by the university data centre. Apply for changes in the official university system."
+    },
+    {
+      "name": "utility_sports_morning",
+      "value": "Morning"
+    },
+    {
+      "name": "utility_sports_required",
+      "value": "Required"
+    },
+    {
+      "name": "utility_sports_optional",
+      "value": "Optional"
+    },
+    {
+      "name": "utility_sports_hint",
+      "value": "Exercise stamps and results follow the PE system. Missing or unreadable counts appear as “—”, not zero."
+    },
+    {
+      "name": "utility_result",
+      "value": "Result"
+    },
+    {
+      "name": "utility_score",
+      "value": "Score"
+    },
+    {
+      "name": "utility_code_fetched",
+      "value": "Updated at %s"
+    },
+    {
+      "name": "utility_code_hint",
+      "value": "The life code is displayed only on this page and is not saved. Pull to refresh or reload for a new code. Screen brightness is restored when leaving."
+    },
+    {
+      "name": "utility_open_official",
+      "value": "Open official website"
+    },
+    {
+      "name": "utility_browser_failed",
+      "value": "Could not open the browser. Please retry."
+    },
+    {
+      "name": "utility_rating_overall",
+      "value": "Overall rating"
+    },
+    {
+      "name": "utility_rating_content",
+      "value": "Teaching style"
+    },
+    {
+      "name": "utility_rating_workload",
+      "value": "Workload"
+    },
+    {
+      "name": "utility_rating_assessment",
+      "value": "Assessment"
+    },
+    {
+      "name": "utility_review_deleted",
+      "value": "This review was deleted"
+    },
+    {
+      "name": "utility_view_course",
+      "value": "View course"
+    },
+    {
+      "name": "utility_edit_review",
+      "value": "Edit"
+    },
+    {
+      "name": "utility_delete_review",
+      "value": "Delete review"
+    },
+    {
+      "name": "utility_delete_review_hint",
+      "value": "This cannot be undone. Delete this review?"
+    },
+    {
+      "name": "utility_credits",
+      "value": "Credits %s"
+    },
+    {
+      "name": "utility_review_count",
+      "value": "%d reviews"
+    },
+    {
+      "name": "utility_course_count",
+      "value": "%d course offerings"
+    },
+    {
+      "name": "utility_search_hint",
+      "value": "Course name, code or teacher"
+    },
+    {
+      "name": "utility_search",
+      "value": "Search"
+    },
+    {
+      "name": "utility_no_courses",
+      "value": "No matching courses. Try a different keyword."
+    },
+    {
+      "name": "utility_load_more",
+      "value": "Load more"
+    },
+    {
+      "name": "utility_evaluation_hint",
+      "value": "Course reviews use the forum account, separate from your campus account. Search courses or teachers, then filter reviews by teacher and term."
+    },
+    {
+      "name": "utility_teacher",
+      "value": "Teacher"
+    },
+    {
+      "name": "utility_term",
+      "value": "Term"
+    },
+    {
+      "name": "utility_all",
+      "value": "All"
+    },
+    {
+      "name": "utility_term_unknown",
+      "value": "Unknown term"
+    },
+    {
+      "name": "utility_term_autumn",
+      "value": "Autumn"
+    },
+    {
+      "name": "utility_term_winter",
+      "value": "Winter break"
+    },
+    {
+      "name": "utility_term_spring",
+      "value": "Spring"
+    },
+    {
+      "name": "utility_term_summer",
+      "value": "Summer break"
+    },
+    {
+      "name": "utility_write_review",
+      "value": "Write a review"
+    },
+    {
+      "name": "utility_no_reviews",
+      "value": "No reviews for these filters"
+    },
+    {
+      "name": "utility_evaluation_editor_hint",
+      "value": "Select the course you attended and complete all four ratings. Style and workload retain the original scale direction."
+    },
+    {
+      "name": "utility_course_offering",
+      "value": "Teacher and term"
+    },
+    {
+      "name": "utility_select_course",
+      "value": "Select an offering"
+    },
+    {
+      "name": "utility_review_title",
+      "value": "Review title"
+    },
+    {
+      "name": "utility_review_title_hint",
+      "value": "Summarise your experience"
+    },
+    {
+      "name": "utility_review_body",
+      "value": "Review content"
+    },
+    {
+      "name": "utility_review_body_hint",
+      "value": "Content, classroom experience and advice…"
+    },
+    {
+      "name": "utility_sending",
+      "value": "Submitting"
+    },
+    {
+      "name": "utility_submit",
+      "value": "Submit review"
+    },
+    {
+      "name": "utility_open_terms",
+      "value": "Read official terms"
+    },
+    {
+      "name": "utility_login_forum",
+      "value": "Sign in to forum"
+    },
+    {
+      "name": "utility_course_details",
+      "value": "Course reviews"
+    },
+    {
+      "name": "utility_sports_migrated_value",
+      "value": "View PE exercise guide"
+    },
+    {
+      "name": "utility_sports_migrated_hint",
+      "value": "The university moved exercise records and statistics to the Fudan Smart PE mini program. Follow the official student guide. This page supports legacy records only with an existing verified web session."
+    },
+    {
+      "name": "utility_sports_guide",
+      "value": "Student user guide"
+    },
+    {
+      "name": "utility_rating_overall_words",
+      "value": "Very bad;Bad;Medium;Favorable;Very favorable"
+    },
+    {
+      "name": "utility_rating_content_words",
+      "value": "Hardcore;Hard;Medium;Easy;Super easy"
+    },
+    {
+      "name": "utility_rating_workload_words",
+      "value": "Enormous;Large;Medium;Light;Super light"
+    },
+    {
+      "name": "utility_rating_assessment_words",
+      "value": "Very strict;Strict;Medium;Loose;Very loose"
+    },
+    {
+      "name": "utility_rating_unset",
+      "value": "Choose a rating"
+    },
+    {
+      "name": "utility_reviewer",
+      "value": "User %d"
+    },
+    {
+      "name": "utility_invalid_service",
+      "value": "This campus service is unavailable. Please choose again."
+    },
+    {
+      "name": "utility_account_changed",
+      "value": "Account or language changed. Please reload."
+    },
+    {
+      "name": "utility_invalid_response",
+      "value": "The service page or response format changed. Retry or open the official website."
+    },
+    {
+      "name": "utility_invalid_review",
+      "value": "Complete the course, title, content and all four ratings. The course cannot change when editing."
+    },
+    {
+      "name": "utility_review_owned_only",
+      "value": "You can edit or delete only your own undeleted reviews."
+    },
+    {
+      "name": "utility_invalid_identifier",
+      "value": "Invalid course, review ID or search page. Please reload."
+    },
+    {
+      "name": "utility_code_terms_required",
+      "value": "Read and agree to the life-code terms on the official website first."
+    },
+    {
+      "name": "utility_code_too_long",
+      "value": "The life code exceeds the native QR limit. Use the official website."
+    },
+    {
+      "name": "campus_verify_continue",
+      "value": "Verify identity"
+    },
+    {
+      "name": "campus_unit_cny",
+      "value": "CNY"
+    },
+    {
+      "name": "campus_unit_people",
+      "value": "people"
+    },
+    {
+      "name": "campus_unit_kwh",
+      "value": "kWh"
+    },
+    {
+      "name": "campus_unit_rooms",
+      "value": "rooms"
+    },
+    {
+      "name": "campus_hint_announcement",
+      "value": "Latest academic notices"
+    },
+    {
+      "name": "campus_hint_bus",
+      "value": "Next bus · Departure"
+    },
+    {
+      "name": "campus_hint_empty_classroom",
+      "value": "Browse classroom schedules and free periods by building and date"
+    },
+    {
+      "name": "campus_hint_academic",
+      "value": "Exam schedule and grade summary"
+    },
+    {
+      "name": "campus_hint_timetable",
+      "value": "Today's classes"
+    },
+    {
+      "name": "campus_hint_card",
+      "value": "Available balance"
+    },
+    {
+      "name": "campus_hint_evaluation",
+      "value": "Course reviews"
+    },
+    {
+      "name": "campus_hint_campus_access",
+      "value": "Access and validity"
+    },
+    {
+      "name": "campus_hint_sports",
+      "value": "Choose a venue, date and available session"
+    },
+    {
+      "name": "campus_hint_life_code",
+      "value": "Live QR code · Tap to show"
+    },
+    {
+      "name": "campus_hint_developer_notice",
+      "value": "Latest developer news"
+    },
+    {
+      "name": "campus_hint_dining",
+      "value": "Less busy dining counter"
+    },
+    {
+      "name": "campus_hint_library",
+      "value": "Visitors currently inside"
+    },
+    {
+      "name": "campus_hint_electricity",
+      "value": "Remaining dorm electricity"
+    },
+    {
+      "name": "forum_webvpn_verification_hint",
+      "value": "The forum cannot be reached directly. Continue campus WebVPN verification, then use your separate forum email and password."
+    },
+    {
+      "name": "forum_login_timeout_hint",
+      "value": "Forum login timed out (2300028). Server receipt is uncertain. Tap Log in again shortly; your password will not be resubmitted automatically."
+    },
+    {
+      "name": "live_load_usage_history",
+      "value": "Load usage history"
+    },
+    {
+      "name": "review_net_against",
+      "value": "Net against"
+    },
+    {
+      "name": "review_net_support",
+      "value": "Net support"
+    },
+    {
+      "name": "review_net_score",
+      "value": "Net score"
+    },
+    {
+      "name": "review_average_rating",
+      "value": "Average rating"
+    },
+    {
+      "name": "settings_high_contrast",
+      "value": "Accessibility: high contrast colors"
+    },
+    {
+      "name": "settings_high_contrast_hint",
+      "value": "Classroom results and tree-hole tags"
+    },
+    {
+      "name": "settings_haptics",
+      "value": "Haptic feedback"
+    },
+    {
+      "name": "settings_haptics_hint",
+      "value": "Gentle feedback for switching, voting and dragging. Intensity follows system settings."
+    },
+    {
+      "name": "settings_proxy",
+      "value": "Proxy settings"
+    },
+    {
+      "name": "settings_proxy_none",
+      "value": "Do not use a proxy"
+    },
+    {
+      "name": "settings_proxy_hint",
+      "value": "Save HTTP proxies and tap to switch. Removing the active proxy disables it."
+    },
+    {
+      "name": "settings_proxy_scope",
+      "value": "Applies to app requests, image downloads and in-app authentication pages, starting with the next request. Automatic WebVPN is a separate setting."
+    },
+    {
+      "name": "settings_proxy_input",
+      "value": "For example: 127.0.0.1:1234"
+    },
+    {
+      "name": "settings_proxy_add",
+      "value": "Add a proxy"
+    },
+    {
+      "name": "settings_proxy_save",
+      "value": "Save address"
+    },
+    {
+      "name": "settings_proxy_remove",
+      "value": "Remove proxy"
+    },
+    {
+      "name": "settings_proxy_invalid",
+      "value": "Enter a valid HTTP proxy host and port (1–65535), such as 127.0.0.1:1234."
+    },
+    {
+      "name": "settings_cancel",
+      "value": "Cancel"
+    },
+    {
+      "name": "settings_save_failed",
+      "value": "Could not save the setting. Please retry."
+    },
+    {
+      "name": "settings_open_failed",
+      "value": "Could not open this link. Check that a browser is installed."
+    },
+    {
+      "name": "settings_intro",
+      "value": "Introduction"
+    },
+    {
+      "name": "settings_description",
+      "value": "A small Fudan campus app lovingly built by undergraduate students to make campus life easier."
+    },
+    {
+      "name": "settings_harmony_intro",
+      "value": "This is the internal-test HarmonyOS adaptation of DanXi. Thanks to the original project and all contributors."
+    },
+    {
+      "name": "settings_legal",
+      "value": "Legal"
+    },
+    {
+      "name": "settings_legal_text",
+      "value": "By logging in, you confirm that you have read and agree to the privacy policy and terms. DanXi is licensed under GNU GPL v3. Third-party licenses are available offline below."
+    },
+    {
+      "name": "settings_privacy",
+      "value": "Privacy policy and terms"
+    },
+    {
+      "name": "settings_licenses",
+      "value": "Open-source licenses"
+    },
+    {
+      "name": "settings_license_hint",
+      "value": "Open-source projects used in this app. Tap to read each full license offline."
+    },
+    {
+      "name": "settings_thanks",
+      "value": "Acknowledgements"
+    },
+    {
+      "name": "settings_thanks_text",
+      "value": "We would like to thank [IvanFei](https://github.com/ivanfei-1) for designing the icon for this app, and [MSapphire](https://www.xiaohongshu.com/user/profile/6575475f000000001902d794), [Lin2510](), and [zzz111]() for contributing emojis and other artistic designs to the app."
+    },
+    {
+      "name": "settings_developers",
+      "value": "Original project developers"
+    },
+    {
+      "name": "settings_contact",
+      "value": "Contact us"
+    },
+    {
+      "name": "settings_contact_hint",
+      "value": "Include the app version, steps to reproduce and Read diagnostics when reporting issues. Do not include passwords or authentication tickets."
+    },
+    {
+      "name": "settings_email",
+      "value": "Compose feedback email"
+    },
+    {
+      "name": "settings_copy_email",
+      "value": "Copy email address"
+    },
+    {
+      "name": "settings_email_copied",
+      "value": "Email address copied"
+    },
+    {
+      "name": "settings_email_unavailable",
+      "value": "Could not open an email app. You can copy the address instead."
+    },
+    {
+      "name": "settings_project",
+      "value": "Project website"
+    },
+    {
+      "name": "settings_source",
+      "value": "Original source code and contributions"
+    },
+    {
+      "name": "settings_latest_reply",
+      "value": "%s replied %s:"
+    },
+    {
+      "name": "settings_deleted_reply",
+      "value": "This reply was deleted"
+    },
+    {
+      "name": "settings_image_summary",
+      "value": "[Image]"
+    },
+    {
+      "name": "settings_sticker_summary",
+      "value": "[Sticker]"
+    },
+    {
+      "name": "settings_quote_summary",
+      "value": "Quote"
+    },
+    {
+      "name": "summary_queued",
+      "value": "Queued for generation"
+    },
+    {
+      "name": "summary_processing",
+      "value": "Organizing the discussion"
+    },
+    {
+      "name": "summary_loading",
+      "value": "Loading AI summary"
+    },
+    {
+      "name": "summary_empty",
+      "value": "No summary available"
+    },
+    {
+      "name": "summary_timeout",
+      "value": "Generation is taking longer. Try again later."
+    },
+    {
+      "name": "summary_error",
+      "value": "Unable to generate a summary. Try again later."
+    },
+    {
+      "name": "summary_count",
+      "value": "Analyzing a discussion with %s floors"
+    },
+    {
+      "name": "summary_wait_note",
+      "value": "Results appear automatically. Closing this panel stops checking."
+    },
+    {
+      "name": "summary_disclaimer",
+      "value": "AI-assisted summary, for reference only · Campus research test; not a public service"
+    },
+    {
+      "name": "summary_keywords",
+      "value": "Keywords"
+    },
+    {
+      "name": "summary_core",
+      "value": "Core summary"
+    },
+    {
+      "name": "summary_branches",
+      "value": "Discussion branches"
+    },
+    {
+      "name": "summary_interactions",
+      "value": "Key interactions"
+    },
+    {
+      "name": "summary_references",
+      "value": "Related floors · Tap to read"
+    },
+    {
+      "name": "summary_support",
+      "value": "supported"
+    },
+    {
+      "name": "summary_rebuttal",
+      "value": "rebutted"
+    },
+    {
+      "name": "summary_supplement",
+      "value": "supplemented"
+    },
+    {
+      "name": "summary_question",
+      "value": "questioned"
+    },
+    {
+      "name": "summary_reply",
+      "value": "replied to"
+    },
+    {
+      "name": "summary_generated",
+      "value": "Generated at"
+    },
+    {
+      "name": "summary_feedback_sent",
+      "value": "Thanks, feedback submitted"
+    },
+    {
+      "name": "summary_feedback_sending",
+      "value": "Sending feedback…"
+    },
+    {
+      "name": "summary_copy",
+      "value": "Copy summary"
+    },
+    {
+      "name": "summary_unsupported",
+      "value": "AI summary is unavailable for this thread"
+    },
+    {
+      "name": "summary_permission",
+      "value": "You do not have permission to use AI summary"
+    },
+    {
+      "name": "summary_feedback_note",
+      "value": "Help improve the summary. Describe missing or inaccurate information (optional)."
+    },
+    {
+      "name": "settings_original_version",
+      "value": "Original project version 1.5.3 build 350 #7fe64c6"
+    },
+    {
+      "name": "settings_original_developer_motto",
+      "value": "Passionate developers\nfrom A.I. & C.S. & Economics & Physics\nat Fudan University"
+    },
+    {
+      "name": "campus_classroom_period_note",
+      "value": "Available this period"
+    },
+    {
+      "name": "campus_academic_summary",
+      "value": "This term: {exams} exams · {grades} graded courses"
+    },
+    {
+      "name": "academic_gpa_credits",
+      "value": "credits"
+    },
+    {
+      "name": "composer_tags_note",
+      "value": "Select or create multiple tags"
+    },
+    {
+      "name": "composer_search_custom_tag",
+      "value": "Search or enter a new tag"
+    },
+    {
+      "name": "composer_add_tag",
+      "value": "Add"
+    },
+    {
+      "name": "composer_draft_note",
+      "value": "Draft kept during this app session"
+    },
+    {
+      "name": "composer_bold",
+      "value": "Bold"
+    },
+    {
+      "name": "composer_italic",
+      "value": "Italic"
+    },
+    {
+      "name": "composer_formula",
+      "value": "Math formula"
+    },
+    {
+      "name": "composer_stickers",
+      "value": "Stickers"
+    },
+    {
+      "name": "composer_images_note",
+      "value": "Attached images · remove to replace"
+    },
+    {
+      "name": "composer_image_number",
+      "value": "Image {index}"
+    },
+    {
+      "name": "composer_remove_image",
+      "value": "Remove image"
+    },
+    {
+      "name": "composer_fullscreen",
+      "value": "Focus editor"
+    },
+    {
+      "name": "composer_help",
+      "value": "Formatting help"
+    },
+    {
+      "name": "composer_help_note",
+      "value": "Supports Markdown and LaTeX.\n\n**bold**, *italic*, # heading, [text](https://example.com)\n\nInline math: $x^2$; display math: $$x^2$$\n\nSelect text before applying formatting. Use the eye to preview. Uploaded images are inserted into the body; multiple stickers can be added."
+    },
+    {
+      "name": "composer_community",
+      "value": "Community rules"
+    },
+    {
+      "name": "composer_warning_title",
+      "value": "Before you post"
+    },
+    {
+      "name": "composer_warning",
+      "value": "Your text contains “{word}”. Please check that it follows the community rules before posting."
+    },
+    {
+      "name": "composer_send_anyway",
+      "value": "Continue posting"
+    },
+    {
+      "name": "composer_recommend",
+      "value": "Suggested tags"
+    },
+    {
+      "name": "composer_recommend_note",
+      "value": "Matches existing tag names locally; your draft is not uploaded. Choose any suggestions or ignore them."
+    },
+    {
+      "name": "campus_classroom_outside_period",
+      "value": "Outside teaching hours"
+    },
+    {
+      "name": "academic_local_scope",
+      "value": "Included {included} · Excluded {excluded} · Missing data {incomplete}"
+    },
+    {
+      "name": "review_no_ratings",
+      "value": "No evaluations yet"
+    },
+    {
+      "name": "review_rating_unavailable",
+      "value": "View course ratings"
+    },
+    {
+      "name": "review_count_unavailable",
+      "value": "Review count unavailable"
+    },
+    {
+      "name": "review_summary_loading",
+      "value": "Loading reviews"
+    },
+    {
+      "name": "review_summary_failed",
+      "value": "Reviews unavailable"
+    },
+    {
+      "name": "forum_all_tags",
+      "value": "All tags"
+    },
+    {
+      "name": "forum_before_date",
+      "value": "Not later than date"
+    },
+    {
+      "name": "forum_clear_date",
+      "value": "Clear date filter"
+    },
+    {
+      "name": "forum_before_date_value",
+      "value": "Not later than %s"
+    },
+    {
+      "name": "forum_pinned",
+      "value": "Pinned"
+    },
+    {
+      "name": "forum_tags_search",
+      "value": "Search tags"
+    },
+    {
+      "name": "forum_tag_popularity",
+      "value": "Popularity %d"
+    },
+    {
+      "name": "campus_academic_exam_count",
+      "value": "{count} exams"
+    },
+    {
+      "name": "campus_academic_grade_count",
+      "value": "{count} graded courses"
+    },
+    {
+      "name": "live_history_diagnostics",
+      "value": "Read diagnostics"
+    },
+    {
+      "name": "live_history_diagnostics_hint",
+      "value": "This snapshot contains the error and recent request metadata, with private values removed. It excludes passwords, credentials and response bodies. Copy it to help report a problem."
+    },
+    {
+      "name": "live_history_diagnostics_copy",
+      "value": "Copy diagnostics"
+    },
+    {
+      "name": "diagnostics_read",
+      "value": "Read diagnostics"
+    },
+    {
+      "name": "diagnostics_error",
+      "value": "Error details"
+    },
+    {
+      "name": "diagnostics_logs",
+      "value": "Related logs"
+    },
+    {
+      "name": "diagnostics_hint",
+      "value": "This snapshot contains the error and recent request metadata, with private values removed. It excludes passwords, credentials and response bodies. Copy it to help report a problem."
+    },
+    {
+      "name": "diagnostics_no_logs",
+      "value": "No request logs are available."
+    },
+    {
+      "name": "diagnostics_expired",
+      "value": "This diagnostic has expired. Return to the previous page to read it again."
+    },
+    {
+      "name": "diagnostics_open_failed",
+      "value": "Could not open diagnostics. Please try again."
+    },
+    {
+      "name": "diagnostics_copy_failed",
+      "value": "Copy failed"
+    },
+    {
+      "name": "diagnostics_network_brief",
+      "value": "Connection failed. Check your network and reload."
+    },
+    {
+      "name": "diagnostics_generic_brief",
+      "value": "Could not complete this action. Please try again later."
+    },
+    {
+      "name": "settings_original_project",
+      "value": "Original project · DanXi-Dev / DanXi"
+    },
+    {
+      "name": "settings_all_contributors",
+      "value": "All contributors"
+    },
+    {
+      "name": "campus_bus_closed",
+      "value": "No more buses"
+    },
+    {
+      "name": "campus_bus_following",
+      "value": "Next: %s"
+    },
+    {
+      "name": "campus_classroom_current",
+      "value": "Free this period"
+    },
+    {
+      "name": "campus_classroom_scope",
+      "value": "Status known for %d rooms"
+    },
+    {
+      "name": "campus_classroom_none",
+      "value": "No rooms free this period"
+    },
+    {
+      "name": "campus_room_seats",
+      "value": "%s seats"
+    },
+    {
+      "name": "campus_library_more",
+      "value": "%d more libraries · tap to view"
+    },
+    {
+      "name": "campus_library_hours",
+      "value": "Open %s"
+    },
+    {
+      "name": "campus_bus_last",
+      "value": "No later departures"
+    },
+    {
+      "name": "campus_bus_timetable",
+      "value": "Tap for timetable"
+    },
+    {
+      "name": "calendar_manual_sync_hint",
+      "value": "Choose another semester manually; syncing updates the current semester only when tapped."
+    },
+    {
+      "name": "timetable_semester_not_found",
+      "value": "No academic semester matches %s. Check the first teaching Monday."
+    },
+    {
+      "name": "timetable_graduate_history_unavailable",
+      "value": "The graduate endpoint provides only the current timetable. No saved courses exist for this semester on this device. Add local courses or return to the current semester."
+    },
+    {
+      "name": "reservation_all_campuses",
+      "value": "All campuses"
+    },
+    {
+      "name": "reservation_all_categories",
+      "value": "All activities"
+    },
+    {
+      "name": "reservation_date",
+      "value": "Date"
+    },
+    {
+      "name": "reservation_available_only",
+      "value": "Available sessions only"
+    },
+    {
+      "name": "reservation_capacity",
+      "value": "Reserved %s / %s"
+    },
+    {
+      "name": "reservation_book",
+      "value": "Book"
+    },
+    {
+      "name": "reservation_full",
+      "value": "Full"
+    },
+    {
+      "name": "reservation_unavailable",
+      "value": "Unavailable"
+    },
+    {
+      "name": "reservation_no_places",
+      "value": "No venues match. Try another campus or activity."
+    },
+    {
+      "name": "reservation_no_slots",
+      "value": "No matching sessions. Change the date or show unavailable sessions."
+    },
+    {
+      "name": "reservation_booking_hint",
+      "value": "Venues and sessions follow university availability. Confirm and submit in the university booking form."
+    },
+    {
+      "name": "reservation_booking_form",
+      "value": "University booking form"
+    },
+    {
+      "name": "reservation_verification_hint",
+      "value": "Venue reservation requires Fudan verification. Tap Continue verification."
+    },
+    {
+      "name": "reservation_data_invalid",
+      "value": "Unable to parse venue data. Reload to try again."
+    },
+    {
+      "name": "reservation_choose_place",
+      "value": "Choose a venue"
+    },
+    {
+      "name": "reservation_place_count",
+      "value": "%s venues"
+    },
+    {
+      "name": "reservation_preview_hint",
+      "value": "View venues and available sessions"
+    },
+    {
+      "name": "feature_library_books",
+      "value": "Library books"
+    },
+    {
+      "name": "campus_hint_library_books",
+      "value": "Search books, check holdings and pin favourite titles"
+    },
+    {
+      "name": "live_dining_people",
+      "value": "people"
+    },
+    {
+      "name": "library_remaining",
+      "value": "%d more visitors can enter"
+    },
+    {
+      "name": "library_capacity",
+      "value": "Capacity %d"
+    },
+    {
+      "name": "classroom_schedule_search",
+      "value": "Room, course or instructor"
+    },
+    {
+      "name": "classroom_schedule_hint",
+      "value": "Swipe sideways to browse rooms; read periods from top to bottom. Tap a course for details. Dates follow the university schedule."
+    },
+    {
+      "name": "classroom_query_date",
+      "value": "Date"
+    },
+    {
+      "name": "classroom_period",
+      "value": "Period"
+    },
+    {
+      "name": "classroom_room",
+      "value": "Classroom"
+    },
+    {
+      "name": "classroom_course_id",
+      "value": "Course code"
+    },
+    {
+      "name": "classroom_teacher",
+      "value": "Instructor"
+    },
+    {
+      "name": "classroom_category",
+      "value": "Category"
+    },
+    {
+      "name": "classroom_enrollment",
+      "value": "Enrolment"
+    },
+    {
+      "name": "classroom_building_h2",
+      "value": "Teaching Building 2"
+    },
+    {
+      "name": "classroom_building_h3",
+      "value": "Teaching Building 3"
+    },
+    {
+      "name": "classroom_building_h4",
+      "value": "Teaching Building 4"
+    },
+    {
+      "name": "classroom_building_h5",
+      "value": "Teaching Building 5"
+    },
+    {
+      "name": "classroom_building_h6",
+      "value": "Teaching Building 6"
+    },
+    {
+      "name": "classroom_building_hgx",
+      "value": "Guanghua West Annex"
+    },
+    {
+      "name": "classroom_building_hgd",
+      "value": "Guanghua East Annex"
+    },
+    {
+      "name": "classroom_building_hq",
+      "value": "School of Journalism"
+    },
+    {
+      "name": "classroom_building_j",
+      "value": "Jiangwan campus"
+    },
+    {
+      "name": "classroom_building_z",
+      "value": "Zhangjiang campus"
+    },
+    {
+      "name": "classroom_building_f",
+      "value": "Fenglin campus"
+    },
+    {
+      "name": "books_search",
+      "value": "Search by book title"
+    },
+    {
+      "name": "books_results_hint",
+      "value": "Ordered by catalogue relevance. More results load as you scroll. Tap a title for holdings."
+    },
+    {
+      "name": "books_pinned_hint",
+      "value": "No login is needed. Pinned books are saved on this device."
+    },
+    {
+      "name": "books_empty",
+      "value": "Enter a title to find books and holdings"
+    },
+    {
+      "name": "books_view_holdings",
+      "value": "View holdings and availability"
+    },
+    {
+      "name": "books_authors",
+      "value": "Authors"
+    },
+    {
+      "name": "books_publisher",
+      "value": "Publication"
+    },
+    {
+      "name": "books_holdings",
+      "value": "Holdings and availability"
+    },
+    {
+      "name": "books_holdings_hint",
+      "value": "Availability is reported by the library. Use the location and call number to find a copy."
+    },
+    {
+      "name": "books_call_number",
+      "value": "Call number"
+    },
+    {
+      "name": "books_no_holdings",
+      "value": "No physical holdings found"
+    },
+    {
+      "name": "books_load_more",
+      "value": "Load more"
+    },
+    {
+      "name": "books_pin",
+      "value": "Pin book"
+    },
+    {
+      "name": "books_unpin",
+      "value": "Unpin book"
+    },
+    {
+      "name": "books_pin_failed",
+      "value": "Could not save pinned books"
+    },
+    {
+      "name": "books_pinned_count",
+      "value": "%d pinned books"
+    },
+    {
+      "name": "books_search_short",
+      "value": "Search and borrow"
+    },
+    {
+      "name": "books_preview_hint",
+      "value": "Holdings · availability"
+    },
+    {
+      "name": "books_public_hint",
+      "value": "No campus login required"
+    },
+    {
+      "name": "classroom_capacity",
+      "value": "%d seats"
+    },
+    {
+      "name": "timetable_calendar_name",
+      "value": "DanXi Courses · %s"
+    },
+    {
+      "name": "timetable_calendar_hint",
+      "value": "Choose courses to write into “DanXi Courses · %s” in the system calendar. Re-exporting updates existing events without duplicates."
+    },
+    {
+      "name": "timetable_calendar_done",
+      "value": "Synced %s class events: %s added or updated, %s unchanged. View them in the system calendar."
+    },
+    {
+      "name": "timetable_calendar_permission_reason",
+      "value": "Write selected courses to the system calendar and recognise previously exported DanXi events to prevent duplicates."
+    },
+    {
+      "name": "timetable_calendar_permission_denied",
+      "value": "Calendar permission is required. Allow calendar access for DanXi in system settings."
+    },
+    {
+      "name": "timetable_export_empty",
+      "value": "Select at least one course."
+    },
+    {
+      "name": "timetable_select_all",
+      "value": "Select all"
+    },
+    {
+      "name": "timetable_unselect_all",
+      "value": "Clear all"
+    },
+    {
+      "name": "timetable_history_diary_hint",
+      "value": "Past classes are read from the graduate academic diary, which may omit some courses. You can add local courses."
+    },
+    {
+      "name": "reservation_browser_hint",
+      "value": "The university reservation site requires a browser check. Complete the instructions below to resume reading, or book directly on the official site."
+    },
+    {
+      "name": "reservation_browser_continue",
+      "value": "Continue reading"
+    },
+    {
+      "name": "reservation_browser_title",
+      "value": "University reservation site"
+    },
+    {
+      "name": "reservation_browser_incomplete",
+      "value": "The university page has not returned venue information. Complete its browser instructions and retry."
+    },
+    {
+      "name": "reservation_places_title",
+      "value": "Venues"
+    },
+    {
+      "name": "reservation_time",
+      "value": "Time slot"
+    },
+    {
+      "name": "reservation_remaining",
+      "value": "%s / %s available"
+    },
+    {
+      "name": "booking_my_reservations",
+      "value": "My reservations"
+    },
+    {
+      "name": "booking_type",
+      "value": "Venue type"
+    },
+    {
+      "name": "booking_environment",
+      "value": "Indoor / outdoor"
+    },
+    {
+      "name": "booking_available",
+      "value": "%d courts available"
+    },
+    {
+      "name": "booking_reserve",
+      "value": "Reserve"
+    },
+    {
+      "name": "booking_full",
+      "value": "Full"
+    },
+    {
+      "name": "booking_rules",
+      "value": "Reservation rules"
+    },
+    {
+      "name": "booking_required",
+      "value": "Please complete all required fields."
+    },
+    {
+      "name": "booking_success",
+      "value": "Reserved. View the assigned court in My reservations."
+    },
+    {
+      "name": "booking_cancel",
+      "value": "Cancel this reservation?"
+    },
+    {
+      "name": "booking_cancel_confirm",
+      "value": "Cancel reservation"
+    },
+    {
+      "name": "booking_action_failed",
+      "value": "Reservation action failed."
+    },
+    {
+      "name": "booking_unavailable",
+      "value": "This venue is currently unavailable."
+    },
+    {
+      "name": "booking_no_times",
+      "value": "No time slots are open on this date."
+    },
+    {
+      "name": "booking_number",
+      "value": "Number"
+    },
+    {
+      "name": "booking_captcha_web",
+      "value": "This venue requires verification. Complete the reservation on the official page."
+    },
+    {
+      "name": "booking_web",
+      "value": "Open official booking"
+    },
+    {
+      "name": "booking_submit",
+      "value": "Confirm reservation"
+    },
+    {
+      "name": "booking_no_venues",
+      "value": "No matching sports venues."
+    },
+    {
+      "name": "booking_no_appointments",
+      "value": "No reservations."
+    },
+    {
+      "name": "library_my_loans",
+      "value": "My loans"
+    },
+    {
+      "name": "library_my_requests",
+      "value": "My requests"
+    },
+    {
+      "name": "library_verify_hint",
+      "value": "Complete verification on the official library page to continue your operation."
+    },
+    {
+      "name": "library_cancel_request",
+      "value": "Cancel request"
+    },
+    {
+      "name": "library_renew_confirm",
+      "value": "Renew this loan?"
+    },
+    {
+      "name": "library_renew",
+      "value": "Renew"
+    },
+    {
+      "name": "library_action_failed",
+      "value": "Library action failed."
+    },
+    {
+      "name": "library_due",
+      "value": "Due %s"
+    },
+    {
+      "name": "library_borrowed",
+      "value": "Borrowed %s"
+    },
+    {
+      "name": "library_returned",
+      "value": "Returned %s"
+    },
+    {
+      "name": "library_renew_count",
+      "value": "Renewed %d times"
+    },
+    {
+      "name": "library_expected",
+      "value": "Expected pickup %s"
+    },
+    {
+      "name": "library_queue",
+      "value": "Queue position %d"
+    },
+    {
+      "name": "library_current",
+      "value": "Current"
+    },
+    {
+      "name": "library_history",
+      "value": "History"
+    },
+    {
+      "name": "library_account_empty",
+      "value": "No records."
+    },
+    {
+      "name": "library_request_book",
+      "value": "Request this copy"
+    },
+    {
+      "name": "library_pickup",
+      "value": "Pickup location"
+    },
+    {
+      "name": "library_pickup_date",
+      "value": "Expected pickup date"
+    },
+    {
+      "name": "library_allow_replace",
+      "value": "Allow another copy"
+    },
+    {
+      "name": "library_submit_request",
+      "value": "Submit request"
+    },
+    {
+      "name": "library_request_success",
+      "value": "Book request submitted. View it in My requests."
+    },
+    {
+      "name": "library_no_pickup",
+      "value": "No pickup locations available."
+    },
+    {
+      "name": "classroom_day_empty",
+      "value": "No courses on this date.\nThe full period timetable is shown on the left."
+    },
+    {
+      "name": "classroom_search_empty",
+      "value": "No matching classrooms or courses."
+    },
+    {
+      "name": "booking_search",
+      "value": "Search venues"
+    },
+    {
+      "name": "timetable_period_times",
+      "value": "Period\nStart–End"
+    },
+    {
+      "name": "timetable_month_heading",
+      "value": "{year} / {month}"
+    },
+    {
+      "name": "timetable_previous_week",
+      "value": "Previous week"
+    },
+    {
+      "name": "timetable_next_week",
+      "value": "Next week"
+    },
+    {
+      "name": "detail_cancel_reply",
+      "value": "Cancel reply to this floor"
+    },
+    {
+      "name": "forum_remove_hidden_tag",
+      "value": "Unhide tag %s"
+    },
+    {
+      "name": "library_history_missing",
+      "value": "Loan history is temporarily unavailable. Retry or check the library website."
+    },
+    {
+      "name": "library_official_query",
+      "value": "Library website"
+    },
+    {
+      "name": "campus_dining_no_activity",
+      "value": "No recent dining activity reported"
+    },
+    {
+      "name": "campus_dining_peak_ratio",
+      "value": "%d%% of peak reference"
+    },
+    {
+      "name": "campus_dining_reference",
+      "value": "Compared with each canteen’s peak"
+    },
+    {
+      "name": "dining_peak_missing",
+      "value": "Peak reference unavailable"
+    },
+    {
+      "name": "campus_preview_unavailable",
+      "value": "No summary yet"
+    },
+    {
+      "name": "campus_academic_counts_compact",
+      "value": "Exams {exams} · Grades {grades}"
+    },
+    {
+      "name": "campus_catalog_selected",
+      "value": "Added · current size"
+    },
+    {
+      "name": "campus_catalog_resize",
+      "value": "Added · tap to resize"
+    },
+    {
+      "name": "campus_catalog_available",
+      "value": "Tap to add"
+    },
+    {
+      "name": "campus_preview_classroom_compact",
+      "value": "Schedules and free rooms"
+    },
+    {
+      "name": "campus_preview_books_compact",
+      "value": "Books, loans and requests"
+    },
+    {
+      "name": "campus_preview_sports_compact",
+      "value": "Venues and booking slots"
+    },
+    {
+      "name": "settings_original_flutter",
+      "value": "Original Flutter project"
+    },
+    {
+      "name": "settings_ios_developers",
+      "value": "Original iOS developers"
+    },
+    {
+      "name": "settings_ios_contributors_order",
+      "value": "Sorted alphabetically."
+    },
+    {
+      "name": "settings_ios_project",
+      "value": "Original iOS project · DanXi-Dev / DanXi-swift"
+    },
+    {
+      "name": "settings_ios_contributors",
+      "value": "All iOS contributors"
+    },
+    {
+      "name": "settings_ios_version",
+      "value": "Original iOS source version 2.4.1 build 500 #fe3c20c"
+    },
+    {
+      "name": "settings_ios_copyright",
+      "value": "Original iOS project · Copyright © 2024-2025 DanXi-Dev"
+    },
+    {
+      "name": "settings_ios_filing",
+      "value": "Original iOS filing · 沪ICP备2021032046号-4A"
+    },
+    {
+      "name": "settings_thanks_merged",
+      "value": "Thanks to the developers, designers and open-source communities of the original Flutter and iOS projects."
+    },
+    {
+      "name": "settings_contributors_merged",
+      "value": "A single alphabetical roster, including icon and emoticon design contributions."
+    },
+    {
+      "name": "settings_credit_icon_design",
+      "value": "Flutter icon design"
+    },
+    {
+      "name": "settings_credit_art_design",
+      "value": "Flutter emoticon design"
+    },
+    {
+      "name": "settings_original_ios",
+      "value": "Original iOS project"
+    },
+    {
+      "name": "settings_original_libraries",
+      "value": "Original project acknowledgements"
+    },
+    {
+      "name": "settings_original_libraries_hint",
+      "value": "Open-source software credited by the original Flutter and iOS projects, sorted by name with its source platform and original license information."
+    }
+  ]
+}

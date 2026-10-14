@@ -1,0 +1,33 @@
+name: 鸿蒙版问题反馈
+description: 反馈鸿蒙 Alpha 的可复现问题，请先脱敏。
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: "请勿上传账号、学生信息、验证码、Cookie、Token、完整设备 ID、签名文件或私人帖子内容。"
+  - type: input
+    id: version
+    attributes:
+      label: 应用版本、升级编号与构建号
+      placeholder: 0.1.33.30 Alpha / versionCode 1000124 / buildVersion 125
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: 设备型号与 HarmonyOS 版本
+      description: 请提供型号与系统版本，不提供设备 ID。
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤、实际结果与预期结果
+      description: 包括所在页面、操作顺序、是否可重复、网络及登录状态；不要填写账号。
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 脱敏诊断与截图
+      description: 可使用应用的读取诊断；上传前自行检查截图和日志中的个人信息。

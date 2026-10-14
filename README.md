@@ -1,171 +1,87 @@
-中文版 [English Version](README_EN.md)
-[官方网站](https://danxi.fduhole.com)
+<div align="center">
+  <img src="AppScope/resources/base/media/launcher.png" width="100" alt="DanXi 应用图标" />
+  <h1>DanXi · 鸿蒙版</h1>
+  <p>面向复旦大学学生的校园服务应用，使用 ArkTS / ArkUI 适配 HarmonyOS。</p>
+  <p>
+    <a href="https://github.com/GoodNima/DanXi_HarmonyOS/releases">下载 Alpha 内测包</a> ·
+    <a href="docs/INSTALLATION.md">安装与签名</a> ·
+    <a href="CONTRIBUTING.md">参与开发</a> ·
+    <a href="docs/MAINTAINING.md">维护手册</a>
+  </p>
+</div>
 
-# 旦挞
+[![阶段](https://img.shields.io/badge/阶段-Alpha-orange)](docs/RELEASE_NOTES.md)
+[![HarmonyOS](https://img.shields.io/badge/HarmonyOS-API%2026-blue)](build-profile.json5)
+[![源码许可](https://img.shields.io/badge/上游许可-GPL--3.0-blue)](LICENSE)
 
-[![Deploy to GitHub Pages](https://github.com/DanXi-Dev/DanXi/actions/workflows/deploy_to_gh-pages.yml/badge.svg)](https://github.com/DanXi-Dev/DanXi/actions/workflows/deploy_to_gh-pages.yml)
+本仓库维护 **DanXi 的原生鸿蒙移植版本**。当前版本为 **0.1.33.30 Alpha**，升级编号 `1000124`，构建号 `125`。应用仍处于内部测试阶段；功能清单表示当前源码已实现的范围，实际服务可用性取决于账号权限、校园网络及服务端状态。
 
-（原名旦夕、旦兮）
+## 功能
 
-日月光华，旦复旦兮.
+| 模块 | 当前实现 |
+| --- | --- |
+| 校园 | 可编辑的校园服务卡片，校区切换、搜索、刷新与缓存；校园卡、入校权限、食堂、空教室、图书馆、校车、宿舍电费、体育与场馆预约等入口 |
+| 学业与课表 | 教务通知、考试与成绩、GPA、历史学期课程、课表与手动课程；系统日历导出 |
+| 树洞 | 分区与排序、帖子列表、楼层及引用、发帖与回复、投票、收藏、图片浏览、富文本及 AI 总结状态展示 |
+| 课评 | 独立课程评价页，课程搜索、评分摘要、课程详情、评价读取与撰写入口 |
+| 设置 | 账号与会话管理、明暗主题、多语言、触觉与辅助功能、简洁报错及脱敏读取诊断 |
 
-可能是为 FDUer 准备的,最好的一站式服务 APP!
+使用系统日历时按需申请日历权限；网络服务需要联网和相应账号授权。服务请求、会话接续与 UI 状态由原生 ArkTS 工程维护，富文本渲染资源随应用离线打包。
 
-- 校园卡余额和消费记录
-- 食堂消费人数
-- 快速显示复活码（支持 Apple Watch 显示）
-- 空教室查询
-- 刷锻次数查询
-- 茶楼
-- 课表查阅与导出至系统日历等
-- 显示教务处通知
-- 查询期中/期末考试日程与导出至系统日历等
-- 查询期末绩点和专业排名
-- 查询校车班次
+## 下载与安装
 
-欢迎各位大佬加入开发~
+前往本仓库的 [Releases](https://github.com/GoodNima/DanXi_HarmonyOS/releases)，下载 `DanXi-HarmonyOS-…-unsigned.hap` 和 `SHA256SUMS.txt`。Alpha 版本发布为 GitHub **Pre-release**，请使用完整发布列表查找。
 
-# 安装
+推荐使用 [小白调试助手](https://github.com/likuai2010/auto-installer/releases) 或 [HoKit](https://github.com/yabi-zzh/HoKit/releases) 侧载。**当前公开资产是未签名开发 HAP**：小白可按自动签名/调试流程签名安装；HoKit 先使用自己的华为开发者账号、证书和设备授权 Profile 重签名，再安装输出的 HAP。无需先编译源码，但不能直接安装 unsigned 文件。
 
-如果您遇到了本应用中不符合预期的行为，欢迎 [新建 Issue](https://github.com/DanXi-Dev/DanXi/issues/new/choose) 或 [发起 Pull request](https://github.com/DanXi-Dev/DanXi/compare)。
+具体下载、USB/无线连接、签名、安装、升级及故障排查见 [安装文档](docs/INSTALLATION.md)。当前尚未在上述两种工具上完成本版真实手机安装验证。维护者的设备专用签名材料不公开，应用尚未在应用市场发布。
 
-## iOS(watchOS)/iPadOS
+当前工程的目标与最低兼容 SDK 均为 **26.0.0 / API 26**，模块声明的设备类型为 **phone**。设备系统必须支持该 API；不承诺低版本系统、平板、手表或其他设备适配。详细步骤、升级数据保留条件和常见签名问题见 [安装文档](docs/INSTALLATION.md)。
 
-从 [App Store](https://apps.apple.com/app/id1568629997) 下载
+## 界面示例
 
-## Android
+以下为鸿蒙模拟器界面。校园和树洞内容均为合成测试数据；关于页来自未登录模拟器。截图不代表真实账号服务验证。
 
-打开 [release 页面](https://github.com/DanXi-Dev/DanXi/releases/latest) 下载最新版 apk 安装包，安装即可。
-（依据设备差异，您可能需要在设置中允许「安装来自未知来源的应用」）
+| 校园 · 浅色 | 校园 · 深色 | 树洞 |
+| :---: | :---: | :---: |
+| <img src="docs/images/campus-light.jpeg" width="230" alt="浅色校园界面，合成数据" /> | <img src="docs/images/campus-dark.jpeg" width="230" alt="深色校园界面，合成数据" /> | <img src="docs/images/forum.jpeg" width="230" alt="树洞界面，合成数据" /> |
 
-## Windows
+| 关于 · 浅色 | 关于 · 深色 |
+| :---: | :---: |
+| <img src="docs/images/about-light.jpeg" width="230" alt="浅色模式关于页" /> | <img src="docs/images/about-dark.jpeg" width="230" alt="深色模式关于页" /> |
 
-打开 [release 页面](https://github.com/DanXi-Dev/DanXi/releases/latest) 下载最新版 zip 压缩包，解压运行即可。
+## 开发
 
-## macOS
+- 使用 **DevEco Studio 26.0.0.851** 或经验证兼容的版本，安装 HarmonyOS SDK 26。
+- 从本仓库克隆 `main`，在 DevEco Studio 打开根工程并同步依赖。根目录使用 Stage 模型；构建插件为 `@ohos/hvigor-ohos-arkui-x-plugin` `4.26.8`，当前构建忽略跨平台目标。
+- 公共 `build-profile.json5` 不包含签名材料。需要安装时，在自己的工作区通过 DevEco Studio 配置签名，避免提交本地配置。
+- 修改后通过匹配 SDK 完成原生构建，并按影响范围验证设备上的实际流程。仓库仅保留应用工程及使用维护资料；本机测试脚本、夹具和开发助手配置不提交。
 
-使用 Apple Silicon 的用户可以直接从 [App Store](https://apps.apple.com/app/id1568629997) 下载。
-
-Apple Intel 用户请打开 [release 页面](https://github.com/DanXi-Dev/DanXi/releases/latest) 下载最新版
-dmg 硬盘映像，挂载拷贝即可。
-
-## Linux
-
-### Arch Linux
-
-从 [AUR](https://aur.archlinux.org) 或 [archlinuxcn](https://github.com/archlinuxcn/repo) 安装。
-
-#### AUR
-
-```shell
-[yay/paru] -S danxi # 最新稳定版
-[yay/paru] -S danxi-git # 最新 Git 版
+```text
+AppScope/          应用标识、版本与全局资源
+entry/src/main/    正式 ArkTS 源码、页面、服务和资源
+hvigor/            构建工具配置
+docs/              安装、版本、许可与多人维护文档
+.github/           问题及 PR 模板
 ```
 
-#### archlinuxcn
+目录职责、环境配置、协作规则、模块维护及完整发布流程见 [维护手册](docs/MAINTAINING.md) 和 [贡献指南](CONTRIBUTING.md)。ArkTS/API 使用以项目 SDK 26 声明及华为官方开发文档为准。
 
-```shell
-sudo pacman -S danxi # 最新稳定版
-sudo pacman -S danxi-git # 最新 Git 版
-```
+## 验证与已知限制
 
-### NixOS
+- 本版已有构建、未登录模拟器明暗 UI 与相同测试签名覆盖升级记录；这些记录不等同于真实账号或所有手机验证，详见版本说明。
+- 2026-10-14 仓库与历史整理只调整开发材料、构建测试目标和文档；安装包及应用版本不变。Alpha tag 已按授权改指同版本的净化源码，见 [历史净化记录](https://github.com/GoodNima/DanXi_HarmonyOS/blob/main/docs/HISTORY_CLEANUP.md)。
+- 真实账号下全部校园服务、不同手机与网络条件尚未完整验证。宿舍用电记录的真实账号超时原因仍需补充验证。
+- Alpha 版本可能受上游服务变更影响。遇到问题请在 [本仓库提交 Issue](https://github.com/GoodNima/DanXi_HarmonyOS/issues/new/choose)，附上复现步骤、设备系统、展示版本、升级编号、构建号及脱敏诊断。
 
-使用 Nix flake 构建和运行：
+详见 [本版说明与验证边界](docs/RELEASE_NOTES.md)、[版本历史](docs/VERSION_HISTORY.md)。
 
-```shell
-# 直接运行（不安装）
-nix run github:DanXi-Dev/DanXi-nix
-```
+## 来源、参考与许可
 
-```shell
-# 进入开发环境
-nix develop github:DanXi-Dev/DanXi-nix
-```
+本项目源自 [DanXi-Dev/DanXi](https://github.com/DanXi-Dev/DanXi)，并在功能流程和原项目贡献记录适配时参考 [DanXi-Dev/DanXi-swift](https://github.com/DanXi-Dev/DanXi-swift)。其他平台的下载与开发情况请参阅对应原项目；本仓库首页与 Release 专注鸿蒙版本。
 
-### 其他 Linux 发行版
+鸿蒙工程采用原生 ArkTS / ArkUI，未使用 Flutter OHOS 运行时。仓库组织、移植说明与发布文档参考了 [Predidit/Kazumi](https://github.com/Predidit/Kazumi) 和其 [ErBWs/Kazumi 鸿蒙 fork](https://github.com/ErBWs/Kazumi/tree/feat-ohos)，未将它们的功能清单或安装能力作为本项目的验证结论。
 
-打开 [release 页面](https://github.com/DanXi-Dev/DanXi/releases/latest) 下载最新版 zip 压缩包，解压运行即可。
+原 Flutter 文件树保留在本仓库的 [upstream-flutter-baseline](https://github.com/GoodNima/DanXi_HarmonyOS/tree/upstream-flutter-baseline) 快照分支，Git 历史继续保留。`main` 用于鸿蒙版维护；上游改动应经评审后按功能移植，维护流程见 [贡献指南](CONTRIBUTING.md)。
 
-#### 依赖项
-
-在 Linux 上运行旦挞需要以下依赖项：
-
-- **libsecret** 和一个 Secret Service 实现（如 **gnome-keyring** 或 **KWallet**）：用于安全存储加密配置文件所用的主密钥。
-  - libsecret：[官网](https://gnome.pages.gitlab.gnome.org/libsecret/) | [安装源](https://repology.org/project/libsecret/versions)
-  - gnome-keyring：[官网](https://gitlab.gnome.org/GNOME/gnome-keyring) | [安装源](https://repology.org/project/gnome-keyring/versions)
-  - KWallet：[官网](https://invent.kde.org/frameworks/kwallet) | [安装源](https://repology.org/project/kwallet/versions)
-- **gtk3**：用于显示 GTK3 窗口。
-  - [官网](https://gtk.org/) | [安装源](https://repology.org/project/gtk/versions)
-- **wpewebkit**：用于显示应用内 WebView。
-  - [官网](https://wpewebkit.org/) | [安装源](https://repology.org/project/wpewebkit/versions)
-
-### 已知问题
-
-部分 GPU（如 AMD 显卡）上，应用内 WebView 可能显示为黑屏。这是 WPE WebKit 硬件渲染的兼容性问题。可通过设置环境变量强制使用软件渲染来解决：
-
-```shell
-LIBGL_ALWAYS_SOFTWARE=1 ./danxi
-```
-
-详见 [flutter_inappwebview#460](https://github.com/pichillilorenzo/flutter_inappwebview/issues/460#issuecomment-3798706399)。
-
-# 构建
-
-## 我们当前使用的 Flutter 编译版本
-
-```shell
-$ flutter --version
-Flutter 3.47.2 • channel stable • https://github.com/flutter/flutter.git
-Framework • revision d3b14c8769 (2 天前) • 2026-08-26 16:07:51 -0700
-Engine • hash 1cf1c4773fb941c4c74a7f8bb144a8837596c0f4 (revision a804b26164) (47 hours ago) • 2026-08-26 18:46:13.000Z
-Tools • Dart 3.13.2 • DevTools 2.60.0
-```
-
-## 编译说明
-
-本应用使用 [Dart](https://dart.cn/) 和 [Flutter](https://flutter.cn/) 开发。
-
-为了构建本应用，您需要按照 `Flutter` 官网的要求[配置国内镜像源](https://flutter.cn/community/china)，然后[下载](https://flutter.cn/docs/get-started/install)并安装 `Flutter SDK`。
-
-如果您正在为 `Windows` 平台构建，您还需要[安装并配置](https://visualstudio.microsoft.com/zh-hans/downloads/) `Visual Studio`。
-
-如果您正在为 `Android` 平台构建，您还需要[安装并配置](https://developer.android.google.cn/studio) `Android Command Line Tools`。
-
-如果你正在为 `iOS/iPadOS/macOS` 平台构建，您还需要[安装并配置](https://apps.apple.com/app/id497799835) `Xcode`。
-
-确定配置正确后，你需要首先在项目根目录下运行 
-
-```shell
-flutter pub get
-flutter pub global activate intl_utils
-dart run intl_utils:generate
-dart run build_runner build
-```
-
-然后运行  `flutter run [ios/android]`即可运行应用。
-
-### Nix Flake 构建
-
-本项目提供 Nix flake，可在 NixOS 上构建（产物预设在 `./result/` 中）：
-
-```shell
-# Linux 桌面版
-nix build github:DanXi-Dev/DanXi-nix
-```
-
-```shell
-# Android APK
-nix build github:DanXi-Dev/DanXi-nix#android
-```
-
-```shell
-# Android APK，另一种方式
-nix develop github:DanXi-Dev/DanXi-nix -c flutter build apk
-```
-
-## 赞助
-
-由于 Apple Developer Program 费用（发布应用至 App Store 和 TestFlight 所必需）费用较高，如果您希望赞助我们，请通过邮件联系我们！
-
-我们的邮箱：[dev@danta.tech](mailto:dev@danta.tech)
+保留 DanXi 上游 [GPL-3.0 许可全文](LICENSE)、原作者与资源致谢。iOS 参考项目及第三方资源的各自许可说明随应用保留，见 [第三方材料说明](docs/THIRD_PARTY_NOTICES.md)。原项目标识、贡献者头像、字体、表情和渲染依赖分别注明来源；新增或替换资源须核对其许可。

@@ -1,0 +1,11 @@
+{
+  "app": {
+    "bundleName": "com.danxi.ohmo",
+    "vendor": "DanXi-Dev",
+    "versionCode": 1000124,
+    "versionName": "0.1.33.30",
+    "buildVersion": "125",
+    "icon": "$media:launcher",
+    "label": "$string:app_name"
+  }
+}
