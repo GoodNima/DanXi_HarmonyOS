@@ -132,29 +132,33 @@ Release 当前为未签名 HAP。使用者通过小白调试工具或 HoKit 完�
 
 ## Release 发布流程
 
-### 发布前
+### 标题、正文与附件
 
-1. 选定可交付源码，核对清单与常量的版本、升级编号、构建号和 Alpha 状态。
-2. 核对 HAP 包内元信息、构建模式、来源与哈希，不使用来源不对应的旧包替代新实现。
-3. 检查工作树和资产，排除凭据、签名、设备授权资料、私人配置及日志。
-4. 记录实际完成的构建、设备、真实账号及升级验证；没有执行的项目列为未验证。
-5. 准备 Release 正文和 SHA256SUMS.txt，由负责人复核。
+Release 标题只写四段数字版本，例如 **0.1.33.30**；不附项目名、v 前缀、Alpha 或构建号。Alpha 状态用 GitHub **Pre-release** 标识，tag 仍采用 `vA.B.C.D-alpha`，应用内展示版本继续遵循版本政策。
 
-资产命名使用 `DanXi-HarmonyOS-A.B.C.D-Alpha-buildN-unsigned.hap`，正文同时列出 versionCode。Alpha Release 勾选 **pre-release**；当前示例为 [v0.1.33.30-alpha](https://github.com/GoodNima/DanXi_HarmonyOS/releases/tag/v0.1.33.30-alpha)。
+- 当前首次公开 Release 的正文只保留 **功能简介**和 **安装方法**，安装部分链接到 [完整侧载说明](INSTALLATION.md)。
+- 后续 Release 正文只写本版本的 **更新日志**：新增、调整、修复，以及本次变化直接涉及的已知问题或升级注意事项。不重复首发功能介绍和通用安装教程。
+- 完整包元信息、来源提交、签名类别、验证范围与限制记录在 [版本说明](RELEASE_NOTES.md) 和 [版本历史](VERSION_HISTORY.md)。这些维护记录不直接复制为 Release 正文。
 
-### 发布与复核
+安装包命名为 `DanXi-HarmonyOS-A.B.C.D-Alpha-buildN-unsigned.hap`。建议同时保留可选的 `SHA256SUMS.txt` 附件，内容为上传前原始 HAP 的 SHA-256 与文件名。它用于检查下载是否完整、是否与发布原件一致；不是安装组件，也不代替应用签名。使用者可以只下载 HAP，签名后的文件不能与 unsigned 原件的哈希直接比较。
 
-发布 tag 对应包的来源提交，正常发布后不移动。2026-10-14 的授权历史净化为例外：保留 tag 名称、应用版本及资产摘要，同时公开新旧提交映射。上传 HAP 与校验文件后，检查 Release 状态、资产名称和大小，再下载公开资产计算 SHA-256，与上传前值及 SHA256SUMS 一致性核对。
+### 一次版本更新的实际步骤
 
-正文至少包括版本三项、tag/commit、签名类别、用户可见变化、系统和设备条件、[侧载步骤](INSTALLATION.md)、验证范围、已知问题、文件哈希及来源署名。同步 README、发布说明和版本历史。
+1. **确定范围与分支。** 在 `fix/*` 或 `feat/*` 分支修改；多人协作先约定接口与影响范围。原生 main 的上游变化按本手册移植，不使用 Sync fork 直接更新。
+2. **修改与验证。** 使用匹配的 SDK 26 构建，执行本次影响的实际页面、账号或服务流程；覆盖更新用同一兼容签名验证，记录数据保留结果，并明确未验证项。当前没有自动 HAP 构建 CI，修改 GitHub 文案不会生成安装包。
+3. **确定新交付版本。** 局部修复下一版为 `0.1.33.31 Alpha`，完整功能下一版为 `0.1.34.0 Alpha`。新主版本和次版本主线按版本政策确认。若没有更高的中间交付，下一包使用 `versionCode=1000125`、`buildVersion=126`；发包前仍须核对此前全部交付和已安装版本，两个编号都必须更高。同步 AppScope/app.json5 与 entry/src/main/ets/common/Constant.ets 的数字版本、展示版本及编号。
+4. **整理公开源码。** 如果开发目录含个人材料，采用独立净化 Git 工作区，只同步必要源码、运行资源、无私人签名的构建配置与公共文档。检查差异，保留公共维护文档和已经脱敏的根构建配置；不把开发目录整体加入 Git，也不复制个人助手配置、测试档案、账号日志、证书和设备授权材料。净化历史后的协作者从当前远端重新克隆，不合并旧历史。
+5. **构建发布候选并记录。** 从拟发布的净化源码构建本版 unsigned HAP，核对包内版本、设备/API 条件、模式、升级编号、构建号与哈希。更新 README 版本和功能状态、VERSION_HISTORY 交付记录、RELEASE_NOTES 更新及维护元信息。检查差异，通过 PR 审阅后合并 main；单人维护也先复核差异。最终来源提交中的应用文件必须与构建输入一致，源码再变动时重新构建。
+6. **创建 tag 与草稿。** 将 `vA.B.C.D-alpha` 指向该包对应的来源提交，建立 Release 草稿。标题仅数字版本，正文仅更新日志，勾选 Pre-release；上传 unsigned HAP 与建议保留的 SHA256SUMS.txt。正常发布后的 tag 不移动。
+7. **复核后发布。** 检查草稿状态、附件名称与大小；下载附件重新计算 SHA-256，核对上传前原件和校验文件。核对包元信息及实际安装、覆盖升级结果，问题解决后发布。未执行的设备或账号验证在维护记录中明确列出。
 
-GitHub latest Release 不包含 pre-release（[官方说明](https://docs.github.com/en/rest/releases/releases#get-the-latest-release)），Alpha 下载入口使用明确 tag 或完整 Release 列表。
+纯 Release 文字、安装说明或仓库文档维护没有交付新 HAP，不递增应用版本。QA 包与重复构建按版本政策处理，不重复计数。当前示例为 [v0.1.33.30-alpha](https://github.com/GoodNima/DanXi_HarmonyOS/releases/tag/v0.1.33.30-alpha)。GitHub latest Release 不包含 pre-release（[官方说明](https://docs.github.com/en/rest/releases/releases#get-the-latest-release)），Alpha 下载入口使用明确 tag 或完整 Release 列表。
 
 ### 发布后与恢复
 
 问题关联具体版本与脱敏证据。说明文字可更正；应用行为变化应发布新版本，不用相同升级编号替换已分发交付。源码回退后重新交付仍使用更高的 versionCode 与 buildVersion。
 
-需要停止推荐有问题的资产时，记录原因与替代版本，并保留源码/tag/哈希追溯。历史净化不修改已分发安装包；核对所有分支和 tag 的可达历史，并在记录中区分干净引用与 GitHub 可能保留的旧编号缓存。已有旧克隆应重新克隆或只迁移必要差异，不将旧历史合并回新主线。
+需要停止推荐有问题的资产时，记录原因与替代版本，并保留源码/tag/哈希追溯。历史净化不修改已分发安装包；核对所有分支和 tag 的可达历史，并在记录中区分干净引用与 GitHub 可能保留的旧编号缓存。已有旧克隆应重新克隆或只迁移必要差异，不将旧历史合并回新主线。2026-10-14 授权历史净化是 tag 调整的特例，见 [历史净化记录](HISTORY_CLEANUP.md)。
 
 ## 文档与许可维护
 
