@@ -1,0 +1,4040 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "DanXi - 復旦大学のキャンパスアシスタント"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "DanXi"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "DanXi"
+    },
+    {
+      "name": "bus_weekday",
+      "value": "平日"
+    },
+    {
+      "name": "bus_holiday",
+      "value": "休日"
+    },
+    {
+      "name": "bus_start",
+      "value": "出発地"
+    },
+    {
+      "name": "bus_end",
+      "value": "目的地"
+    },
+    {
+      "name": "bus_swap",
+      "value": "入れ替え"
+    },
+    {
+      "name": "bus_all",
+      "value": "すべての便を表示"
+    },
+    {
+      "name": "bus_upcoming",
+      "value": "これから出発する便のみ"
+    },
+    {
+      "name": "bus_time_note",
+      "value": "左右の時刻はそれぞれの出発地からの発車時刻です。両矢印は往復便を表します。祝日は手動で「休日」を選択してください。"
+    },
+    {
+      "name": "bus_same_station",
+      "value": "異なる出発地と目的地を選択してください"
+    },
+    {
+      "name": "bus_empty",
+      "value": "該当する便はありません。平日・休日を切り替えるか、すべての便を表示してください。"
+    },
+    {
+      "name": "card_recent",
+      "value": "最近の取引"
+    },
+    {
+      "name": "card_7_days",
+      "value": "7日間"
+    },
+    {
+      "name": "card_15_days",
+      "value": "15日間"
+    },
+    {
+      "name": "card_30_days",
+      "value": "30日間"
+    },
+    {
+      "name": "card_progress",
+      "value": "取引履歴を読み込み中 %s"
+    },
+    {
+      "name": "card_loading",
+      "value": "キャンパスカードを読み込み中…"
+    },
+    {
+      "name": "card_low_balance",
+      "value": "残高が20元未満です"
+    },
+    {
+      "name": "card_records_days",
+      "value": "過去%d日間の取引"
+    },
+    {
+      "name": "account_undergraduate",
+      "value": "復旦大学の学部生"
+    },
+    {
+      "name": "account_postgraduate",
+      "value": "復旦大学の大学院生"
+    },
+    {
+      "name": "account_type",
+      "value": "教務アカウントの種別"
+    },
+    {
+      "name": "app_preferences",
+      "value": "外観と通知"
+    },
+    {
+      "name": "settings_back",
+      "value": "戻る"
+    },
+    {
+      "name": "theme_mode",
+      "value": "テーマ"
+    },
+    {
+      "name": "theme_system",
+      "value": "システムに合わせる"
+    },
+    {
+      "name": "theme_light",
+      "value": "ライト"
+    },
+    {
+      "name": "theme_dark",
+      "value": "ダーク"
+    },
+    {
+      "name": "graduate_start",
+      "value": "大学院の時間割：第1授業週の月曜日"
+    },
+    {
+      "name": "save_settings",
+      "value": "保存"
+    },
+    {
+      "name": "notification_settings",
+      "value": "通知設定"
+    },
+    {
+      "name": "notification_allowed",
+      "value": "システム通知：許可済み"
+    },
+    {
+      "name": "notification_denied",
+      "value": "システム通知：未許可"
+    },
+    {
+      "name": "notification_unknown",
+      "value": "システム通知の権限を取得できません"
+    },
+    {
+      "name": "notification_permission",
+      "value": "通知の許可を求める"
+    },
+    {
+      "name": "notification_system_hint",
+      "value": "システム設定 → 通知とステータスバー → DanXi で通知の音・振動・許可を設定できます。"
+    },
+    {
+      "name": "notification_login",
+      "value": "通知の種類を設定するには先に掲示板にログインしてください。"
+    },
+    {
+      "name": "notification_mention",
+      "value": "メンションと返信"
+    },
+    {
+      "name": "notification_favorite",
+      "value": "購読中の投稿の更新"
+    },
+    {
+      "name": "notification_report",
+      "value": "通報の対応結果"
+    },
+    {
+      "name": "notification_delivery",
+      "value": "通知の種類は掲示板アカウントに同期されます。このバージョンではバックグラウンドのプッシュ通知にまだ対応していません。"
+    },
+    {
+      "name": "graduate_scores_note",
+      "value": "大学院の科目成績と科目ごとのGPA（大学院システムには学部生のGPA順位・試験日程はありません）"
+    },
+    {
+      "name": "graduate_week_hint",
+      "value": "マイページ → 教務アカウントの種別で第1授業週の月曜日を設定すると、今週の時間割を表示できます。"
+    },
+    {
+      "name": "theme_choice_hint",
+      "value": "システムに合わせると明暗の設定に従います。没入感のあるマテリアルの強度は常にシステム設定に従います。"
+    },
+    {
+      "name": "caution_menu_title",
+      "value": "閲覧注意の内容"
+    },
+    {
+      "name": "caution_settings_title",
+      "value": "星印（閲覧注意）のタグが付いた内容"
+    },
+    {
+      "name": "caution_choice_hint",
+      "value": "星印のタグは閲覧注意を表します。初期設定では内容を折りたたみます。この設定は掲示板アカウントに同期されます。"
+    },
+    {
+      "name": "caution_fold",
+      "value": "折りたたむ"
+    },
+    {
+      "name": "caution_hide",
+      "value": "非表示"
+    },
+    {
+      "name": "caution_show",
+      "value": "表示"
+    },
+    {
+      "name": "caution_fold_hint",
+      "value": "タップして読む"
+    },
+    {
+      "name": "caution_hide_hint",
+      "value": "一覧に表示しない"
+    },
+    {
+      "name": "caution_show_hint",
+      "value": "内容をそのまま表示"
+    },
+    {
+      "name": "account_choice_hint",
+      "value": "教務アカウントの種別を選択してください。大学院生は科目成績と科目ごとのGPAを確認できます。大学院システムには学部生のGPA順位と試験日程はありません。"
+    },
+    {
+      "name": "graduate_start_hint",
+      "value": "大学院の時間割の現在の授業週を計算するため、今学期の第1授業週の月曜日を選択してください。"
+    },
+    {
+      "name": "forum_settings",
+      "value": "掲示板の設定"
+    },
+    {
+      "name": "forum_compose",
+      "value": "新規投稿"
+    },
+    {
+      "name": "forum_cancel",
+      "value": "キャンセル"
+    },
+    {
+      "name": "forum_publish",
+      "value": "投稿"
+    },
+    {
+      "name": "forum_publishing",
+      "value": "投稿中"
+    },
+    {
+      "name": "forum_post",
+      "value": "投稿"
+    },
+    {
+      "name": "ui_enter_the_monday_of_the_first_teaching_week_e_g_",
+      "value": "第1授業週の月曜日を入力してください（例：2026-09-07）"
+    },
+    {
+      "name": "ui_semester_start_saved",
+      "value": "学期開始日を保存しました"
+    },
+    {
+      "name": "ui_adjust_permission_sound_and_vibration_in_system_",
+      "value": "システム設定 → 通知とステータスバー → DanXi で通知の権限・音・振動を設定できます"
+    },
+    {
+      "name": "ui_handan",
+      "value": "邯鄲"
+    },
+    {
+      "name": "ui_jiangwan",
+      "value": "江湾"
+    },
+    {
+      "name": "ui_shuttle_departures",
+      "value": "スクールバス時刻表"
+    },
+    {
+      "name": "ui_bus",
+      "value": "バス"
+    },
+    {
+      "name": "ui_classrooms",
+      "value": "空き教室"
+    },
+    {
+      "name": "ui_exam_schedule",
+      "value": "試験日程"
+    },
+    {
+      "name": "ui_grades_gpa",
+      "value": "成績・GPA"
+    },
+    {
+      "name": "ui_timetable",
+      "value": "時間割"
+    },
+    {
+      "name": "ui_campus",
+      "value": "キャンパス"
+    },
+    {
+      "name": "ui_notices",
+      "value": "お知らせ"
+    },
+    {
+      "name": "ui_exams",
+      "value": "試験"
+    },
+    {
+      "name": "ui_campus_card",
+      "value": "キャンパスカード"
+    },
+    {
+      "name": "ui_unavailable",
+      "value": "は利用できません"
+    },
+    {
+      "name": "ui_reload",
+      "value": "再読み込み"
+    },
+    {
+      "name": "ui_log_in_to_campus_account",
+      "value": "大学アカウントでログイン"
+    },
+    {
+      "name": "ui_could_not_open_login_please_try_again",
+      "value": "ログイン画面を開けません。もう一度お試しください"
+    },
+    {
+      "name": "ui_could_not_load_academic_notices",
+      "value": "教務のお知らせを読み込めません"
+    },
+    {
+      "name": "ui_source_jwc_fudan_edu_cn_may_require_campus_netwo",
+      "value": "出典：jwc.fudan.edu.cn（学内ネットワークが必要な場合があります）"
+    },
+    {
+      "name": "ui_fenglin",
+      "value": "楓林"
+    },
+    {
+      "name": "ui_zhangjiang",
+      "value": "張江"
+    },
+    {
+      "name": "ui_today_s_classrooms_choose_a_building",
+      "value": "今日の空き教室・校舎を選択"
+    },
+    {
+      "name": "ui_seats",
+      "value": "席"
+    },
+    {
+      "name": "ui_unknown_capacity",
+      "value": "定員不明"
+    },
+    {
+      "name": "ui_grade",
+      "value": "成績 "
+    },
+    {
+      "name": "ui_gpa",
+      "value": " ・ GPA "
+    },
+    {
+      "name": "ui_credits",
+      "value": " ・ 単位 "
+    },
+    {
+      "name": "ui_rank",
+      "value": "順位 "
+    },
+    {
+      "name": "ui_credits_30",
+      "value": "単位 "
+    },
+    {
+      "name": "ui_cohort",
+      "value": "年度 ・ "
+    },
+    {
+      "name": "ui_period",
+      "value": "第"
+    },
+    {
+      "name": "ui_",
+      "value": "時限"
+    },
+    {
+      "name": "ui_no_loaded_courses_for_today",
+      "value": "今日の授業データはありません"
+    },
+    {
+      "name": "ui_no_classes_today",
+      "value": "今日は授業がありません！"
+    },
+    {
+      "name": "ui_card_balance",
+      "value": "キャンパスカード残高"
+    },
+    {
+      "name": "ui_no_transactions_in_this_date_range",
+      "value": "選択した期間に取引はありません"
+    },
+    {
+      "name": "ui_complete_verification_on_fudan_s_official_page_y",
+      "value": "復旦大学の公式ページで認証してください。完了後、自動的に戻ります"
+    },
+    {
+      "name": "ui_verification_has_ended_return_to_login_and_try_a",
+      "value": "認証が終了しました。ログイン画面に戻って再度お試しください"
+    },
+    {
+      "name": "ui_could_not_initialize_verification_tap_retry",
+      "value": "認証画面を初期化できません。「再試行」をタップしてください"
+    },
+    {
+      "name": "ui_could_not_open_verification_tap_retry",
+      "value": "認証ページを開けません。「再試行」をタップしてください"
+    },
+    {
+      "name": "ui_verify_on_fudan_s_official_page_return_is_automa",
+      "value": "公式ページで認証すると自動的に戻ります。ピンチ操作で拡大できます"
+    },
+    {
+      "name": "ui_verify_on_fudan_s_official_page_pinch_to_zoom",
+      "value": "復旦大学の公式ページで認証してください。ピンチ操作で拡大できます"
+    },
+    {
+      "name": "ui_the_graduate_system_has_not_returned_a_timetable",
+      "value": "大学院の時間割が取得できません。「再試行」をタップするか、後でもう一度読み込んでください"
+    },
+    {
+      "name": "ui_no_login_session_was_received_from_the_campus_se",
+      "value": "大学サービスのログイン情報が取得できません。再試行するか、もう一度ログインしてください"
+    },
+    {
+      "name": "ui_verification_is_not_ready_yet_retry_later_or_log",
+      "value": "認証ページの準備ができていません。後で再試行するか、もう一度ログインしてください"
+    },
+    {
+      "name": "ui_could_not_reload_verification_check_your_connect",
+      "value": "認証ページを再読み込みできません。接続を確認して再度お試しください"
+    },
+    {
+      "name": "ui_loading_fudan_verification",
+      "value": "復旦大学の認証ページを読み込み中…"
+    },
+    {
+      "name": "ui_verification_is_loading_slowly_check_your_connec",
+      "value": "認証ページの読み込みに時間がかかっています。接続を確認するか「再試行」をタップしてください"
+    },
+    {
+      "name": "ui_fudan_verification",
+      "value": "復旦大学の本人認証"
+    },
+    {
+      "name": "ui_retry",
+      "value": "リトライ"
+    },
+    {
+      "name": "ui_could_not_load_verification_check_your_connectio",
+      "value": "認証ページを読み込めません。接続を確認して再度お試しください"
+    },
+    {
+      "name": "ui_verification_is_temporarily_unavailable_try_agai",
+      "value": "認証サービスは現在利用できません。後でもう一度お試しください"
+    },
+    {
+      "name": "ui_missing_post_information",
+      "value": "投稿情報がありません"
+    },
+    {
+      "name": "ui_could_not_open_the_quoted_post",
+      "value": "引用元の投稿を開けません"
+    },
+    {
+      "name": "ui_this_floor_was_deleted_or_is_unavailable",
+      "value": "このコメントは削除されたか、表示できません"
+    },
+    {
+      "name": "ui_enter_a_reply",
+      "value": "返信を入力してください"
+    },
+    {
+      "name": "ui_reply_sent",
+      "value": "返信しました"
+    },
+    {
+      "name": "ui_like",
+      "value": "いいね "
+    },
+    {
+      "name": "ui_dislike",
+      "value": "よくないね "
+    },
+    {
+      "name": "ui_anonymous",
+      "value": "匿名"
+    },
+    {
+      "name": "ui_this_floor_was_deleted",
+      "value": "このコメントは削除されました"
+    },
+    {
+      "name": "ui_say_something",
+      "value": "何か話してみよう…"
+    },
+    {
+      "name": "ui_sending",
+      "value": "送信中"
+    },
+    {
+      "name": "ui_reply",
+      "value": "返信"
+    },
+    {
+      "name": "ui_loading_failed",
+      "value": "ロード失敗"
+    },
+    {
+      "name": "ui_read_with_care",
+      "value": "閲覧注意"
+    },
+    {
+      "name": "ui_this_post_has_starred_tags_its_content_is_collap",
+      "value": "星印のタグが付いているため、内容が折りたたまれています"
+    },
+    {
+      "name": "ui_view_content",
+      "value": "内容を見る"
+    },
+    {
+      "name": "ui_replies",
+      "value": " 件の返信"
+    },
+    {
+      "name": "ui_views",
+      "value": " 回閲覧"
+    },
+    {
+      "name": "ui_loading_failed_tap_to_retry",
+      "value": "読み込めません。タップして再試行"
+    },
+    {
+      "name": "ui_scroll_up_for_more_replies",
+      "value": "上へスクロールして返信を読み込む"
+    },
+    {
+      "name": "ui_locating_tap_to_cancel",
+      "value": "移動中・タップでキャンセル"
+    },
+    {
+      "name": "ui_could_not_locate_tap_to_retry",
+      "value": "移動できません・タップして再試行"
+    },
+    {
+      "name": "ui_post_details",
+      "value": "投稿の詳細"
+    },
+    {
+      "name": "ui_enter_some_content",
+      "value": "内容を入力してください"
+    },
+    {
+      "name": "ui_choose_a_section",
+      "value": "掲示板を選択してください"
+    },
+    {
+      "name": "ui_post_published",
+      "value": "投稿しました"
+    },
+    {
+      "name": "ui_choose_section",
+      "value": "掲示板を選択"
+    },
+    {
+      "name": "ui_section",
+      "value": "掲示板"
+    },
+    {
+      "name": "ui_tags",
+      "value": "タグ"
+    },
+    {
+      "name": "ui_optional_up_to_one",
+      "value": "(任意・1つまで)"
+    },
+    {
+      "name": "ui_search_tags",
+      "value": "タグを検索"
+    },
+    {
+      "name": "ui_no_matching_tags_you_can_publish_without_one",
+      "value": "該当するタグはありません。タグなしで投稿できます"
+    },
+    {
+      "name": "ui_previous",
+      "value": "前へ"
+    },
+    {
+      "name": "ui_next",
+      "value": "次へ"
+    },
+    {
+      "name": "detail_image_previous",
+      "value": "前の画像"
+    },
+    {
+      "name": "detail_image_next",
+      "value": "次の画像"
+    },
+    {
+      "name": "ui_original_image_saved",
+      "value": "元の画像を保存しました"
+    },
+    {
+      "name": "ui_could_not_save_check_your_connection_and_storage",
+      "value": "保存できません。接続と空き容量を確認して再度お試しください"
+    },
+    {
+      "name": "ui_could_not_load_image",
+      "value": "画像を読み込めません"
+    },
+    {
+      "name": "ui_saving",
+      "value": "保存中…"
+    },
+    {
+      "name": "ui_download_original",
+      "value": "元の画像を保存"
+    },
+    {
+      "name": "gallery_original_loading",
+      "value": "元の画像を読み込み中…"
+    },
+    {
+      "name": "gallery_original_failed_preview",
+      "value": "元の画像を読み込めません。プレビューを表示中"
+    },
+    {
+      "name": "ui_enter_your_forum_email",
+      "value": "掲示板アカウントのメールアドレスを入力してください"
+    },
+    {
+      "name": "ui_enter_your_password",
+      "value": "パスワードを入力してください"
+    },
+    {
+      "name": "ui_logged_in",
+      "value": "ログインしました"
+    },
+    {
+      "name": "ui_log_in_to_forum",
+      "value": "掲示板にログイン"
+    },
+    {
+      "name": "ui_use_your_danxi_forum_account_separate_from_uis",
+      "value": "DanXi の掲示板アカウントを使用してください（UIS とは別です）"
+    },
+    {
+      "name": "ui_email",
+      "value": "メール"
+    },
+    {
+      "name": "ui_password",
+      "value": "暗証番号"
+    },
+    {
+      "name": "ui_logging_in",
+      "value": "ログイン中…"
+    },
+    {
+      "name": "ui_log_in",
+      "value": "ログイン"
+    },
+    {
+      "name": "ui_register_on_the_forum_website_this_is_separate_f",
+      "value": "掲示板のウェブサイトで登録してください。復旦大学の UIS アカウントとは別です"
+    },
+    {
+      "name": "ui_could_not_open_post_please_retry",
+      "value": "投稿を開けません。もう一度お試しください"
+    },
+    {
+      "name": "ui_read_with_care_content_collapsed_tap_to_expand",
+      "value": "閲覧注意・内容は折りたたまれています。タップして展開"
+    },
+    {
+      "name": "ui_log_in_to_browse_the_forum",
+      "value": "ログインして掲示板を見る"
+    },
+    {
+      "name": "ui_a_fduhole_com_account_is_required_please_log_in",
+      "value": "掲示板には fduhole.com のアカウントでログインしてください"
+    },
+    {
+      "name": "ui_search_forum",
+      "value": "掲示板を検索"
+    },
+    {
+      "name": "ui_clear",
+      "value": "削除"
+    },
+    {
+      "name": "ui_no_matching_content",
+      "value": "該当する内容はありません"
+    },
+    {
+      "name": "ui_try_a_different_keyword",
+      "value": "別のキーワードをお試しください"
+    },
+    {
+      "name": "ui_no_posts_to_display",
+      "value": "表示できる投稿はありません"
+    },
+    {
+      "name": "ui_posts_on_this_page_are_hidden_you_can_load_more",
+      "value": "このページの投稿は非表示です。続きを読み込めます"
+    },
+    {
+      "name": "ui_forum",
+      "value": "掲示板"
+    },
+    {
+      "name": "ui_could_not_open_editor_please_retry",
+      "value": "投稿画面を開けません。もう一度お試しください"
+    },
+    {
+      "name": "ui_all",
+      "value": "全て"
+    },
+    {
+      "name": "ui_loading",
+      "value": "読み込み中…"
+    },
+    {
+      "name": "ui_scroll_up_to_load_more",
+      "value": "上へスクロールして続きを読み込む"
+    },
+    {
+      "name": "ui_please_log_in_to_the_forum_first",
+      "value": "先に掲示板にログインしてください"
+    },
+    {
+      "name": "ui_me",
+      "value": "マイページ"
+    },
+    {
+      "name": "ui_enter_your_student_id",
+      "value": "学籍番号を入力してください"
+    },
+    {
+      "name": "ui_login_failed",
+      "value": "ログインに失敗しました"
+    },
+    {
+      "name": "ui_login_incomplete_check_your_connection_and_retry",
+      "value": "ログインが完了しませんでした。接続を確認して再度お試しください"
+    },
+    {
+      "name": "ui_fudan_campus_assistant",
+      "value": "復旦大学のキャンパスアシスタント"
+    },
+    {
+      "name": "ui_student_id",
+      "value": "学生番号"
+    },
+    {
+      "name": "ui_log_in_with_your_fudan_id_official_verification_",
+      "value": "復旦大学の ID でログインしてください。必要な場合は公式の認証ページが開きます"
+    },
+    {
+      "name": "ui_continue_as_guest",
+      "value": "ゲストとして利用"
+    },
+    {
+      "name": "ui_could_not_save_theme_please_retry",
+      "value": "テーマを保存できません。再度お試しください"
+    },
+    {
+      "name": "ui_could_not_save_account_type_please_retry",
+      "value": "アカウント種別を保存できません。再度お試しください"
+    },
+    {
+      "name": "ui_choose_the_monday_of_the_first_teaching_week",
+      "value": "第1授業週の月曜日を選択してください"
+    },
+    {
+      "name": "ui_could_not_save_semester_start_please_retry",
+      "value": "学期開始日を保存できません。再度お試しください"
+    },
+    {
+      "name": "ui_graduate",
+      "value": "大学院生"
+    },
+    {
+      "name": "ui_undergraduate",
+      "value": "学部生"
+    },
+    {
+      "name": "ui_choose",
+      "value": "選択してください"
+    },
+    {
+      "name": "ui_logged_out",
+      "value": "ログアウトしました"
+    },
+    {
+      "name": "ui_could_not_log_out",
+      "value": "ログアウトできません"
+    },
+    {
+      "name": "ui_cohort_145",
+      "value": "年度"
+    },
+    {
+      "name": "ui_welcome_to_danxi",
+      "value": "DanXi へようこそ"
+    },
+    {
+      "name": "ui_log_in_to_view_grades_timetables_and_campus_serv",
+      "value": "ログインすると成績・時間割などの大学情報を確認できます"
+    },
+    {
+      "name": "ui_general",
+      "value": "一般設定"
+    },
+    {
+      "name": "ui_monday_of_the_first_teaching_week",
+      "value": "第1授業週の月曜日"
+    },
+    {
+      "name": "ui_choose_semester_start",
+      "value": "学期開始日を選択"
+    },
+    {
+      "name": "ui_language",
+      "value": "言語"
+    },
+    {
+      "name": "ui__156",
+      "value": "簡体字中国語"
+    },
+    {
+      "name": "ui_coming_soon",
+      "value": "準備中"
+    },
+    {
+      "name": "ui_system_permission_forum_notification_types",
+      "value": "システム権限と掲示板の通知種別"
+    },
+    {
+      "name": "ui_dashboard_order",
+      "value": "ダッシュボードの並び順"
+    },
+    {
+      "name": "ui_default_order",
+      "value": "標準の並び順"
+    },
+    {
+      "name": "ui_about",
+      "value": "このアプリについて"
+    },
+    {
+      "name": "ui_about_danxi",
+      "value": "DanXi について"
+    },
+    {
+      "name": "ui_danxi_for_harmonyos_v",
+      "value": "DanXi HarmonyOS版 v"
+    },
+    {
+      "name": "ui_open_source_licenses",
+      "value": "オープンソースライセンス"
+    },
+    {
+      "name": "ui_diagnostics",
+      "value": "診断コンソール"
+    },
+    {
+      "name": "ui_log_out",
+      "value": "ログアウト"
+    },
+    {
+      "name": "ui_loading_168",
+      "value": "ローディング..."
+    },
+    {
+      "name": "ui_no_data",
+      "value": "データがありません"
+    },
+    {
+      "name": "ui_image_unavailable",
+      "value": " ・ 画像は利用できません]"
+    },
+    {
+      "name": "ui_could_not_open_image_please_retry",
+      "value": "画像を開けません。もう一度お試しください"
+    },
+    {
+      "name": "ui_quoted_content",
+      "value": "引用内容"
+    },
+    {
+      "name": "ui_quoted_content_collapsed",
+      "value": "引用内容は折りたたまれています："
+    },
+    {
+      "name": "ui_expand_content",
+      "value": "内容を展開"
+    },
+    {
+      "name": "ui_go_to_quoted_floor",
+      "value": "引用元のコメントへ移動"
+    },
+    {
+      "name": "ui_close",
+      "value": "閉じる"
+    },
+    {
+      "name": "ui_quote",
+      "value": "引用 "
+    },
+    {
+      "name": "ui_quote_not_found_tap_to_retry",
+      "value": "引用が見つかりません。タップして再試行"
+    },
+    {
+      "name": "ui_loading_quote",
+      "value": "引用を読み込み中…"
+    },
+    {
+      "name": "ui_tap_to_view_quote",
+      "value": "タップして引用を見る"
+    },
+    {
+      "name": "ui_quoted_content_collapsed_tap_to_view",
+      "value": "引用内容は折りたたまれています。タップして表示"
+    },
+    {
+      "name": "language_zh_cn",
+      "value": "简体中文"
+    },
+    {
+      "name": "language_zh_tw",
+      "value": "繁體中文"
+    },
+    {
+      "name": "language_en",
+      "value": "English"
+    },
+    {
+      "name": "language_ja",
+      "value": "日本語"
+    },
+    {
+      "name": "language_choice_hint",
+      "value": "変更はすぐに反映されます。未対応のシステム言語の場合は簡体字中国語を使用します。"
+    },
+    {
+      "name": "language_save_failed",
+      "value": "言語を保存できません。再度お試しください"
+    },
+    {
+      "name": "layout_default",
+      "value": "標準の並び順"
+    },
+    {
+      "name": "layout_custom",
+      "value": "カスタムの並び順"
+    },
+    {
+      "name": "layout_hint",
+      "value": "長押しして並び替え、チェックで表示を切り替えます。1つ以上を表示してください。「完了」で適用します。"
+    },
+    {
+      "name": "layout_keep_one",
+      "value": "キャンパスの項目を1つ以上表示してください"
+    },
+    {
+      "name": "layout_reset",
+      "value": "初期設定"
+    },
+    {
+      "name": "layout_done",
+      "value": "完了"
+    },
+    {
+      "name": "layout_save_failed",
+      "value": "並び順を保存できません。再度お試しください"
+    },
+    {
+      "name": "announcement_open_failed",
+      "value": "お知らせを開けません。ブラウザを確認して再度お試しください"
+    },
+    {
+      "name": "feature_announcement",
+      "value": "教務部のお知らせ"
+    },
+    {
+      "name": "feature_bus",
+      "value": "バス"
+    },
+    {
+      "name": "feature_empty_classroom",
+      "value": "教室スケジュール"
+    },
+    {
+      "name": "feature_exam",
+      "value": "試験"
+    },
+    {
+      "name": "feature_gpa",
+      "value": "GPA"
+    },
+    {
+      "name": "feature_timetable",
+      "value": "時間割"
+    },
+    {
+      "name": "feature_card",
+      "value": "カード"
+    },
+    {
+      "name": "campus_handan",
+      "value": "邯鄲"
+    },
+    {
+      "name": "campus_fenglin",
+      "value": "楓林"
+    },
+    {
+      "name": "campus_jiangwan",
+      "value": "江湾"
+    },
+    {
+      "name": "campus_zhangjiang",
+      "value": "張江"
+    },
+    {
+      "name": "weekday_mon",
+      "value": "月"
+    },
+    {
+      "name": "weekday_tue",
+      "value": "火"
+    },
+    {
+      "name": "weekday_wed",
+      "value": "水"
+    },
+    {
+      "name": "weekday_thu",
+      "value": "木"
+    },
+    {
+      "name": "weekday_fri",
+      "value": "金"
+    },
+    {
+      "name": "weekday_sat",
+      "value": "土"
+    },
+    {
+      "name": "weekday_sun",
+      "value": "日"
+    },
+    {
+      "name": "time_just_now",
+      "value": "たった今"
+    },
+    {
+      "name": "time_minutes_ago",
+      "value": "%d分前"
+    },
+    {
+      "name": "time_hours_ago",
+      "value": "%d時間前"
+    },
+    {
+      "name": "time_days_ago",
+      "value": "%d日前"
+    },
+    {
+      "name": "forum_webvpn_login_required",
+      "value": "このネットワークから掲示板に直接接続できません。学外からは復旦 WebVPN を利用します。復旦アカウントにログインしてください。掲示板のログイン情報は保持されます。"
+    },
+    {
+      "name": "webvpn_auto",
+      "value": "WebVPN を自動使用"
+    },
+    {
+      "name": "webvpn_hint",
+      "value": "直接接続を優先し、接続できない場合は復旦 WebVPN と共通の認証を使用します。オフの場合は直接接続のみです。"
+    },
+    {
+      "name": "webvpn_save_failed",
+      "value": "プロキシ設定を保存できませんでした"
+    },
+    {
+      "name": "calendar_auto",
+      "value": "自動同期"
+    },
+    {
+      "name": "calendar_manual",
+      "value": "日付を選択"
+    },
+    {
+      "name": "calendar_sync_now",
+      "value": "現在の学期を同期"
+    },
+    {
+      "name": "calendar_choice_hint",
+      "value": "同期すると、本日が属する学期の公式学年暦から第1授業週の月曜日を取得し、選択中の日付を置き換えます。過去の学期は手動で日付を選択してください。自動同期は行いません。必要に応じて復旦の認証を使用します。"
+    },
+    {
+      "name": "calendar_date_unknown",
+      "value": "開始日が未取得です。同期または手動指定してください"
+    },
+    {
+      "name": "calendar_syncing",
+      "value": "公式学事暦を読み込み中…"
+    },
+    {
+      "name": "calendar_sync_failed",
+      "value": "学事暦を同期できません。保存済みの日付を保持します。再試行または手動指定してください。"
+    },
+    {
+      "name": "calendar_unrecognized",
+      "value": "公式学事暦の日付を正確に読み取れませんでした。元の資料を確認するか、手動指定してください。"
+    },
+    {
+      "name": "calendar_login_required",
+      "value": "学事暦には復旦認証が必要です"
+    },
+    {
+      "name": "calendar_source",
+      "value": "出典"
+    },
+    {
+      "name": "calendar_source_account",
+      "value": "教務システムの学期日程"
+    },
+    {
+      "name": "calendar_source_official",
+      "value": "大学公式学事暦"
+    },
+    {
+      "name": "calendar_source_open",
+      "value": "公式学事暦を見る"
+    },
+    {
+      "name": "timetable_week",
+      "value": "第 {week} 週"
+    },
+    {
+      "name": "timetable_today",
+      "value": "今週"
+    },
+    {
+      "name": "timetable_week_view",
+      "value": "週表示"
+    },
+    {
+      "name": "timetable_agenda",
+      "value": "予定"
+    },
+    {
+      "name": "timetable_add",
+      "value": "授業を追加"
+    },
+    {
+      "name": "timetable_edit",
+      "value": "編集"
+    },
+    {
+      "name": "timetable_remove",
+      "value": "時間割から削除"
+    },
+    {
+      "name": "timetable_save",
+      "value": "授業を保存"
+    },
+    {
+      "name": "timetable_semester_date",
+      "value": "開始日と学事暦の同期"
+    },
+    {
+      "name": "timetable_export",
+      "value": "カレンダーに追加"
+    },
+    {
+      "name": "timetable_restore",
+      "value": "教務の授業表示を復元"
+    },
+    {
+      "name": "timetable_local_hint",
+      "value": "追加・編集・削除はこの端末の表示のみを変更し、履修登録を変更しません。削除した教務の授業はメニューから復元できます。"
+    },
+    {
+      "name": "timetable_invalid",
+      "value": "授業名、有効な時限（1–15）、週（1–30）を入力してください"
+    },
+    {
+      "name": "timetable_save_failed",
+      "value": "時間割の変更を保存できませんでした"
+    },
+    {
+      "name": "timetable_exported",
+      "value": "カレンダーを保存しました。カレンダーアプリに取り込めます"
+    },
+    {
+      "name": "timetable_export_failed",
+      "value": "カレンダーを保存できませんでした"
+    },
+    {
+      "name": "timetable_load_failed",
+      "value": "時間割を読み込めませんでした。下に引いて再試行してください"
+    },
+    {
+      "name": "timetable_loading",
+      "value": "授業を同期中…"
+    },
+    {
+      "name": "timetable_empty",
+      "value": "この学期の授業がありません。更新するか、授業を追加してください。"
+    },
+    {
+      "name": "timetable_guest",
+      "value": "復旦 ID でログインして授業を取り込むか、授業を手動追加できます。"
+    },
+    {
+      "name": "timetable_date_hint",
+      "value": "開始日が未確定です。タップして同期または指定してください。選択した週のプレビューを表示しています。"
+    },
+    {
+      "name": "timetable_outside_term",
+      "value": "今日は授業期間外です。選択した週を表示しています。"
+    },
+    {
+      "name": "timetable_no_class_day",
+      "value": "この日は授業がありません"
+    },
+    {
+      "name": "timetable_updated",
+      "value": "最終同期"
+    },
+    {
+      "name": "timetable_course_name",
+      "value": "授業名（必須）"
+    },
+    {
+      "name": "timetable_teacher",
+      "value": "担当教員"
+    },
+    {
+      "name": "timetable_room",
+      "value": "教室・場所"
+    },
+    {
+      "name": "timetable_code",
+      "value": "科目コード（任意）"
+    },
+    {
+      "name": "timetable_first_unit",
+      "value": "開始時限"
+    },
+    {
+      "name": "timetable_last_unit",
+      "value": "終了時限"
+    },
+    {
+      "name": "timetable_weeks",
+      "value": "授業週"
+    },
+    {
+      "name": "timetable_weeks_hint",
+      "value": "例：1-18 または 1,3,5-8。カンマ区切りで第1–30週を指定できます。"
+    },
+    {
+      "name": "timetable_semester_unavailable",
+      "value": "選択した学期がありません。学期一覧を再読み込みしてください。"
+    },
+    {
+      "name": "detail_content_required",
+      "value": "内容を入力してください"
+    },
+    {
+      "name": "detail_operation_success",
+      "value": "完了しました"
+    },
+    {
+      "name": "detail_copied",
+      "value": "コピーしました"
+    },
+    {
+      "name": "detail_delete_floor",
+      "value": "返信を削除"
+    },
+    {
+      "name": "detail_delete_note",
+      "value": "削除すると自分で元に戻せません。返信を確認してください。"
+    },
+    {
+      "name": "detail_confirm",
+      "value": "確認"
+    },
+    {
+      "name": "detail_admin",
+      "value": "管理者ツール"
+    },
+    {
+      "name": "detail_admin_note",
+      "value": "サーバーの内容を変更します。対象と操作を確認してください。"
+    },
+    {
+      "name": "detail_missing_division",
+      "value": "セクションを取得できません。再読み込みしてください。"
+    },
+    {
+      "name": "detail_favorite",
+      "value": "投稿を保存"
+    },
+    {
+      "name": "detail_unfavorite",
+      "value": "保存を解除"
+    },
+    {
+      "name": "detail_subscribe",
+      "value": "返信を購読"
+    },
+    {
+      "name": "detail_unsubscribe",
+      "value": "購読を解除"
+    },
+    {
+      "name": "detail_subscription_note",
+      "value": "新しい返信の通知は掲示板の通知設定に従います。"
+    },
+    {
+      "name": "detail_show_all",
+      "value": "すべての返信"
+    },
+    {
+      "name": "detail_only_op",
+      "value": "投稿者のみ"
+    },
+    {
+      "name": "detail_only_author",
+      "value": "このユーザーのみ"
+    },
+    {
+      "name": "detail_to_top",
+      "value": "最初の投稿へ"
+    },
+    {
+      "name": "detail_to_end",
+      "value": "最新の返信へ"
+    },
+    {
+      "name": "detail_copy_hole",
+      "value": "投稿IDをコピー"
+    },
+    {
+      "name": "detail_copy_floor",
+      "value": "返信IDをコピー"
+    },
+    {
+      "name": "detail_copy_time",
+      "value": "投稿日時をコピー"
+    },
+    {
+      "name": "detail_copy_content",
+      "value": "内容をコピー"
+    },
+    {
+      "name": "detail_select_text",
+      "value": "テキストを選択"
+    },
+    {
+      "name": "detail_share_post",
+      "value": "共有する返信を選択"
+    },
+    {
+      "name": "detail_share_floor",
+      "value": "共有用の返信をコピー"
+    },
+    {
+      "name": "detail_share_note",
+      "value": "返信を選択してコピーします。追加の返信も読み込めます。"
+    },
+    {
+      "name": "detail_copy_selected",
+      "value": "選択した返信をコピー"
+    },
+    {
+      "name": "detail_load_more",
+      "value": "返信を追加読込"
+    },
+    {
+      "name": "detail_summary",
+      "value": "AI要約"
+    },
+    {
+      "name": "detail_summary_pending",
+      "value": "要約はまだ生成されていません。後で再試行してください。"
+    },
+    {
+      "name": "detail_summary_note",
+      "value": "AI要約は参考情報です。引用した返信で内容を確認してください。"
+    },
+    {
+      "name": "detail_summary_refresh",
+      "value": "要約を再生成"
+    },
+    {
+      "name": "detail_hide",
+      "value": "この端末で投稿を非表示"
+    },
+    {
+      "name": "detail_hide_note",
+      "value": "この端末のみ非表示になります。掲示板の設定で戻せます。"
+    },
+    {
+      "name": "detail_reply_floor",
+      "value": "この返信に返信"
+    },
+    {
+      "name": "detail_full_editor",
+      "value": "編集画面を開く"
+    },
+    {
+      "name": "detail_history",
+      "value": "編集履歴"
+    },
+    {
+      "name": "detail_no_history",
+      "value": "編集履歴はありません"
+    },
+    {
+      "name": "detail_edit",
+      "value": "内容を編集"
+    },
+    {
+      "name": "detail_report",
+      "value": "返信を報告"
+    },
+    {
+      "name": "detail_report_note",
+      "value": "報告の理由を入力してください。管理者が規則に基づいて対応します。"
+    },
+    {
+      "name": "detail_markdown_note",
+      "value": "Markdown、LaTeX、スタンプに対応。送信前にプレビューできます。"
+    },
+    {
+      "name": "detail_preview",
+      "value": "プレビュー"
+    },
+    {
+      "name": "detail_submit",
+      "value": "送信"
+    },
+    {
+      "name": "detail_lock",
+      "value": "投稿のロック／解除"
+    },
+    {
+      "name": "detail_freeze",
+      "value": "投稿の凍結／解除"
+    },
+    {
+      "name": "detail_hide_server",
+      "value": "投稿の非表示／復元"
+    },
+    {
+      "name": "detail_delete_force",
+      "value": "投稿を完全に削除"
+    },
+    {
+      "name": "detail_pin",
+      "value": "投稿の固定／解除"
+    },
+    {
+      "name": "detail_tags_division",
+      "value": "タグとセクションを編集"
+    },
+    {
+      "name": "detail_special_tag",
+      "value": "特別ラベルを設定"
+    },
+    {
+      "name": "detail_fold_floor",
+      "value": "折りたたむ理由を設定"
+    },
+    {
+      "name": "detail_sensitive",
+      "value": "センシティブに指定"
+    },
+    {
+      "name": "detail_unmark_sensitive",
+      "value": "センシティブ指定を解除"
+    },
+    {
+      "name": "detail_penalty",
+      "value": "投稿禁止の日数を設定"
+    },
+    {
+      "name": "detail_reason_note",
+      "value": "理由は1行に1件。投稿禁止は0以上の日数を入力。"
+    },
+    {
+      "name": "detail_more",
+      "value": "その他の操作"
+    },
+    {
+      "name": "detail_op",
+      "value": "投稿者"
+    },
+    {
+      "name": "detail_me",
+      "value": "自分"
+    },
+    {
+      "name": "detail_modified",
+      "value": "編集済み"
+    },
+    {
+      "name": "detail_reply_unavailable",
+      "value": "ロック・凍結・非表示の投稿には返信できません。"
+    },
+    {
+      "name": "detail_all_loaded",
+      "value": "すべての返信を表示しました"
+    },
+    {
+      "name": "detail_filter_none",
+      "value": "該当する返信はありません"
+    },
+    {
+      "name": "detail_restore_hidden",
+      "value": "端末で非表示にした投稿を復元"
+    },
+    {
+      "name": "detail_helpful",
+      "value": "役に立った"
+    },
+    {
+      "name": "detail_unhelpful",
+      "value": "要約の問題を報告"
+    },
+    {
+      "name": "detail_image_add",
+      "value": "画像を追加"
+    },
+    {
+      "name": "detail_image_uploading",
+      "value": "画像をアップロード中…"
+    },
+    {
+      "name": "detail_image_upload_failed",
+      "value": "画像をアップロードできませんでした。接続、掲示板のログイン状態、選択した写真のアクセス権を確認して再試行してください。下書きは保持されています。"
+    },
+    {
+      "name": "detail_image_too_long",
+      "value": "文字数の上限に近づいています。本文を短くしてから画像を追加してください。下書きは保持されています。"
+    },
+    {
+      "name": "detail_content_limit",
+      "value": "本文は2000文字までです。短くしてから追加してください。"
+    },
+    {
+      "name": "feature_academic",
+      "value": "試験と成績"
+    },
+    {
+      "name": "academic_overview",
+      "value": "試験と成績"
+    },
+    {
+      "name": "academic_grades",
+      "value": "科目成績"
+    },
+    {
+      "name": "academic_ranking",
+      "value": "GPA と順位"
+    },
+    {
+      "name": "academic_semester",
+      "value": "学期を選択"
+    },
+    {
+      "name": "academic_semester_missing",
+      "value": "この学期は利用できません。再選択してください。"
+    },
+    {
+      "name": "academic_my_gpa",
+      "value": "ローカル GPA"
+    },
+    {
+      "name": "academic_my_gpa_unavailable",
+      "value": "取得済みの科目データでは GPA を計算できません"
+    },
+    {
+      "name": "academic_gpa_note",
+      "value": "取得済み一覧から端末上で計算：Σ（大学公表の科目別 GP × 単位数）÷ 算入単位数。卒業判定や全学期 GPA ではありません。P/NP、学部の認定成績、明示された大学院の補修・必修課程・考査科目は除外します。GP または単位数が欠ける科目は推定しません。"
+    },
+    {
+      "name": "academic_rank_all",
+      "value": "全専攻"
+    },
+    {
+      "name": "academic_rank_same",
+      "value": "同じ専攻"
+    },
+    {
+      "name": "academic_percentile",
+      "value": "百分位（現在の範囲）"
+    },
+    {
+      "name": "academic_gradepoint",
+      "value": "科目の評価点"
+    },
+    {
+      "name": "academic_other_exams",
+      "value": "その他の試験と科目成績"
+    },
+    {
+      "name": "academic_empty_grades",
+      "value": "公開済みの科目成績はありません"
+    },
+    {
+      "name": "academic_empty_rank",
+      "value": "公開済みの GPA 順位はありません"
+    },
+    {
+      "name": "academic_export_exams",
+      "value": "試験カレンダーを書き出す"
+    },
+    {
+      "name": "academic_export_unavailable",
+      "value": "日付と時刻がそろった試験がないため書き出せません。"
+    },
+    {
+      "name": "academic_retry",
+      "value": "学業データを再読込"
+    },
+    {
+      "name": "academic_grade_not_for_exam",
+      "value": "追試・延期試験には元の試験成績を紐付けません"
+    },
+    {
+      "name": "academic_fallback_note",
+      "value": "データセンターの全成績を表示中です。学期選択・試験・GPA 順位は利用できません。"
+    },
+    {
+      "name": "academic_exam_date",
+      "value": "日付"
+    },
+    {
+      "name": "academic_exam_time",
+      "value": "時刻"
+    },
+    {
+      "name": "academic_exam_room",
+      "value": "場所"
+    },
+    {
+      "name": "academic_exam_note",
+      "value": "試験の備考"
+    },
+    {
+      "name": "academic_grade",
+      "value": "成績"
+    },
+    {
+      "name": "academic_gpa",
+      "value": "GPA"
+    },
+    {
+      "name": "academic_credits",
+      "value": "単位数"
+    },
+    {
+      "name": "academic_rank",
+      "value": "順位"
+    },
+    {
+      "name": "classroom_periods",
+      "value": "時限の使用状況"
+    },
+    {
+      "name": "classroom_period_free",
+      "value": "第 %1$d 時限：空き"
+    },
+    {
+      "name": "classroom_period_occupied",
+      "value": "第 %1$d 時限：%2$s"
+    },
+    {
+      "name": "classroom_no_rows",
+      "value": "この校舎の教室データはありません"
+    },
+    {
+      "name": "classroom_busy",
+      "value": "本日の全時限は使用中です"
+    },
+    {
+      "name": "classroom_free_summary",
+      "value": "空き時限：%1$s"
+    },
+    {
+      "name": "academic_semester_label",
+      "value": "学期"
+    },
+    {
+      "name": "forum_divisions_loading",
+      "value": "セクションを読み込み中"
+    },
+    {
+      "name": "forum_divisions_retry",
+      "value": "取得失敗 · 再試行"
+    },
+    {
+      "name": "campus_welcome_national_day",
+      "value": "国慶節おめでとう！"
+    },
+    {
+      "name": "campus_welcome_late",
+      "value": "披星戴月，不负韶华"
+    },
+    {
+      "name": "campus_welcome_morning",
+      "value": "一日の中で重要なのは朝である"
+    },
+    {
+      "name": "campus_welcome_noon",
+      "value": "もうすぐお昼です"
+    },
+    {
+      "name": "campus_welcome_afternoon",
+      "value": "午後はレジャーですね"
+    },
+    {
+      "name": "campus_welcome_evening",
+      "value": "こんばんは～"
+    },
+    {
+      "name": "campus_welcome_name",
+      "value": "ようこそ、{name}"
+    },
+    {
+      "name": "campus_welcome_guest",
+      "value": "DanXi へようこそ"
+    },
+    {
+      "name": "campus_no_notices",
+      "value": "新しいお知らせはありません"
+    },
+    {
+      "name": "campus_preview_open",
+      "value": "詳細を見る"
+    },
+    {
+      "name": "campus_preview_classroom",
+      "value": "校区・校舎・日付で空き教室を探す"
+    },
+    {
+      "name": "campus_preview_academic",
+      "value": "試験予定・成績・GPA"
+    },
+    {
+      "name": "campus_preview_timetable",
+      "value": "時間割を見る、授業を追加する"
+    },
+    {
+      "name": "campus_preview_bus",
+      "value": "出発・到着校区を選択"
+    },
+    {
+      "name": "campus_preview_card",
+      "value": "残高と利用履歴"
+    },
+    {
+      "name": "campus_preview_retry",
+      "value": "再読み込み"
+    },
+    {
+      "name": "campus_preview_failed",
+      "value": "概要を読み込めません。再試行または詳細へ。"
+    },
+    {
+      "name": "campus_preview_loading",
+      "value": "概要を読み込み中…"
+    },
+    {
+      "name": "campus_card_refresh",
+      "value": "更新"
+    },
+    {
+      "name": "campus_move_up",
+      "value": "カードを前へ"
+    },
+    {
+      "name": "campus_move_down",
+      "value": "カードを後へ"
+    },
+    {
+      "name": "campus_size_compact",
+      "value": "横長の小カード"
+    },
+    {
+      "name": "campus_size_small",
+      "value": "小"
+    },
+    {
+      "name": "campus_size_large",
+      "value": "大"
+    },
+    {
+      "name": "campus_remove_card",
+      "value": "カードを削除"
+    },
+    {
+      "name": "campus_edit_note",
+      "value": "カードを長押しして移動します。押したまま、もう一本の指で画面を上下にスクロールできます。"
+    },
+    {
+      "name": "campus_restore_layout",
+      "value": "初期配置に戻す"
+    },
+    {
+      "name": "campus_add_card",
+      "value": "追加"
+    },
+    {
+      "name": "campus_edit_layout",
+      "value": "配置編集"
+    },
+    {
+      "name": "campus_classroom_count",
+      "value": "空き教室 {count} 室"
+    },
+    {
+      "name": "campus_academic_count",
+      "value": "{count} 科目の成績"
+    },
+    {
+      "name": "ui_could_not_open_details",
+      "value": "詳細を開けません。再試行してください。"
+    },
+    {
+      "name": "classroom_morning",
+      "value": "午前"
+    },
+    {
+      "name": "classroom_afternoon",
+      "value": "午後"
+    },
+    {
+      "name": "classroom_evening",
+      "value": "夜間"
+    },
+    {
+      "name": "classroom_campus",
+      "value": "キャンパス"
+    },
+    {
+      "name": "classroom_building",
+      "value": "講義棟"
+    },
+    {
+      "name": "classroom_date",
+      "value": "照会日"
+    },
+    {
+      "name": "classroom_time_range",
+      "value": "時間帯"
+    },
+    {
+      "name": "classroom_whole_day",
+      "value": "終日"
+    },
+    {
+      "name": "classroom_range",
+      "value": "%1$d–%2$d 限"
+    },
+    {
+      "name": "classroom_only_free",
+      "value": "空き教室のみ"
+    },
+    {
+      "name": "classroom_display_settings",
+      "value": "表示設定"
+    },
+    {
+      "name": "classroom_remember_building",
+      "value": "前回の講義棟を記憶"
+    },
+    {
+      "name": "classroom_high_contrast",
+      "value": "高コントラスト時間割"
+    },
+    {
+      "name": "classroom_settings_note",
+      "value": "講義棟はキャンパス別に保存されます。高コントラストでは塗りつぶしが使用中、枠のみが空きを示し、色に頼らず判別できます。"
+    },
+    {
+      "name": "classroom_filter_note",
+      "value": "時間帯を選び「空き教室のみ」を有効にすると、その時間帯を通して空いている教室を表示します。昨日から 14 日先まで照会できます。"
+    },
+    {
+      "name": "classroom_result_count",
+      "value": "%2$d 室中 %1$d 室"
+    },
+    {
+      "name": "classroom_free",
+      "value": "空き"
+    },
+    {
+      "name": "classroom_occupied",
+      "value": "使用中"
+    },
+    {
+      "name": "classroom_matrix_note",
+      "value": "数字は時限です。枠は本日の現在時限を示します。時限をタップすると利用詳細が開きます。"
+    },
+    {
+      "name": "classroom_period_unknown",
+      "value": "%1$d 限：データなし"
+    },
+    {
+      "name": "classroom_hide_periods",
+      "value": "利用詳細を閉じる"
+    },
+    {
+      "name": "classroom_loading",
+      "value": "教室の利用状況を更新中"
+    },
+    {
+      "name": "classroom_filter_empty",
+      "value": "この時間帯を通して空いている教室はありません。時間帯を変更するか、空き教室の絞り込みを解除してください。"
+    },
+    {
+      "name": "timetable_edit_title",
+      "value": "授業を編集"
+    },
+    {
+      "name": "timetable_editor_intro",
+      "value": "授業名、授業時間と授業週は必須です。他の項目は任意です。"
+    },
+    {
+      "name": "timetable_editor_optional",
+      "value": "任意"
+    },
+    {
+      "name": "timetable_weekday",
+      "value": "曜日"
+    },
+    {
+      "name": "timetable_select_weekday",
+      "value": "授業の曜日を選択"
+    },
+    {
+      "name": "timetable_editor_period_hint",
+      "value": "時限を選択"
+    },
+    {
+      "name": "timetable_editor_weeks_placeholder",
+      "value": "週または範囲を入力"
+    },
+    {
+      "name": "timetable_editor_error_name",
+      "value": "授業名を入力してください"
+    },
+    {
+      "name": "timetable_editor_error_weekday",
+      "value": "授業の曜日を選択してください"
+    },
+    {
+      "name": "timetable_editor_error_first_unit",
+      "value": "開始時限を 1–15 で入力してください"
+    },
+    {
+      "name": "timetable_editor_error_last_unit",
+      "value": "終了時限を 1–15 で入力してください"
+    },
+    {
+      "name": "timetable_editor_error_order",
+      "value": "終了時限は開始時限以降にしてください"
+    },
+    {
+      "name": "timetable_editor_error_weeks",
+      "value": "授業週を 1–30 の範囲で入力してください（例：1-18、1,3,5-8）"
+    },
+    {
+      "name": "timetable_editor_local_note",
+      "value": "この端末の時間割にのみ保存され、正式な履修登録は変更されません。"
+    },
+    {
+      "name": "classroom_save_failed",
+      "value": "設定を保存できませんでした。もう一度お試しください。"
+    },
+    {
+      "name": "profile_current_campus",
+      "value": "現在のキャンパス"
+    },
+    {
+      "name": "profile_campus_hint",
+      "value": "ホーム、空き教室、バスの初期キャンパスです。各画面でも変更できます。"
+    },
+    {
+      "name": "profile_save_failed",
+      "value": "設定を保存できませんでした。再試行してください。"
+    },
+    {
+      "name": "profile_logout_hint",
+      "value": "キャンパスアカウントからログアウトします。授業、ホームの配置、一般設定は保持されます。"
+    },
+    {
+      "name": "forum_account_id",
+      "value": "ログイン済み · ID %d"
+    },
+    {
+      "name": "forum_signed_in",
+      "value": "掲示板にログイン済み"
+    },
+    {
+      "name": "forum_signed_out",
+      "value": "掲示板からログアウト中"
+    },
+    {
+      "name": "forum_account_hint",
+      "value": "掲示板と復旦のアカウントは別です。"
+    },
+    {
+      "name": "forum_logout_hint",
+      "value": "掲示板からログアウトします。キャンパスサービスは引き続き利用できます。"
+    },
+    {
+      "name": "forum_browsing_settings",
+      "value": "閲覧と通知"
+    },
+    {
+      "name": "forum_sort_title",
+      "value": "初期の並び順"
+    },
+    {
+      "name": "forum_sort_replied",
+      "value": "最新の返信"
+    },
+    {
+      "name": "forum_sort_created",
+      "value": "最新の投稿"
+    },
+    {
+      "name": "forum_clean_title",
+      "value": "クリーンモード"
+    },
+    {
+      "name": "forum_clean_hint",
+      "value": "原版のルールで一部の絵文字を非表示にします。投稿の原文は変更しません。"
+    },
+    {
+      "name": "forum_summary_hint",
+      "value": "対応する投稿で AI 要約を表示します。"
+    },
+    {
+      "name": "forum_hidden_tags",
+      "value": "ミュートするタグ"
+    },
+    {
+      "name": "forum_hidden_tag_count",
+      "value": "%d 個のタグをミュート中"
+    },
+    {
+      "name": "forum_hidden_tags_hint",
+      "value": "これらのタグを含む投稿をフィードから非表示にします。選択済みのタグはタップして解除できます。"
+    },
+    {
+      "name": "forum_tag_search",
+      "value": "タグを検索または入力"
+    },
+    {
+      "name": "forum_tag_add",
+      "value": "追加"
+    },
+    {
+      "name": "forum_account_content",
+      "value": "自分の掲示板"
+    },
+    {
+      "name": "forum_my_posts",
+      "value": "自分の投稿"
+    },
+    {
+      "name": "forum_my_replies",
+      "value": "自分の返信"
+    },
+    {
+      "name": "forum_favorites",
+      "value": "お気に入り"
+    },
+    {
+      "name": "forum_subscriptions",
+      "value": "購読"
+    },
+    {
+      "name": "forum_view_history",
+      "value": "閲覧履歴"
+    },
+    {
+      "name": "forum_history_hint",
+      "value": "この端末に最大 500 件の履歴を保存します。"
+    },
+    {
+      "name": "forum_punishments",
+      "value": "制限の履歴"
+    },
+    {
+      "name": "forum_change_password",
+      "value": "パスワード変更"
+    },
+    {
+      "name": "forum_display_storage",
+      "value": "表示とストレージ"
+    },
+    {
+      "name": "forum_background",
+      "value": "掲示板の背景画像"
+    },
+    {
+      "name": "forum_background_hint",
+      "value": "端末の画像を控えめな背景に設定します。"
+    },
+    {
+      "name": "forum_background_set",
+      "value": "設定済み · タップして変更"
+    },
+    {
+      "name": "forum_background_remove",
+      "value": "背景画像を解除"
+    },
+    {
+      "name": "forum_background_limit",
+      "value": "背景画像は 20 MB 以下にしてください"
+    },
+    {
+      "name": "forum_clear_cache",
+      "value": "画像キャッシュを削除"
+    },
+    {
+      "name": "forum_clear_cache_hint",
+      "value": "ダウンロード済みの画像を削除します。アカウントと設定は保持されます。"
+    },
+    {
+      "name": "forum_cache_cleared",
+      "value": "画像キャッシュを削除しました"
+    },
+    {
+      "name": "forum_clear_history",
+      "value": "削除"
+    },
+    {
+      "name": "forum_clear_history_hint",
+      "value": "この端末の閲覧履歴を削除しますか？サーバーの投稿は保持されます。"
+    },
+    {
+      "name": "forum_account_empty",
+      "value": "まだありません"
+    },
+    {
+      "name": "forum_punishment_revoked",
+      "value": "取り消し済み"
+    },
+    {
+      "value": "復旦アカウント",
+      "name": "account_signed_in"
+    },
+    {
+      "value": "復旦 ID · %s",
+      "name": "account_fudan_id"
+    },
+    {
+      "value": "アカウントの画像",
+      "name": "account_avatar"
+    },
+    {
+      "value": "復旦にログイン済み",
+      "name": "account_verified"
+    },
+    {
+      "value": "青い枠とチェックは現在のカードです。別のサイズをタップして変更し、未追加のカードをタップして追加できます。",
+      "name": "campus_catalog_note"
+    },
+    {
+      "value": "よい旧正月をお迎えください",
+      "name": "campus_welcome_lunar_eve"
+    },
+    {
+      "value": "旧正月おめでとうございます！",
+      "name": "campus_welcome_spring"
+    },
+    {
+      "value": "元宵節おめでとうございます！",
+      "name": "campus_welcome_lantern"
+    },
+    {
+      "value": "健やかな端午節を！",
+      "name": "campus_welcome_dragon"
+    },
+    {
+      "value": "素敵な中秋節を！",
+      "name": "campus_welcome_midautumn"
+    },
+    {
+      "value": "明けましておめでとうございます！",
+      "name": "campus_welcome_new_year"
+    },
+    {
+      "value": "素敵な労働節を！",
+      "name": "campus_welcome_labour"
+    },
+    {
+      "value": "教師の日おめでとうございます！",
+      "name": "campus_welcome_teachers"
+    },
+    {
+      "name": "forum_activities_title",
+      "value": "イベントを表示"
+    },
+    {
+      "name": "forum_activities_hint",
+      "value": "掲示板に公式イベントを表示します。タップで詳細を確認できます。イベントがない場合は自動的に折りたたみ、オフにするとイベント欄を非表示にします。"
+    },
+    {
+      "name": "forum_activities_cached",
+      "value": "更新できないため、以前取得したイベントを表示しています。"
+    },
+    {
+      "name": "forum_activities_unavailable",
+      "value": "イベントを取得できません。後でもう一度お試しください。"
+    },
+    {
+      "name": "forum_activities_all",
+      "value": "すべてのイベントを見る"
+    },
+    {
+      "name": "forum_activity_open",
+      "value": "見る"
+    },
+    {
+      "name": "forum_messages",
+      "value": "メッセージ"
+    },
+    {
+      "name": "forum_show_unread",
+      "value": "未読のみ"
+    },
+    {
+      "name": "forum_message_no_detail",
+      "value": "このメッセージに詳しい内容はありません。"
+    },
+    {
+      "name": "forum_message_ack_failed",
+      "value": "既読状態を同期できませんでした。下に引いて再試行してください。"
+    },
+    {
+      "name": "forum_activities_loading",
+      "value": "イベントを取得中"
+    },
+    {
+      "name": "forum_activities_source",
+      "value": "旦夕公式イベント"
+    },
+    {
+      "name": "forum_activities_empty",
+      "value": "イベントはありません"
+    },
+    {
+      "name": "forum_activities_empty_hint",
+      "value": "現在、公式イベントは公開されていません。後で更新してください。"
+    },
+    {
+      "name": "forum_activities_retry_hint",
+      "value": "公式イベントを取得できませんでした。タップして再試行してください。"
+    },
+    {
+      "name": "feature_evaluation",
+      "value": "授業評価"
+    },
+    {
+      "name": "feature_campus_access",
+      "value": "入構権限"
+    },
+    {
+      "name": "feature_sports",
+      "value": "施設予約"
+    },
+    {
+      "name": "feature_life_code",
+      "value": "復旦生活コード"
+    },
+    {
+      "name": "feature_developer_notice",
+      "value": "開発チームのお知らせ"
+    },
+    {
+      "name": "feature_dining",
+      "value": "食堂の混雑状況"
+    },
+    {
+      "name": "feature_library",
+      "value": "図書館の利用人数"
+    },
+    {
+      "name": "feature_electricity",
+      "value": "寮の電気料金"
+    },
+    {
+      "name": "live_dining_title",
+      "value": "食堂の混雑状況"
+    },
+    {
+      "name": "live_library_title",
+      "value": "図書館の在館人数"
+    },
+    {
+      "name": "live_electricity_title",
+      "value": "寮の電力"
+    },
+    {
+      "name": "live_developer_title",
+      "value": "開発チームのお知らせ"
+    },
+    {
+      "name": "live_sign_in_hint",
+      "value": "復旦アカウントにログインして確認してください。"
+    },
+    {
+      "name": "live_load_error",
+      "value": "データを読み込めません。接続を確認して再試行してください。"
+    },
+    {
+      "name": "live_dining_outside",
+      "value": "現在は食事の集計時間外です"
+    },
+    {
+      "name": "live_dining_hint",
+      "value": "大学が提供する全窓口をキャンパスと食堂別に表示。人数は利用状況の目安で、実際の待ち人数ではありません。相対的な混雑は各食堂の人数とピーク目安の比率で比較します。"
+    },
+    {
+      "name": "live_library_hint",
+      "value": "入館者数・残りの入館可能人数・開館時間を表示。下に引いて更新。"
+    },
+    {
+      "name": "live_electricity_hint",
+      "value": "寮の情報は学内アカウントに基づきます。使用履歴はデータセンターから取得し、現在の残量と更新時刻が異なる場合があります。"
+    },
+    {
+      "name": "live_developer_hint",
+      "value": "旦夕開発チームの原文と公開日時を表示します。最新と過去のお知らせを切り替えられます。"
+    },
+    {
+      "name": "live_no_notices",
+      "value": "お知らせはありません"
+    },
+    {
+      "name": "live_visitors",
+      "value": "在館人数"
+    },
+    {
+      "name": "live_remaining_kwh",
+      "value": "残量 · kWh"
+    },
+    {
+      "name": "live_used_kwh",
+      "value": "使用済み · kWh"
+    },
+    {
+      "name": "live_least_busy",
+      "value": "比較的空いている"
+    },
+    {
+      "name": "live_most_busy",
+      "value": "比較的混雑している"
+    },
+    {
+      "name": "live_notice_range",
+      "value": "表示範囲"
+    },
+    {
+      "name": "live_latest",
+      "value": "最新のお知らせ"
+    },
+    {
+      "name": "live_history",
+      "value": "過去のお知らせ"
+    },
+    {
+      "name": "live_view_full",
+      "value": "全文を見る"
+    },
+    {
+      "name": "live_query_campus",
+      "value": "キャンパス"
+    },
+    {
+      "name": "live_transactions",
+      "value": "利用人数"
+    },
+    {
+      "name": "live_peak_reference",
+      "value": "ピーク参考値: %d 人"
+    },
+    {
+      "name": "live_usage_history",
+      "value": "日ごとの使用量"
+    },
+    {
+      "name": "live_last_days",
+      "value": "最新 %d 件"
+    },
+    {
+      "name": "live_open_error",
+      "value": "リンクを開けません。後でもう一度お試しください。"
+    },
+    {
+      "name": "utility_evaluation",
+      "value": "授業評価"
+    },
+    {
+      "name": "utility_access",
+      "value": "入構権限"
+    },
+    {
+      "name": "utility_life_code",
+      "value": "復旦生活コード"
+    },
+    {
+      "name": "utility_sports",
+      "value": "施設予約"
+    },
+    {
+      "name": "utility_code_entry",
+      "value": "生活コードを表示"
+    },
+    {
+      "name": "utility_code_preview_hint",
+      "value": "開いたときに最新コードを取得"
+    },
+    {
+      "name": "utility_not_provided",
+      "value": "大学から未提供"
+    },
+    {
+      "name": "utility_no_access",
+      "value": "入構権限の記録なし"
+    },
+    {
+      "name": "utility_sports_summary",
+      "value": "朝練 %s · 必修 %s · 選択 %s"
+    },
+    {
+      "name": "utility_login_value",
+      "value": "ログインして確認"
+    },
+    {
+      "name": "utility_forum_login_hint",
+      "value": "掲示板アカウントで授業評価を確認"
+    },
+    {
+      "name": "utility_campus_login_hint",
+      "value": "詳細で復旦の本人認証を実施"
+    },
+    {
+      "name": "utility_access_permission",
+      "value": "入構権限"
+    },
+    {
+      "name": "utility_card_status",
+      "value": "アカウント状態"
+    },
+    {
+      "name": "utility_access_expiry",
+      "value": "有効期限"
+    },
+    {
+      "name": "utility_access_hint",
+      "value": "大学データセンターの学生証入構権限と有効期限を表示します。変更は大学の公式システムで申請してください。"
+    },
+    {
+      "name": "utility_sports_morning",
+      "value": "朝練"
+    },
+    {
+      "name": "utility_sports_required",
+      "value": "必修"
+    },
+    {
+      "name": "utility_sports_optional",
+      "value": "選択"
+    },
+    {
+      "name": "utility_sports_hint",
+      "value": "運動の回数と種目別成績は体育システムの記録に従います。未提供または解析できない値はゼロではなく「—」を表示します。"
+    },
+    {
+      "name": "utility_result",
+      "value": "記録"
+    },
+    {
+      "name": "utility_score",
+      "value": "点数"
+    },
+    {
+      "name": "utility_code_fetched",
+      "value": "更新時刻 %s"
+    },
+    {
+      "name": "utility_code_hint",
+      "value": "生活コードはこの画面だけに表示し、保存しません。下に引くか再読み込みで最新コードを取得します。閉じると画面の明るさを元に戻します。"
+    },
+    {
+      "name": "utility_open_official",
+      "value": "大学の公式サイトを開く"
+    },
+    {
+      "name": "utility_browser_failed",
+      "value": "ブラウザーを開けません。もう一度お試しください。"
+    },
+    {
+      "name": "utility_rating_overall",
+      "value": "全体的な評価"
+    },
+    {
+      "name": "utility_rating_content",
+      "value": "授業の形式"
+    },
+    {
+      "name": "utility_rating_workload",
+      "value": "課題量"
+    },
+    {
+      "name": "utility_rating_assessment",
+      "value": "評価の要件"
+    },
+    {
+      "name": "utility_review_deleted",
+      "value": "この評価は削除されました"
+    },
+    {
+      "name": "utility_view_course",
+      "value": "授業を表示"
+    },
+    {
+      "name": "utility_edit_review",
+      "value": "編集"
+    },
+    {
+      "name": "utility_delete_review",
+      "value": "評価を削除"
+    },
+    {
+      "name": "utility_delete_review_hint",
+      "value": "削除は取り消せません。この評価を削除しますか？"
+    },
+    {
+      "name": "utility_credits",
+      "value": "単位 %s"
+    },
+    {
+      "name": "utility_review_count",
+      "value": "評価 %d 件"
+    },
+    {
+      "name": "utility_course_count",
+      "value": "開講記録 %d 件"
+    },
+    {
+      "name": "utility_search_hint",
+      "value": "授業名・コード・教員"
+    },
+    {
+      "name": "utility_search",
+      "value": "検索"
+    },
+    {
+      "name": "utility_no_courses",
+      "value": "該当する授業がありません。検索語を変えてお試しください。"
+    },
+    {
+      "name": "utility_load_more",
+      "value": "さらに読み込む"
+    },
+    {
+      "name": "utility_evaluation_hint",
+      "value": "授業評価は大学アカウントとは別の掲示板アカウントを使います。授業や教員を検索し、詳細で教員・学期別に評価を絞り込めます。"
+    },
+    {
+      "name": "utility_teacher",
+      "value": "教員"
+    },
+    {
+      "name": "utility_term",
+      "value": "学期"
+    },
+    {
+      "name": "utility_all",
+      "value": "すべて"
+    },
+    {
+      "name": "utility_term_unknown",
+      "value": "不明な学期"
+    },
+    {
+      "name": "utility_term_autumn",
+      "value": "秋学期"
+    },
+    {
+      "name": "utility_term_winter",
+      "value": "冬休み"
+    },
+    {
+      "name": "utility_term_spring",
+      "value": "春学期"
+    },
+    {
+      "name": "utility_term_summer",
+      "value": "夏休み"
+    },
+    {
+      "name": "utility_write_review",
+      "value": "評価を書く"
+    },
+    {
+      "name": "utility_no_reviews",
+      "value": "この条件の評価はまだありません"
+    },
+    {
+      "name": "utility_evaluation_editor_hint",
+      "value": "実際に履修した授業を選び、4項目すべてを評価してください。スタイル・課題量は原版の評価方向を維持します。"
+    },
+    {
+      "name": "utility_course_offering",
+      "value": "開講教員・学期"
+    },
+    {
+      "name": "utility_select_course",
+      "value": "開講記録を選択"
+    },
+    {
+      "name": "utility_review_title",
+      "value": "評価のタイトル"
+    },
+    {
+      "name": "utility_review_title_hint",
+      "value": "体験を簡潔にまとめる"
+    },
+    {
+      "name": "utility_review_body",
+      "value": "評価本文"
+    },
+    {
+      "name": "utility_review_body_hint",
+      "value": "授業内容・授業体験・アドバイス…"
+    },
+    {
+      "name": "utility_sending",
+      "value": "送信中"
+    },
+    {
+      "name": "utility_submit",
+      "value": "評価を送信"
+    },
+    {
+      "name": "utility_open_terms",
+      "value": "公式の利用規約を読む"
+    },
+    {
+      "name": "utility_login_forum",
+      "value": "掲示板にログイン"
+    },
+    {
+      "name": "utility_course_details",
+      "value": "授業評価"
+    },
+    {
+      "name": "utility_sports_migrated_value",
+      "value": "体育・運動ガイドを確認"
+    },
+    {
+      "name": "utility_sports_migrated_hint",
+      "value": "大学の運動記録・統計は「復旦智慧体育系統」ミニプログラムに移行しました。公式の学生ガイドをご参照ください。この画面は認証済みの旧Web記録のみ対応します。"
+    },
+    {
+      "name": "utility_sports_guide",
+      "value": "学生向け使用ガイド"
+    },
+    {
+      "name": "utility_rating_overall_words",
+      "value": "とても悪い;悪い;普通;良い;とても良い"
+    },
+    {
+      "name": "utility_rating_content_words",
+      "value": "ハードコア;難しい;普通;簡単;とても簡単"
+    },
+    {
+      "name": "utility_rating_workload_words",
+      "value": "非常に多い;多い;普通;少ない;とても少ない"
+    },
+    {
+      "name": "utility_rating_assessment_words",
+      "value": "非常に厳格;厳格;普通;緩やか;とても緩やか"
+    },
+    {
+      "name": "utility_rating_unset",
+      "value": "評価を選択"
+    },
+    {
+      "name": "utility_reviewer",
+      "value": "ユーザー %d"
+    },
+    {
+      "name": "utility_invalid_service",
+      "value": "この学内サービスは利用できません。選び直してください。"
+    },
+    {
+      "name": "utility_account_changed",
+      "value": "アカウントまたは言語が変わりました。再読み込みしてください。"
+    },
+    {
+      "name": "utility_invalid_response",
+      "value": "サービスの画面・データ形式が変わりました。再試行するか公式サイトを開いてください。"
+    },
+    {
+      "name": "utility_invalid_review",
+      "value": "授業・タイトル・本文・4つの評価を入力してください。編集時に授業は変更できません。"
+    },
+    {
+      "name": "utility_review_owned_only",
+      "value": "自分の削除されていない評価だけを編集・削除できます。"
+    },
+    {
+      "name": "utility_invalid_identifier",
+      "value": "授業・評価のIDまたは検索ページが無効です。再読み込みしてください。"
+    },
+    {
+      "name": "utility_code_terms_required",
+      "value": "まず公式サイトで生活コードの規約を読み、同意してください。"
+    },
+    {
+      "name": "utility_code_too_long",
+      "value": "生活コードがネイティブQRの上限を超えました。公式サイトを使用してください。"
+    },
+    {
+      "name": "campus_verify_continue",
+      "value": "本人確認を続ける"
+    },
+    {
+      "name": "campus_unit_cny",
+      "value": "CNY"
+    },
+    {
+      "name": "campus_unit_people",
+      "value": "人"
+    },
+    {
+      "name": "campus_unit_kwh",
+      "value": "kWh"
+    },
+    {
+      "name": "campus_unit_rooms",
+      "value": "室"
+    },
+    {
+      "name": "campus_hint_announcement",
+      "value": "最新の教務情報"
+    },
+    {
+      "name": "campus_hint_bus",
+      "value": "次の便 · 出発時刻"
+    },
+    {
+      "name": "campus_hint_empty_classroom",
+      "value": "棟と日付から授業と空き時間を確認"
+    },
+    {
+      "name": "campus_hint_academic",
+      "value": "試験日程と成績の概要"
+    },
+    {
+      "name": "campus_hint_timetable",
+      "value": "今日の授業"
+    },
+    {
+      "name": "campus_hint_card",
+      "value": "利用可能な残高"
+    },
+    {
+      "name": "campus_hint_evaluation",
+      "value": "授業の評価と体験"
+    },
+    {
+      "name": "campus_hint_campus_access",
+      "value": "入校資格と有効期間"
+    },
+    {
+      "name": "campus_hint_sports",
+      "value": "施設・日付・予約可能時間を選択"
+    },
+    {
+      "name": "campus_hint_life_code",
+      "value": "QR コード · タップで表示"
+    },
+    {
+      "name": "campus_hint_developer_notice",
+      "value": "開発チームのお知らせ"
+    },
+    {
+      "name": "campus_hint_dining",
+      "value": "比較的空いている窓口"
+    },
+    {
+      "name": "campus_hint_library",
+      "value": "現在の在館者数"
+    },
+    {
+      "name": "campus_hint_electricity",
+      "value": "寮の電力残量"
+    },
+    {
+      "name": "forum_webvpn_verification_hint",
+      "value": "樹洞への直接接続ができません。大学 WebVPN の認証後、樹洞専用のメールアドレスとパスワードでログインしてください。"
+    },
+    {
+      "name": "forum_login_timeout_hint",
+      "value": "ログインがタイムアウトしました（2300028）。サーバーの受信を確認できません。しばらくして再度ログインしてください。パスワードは自動で再送されません。"
+    },
+    {
+      "name": "live_load_usage_history",
+      "value": "使用履歴を表示"
+    },
+    {
+      "name": "review_net_against",
+      "value": "反対超過"
+    },
+    {
+      "name": "review_net_support",
+      "value": "賛成超過"
+    },
+    {
+      "name": "review_net_score",
+      "value": "差引評価"
+    },
+    {
+      "name": "review_average_rating",
+      "value": "平均評価"
+    },
+    {
+      "name": "settings_high_contrast",
+      "value": "アクセシビリティ：高コントラスト"
+    },
+    {
+      "name": "settings_high_contrast_hint",
+      "value": "空き教室の検索結果と掲示板タグ"
+    },
+    {
+      "name": "settings_haptics",
+      "value": "触覚フィードバック"
+    },
+    {
+      "name": "settings_haptics_hint",
+      "value": "切り替え・投票・ドラッグ時に振動します。強度はシステム設定に従います。"
+    },
+    {
+      "name": "settings_proxy",
+      "value": "プロキシ設定"
+    },
+    {
+      "name": "settings_proxy_none",
+      "value": "プロキシを使用しない"
+    },
+    {
+      "name": "settings_proxy_hint",
+      "value": "HTTP プロキシを保存し、タップして切り替えます。使用中の項目を削除すると無効になります。"
+    },
+    {
+      "name": "settings_proxy_scope",
+      "value": "アプリの通信、画像のダウンロード、アプリ内の認証ページに適用されます。次の通信から有効です。WebVPN の自動利用とは別の設定です。"
+    },
+    {
+      "name": "settings_proxy_input",
+      "value": "例：127.0.0.1:1234"
+    },
+    {
+      "name": "settings_proxy_add",
+      "value": "プロキシを追加"
+    },
+    {
+      "name": "settings_proxy_save",
+      "value": "アドレスを保存"
+    },
+    {
+      "name": "settings_proxy_remove",
+      "value": "プロキシを削除"
+    },
+    {
+      "name": "settings_proxy_invalid",
+      "value": "有効な HTTP プロキシのホストとポート（1–65535）を入力してください。例：127.0.0.1:1234"
+    },
+    {
+      "name": "settings_cancel",
+      "value": "キャンセル"
+    },
+    {
+      "name": "settings_save_failed",
+      "value": "設定を保存できませんでした。再試行してください。"
+    },
+    {
+      "name": "settings_open_failed",
+      "value": "リンクを開けません。ブラウザーがインストールされているか確認してください。"
+    },
+    {
+      "name": "settings_intro",
+      "value": "アプリについて"
+    },
+    {
+      "name": "settings_description",
+      "value": "復旦大学の学部生が心を込めて開発した、小さなキャンパス総合サービスアプリです。日々の生活のお役に立てれば幸いです。"
+    },
+    {
+      "name": "settings_harmony_intro",
+      "value": "本アプリは DanXi の HarmonyOS 向け内部テスト版です。元のプロジェクトとすべての貢献者に感謝します。"
+    },
+    {
+      "name": "settings_legal",
+      "value": "法的情報"
+    },
+    {
+      "name": "settings_legal_text",
+      "value": "ログインすると、プライバシーポリシーと利用規約を読み、同意したものとみなされます。DanXi は GNU GPL v3 で公開されています。サードパーティーのライセンスはオフラインで閲覧できます。"
+    },
+    {
+      "name": "settings_privacy",
+      "value": "プライバシーポリシーと利用規約"
+    },
+    {
+      "name": "settings_licenses",
+      "value": "オープンソースライセンス"
+    },
+    {
+      "name": "settings_license_hint",
+      "value": "本アプリで使用しているオープンソースプロジェクトです。タップしてライセンス全文をオフラインで閲覧できます。"
+    },
+    {
+      "name": "settings_thanks",
+      "value": "謝辞"
+    },
+    {
+      "name": "settings_thanks_text",
+      "value": "このアプリのアイコンをデザインしてくれた [IvanFei](https://github.com/ivanfei-1) さん、ステッカーなどのアートデザインを提供してくれた [MSapphire](https://www.xiaohongshu.com/user/profile/6575475f000000001902d794) さん、[Lin2510]() さん、[zzz111]() さんに感謝します。"
+    },
+    {
+      "name": "settings_developers",
+      "value": "元プロジェクトの開発者"
+    },
+    {
+      "name": "settings_contact",
+      "value": "お問い合わせ"
+    },
+    {
+      "name": "settings_contact_hint",
+      "value": "不具合報告にはバージョン、再現手順、エラーの詳細を添えてください。パスワードや認証情報は含めないでください。"
+    },
+    {
+      "name": "settings_email",
+      "value": "フィードバックメールを作成"
+    },
+    {
+      "name": "settings_copy_email",
+      "value": "メールアドレスをコピー"
+    },
+    {
+      "name": "settings_email_copied",
+      "value": "メールアドレスをコピーしました"
+    },
+    {
+      "name": "settings_email_unavailable",
+      "value": "メールアプリを開けませんでした。アドレスをコピーしてお問い合わせください。"
+    },
+    {
+      "name": "settings_project",
+      "value": "プロジェクトのウェブサイト"
+    },
+    {
+      "name": "settings_source",
+      "value": "元のソースコードと貢献記録"
+    },
+    {
+      "name": "settings_latest_reply",
+      "value": "%s · %sの返信："
+    },
+    {
+      "name": "settings_deleted_reply",
+      "value": "この返信は削除されました"
+    },
+    {
+      "name": "settings_image_summary",
+      "value": "[画像]"
+    },
+    {
+      "name": "settings_sticker_summary",
+      "value": "[スタンプ]"
+    },
+    {
+      "name": "settings_quote_summary",
+      "value": "引用"
+    },
+    {
+      "name": "summary_queued",
+      "value": "生成待ち"
+    },
+    {
+      "name": "summary_processing",
+      "value": "議論を整理しています"
+    },
+    {
+      "name": "summary_loading",
+      "value": "AI 要約を取得中"
+    },
+    {
+      "name": "summary_empty",
+      "value": "要約はまだありません"
+    },
+    {
+      "name": "summary_timeout",
+      "value": "生成に時間がかかっています。後でもう一度お試しください。"
+    },
+    {
+      "name": "summary_error",
+      "value": "要約を生成できません。後でもう一度お試しください。"
+    },
+    {
+      "name": "summary_count",
+      "value": "%s 件の投稿を分析中"
+    },
+    {
+      "name": "summary_wait_note",
+      "value": "結果は自動表示されます。閉じると確認を停止します。"
+    },
+    {
+      "name": "summary_disclaimer",
+      "value": "AI による参考用の要約 · 学内研究試験、一般向けサービスではありません"
+    },
+    {
+      "name": "summary_keywords",
+      "value": "キーワード"
+    },
+    {
+      "name": "summary_core",
+      "value": "要約"
+    },
+    {
+      "name": "summary_branches",
+      "value": "議論の分岐"
+    },
+    {
+      "name": "summary_interactions",
+      "value": "主なやり取り"
+    },
+    {
+      "name": "summary_references",
+      "value": "関連投稿 · タップして原文を読む"
+    },
+    {
+      "name": "summary_support",
+      "value": "に賛同"
+    },
+    {
+      "name": "summary_rebuttal",
+      "value": "に反論"
+    },
+    {
+      "name": "summary_supplement",
+      "value": "に補足"
+    },
+    {
+      "name": "summary_question",
+      "value": "に質問"
+    },
+    {
+      "name": "summary_reply",
+      "value": "に返信"
+    },
+    {
+      "name": "summary_generated",
+      "value": "生成日時"
+    },
+    {
+      "name": "summary_feedback_sent",
+      "value": "フィードバックを送信しました"
+    },
+    {
+      "name": "summary_feedback_sending",
+      "value": "送信中…"
+    },
+    {
+      "name": "summary_copy",
+      "value": "要約をコピー"
+    },
+    {
+      "name": "summary_unsupported",
+      "value": "このスレッドは AI 要約に対応していません"
+    },
+    {
+      "name": "summary_permission",
+      "value": "AI 要約を利用する権限がありません"
+    },
+    {
+      "name": "summary_feedback_note",
+      "value": "要約の改善にご協力ください。抜けや不正確な内容をご記入ください（任意）。"
+    },
+    {
+      "name": "settings_original_version",
+      "value": "原プロジェクトのバージョン 1.5.3 build 350 #7fe64c6"
+    },
+    {
+      "name": "settings_original_developer_motto",
+      "value": "Passionate developers\nfrom A.I. & C.S. & Economics & Physics\nat Fudan University"
+    },
+    {
+      "name": "campus_classroom_period_note",
+      "value": "現在の時限の空き教室"
+    },
+    {
+      "name": "campus_academic_summary",
+      "value": "今学期：試験 {exams} 科目・成績公開 {grades} 科目"
+    },
+    {
+      "name": "academic_gpa_credits",
+      "value": "単位"
+    },
+    {
+      "name": "composer_tags_note",
+      "value": "複数選択・新規作成できます"
+    },
+    {
+      "name": "composer_search_custom_tag",
+      "value": "タグを検索・入力"
+    },
+    {
+      "name": "composer_add_tag",
+      "value": "追加"
+    },
+    {
+      "name": "composer_draft_note",
+      "value": "アプリ使用中は下書きを保存"
+    },
+    {
+      "name": "composer_bold",
+      "value": "太字"
+    },
+    {
+      "name": "composer_italic",
+      "value": "斜体"
+    },
+    {
+      "name": "composer_formula",
+      "value": "数式"
+    },
+    {
+      "name": "composer_stickers",
+      "value": "スタンプ"
+    },
+    {
+      "name": "composer_images_note",
+      "value": "添付画像（削除して選び直せます）"
+    },
+    {
+      "name": "composer_image_number",
+      "value": "画像 {index}"
+    },
+    {
+      "name": "composer_remove_image",
+      "value": "画像を削除"
+    },
+    {
+      "name": "composer_fullscreen",
+      "value": "集中編集"
+    },
+    {
+      "name": "composer_help",
+      "value": "書式のヘルプ"
+    },
+    {
+      "name": "composer_help_note",
+      "value": "Markdown と LaTeX に対応します。\n\n**太字**、*斜体*、# 見出し、[文字](https://example.com)\n\nインライン数式：$x^2$、独立数式：$$x^2$$\n\n文字を選択して書式を適用し、目のボタンで確認できます。画像はアップロード後に本文へ挿入され、スタンプは続けて追加できます。"
+    },
+    {
+      "name": "composer_community",
+      "value": "コミュニティ規約"
+    },
+    {
+      "name": "composer_warning_title",
+      "value": "投稿前の確認"
+    },
+    {
+      "name": "composer_warning",
+      "value": "本文に「{word}」が含まれます。規約を確認してから投稿してください。"
+    },
+    {
+      "name": "composer_send_anyway",
+      "value": "投稿を続行"
+    },
+    {
+      "name": "composer_recommend",
+      "value": "おすすめタグ"
+    },
+    {
+      "name": "composer_recommend_note",
+      "value": "既存のタグ名を端末内で照合します。本文は送信しません。候補は自由に選択できます。"
+    },
+    {
+      "name": "campus_classroom_outside_period",
+      "value": "現在は授業時間外です"
+    },
+    {
+      "name": "academic_local_scope",
+      "value": "算入 {included} 科目 · 除外 {excluded} 科目 · データ不足 {incomplete} 科目"
+    },
+    {
+      "name": "review_no_ratings",
+      "value": "評価はまだありません"
+    },
+    {
+      "name": "review_rating_unavailable",
+      "value": "科目評価を見る"
+    },
+    {
+      "name": "review_count_unavailable",
+      "value": "レビュー件数は未取得"
+    },
+    {
+      "name": "review_summary_loading",
+      "value": "評価を読み込み中"
+    },
+    {
+      "name": "review_summary_failed",
+      "value": "評価を取得できません"
+    },
+    {
+      "name": "forum_all_tags",
+      "value": "All tags"
+    },
+    {
+      "name": "forum_before_date",
+      "value": "Not later than date"
+    },
+    {
+      "name": "forum_clear_date",
+      "value": "Clear date filter"
+    },
+    {
+      "name": "forum_before_date_value",
+      "value": "Not later than %s"
+    },
+    {
+      "name": "forum_pinned",
+      "value": "Pinned"
+    },
+    {
+      "name": "forum_tags_search",
+      "value": "Search tags"
+    },
+    {
+      "name": "forum_tag_popularity",
+      "value": "Popularity %d"
+    },
+    {
+      "name": "campus_academic_exam_count",
+      "value": "試験 {count} 科目"
+    },
+    {
+      "name": "campus_academic_grade_count",
+      "value": "成績公開 {count} 科目"
+    },
+    {
+      "name": "live_history_diagnostics",
+      "value": "読み込みの診断"
+    },
+    {
+      "name": "live_history_diagnostics_hint",
+      "value": "この診断にはエラーと最近のリクエストの匿名化された情報が含まれます。パスワード、認証情報、応答本文は含まれません。問題の報告用にコピーできます。"
+    },
+    {
+      "name": "live_history_diagnostics_copy",
+      "value": "診断をコピー"
+    },
+    {
+      "name": "diagnostics_read",
+      "value": "診断を表示"
+    },
+    {
+      "name": "diagnostics_error",
+      "value": "エラー詳細"
+    },
+    {
+      "name": "diagnostics_logs",
+      "value": "関連ログ"
+    },
+    {
+      "name": "diagnostics_hint",
+      "value": "この診断にはエラーと最近のリクエストの匿名化された情報が含まれます。パスワード、認証情報、応答本文は含まれません。問題の報告用にコピーできます。"
+    },
+    {
+      "name": "diagnostics_no_logs",
+      "value": "リクエストログはありません。"
+    },
+    {
+      "name": "diagnostics_expired",
+      "value": "診断の有効期限が切れました。前の画面に戻って再度表示してください。"
+    },
+    {
+      "name": "diagnostics_open_failed",
+      "value": "診断を開けません。もう一度お試しください。"
+    },
+    {
+      "name": "diagnostics_copy_failed",
+      "value": "コピー失敗"
+    },
+    {
+      "name": "diagnostics_network_brief",
+      "value": "接続に失敗しました。ネットワークを確認して再読み込みしてください。"
+    },
+    {
+      "name": "diagnostics_generic_brief",
+      "value": "操作を完了できません。しばらくしてから再度お試しください。"
+    },
+    {
+      "name": "settings_original_project",
+      "value": "原プロジェクト · DanXi-Dev / DanXi"
+    },
+    {
+      "name": "settings_all_contributors",
+      "value": "すべての貢献者"
+    },
+    {
+      "name": "campus_bus_closed",
+      "value": "本日終了"
+    },
+    {
+      "name": "campus_bus_following",
+      "value": "次の便 %s"
+    },
+    {
+      "name": "campus_classroom_current",
+      "value": "現在の時限の空き"
+    },
+    {
+      "name": "campus_classroom_scope",
+      "value": "%d 室の状態を確認"
+    },
+    {
+      "name": "campus_classroom_none",
+      "value": "現在の時限に空き教室はありません"
+    },
+    {
+      "name": "campus_room_seats",
+      "value": "%s 席"
+    },
+    {
+      "name": "campus_library_more",
+      "value": "ほか %d 館 · タップして表示"
+    },
+    {
+      "name": "campus_library_hours",
+      "value": "開館 %s"
+    },
+    {
+      "name": "campus_bus_last",
+      "value": "以降の便はありません"
+    },
+    {
+      "name": "campus_bus_timetable",
+      "value": "時刻表を表示"
+    },
+    {
+      "name": "calendar_manual_sync_hint",
+      "value": "別の学期は手動で選択。同期はボタンを押したときだけ行います。"
+    },
+    {
+      "name": "timetable_semester_not_found",
+      "value": "%s に対応する学期がありません。第1授業週の月曜日を確認してください。"
+    },
+    {
+      "name": "timetable_graduate_history_unavailable",
+      "value": "大学院の教務APIは現在の時間割のみを返します。この学期の保存済み授業がありません。ローカル授業を追加するか、現在の学期に戻ってください。"
+    },
+    {
+      "name": "reservation_all_campuses",
+      "value": "すべてのキャンパス"
+    },
+    {
+      "name": "reservation_all_categories",
+      "value": "すべての種目"
+    },
+    {
+      "name": "reservation_date",
+      "value": "予約日"
+    },
+    {
+      "name": "reservation_available_only",
+      "value": "予約可能な時間のみ"
+    },
+    {
+      "name": "reservation_capacity",
+      "value": "予約済み %s / %s"
+    },
+    {
+      "name": "reservation_book",
+      "value": "予約"
+    },
+    {
+      "name": "reservation_full",
+      "value": "満員"
+    },
+    {
+      "name": "reservation_unavailable",
+      "value": "予約不可"
+    },
+    {
+      "name": "reservation_no_places",
+      "value": "該当する施設がありません。キャンパスまたは種目を変更してください。"
+    },
+    {
+      "name": "reservation_no_slots",
+      "value": "該当する時間がありません。日付を変更するか、予約不可の時間も表示してください。"
+    },
+    {
+      "name": "reservation_booking_hint",
+      "value": "空き状況は大学の情報に基づきます。時間を選択後、大学の予約画面で内容を確認して送信してください。"
+    },
+    {
+      "name": "reservation_booking_form",
+      "value": "大学の予約画面"
+    },
+    {
+      "name": "reservation_verification_hint",
+      "value": "施設予約には復旦の認証が必要です。認証を続けてください。"
+    },
+    {
+      "name": "reservation_data_invalid",
+      "value": "施設予約のデータを読み取れません。再読み込みしてください。"
+    },
+    {
+      "name": "reservation_choose_place",
+      "value": "予約施設を選択"
+    },
+    {
+      "name": "reservation_place_count",
+      "value": "%s 施設"
+    },
+    {
+      "name": "reservation_preview_hint",
+      "value": "利用施設と予約可能時間を確認"
+    },
+    {
+      "name": "feature_library_books",
+      "value": "図書館の蔵書"
+    },
+    {
+      "name": "campus_hint_library_books",
+      "value": "図書を検索して所蔵場所と貸出状況を確認"
+    },
+    {
+      "name": "live_dining_people",
+      "value": "人"
+    },
+    {
+      "name": "library_remaining",
+      "value": "あと %d 人入館可能"
+    },
+    {
+      "name": "library_capacity",
+      "value": "定員 %d 人"
+    },
+    {
+      "name": "classroom_schedule_search",
+      "value": "教室・授業・教員を検索"
+    },
+    {
+      "name": "classroom_schedule_hint",
+      "value": "横にスワイプして教室を切替、縦に時限を表示。授業をタップして詳細を確認。"
+    },
+    {
+      "name": "classroom_query_date",
+      "value": "日付"
+    },
+    {
+      "name": "classroom_period",
+      "value": "時限"
+    },
+    {
+      "name": "classroom_room",
+      "value": "教室"
+    },
+    {
+      "name": "classroom_course_id",
+      "value": "科目コード"
+    },
+    {
+      "name": "classroom_teacher",
+      "value": "担当教員"
+    },
+    {
+      "name": "classroom_category",
+      "value": "区分"
+    },
+    {
+      "name": "classroom_enrollment",
+      "value": "履修者数"
+    },
+    {
+      "name": "classroom_building_h2",
+      "value": "第2教学棟"
+    },
+    {
+      "name": "classroom_building_h3",
+      "value": "第3教学棟"
+    },
+    {
+      "name": "classroom_building_h4",
+      "value": "第4教学棟"
+    },
+    {
+      "name": "classroom_building_h5",
+      "value": "第5教学棟"
+    },
+    {
+      "name": "classroom_building_h6",
+      "value": "第6教学棟"
+    },
+    {
+      "name": "classroom_building_hgx",
+      "value": "光華楼西別館"
+    },
+    {
+      "name": "classroom_building_hgd",
+      "value": "光華楼東別館"
+    },
+    {
+      "name": "classroom_building_hq",
+      "value": "新聞学院"
+    },
+    {
+      "name": "classroom_building_j",
+      "value": "江湾キャンパス"
+    },
+    {
+      "name": "classroom_building_z",
+      "value": "張江キャンパス"
+    },
+    {
+      "name": "classroom_building_f",
+      "value": "楓林キャンパス"
+    },
+    {
+      "name": "books_search",
+      "value": "書名を入力して検索"
+    },
+    {
+      "name": "books_results_hint",
+      "value": "関連度順に表示し、スクロールで続きを取得。書名をタップして所蔵を確認。"
+    },
+    {
+      "name": "books_pinned_hint",
+      "value": "ログイン不要。ピン留めした図書はこの端末に保存されます。"
+    },
+    {
+      "name": "books_empty",
+      "value": "書名を入力して図書と所蔵場所を検索"
+    },
+    {
+      "name": "books_view_holdings",
+      "value": "所蔵と貸出状況を見る"
+    },
+    {
+      "name": "books_authors",
+      "value": "著者"
+    },
+    {
+      "name": "books_publisher",
+      "value": "出版情報"
+    },
+    {
+      "name": "books_holdings",
+      "value": "所蔵と貸出状況"
+    },
+    {
+      "name": "books_holdings_hint",
+      "value": "貸出状況は図書館の情報です。所在と請求記号で図書をお探しください。"
+    },
+    {
+      "name": "books_call_number",
+      "value": "請求記号"
+    },
+    {
+      "name": "books_no_holdings",
+      "value": "所蔵資料がありません"
+    },
+    {
+      "name": "books_load_more",
+      "value": "続きを取得"
+    },
+    {
+      "name": "books_pin",
+      "value": "図書をピン留め"
+    },
+    {
+      "name": "books_unpin",
+      "value": "ピン留めを解除"
+    },
+    {
+      "name": "books_pin_failed",
+      "value": "図書を保存できませんでした"
+    },
+    {
+      "name": "books_pinned_count",
+      "value": "%d 冊を保存"
+    },
+    {
+      "name": "books_search_short",
+      "value": "図書検索"
+    },
+    {
+      "name": "books_preview_hint",
+      "value": "所蔵場所・貸出状況"
+    },
+    {
+      "name": "books_public_hint",
+      "value": "キャンパスへのログイン不要"
+    },
+    {
+      "name": "classroom_capacity",
+      "value": "%d 席"
+    },
+    {
+      "name": "timetable_calendar_name",
+      "value": "旦夕時間割 · %s"
+    },
+    {
+      "name": "timetable_calendar_hint",
+      "value": "授業を選択し、システムカレンダーの「旦夕時間割 · %s」に追加します。再度追加しても重複しません。"
+    },
+    {
+      "name": "timetable_calendar_done",
+      "value": "%s 件を同期：追加・更新 %s 件、変更なし %s 件。システムカレンダーで確認できます。"
+    },
+    {
+      "name": "timetable_calendar_permission_reason",
+      "value": "授業をシステムカレンダーに追加し、追加済みの授業の重複を防ぎます。"
+    },
+    {
+      "name": "timetable_calendar_permission_denied",
+      "value": "カレンダーの権限が必要です。システム設定で旦夕のアクセスを許可してください。"
+    },
+    {
+      "name": "timetable_export_empty",
+      "value": "授業を選択してください。"
+    },
+    {
+      "name": "timetable_select_all",
+      "value": "すべて選択"
+    },
+    {
+      "name": "timetable_unselect_all",
+      "value": "選択解除"
+    },
+    {
+      "name": "timetable_history_diary_hint",
+      "value": "過去の授業は大学院の日程から取得します。未登録の授業は手動で追加できます。"
+    },
+    {
+      "name": "reservation_browser_hint",
+      "value": "大学の予約サイトで確認が必要です。下の公式ページの手順を完了すると取得を再開します。公式サイトからも予約できます。"
+    },
+    {
+      "name": "reservation_browser_continue",
+      "value": "取得を再開"
+    },
+    {
+      "name": "reservation_browser_title",
+      "value": "大学の予約サイト"
+    },
+    {
+      "name": "reservation_browser_incomplete",
+      "value": "大学のページから会場情報を取得できませんでした。ページの手順を完了して再試行してください。"
+    },
+    {
+      "name": "reservation_places_title",
+      "value": "施設一覧"
+    },
+    {
+      "name": "reservation_time",
+      "value": "時間帯"
+    },
+    {
+      "name": "reservation_remaining",
+      "value": "空き %s / %s"
+    },
+    {
+      "name": "booking_my_reservations",
+      "value": "予約履歴"
+    },
+    {
+      "name": "booking_type",
+      "value": "施設の種類"
+    },
+    {
+      "name": "booking_environment",
+      "value": "屋内／屋外"
+    },
+    {
+      "name": "booking_available",
+      "value": "予約可能な施設 %d 件"
+    },
+    {
+      "name": "booking_reserve",
+      "value": "予約"
+    },
+    {
+      "name": "booking_full",
+      "value": "満員"
+    },
+    {
+      "name": "booking_rules",
+      "value": "予約の注意事項"
+    },
+    {
+      "name": "booking_required",
+      "value": "必須項目をすべて入力してください。"
+    },
+    {
+      "name": "booking_success",
+      "value": "予約が完了しました。予約履歴で割り当てられた施設を確認できます。"
+    },
+    {
+      "name": "booking_cancel",
+      "value": "この予約を取り消しますか？"
+    },
+    {
+      "name": "booking_cancel_confirm",
+      "value": "予約を取り消す"
+    },
+    {
+      "name": "booking_action_failed",
+      "value": "予約操作を完了できませんでした。"
+    },
+    {
+      "name": "booking_unavailable",
+      "value": "現在この施設は予約できません。"
+    },
+    {
+      "name": "booking_no_times",
+      "value": "選択した日に予約可能な時間帯はありません。"
+    },
+    {
+      "name": "booking_number",
+      "value": "予約数"
+    },
+    {
+      "name": "booking_captcha_web",
+      "value": "この施設では認証が必要です。公式ページで予約を完了してください。"
+    },
+    {
+      "name": "booking_web",
+      "value": "公式予約ページを開く"
+    },
+    {
+      "name": "booking_submit",
+      "value": "予約を確定"
+    },
+    {
+      "name": "booking_no_venues",
+      "value": "条件に一致する施設はありません。"
+    },
+    {
+      "name": "booking_no_appointments",
+      "value": "予約履歴はありません。"
+    },
+    {
+      "name": "library_my_loans",
+      "value": "貸出状況"
+    },
+    {
+      "name": "library_my_requests",
+      "value": "予約状況"
+    },
+    {
+      "name": "library_verify_hint",
+      "value": "図書館の公式ページで認証を完了すると、元の操作を再開します。"
+    },
+    {
+      "name": "library_cancel_request",
+      "value": "予約を取り消す"
+    },
+    {
+      "name": "library_renew_confirm",
+      "value": "この本の貸出を延長しますか？"
+    },
+    {
+      "name": "library_renew",
+      "value": "貸出延長"
+    },
+    {
+      "name": "library_action_failed",
+      "value": "図書館の操作を完了できませんでした。"
+    },
+    {
+      "name": "library_due",
+      "value": "返却期限 %s"
+    },
+    {
+      "name": "library_borrowed",
+      "value": "貸出日 %s"
+    },
+    {
+      "name": "library_returned",
+      "value": "返却日 %s"
+    },
+    {
+      "name": "library_renew_count",
+      "value": "延長回数 %d 回"
+    },
+    {
+      "name": "library_expected",
+      "value": "受取予定日 %s"
+    },
+    {
+      "name": "library_queue",
+      "value": "待ち順 %d"
+    },
+    {
+      "name": "library_current",
+      "value": "現在"
+    },
+    {
+      "name": "library_history",
+      "value": "履歴"
+    },
+    {
+      "name": "library_account_empty",
+      "value": "履歴はありません。"
+    },
+    {
+      "name": "library_request_book",
+      "value": "この本を予約"
+    },
+    {
+      "name": "library_pickup",
+      "value": "受取場所"
+    },
+    {
+      "name": "library_pickup_date",
+      "value": "受取予定日"
+    },
+    {
+      "name": "library_allow_replace",
+      "value": "同じ本の別の冊を許可"
+    },
+    {
+      "name": "library_submit_request",
+      "value": "予約を送信"
+    },
+    {
+      "name": "library_request_success",
+      "value": "図書の予約を送信しました。予約状況で確認できます。"
+    },
+    {
+      "name": "library_no_pickup",
+      "value": "選択できる受取場所はありません。"
+    },
+    {
+      "name": "classroom_day_empty",
+      "value": "選択した日に授業はありません。\n左側に全時限の時間を表示しています。"
+    },
+    {
+      "name": "classroom_search_empty",
+      "value": "条件に一致する教室または授業はありません。"
+    },
+    {
+      "name": "booking_search",
+      "value": "施設を検索"
+    },
+    {
+      "name": "timetable_period_times",
+      "value": "時限\n開始–終了"
+    },
+    {
+      "name": "timetable_month_heading",
+      "value": "{year}年{month}月"
+    },
+    {
+      "name": "timetable_previous_week",
+      "value": "前の週"
+    },
+    {
+      "name": "timetable_next_week",
+      "value": "次の週"
+    },
+    {
+      "name": "detail_cancel_reply",
+      "value": "このフロアへの返信を取り消す"
+    },
+    {
+      "name": "forum_remove_hidden_tag",
+      "value": "タグ %s の非表示を解除"
+    },
+    {
+      "name": "library_history_missing",
+      "value": "貸出履歴を読み込めません。再試行するか、図書館の公式サイトをご確認ください。"
+    },
+    {
+      "name": "library_official_query",
+      "value": "図書館公式サイト"
+    },
+    {
+      "name": "campus_dining_no_activity",
+      "value": "利用状況の記録はまだありません"
+    },
+    {
+      "name": "campus_dining_peak_ratio",
+      "value": "ピーク目安の %d%%"
+    },
+    {
+      "name": "campus_dining_reference",
+      "value": "各食堂のピーク目安で比較"
+    },
+    {
+      "name": "dining_peak_missing",
+      "value": "ピーク目安は未提供"
+    },
+    {
+      "name": "campus_preview_unavailable",
+      "value": "概要は未取得です"
+    },
+    {
+      "name": "campus_academic_counts_compact",
+      "value": "試験 {exams} · 成績 {grades}"
+    },
+    {
+      "name": "campus_catalog_selected",
+      "value": "追加済み · 現在のサイズ"
+    },
+    {
+      "name": "campus_catalog_resize",
+      "value": "追加済み · タップでサイズ変更"
+    },
+    {
+      "name": "campus_catalog_available",
+      "value": "タップして追加"
+    },
+    {
+      "name": "campus_preview_classroom_compact",
+      "value": "教室の予定と空き状況"
+    },
+    {
+      "name": "campus_preview_books_compact",
+      "value": "蔵書検索・貸出・予約"
+    },
+    {
+      "name": "campus_preview_sports_compact",
+      "value": "施設と予約枠"
+    },
+    {
+      "name": "settings_original_flutter",
+      "value": "Flutter 原プロジェクト"
+    },
+    {
+      "name": "settings_ios_developers",
+      "value": "iOS 原プロジェクト開発者"
+    },
+    {
+      "name": "settings_ios_contributors_order",
+      "value": "名前のアルファベット順。"
+    },
+    {
+      "name": "settings_ios_project",
+      "value": "iOS 原プロジェクト · DanXi-Dev / DanXi-swift"
+    },
+    {
+      "name": "settings_ios_contributors",
+      "value": "iOS の全貢献者を表示"
+    },
+    {
+      "name": "settings_ios_version",
+      "value": "iOS 原プロジェクトのソース版 2.4.1 build 500 #fe3c20c"
+    },
+    {
+      "name": "settings_ios_copyright",
+      "value": "iOS 原プロジェクト · Copyright © 2024-2025 DanXi-Dev"
+    },
+    {
+      "name": "settings_ios_filing",
+      "value": "iOS 原プロジェクトの登録 · 沪ICP备2021032046号-4A"
+    },
+    {
+      "name": "settings_thanks_merged",
+      "value": "Flutter・iOS 原プロジェクトの開発者、デザイナー、オープンソースコミュニティに感謝します。"
+    },
+    {
+      "name": "settings_contributors_merged",
+      "value": "重複を除いて名前順に掲載。アイコン・絵文字のデザイン貢献も含みます。"
+    },
+    {
+      "name": "settings_credit_icon_design",
+      "value": "Flutter アイコン制作"
+    },
+    {
+      "name": "settings_credit_art_design",
+      "value": "Flutter 絵文字制作"
+    },
+    {
+      "name": "settings_original_ios",
+      "value": "iOS 原プロジェクト"
+    },
+    {
+      "name": "settings_original_libraries",
+      "value": "原プロジェクトの謝辞"
+    },
+    {
+      "name": "settings_original_libraries_hint",
+      "value": "Flutter・iOS 原プロジェクトが謝辞に掲載するオープンソースソフトウェアを名前順でまとめ、対象プラットフォームと原文のライセンス情報を併記します。"
+    }
+  ]
+}
