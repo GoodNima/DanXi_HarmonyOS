@@ -7,8 +7,8 @@
 ## 先确认设备与下载文件
 
 1. 本包只声明 **phone**，目标及最低兼容 SDK 均为 **26.0.0 / API 26**。包内 `minAPIVersion` 和 `targetAPIVersion` 为 `260000026`。工具支持 HarmonyOS NEXT 并不表示本包支持所有 NEXT 系统；没有低 API 兼容包，也没有平板或手表支持承诺。
-2. 在 Releases 的 **Assets** 下载上述 `.hap` 和 `SHA256SUMS.txt`。Alpha 是 Pre-release，请使用发布列表；自动生成的 Source code ZIP/TAR.GZ 是源码，不是安装包。
-3. 在电脑校验未签名原始下载文件。Windows 可使用下面的命令。签名后文件会改变，不应再拿签名产物与原 unsigned 哈希比较。
+2. 在 Releases 的 **Assets** 下载上述 `.hap`；`SHA256SUMS.txt` 可选，用于核对下载文件，不是安装所需组件。Alpha 是 Pre-release，请使用发布列表；自动生成的 Source code ZIP/TAR.GZ 是源码，不是安装包。
+3. 可选：在电脑校验未签名原始下载文件。SHA-256 是文件摘要，相同下载原件应得到相同结果；它不代替签名，也不能单独证明应用安全。Windows 可使用下面的命令。签名后文件会改变，不应再拿签名产物与原 unsigned 哈希比较。
 
 ```bat
 certutil -hashfile DanXi-HarmonyOS-0.1.33.30-Alpha-build125-unsigned.hap SHA256
@@ -48,7 +48,7 @@ hdc -t <设备标识> shell param get const.ohos.apiversion
 
 1. USB 连接并授权后，在工具中确认识别到目标手机。USB 方式不填写无线 IP，见[作者答复](https://github.com/likuai2010/auto-installer/issues/29#issuecomment-2503322875)。无线方式则按手机当前 IP、端口连接；3.1.0 的自动端口默认值不能代替设备实际连接信息。
 2. 在工具的账号入口登录自己的华为账号，完成页面提示的认证、验证码或授权，并检查当前目标设备。
-3. 选择下载并校验过的 DanXi unsigned HAP，核对包名 `com.danxi.ohmo` 和版本。进入工具的自动签名/调试流程，根据提示为该包名和设备申请或刷新调试材料，再进行签名安装。
+3. 选择下载的 DanXi unsigned HAP，核对包名 `com.danxi.ohmo` 和版本。进入工具的自动签名/调试流程，根据提示为该包名和设备申请或刷新调试材料，再进行签名安装。
 4. 对这个 unsigned HAP，不使用仅供已签名 HAP 的直接安装流程。签名或设备授权失败时先处理具体错误，再重试；不要反复直接安装未签名文件。
 5. 等待工具显示安装完成，在手机启动 DanXi。保留之后更新所需的签名身份和账号材料；到期时按工具的续期流程处理。
 

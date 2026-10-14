@@ -30,7 +30,7 @@
 
 ## 下载与安装
 
-前往本仓库的 [Releases](https://github.com/GoodNima/DanXi_HarmonyOS/releases)，下载 `DanXi-HarmonyOS-…-unsigned.hap` 和 `SHA256SUMS.txt`。Alpha 版本发布为 GitHub **Pre-release**，请使用完整发布列表查找。
+前往本仓库的 [Releases](https://github.com/GoodNima/DanXi_HarmonyOS/releases)，下载 `DanXi-HarmonyOS-…-unsigned.hap`。`SHA256SUMS.txt` 是可选的下载校验文件，安装不依赖它。Alpha 版本发布为 GitHub **Pre-release**，请使用完整发布列表查找。
 
 推荐使用 [小白调试助手](https://github.com/likuai2010/auto-installer/releases) 或 [HoKit](https://github.com/yabi-zzh/HoKit/releases) 侧载。**当前公开资产是未签名开发 HAP**：小白可按自动签名/调试流程签名安装；HoKit 先使用自己的华为开发者账号、证书和设备授权 Profile 重签名，再安装输出的 HAP。无需先编译源码，但不能直接安装 unsigned 文件。
 
