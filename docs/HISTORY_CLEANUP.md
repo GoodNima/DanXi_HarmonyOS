@@ -43,6 +43,6 @@ git clone https://github.com/GoodNima/DanXi_HarmonyOS.git
 
 ## GitHub 保留边界
 
-本次净化针对本仓库可控制的分支、tag 及其可达历史。GitHub 的旧编号对象、缓存页、外部 fork 和他人克隆可能仍保存旧内容；不能将引用净化声明为所有旧对象已永久抹除。GitHub 官方说明其支持渠道不清除非敏感的多余文件缓存。
+本次净化针对本仓库可控制的分支、tag 及其可达历史。GitHub 的旧编号对象、缓存页、外部 fork 和他人克隆可能仍保存旧内容；不能将引用净化声明为所有旧对象已永久抹除。本轮实测按原鸿蒙导入编号读取旧 AGENTS.md，GitHub 仍返回 HTTP 200；这并非当前分支或 tag 重新包含该文件。GitHub 官方说明其支持渠道不清除非敏感的多余文件缓存，因此不承诺旧编号已不可访问。
 
 依据：[历史改写与旧对象访问](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository)、[源码归档及缓存](https://docs.github.com/en/repositories/working-with-files/using-files/downloading-source-code-archives)。
