@@ -1,0 +1,15 @@
+name: 鸿蒙版功能建议
+description: 提出功能移植、兼容性或维护建议。
+title: "[Feature] "
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: 需求场景与希望的结果
+    validations:
+      required: true
+  - type: textarea
+    id: references
+    attributes:
+      label: 来源与相关实现
+      description: 如参考原项目，请给出具体页面、文件或固定提交链接，并说明鸿蒙适配范围。

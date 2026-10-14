@@ -1,0 +1,23 @@
+{
+  "src": [
+    "pages/Index",
+    "pages/LoginPage",
+    "pages/FduAuthPage",
+    "pages/ForumLoginPage",
+    "pages/ForumDetailPage",
+    "pages/ForumImagePage",
+    "pages/ForumEditorPage",
+    "pages/ForumSettingsPage",
+    "pages/AppSettingsPage",
+    "pages/SettingsUtilitiesPage",
+    "pages/CampusDetailPage",
+    "pages/ForumAccountPage",
+    "pages/CampusUtilityPage",
+    "pages/CampusLiveServicesPage",
+    "pages/ReservationPage",
+    "pages/ClassroomSchedulePage",
+    "pages/LibraryBooksPage",
+    "pages/SportsBookingPage",
+    "pages/LibraryAccountPage"
+  ]
+}

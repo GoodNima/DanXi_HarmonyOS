@@ -1,0 +1,4040 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "旦夕 - 復旦大學校園助手"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "旦夕"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "旦夕"
+    },
+    {
+      "name": "bus_weekday",
+      "value": "工作日"
+    },
+    {
+      "name": "bus_holiday",
+      "value": "休息日"
+    },
+    {
+      "name": "bus_start",
+      "value": "始發站"
+    },
+    {
+      "name": "bus_end",
+      "value": "終點站"
+    },
+    {
+      "name": "bus_swap",
+      "value": "互換"
+    },
+    {
+      "name": "bus_all",
+      "value": "顯示全部班次"
+    },
+    {
+      "name": "bus_upcoming",
+      "value": "僅顯示當前時間之後的班次"
+    },
+    {
+      "name": "bus_time_note",
+      "value": "左右時間分別爲兩端發車時間；雙向箭頭表示往返班次。節假日請手動選擇休息日。"
+    },
+    {
+      "name": "bus_same_station",
+      "value": "請選擇不同的始發站和終點站"
+    },
+    {
+      "name": "bus_empty",
+      "value": "當前篩選下沒有班次，可切換日期類型或顯示全部"
+    },
+    {
+      "name": "card_recent",
+      "value": "最近交易"
+    },
+    {
+      "name": "card_7_days",
+      "value": "近7天"
+    },
+    {
+      "name": "card_15_days",
+      "value": "近15天"
+    },
+    {
+      "name": "card_30_days",
+      "value": "近30天"
+    },
+    {
+      "name": "card_progress",
+      "value": "正在讀取交易記錄 %s"
+    },
+    {
+      "name": "card_loading",
+      "value": "正在加載一卡通…"
+    },
+    {
+      "name": "card_low_balance",
+      "value": "餘額低於 20 元"
+    },
+    {
+      "name": "card_records_days",
+      "value": "近 %d 天交易記錄"
+    },
+    {
+      "name": "account_undergraduate",
+      "value": "復旦本科生"
+    },
+    {
+      "name": "account_postgraduate",
+      "value": "復旦研究生"
+    },
+    {
+      "name": "account_type",
+      "value": "教務賬號類型"
+    },
+    {
+      "name": "app_preferences",
+      "value": "外觀與通知設置"
+    },
+    {
+      "name": "settings_back",
+      "value": "返回"
+    },
+    {
+      "name": "theme_mode",
+      "value": "主題模式"
+    },
+    {
+      "name": "theme_system",
+      "value": "跟隨系統"
+    },
+    {
+      "name": "theme_light",
+      "value": "淺色"
+    },
+    {
+      "name": "theme_dark",
+      "value": "深色"
+    },
+    {
+      "name": "graduate_start",
+      "value": "研究生課表：第一教學周的週一日期"
+    },
+    {
+      "name": "save_settings",
+      "value": "保存"
+    },
+    {
+      "name": "notification_settings",
+      "value": "通知設置"
+    },
+    {
+      "name": "notification_allowed",
+      "value": "系統通知權限：已允許"
+    },
+    {
+      "name": "notification_denied",
+      "value": "系統通知權限：未允許"
+    },
+    {
+      "name": "notification_unknown",
+      "value": "系統通知權限：無法讀取"
+    },
+    {
+      "name": "notification_permission",
+      "value": "申請系統通知權限"
+    },
+    {
+      "name": "notification_system_hint",
+      "value": "聲音、振動及關閉通知可在系統設置 → 通知與狀態欄 → 旦夕中調整。"
+    },
+    {
+      "name": "notification_login",
+      "value": "請先登錄樹洞賬號，再設置通知類型。"
+    },
+    {
+      "name": "notification_mention",
+      "value": "被提及或回覆"
+    },
+    {
+      "name": "notification_favorite",
+      "value": "訂閱的樹洞更新"
+    },
+    {
+      "name": "notification_report",
+      "value": "舉報處理結果"
+    },
+    {
+      "name": "notification_delivery",
+      "value": "通知類型會同步到樹洞賬號。本版本尚未接入後臺推送，允許系統通知不會自動啓用離線推送。"
+    },
+    {
+      "name": "graduate_scores_note",
+      "value": "研究生：課程成績與單科績點（原版研究生系統不提供本科生 GPA 排名或考試安排）"
+    },
+    {
+      "name": "graduate_week_hint",
+      "value": "請在“我的 → 教務賬號類型”設置本學期第一教學周的週一日期，以按當前周顯示課表。"
+    },
+    {
+      "name": "theme_choice_hint",
+      "value": "跟隨系統時，配色隨系統深淺色切換。沉浸光感強度始終跟隨系統設置。"
+    },
+    {
+      "name": "caution_menu_title",
+      "value": "謹慎閱讀內容"
+    },
+    {
+      "name": "caution_settings_title",
+      "value": "具有謹慎閱讀（帶星號）標籤的內容"
+    },
+    {
+      "name": "caution_choice_hint",
+      "value": "帶星號的標籤表示謹慎閱讀。默認摺疊正文，此設置與樹洞賬號同步。"
+    },
+    {
+      "name": "caution_fold",
+      "value": "摺疊"
+    },
+    {
+      "name": "caution_hide",
+      "value": "隱藏"
+    },
+    {
+      "name": "caution_show",
+      "value": "顯示"
+    },
+    {
+      "name": "caution_fold_hint",
+      "value": "點擊再閱讀"
+    },
+    {
+      "name": "caution_hide_hint",
+      "value": "列表中不顯示"
+    },
+    {
+      "name": "caution_show_hint",
+      "value": "直接顯示正文"
+    },
+    {
+      "name": "account_choice_hint",
+      "value": "按實際賬號類型選擇教務系統。研究生可查看課程成績與單科績點；研究生系統不提供本科生 GPA 排名或考試安排。"
+    },
+    {
+      "name": "graduate_start_hint",
+      "value": "選擇本學期第一教學周的週一，用於計算研究生課表的當前教學周。"
+    },
+    {
+      "name": "forum_settings",
+      "value": "樹洞設置"
+    },
+    {
+      "name": "forum_compose",
+      "value": "發佈新帖"
+    },
+    {
+      "name": "forum_cancel",
+      "value": "取消"
+    },
+    {
+      "name": "forum_publish",
+      "value": "發佈"
+    },
+    {
+      "name": "forum_publishing",
+      "value": "發佈中"
+    },
+    {
+      "name": "forum_post",
+      "value": "發帖"
+    },
+    {
+      "name": "ui_enter_the_monday_of_the_first_teaching_week_e_g_",
+      "value": "請輸入有效的第一教學週週一日期，例如 2026-09-07"
+    },
+    {
+      "name": "ui_semester_start_saved",
+      "value": "開學日期已保存"
+    },
+    {
+      "name": "ui_adjust_permission_sound_and_vibration_in_system_",
+      "value": "可在系統設置 → 通知與狀態欄 → 旦夕中調整通知權限、聲音和振動"
+    },
+    {
+      "name": "ui_handan",
+      "value": "邯鄲"
+    },
+    {
+      "name": "ui_jiangwan",
+      "value": "江灣"
+    },
+    {
+      "name": "ui_shuttle_departures",
+      "value": "校車班次"
+    },
+    {
+      "name": "ui_bus",
+      "value": "校車"
+    },
+    {
+      "name": "ui_classrooms",
+      "value": "教室日程"
+    },
+    {
+      "name": "ui_exam_schedule",
+      "value": "考試安排"
+    },
+    {
+      "name": "ui_grades_gpa",
+      "value": "成績與 GPA"
+    },
+    {
+      "name": "ui_timetable",
+      "value": "課表"
+    },
+    {
+      "name": "ui_campus",
+      "value": "校園"
+    },
+    {
+      "name": "ui_notices",
+      "value": "通知"
+    },
+    {
+      "name": "ui_exams",
+      "value": "考試"
+    },
+    {
+      "name": "ui_campus_card",
+      "value": "一卡通"
+    },
+    {
+      "name": "ui_unavailable",
+      "value": "暫不可用"
+    },
+    {
+      "name": "ui_reload",
+      "value": "重新加載"
+    },
+    {
+      "name": "ui_log_in_to_campus_account",
+      "value": "登錄校園賬號"
+    },
+    {
+      "name": "ui_could_not_open_login_please_try_again",
+      "value": "無法打開登錄頁面，請重試"
+    },
+    {
+      "name": "ui_could_not_load_academic_notices",
+      "value": "教務處通知加載失敗"
+    },
+    {
+      "name": "ui_source_jwc_fudan_edu_cn_may_require_campus_netwo",
+      "value": "數據來源 jwc.fudan.edu.cn（校園網外可能不可達）"
+    },
+    {
+      "name": "ui_fenglin",
+      "value": "楓林"
+    },
+    {
+      "name": "ui_zhangjiang",
+      "value": "張江"
+    },
+    {
+      "name": "ui_today_s_classrooms_choose_a_building",
+      "value": "今日教室日程 · 選擇教學樓"
+    },
+    {
+      "name": "ui_seats",
+      "value": "人"
+    },
+    {
+      "name": "ui_unknown_capacity",
+      "value": "座位數未知"
+    },
+    {
+      "name": "ui_grade",
+      "value": "成績 "
+    },
+    {
+      "name": "ui_gpa",
+      "value": " · 績點 "
+    },
+    {
+      "name": "ui_credits",
+      "value": " · 學分 "
+    },
+    {
+      "name": "ui_rank",
+      "value": "排名 "
+    },
+    {
+      "name": "ui_credits_30",
+      "value": "學分 "
+    },
+    {
+      "name": "ui_cohort",
+      "value": " 級 · "
+    },
+    {
+      "name": "ui_period",
+      "value": "第"
+    },
+    {
+      "name": "ui_",
+      "value": "節"
+    },
+    {
+      "name": "ui_no_loaded_courses_for_today",
+      "value": "今天沒有已加載的課程安排"
+    },
+    {
+      "name": "ui_no_classes_today",
+      "value": "今天沒有課！"
+    },
+    {
+      "name": "ui_card_balance",
+      "value": "校園卡餘額"
+    },
+    {
+      "name": "ui_no_transactions_in_this_date_range",
+      "value": "所選時間範圍內沒有交易記錄"
+    },
+    {
+      "name": "ui_complete_verification_on_fudan_s_official_page_y",
+      "value": "請在復旦官方頁面完成驗證，完成後將自動返回。"
+    },
+    {
+      "name": "ui_verification_has_ended_return_to_login_and_try_a",
+      "value": "驗證已結束，請返回登錄頁重試。"
+    },
+    {
+      "name": "ui_could_not_initialize_verification_tap_retry",
+      "value": "無法初始化驗證頁面，請點擊重試。"
+    },
+    {
+      "name": "ui_could_not_open_verification_tap_retry",
+      "value": "無法打開驗證網頁，請點擊重試。"
+    },
+    {
+      "name": "ui_verify_on_fudan_s_official_page_return_is_automa",
+      "value": "請在復旦官方頁面完成驗證，完成後將自動返回。支持雙指縮放。"
+    },
+    {
+      "name": "ui_verify_on_fudan_s_official_page_pinch_to_zoom",
+      "value": "請在復旦官方頁面完成驗證。頁面支持雙指縮放。"
+    },
+    {
+      "name": "ui_the_graduate_system_has_not_returned_a_timetable",
+      "value": "研究生教務尚未返回課表數據，請點擊重試或返回後稍後加載。"
+    },
+    {
+      "name": "ui_no_login_session_was_received_from_the_campus_se",
+      "value": "頁面已返回校園服務，但尚未取得登錄會話。請重試或返回重新登錄。"
+    },
+    {
+      "name": "ui_verification_is_not_ready_yet_retry_later_or_log",
+      "value": "驗證網頁尚未就緒，請稍後重試或返回重新登錄。"
+    },
+    {
+      "name": "ui_could_not_reload_verification_check_your_connect",
+      "value": "無法重新加載驗證網頁，請檢查網絡後重試。"
+    },
+    {
+      "name": "ui_loading_fudan_verification",
+      "value": "正在加載復旦官方驗證頁面…"
+    },
+    {
+      "name": "ui_verification_is_loading_slowly_check_your_connec",
+      "value": "驗證網頁加載較慢，請檢查網絡或點擊重試。"
+    },
+    {
+      "name": "ui_fudan_verification",
+      "value": "復旦身份驗證"
+    },
+    {
+      "name": "ui_retry",
+      "value": "重試"
+    },
+    {
+      "name": "ui_could_not_load_verification_check_your_connectio",
+      "value": "驗證網頁加載失敗，請檢查網絡後重試。"
+    },
+    {
+      "name": "ui_verification_is_temporarily_unavailable_try_agai",
+      "value": "驗證服務暫時不可用，請稍後重試。"
+    },
+    {
+      "name": "ui_missing_post_information",
+      "value": "缺少帖子參數"
+    },
+    {
+      "name": "ui_could_not_open_the_quoted_post",
+      "value": "無法打開引用所在帖子"
+    },
+    {
+      "name": "ui_this_floor_was_deleted_or_is_unavailable",
+      "value": "該樓層已被刪除或當前不可見"
+    },
+    {
+      "name": "ui_enter_a_reply",
+      "value": "請輸入回覆內容"
+    },
+    {
+      "name": "ui_reply_sent",
+      "value": "回覆成功"
+    },
+    {
+      "name": "ui_like",
+      "value": "贊 "
+    },
+    {
+      "name": "ui_dislike",
+      "value": "踩 "
+    },
+    {
+      "name": "ui_anonymous",
+      "value": "匿名"
+    },
+    {
+      "name": "ui_this_floor_was_deleted",
+      "value": "該樓層已被刪除"
+    },
+    {
+      "name": "ui_say_something",
+      "value": "說點什麼…"
+    },
+    {
+      "name": "ui_sending",
+      "value": "發送中"
+    },
+    {
+      "name": "ui_reply",
+      "value": "回覆"
+    },
+    {
+      "name": "ui_loading_failed",
+      "value": "載入失敗"
+    },
+    {
+      "name": "ui_read_with_care",
+      "value": "謹慎閱讀"
+    },
+    {
+      "name": "ui_this_post_has_starred_tags_its_content_is_collap",
+      "value": "此樓含帶星號的標籤，正文已摺疊。"
+    },
+    {
+      "name": "ui_view_content",
+      "value": "查看內容"
+    },
+    {
+      "name": "ui_replies",
+      "value": " 回覆"
+    },
+    {
+      "name": "ui_views",
+      "value": " 瀏覽"
+    },
+    {
+      "name": "ui_loading_failed_tap_to_retry",
+      "value": "加載失敗，點擊重試"
+    },
+    {
+      "name": "ui_scroll_up_for_more_replies",
+      "value": "繼續上滑加載回覆"
+    },
+    {
+      "name": "ui_locating_tap_to_cancel",
+      "value": "定位中 · 點擊取消"
+    },
+    {
+      "name": "ui_could_not_locate_tap_to_retry",
+      "value": "定位失敗 · 點擊重試"
+    },
+    {
+      "name": "ui_post_details",
+      "value": "帖子詳情"
+    },
+    {
+      "name": "ui_enter_some_content",
+      "value": "請輸入內容"
+    },
+    {
+      "name": "ui_choose_a_section",
+      "value": "請選擇分區"
+    },
+    {
+      "name": "ui_post_published",
+      "value": "發佈成功"
+    },
+    {
+      "name": "ui_choose_section",
+      "value": "選擇分區"
+    },
+    {
+      "name": "ui_section",
+      "value": "分區"
+    },
+    {
+      "name": "ui_tags",
+      "value": "標籤"
+    },
+    {
+      "name": "ui_optional_up_to_one",
+      "value": "（可選，最多一個）"
+    },
+    {
+      "name": "ui_search_tags",
+      "value": "搜索標籤"
+    },
+    {
+      "name": "ui_no_matching_tags_you_can_publish_without_one",
+      "value": "沒有匹配的標籤，可不選標籤發佈"
+    },
+    {
+      "name": "ui_previous",
+      "value": "上一頁"
+    },
+    {
+      "name": "ui_next",
+      "value": "下一頁"
+    },
+    {
+      "name": "detail_image_previous",
+      "value": "上一張"
+    },
+    {
+      "name": "detail_image_next",
+      "value": "下一張"
+    },
+    {
+      "name": "ui_original_image_saved",
+      "value": "原圖已保存"
+    },
+    {
+      "name": "ui_could_not_save_check_your_connection_and_storage",
+      "value": "未能保存原圖，請檢查網絡和存儲空間後重試"
+    },
+    {
+      "name": "ui_could_not_load_image",
+      "value": "圖片加載失敗"
+    },
+    {
+      "name": "ui_saving",
+      "value": "正在保存…"
+    },
+    {
+      "name": "ui_download_original",
+      "value": "下載原圖"
+    },
+    {
+      "name": "gallery_original_loading",
+      "value": "正在載入原圖…"
+    },
+    {
+      "name": "gallery_original_failed_preview",
+      "value": "原圖暫不可用，已保留預覽"
+    },
+    {
+      "name": "ui_enter_your_forum_email",
+      "value": "請輸入樹洞賬號郵箱"
+    },
+    {
+      "name": "ui_enter_your_password",
+      "value": "請輸入密碼"
+    },
+    {
+      "name": "ui_logged_in",
+      "value": "登錄成功"
+    },
+    {
+      "name": "ui_log_in_to_forum",
+      "value": "登錄樹洞"
+    },
+    {
+      "name": "ui_use_your_danxi_forum_account_separate_from_uis",
+      "value": "使用旦夕樹洞賬號（非 UIS 賬號）"
+    },
+    {
+      "name": "ui_email",
+      "value": "電子郵件"
+    },
+    {
+      "name": "ui_password",
+      "value": "密碼"
+    },
+    {
+      "name": "ui_logging_in",
+      "value": "登錄中..."
+    },
+    {
+      "name": "ui_log_in",
+      "value": "登入"
+    },
+    {
+      "name": "ui_register_on_the_forum_website_this_is_separate_f",
+      "value": "樹洞賬號在 web 端註冊，與復旦大學 UIS 賬號不同"
+    },
+    {
+      "name": "ui_could_not_open_post_please_retry",
+      "value": "無法打開帖子，請重試"
+    },
+    {
+      "name": "ui_read_with_care_content_collapsed_tap_to_expand",
+      "value": "謹慎閱讀 · 內容已摺疊，點擊展開"
+    },
+    {
+      "name": "ui_log_in_to_browse_the_forum",
+      "value": "登錄後瀏覽樹洞"
+    },
+    {
+      "name": "ui_a_fduhole_com_account_is_required_please_log_in",
+      "value": "樹洞內容需要 fduhole.com 賬號，請先登錄"
+    },
+    {
+      "name": "ui_search_forum",
+      "value": "搜索樹洞內容"
+    },
+    {
+      "name": "ui_clear",
+      "value": "清除"
+    },
+    {
+      "name": "ui_no_matching_content",
+      "value": "沒有匹配的內容"
+    },
+    {
+      "name": "ui_try_a_different_keyword",
+      "value": "換個關鍵詞試試"
+    },
+    {
+      "name": "ui_no_posts_to_display",
+      "value": "暫無可顯示的帖子"
+    },
+    {
+      "name": "ui_posts_on_this_page_are_hidden_you_can_load_more",
+      "value": "當前頁內容已隱藏，可以繼續加載"
+    },
+    {
+      "name": "ui_forum",
+      "value": "樹洞"
+    },
+    {
+      "name": "ui_could_not_open_editor_please_retry",
+      "value": "無法打開編輯器，請重試"
+    },
+    {
+      "name": "ui_all",
+      "value": "全部"
+    },
+    {
+      "name": "ui_loading",
+      "value": "正在加載…"
+    },
+    {
+      "name": "ui_scroll_up_to_load_more",
+      "value": "繼續上滑加載"
+    },
+    {
+      "name": "ui_please_log_in_to_the_forum_first",
+      "value": "請先登錄樹洞賬號"
+    },
+    {
+      "name": "ui_me",
+      "value": "我的"
+    },
+    {
+      "name": "ui_enter_your_student_id",
+      "value": "請輸入學號"
+    },
+    {
+      "name": "ui_login_failed",
+      "value": "登錄失敗"
+    },
+    {
+      "name": "ui_login_incomplete_check_your_connection_and_retry",
+      "value": "登錄未完成，請檢查網絡後重試"
+    },
+    {
+      "name": "ui_fudan_campus_assistant",
+      "value": "復旦大學校園助手"
+    },
+    {
+      "name": "ui_student_id",
+      "value": "學號"
+    },
+    {
+      "name": "ui_log_in_with_your_fudan_id_official_verification_",
+      "value": "使用復旦大學 ID 賬號登錄；如需二次驗證，將打開官方驗證頁面"
+    },
+    {
+      "name": "ui_continue_as_guest",
+      "value": "遊客進入"
+    },
+    {
+      "name": "ui_could_not_save_theme_please_retry",
+      "value": "主題保存失敗，請重試"
+    },
+    {
+      "name": "ui_could_not_save_account_type_please_retry",
+      "value": "賬號類型保存失敗，請重試"
+    },
+    {
+      "name": "ui_choose_the_monday_of_the_first_teaching_week",
+      "value": "請選擇第一教學周的週一"
+    },
+    {
+      "name": "ui_could_not_save_semester_start_please_retry",
+      "value": "開學日期保存失敗，請重試"
+    },
+    {
+      "name": "ui_graduate",
+      "value": "研究生"
+    },
+    {
+      "name": "ui_undergraduate",
+      "value": "本科生"
+    },
+    {
+      "name": "ui_choose",
+      "value": "請選擇"
+    },
+    {
+      "name": "ui_logged_out",
+      "value": "已退出登錄"
+    },
+    {
+      "name": "ui_could_not_log_out",
+      "value": "退出失敗"
+    },
+    {
+      "name": "ui_cohort_145",
+      "value": "級"
+    },
+    {
+      "name": "ui_welcome_to_danxi",
+      "value": "歡迎使用旦夕"
+    },
+    {
+      "name": "ui_log_in_to_view_grades_timetables_and_campus_serv",
+      "value": "登錄後可查看成績、課表等校園信息"
+    },
+    {
+      "name": "ui_general",
+      "value": "通用設置"
+    },
+    {
+      "name": "ui_monday_of_the_first_teaching_week",
+      "value": "第一教學周的週一"
+    },
+    {
+      "name": "ui_choose_semester_start",
+      "value": "請選擇開學日期"
+    },
+    {
+      "name": "ui_language",
+      "value": "語言"
+    },
+    {
+      "name": "ui__156",
+      "value": "簡體中文"
+    },
+    {
+      "name": "ui_coming_soon",
+      "value": "功能開發中"
+    },
+    {
+      "name": "ui_system_permission_forum_notification_types",
+      "value": "系統權限與樹洞通知類型"
+    },
+    {
+      "name": "ui_dashboard_order",
+      "value": "儀表盤排序"
+    },
+    {
+      "name": "ui_default_order",
+      "value": "默認排序"
+    },
+    {
+      "name": "ui_about",
+      "value": "關於"
+    },
+    {
+      "name": "ui_about_danxi",
+      "value": "關於旦夕"
+    },
+    {
+      "name": "ui_danxi_for_harmonyos_v",
+      "value": "旦夕 HarmonyOS版 v"
+    },
+    {
+      "name": "ui_open_source_licenses",
+      "value": "開源許可"
+    },
+    {
+      "name": "ui_diagnostics",
+      "value": "診斷控制檯"
+    },
+    {
+      "name": "ui_log_out",
+      "value": "登出"
+    },
+    {
+      "name": "ui_loading_168",
+      "value": "載入中..."
+    },
+    {
+      "name": "ui_no_data",
+      "value": "暫無數據"
+    },
+    {
+      "name": "ui_image_unavailable",
+      "value": " · 圖片暫不可用]"
+    },
+    {
+      "name": "ui_could_not_open_image_please_retry",
+      "value": "無法打開圖片，請重試"
+    },
+    {
+      "name": "ui_quoted_content",
+      "value": "引用內容"
+    },
+    {
+      "name": "ui_quoted_content_collapsed",
+      "value": "引用內容已摺疊："
+    },
+    {
+      "name": "ui_expand_content",
+      "value": "展開內容"
+    },
+    {
+      "name": "ui_go_to_quoted_floor",
+      "value": "跳轉到所在樓層"
+    },
+    {
+      "name": "ui_close",
+      "value": "關閉"
+    },
+    {
+      "name": "ui_quote",
+      "value": "引用 "
+    },
+    {
+      "name": "ui_quote_not_found_tap_to_retry",
+      "value": "無法找到引用，點擊重試"
+    },
+    {
+      "name": "ui_loading_quote",
+      "value": "正在加載引用…"
+    },
+    {
+      "name": "ui_tap_to_view_quote",
+      "value": "點擊查看引用內容"
+    },
+    {
+      "name": "ui_quoted_content_collapsed_tap_to_view",
+      "value": "引用內容已摺疊，點擊查看"
+    },
+    {
+      "name": "language_zh_cn",
+      "value": "簡體中文"
+    },
+    {
+      "name": "language_zh_tw",
+      "value": "繁體中文"
+    },
+    {
+      "name": "language_en",
+      "value": "English"
+    },
+    {
+      "name": "language_ja",
+      "value": "日本語"
+    },
+    {
+      "name": "language_choice_hint",
+      "value": "語言立即生效。跟隨系統時，暫不支持的系統語言使用簡體中文。"
+    },
+    {
+      "name": "language_save_failed",
+      "value": "語言保存失敗，請重試"
+    },
+    {
+      "name": "layout_default",
+      "value": "默認排序"
+    },
+    {
+      "name": "layout_custom",
+      "value": "自定義排序"
+    },
+    {
+      "name": "layout_hint",
+      "value": "長按模塊拖動排序，勾選控制是否顯示；至少保留一個模塊。點擊完成後應用到校園頁面。"
+    },
+    {
+      "name": "layout_keep_one",
+      "value": "至少保留一個校園模塊"
+    },
+    {
+      "name": "layout_reset",
+      "value": "恢復默認"
+    },
+    {
+      "name": "layout_done",
+      "value": "完成"
+    },
+    {
+      "name": "layout_save_failed",
+      "value": "排序保存失敗，請重試"
+    },
+    {
+      "name": "announcement_open_failed",
+      "value": "無法打開通知網站，請檢查瀏覽器後重試"
+    },
+    {
+      "name": "feature_announcement",
+      "value": "教務處通知"
+    },
+    {
+      "name": "feature_bus",
+      "value": "校車"
+    },
+    {
+      "name": "feature_empty_classroom",
+      "value": "教室日程"
+    },
+    {
+      "name": "feature_exam",
+      "value": "考試"
+    },
+    {
+      "name": "feature_gpa",
+      "value": "GPA"
+    },
+    {
+      "name": "feature_timetable",
+      "value": "課表"
+    },
+    {
+      "name": "feature_card",
+      "value": "一卡通"
+    },
+    {
+      "name": "campus_handan",
+      "value": "邯鄲"
+    },
+    {
+      "name": "campus_fenglin",
+      "value": "楓林"
+    },
+    {
+      "name": "campus_jiangwan",
+      "value": "江灣"
+    },
+    {
+      "name": "campus_zhangjiang",
+      "value": "張江"
+    },
+    {
+      "name": "weekday_mon",
+      "value": "週一"
+    },
+    {
+      "name": "weekday_tue",
+      "value": "週二"
+    },
+    {
+      "name": "weekday_wed",
+      "value": "週三"
+    },
+    {
+      "name": "weekday_thu",
+      "value": "週四"
+    },
+    {
+      "name": "weekday_fri",
+      "value": "週五"
+    },
+    {
+      "name": "weekday_sat",
+      "value": "週六"
+    },
+    {
+      "name": "weekday_sun",
+      "value": "週日"
+    },
+    {
+      "name": "time_just_now",
+      "value": "剛剛"
+    },
+    {
+      "name": "time_minutes_ago",
+      "value": "%d分鐘前"
+    },
+    {
+      "name": "time_hours_ago",
+      "value": "%d小時前"
+    },
+    {
+      "name": "time_days_ago",
+      "value": "%d天前"
+    },
+    {
+      "name": "forum_webvpn_login_required",
+      "value": "目前網路無法直連樹洞。校外存取需要復旦 WebVPN，請先登入復旦帳號；樹洞登入憑證會保留。"
+    },
+    {
+      "name": "webvpn_auto",
+      "value": "自動使用 WebVPN 代理"
+    },
+    {
+      "name": "webvpn_hint",
+      "value": "校內優先直連；校外無法直連時使用復旦 WebVPN，並重用身分驗證。關閉後僅直連。"
+    },
+    {
+      "name": "webvpn_save_failed",
+      "value": "代理設定儲存失敗，請重試"
+    },
+    {
+      "name": "calendar_auto",
+      "value": "自動同步"
+    },
+    {
+      "name": "calendar_manual",
+      "value": "選擇日期"
+    },
+    {
+      "name": "calendar_sync_now",
+      "value": "同步目前學期"
+    },
+    {
+      "name": "calendar_choice_hint",
+      "value": "「同步目前學期」依今天的日期讀取官方校曆，儲存該學期第一教學週的週一，並取代已選日期。查詢其他學期時請手動選擇日期；不會背景自動同步。如需驗證，沿用復旦身分驗證。"
+    },
+    {
+      "name": "calendar_date_unknown",
+      "value": "尚未取得學期日期，可同步或手動指定"
+    },
+    {
+      "name": "calendar_syncing",
+      "value": "正在讀取官方校曆…"
+    },
+    {
+      "name": "calendar_sync_failed",
+      "value": "校曆暫時無法同步，保留已有日期。可下拉重試或手動指定。"
+    },
+    {
+      "name": "calendar_unrecognized",
+      "value": "官方校曆日期未能可靠識別，保留已有日期。請查看來源或手動指定。"
+    },
+    {
+      "name": "calendar_login_required",
+      "value": "讀取校曆需要復旦身分驗證"
+    },
+    {
+      "name": "calendar_source",
+      "value": "來源"
+    },
+    {
+      "name": "calendar_source_account",
+      "value": "教務系統學期日期"
+    },
+    {
+      "name": "calendar_source_official",
+      "value": "學校官方校曆"
+    },
+    {
+      "name": "calendar_source_open",
+      "value": "查看官方校曆"
+    },
+    {
+      "name": "timetable_week",
+      "value": "第 {week} 週"
+    },
+    {
+      "name": "timetable_today",
+      "value": "本週"
+    },
+    {
+      "name": "timetable_week_view",
+      "value": "週檢視"
+    },
+    {
+      "name": "timetable_agenda",
+      "value": "日程"
+    },
+    {
+      "name": "timetable_add",
+      "value": "新增課程"
+    },
+    {
+      "name": "timetable_edit",
+      "value": "編輯"
+    },
+    {
+      "name": "timetable_remove",
+      "value": "從課表移除"
+    },
+    {
+      "name": "timetable_save",
+      "value": "儲存課程"
+    },
+    {
+      "name": "timetable_semester_date",
+      "value": "學期日期與校曆同步"
+    },
+    {
+      "name": "timetable_export",
+      "value": "匯出到日曆"
+    },
+    {
+      "name": "timetable_restore",
+      "value": "恢復教務課程顯示"
+    },
+    {
+      "name": "timetable_local_hint",
+      "value": "新增、編輯和移除僅改變本機課表，不會修改教務選課紀錄。移除的教務課程可在選單中恢復顯示。"
+    },
+    {
+      "name": "timetable_invalid",
+      "value": "請填寫課程名稱、1–15 節的有效範圍，以及 1–30 週的有效週次。"
+    },
+    {
+      "name": "timetable_save_failed",
+      "value": "課表修改儲存失敗，請重試"
+    },
+    {
+      "name": "timetable_exported",
+      "value": "日曆已儲存，可匯入系統日曆"
+    },
+    {
+      "name": "timetable_export_failed",
+      "value": "日曆未能儲存，請重試"
+    },
+    {
+      "name": "timetable_load_failed",
+      "value": "課表載入失敗，請下拉重試"
+    },
+    {
+      "name": "timetable_loading",
+      "value": "正在同步課程…"
+    },
+    {
+      "name": "timetable_empty",
+      "value": "本學期尚未返回課程，可下拉重新整理或新增本機課程。"
+    },
+    {
+      "name": "timetable_guest",
+      "value": "登入復旦帳號可匯入教務課表，也可以先新增本機課程。"
+    },
+    {
+      "name": "timetable_date_hint",
+      "value": "學期開始日期未確定，點擊同步或手動指定；目前僅預覽所選週課程。"
+    },
+    {
+      "name": "timetable_outside_term",
+      "value": "今天不在本學期教學週範圍內，正在預覽所選週。"
+    },
+    {
+      "name": "timetable_no_class_day",
+      "value": "這一天沒有課程"
+    },
+    {
+      "name": "timetable_updated",
+      "value": "上次同步"
+    },
+    {
+      "name": "timetable_course_name",
+      "value": "課程名稱（必填）"
+    },
+    {
+      "name": "timetable_teacher",
+      "value": "教師"
+    },
+    {
+      "name": "timetable_room",
+      "value": "教室 / 地點"
+    },
+    {
+      "name": "timetable_code",
+      "value": "課程代碼（選填）"
+    },
+    {
+      "name": "timetable_first_unit",
+      "value": "開始節次"
+    },
+    {
+      "name": "timetable_last_unit",
+      "value": "結束節次"
+    },
+    {
+      "name": "timetable_weeks",
+      "value": "教學週"
+    },
+    {
+      "name": "timetable_weeks_hint",
+      "value": "例：1-18，或 1,3,5-8；逗號分隔，可輸入 1–30 週。"
+    },
+    {
+      "name": "timetable_semester_unavailable",
+      "value": "所選學期不可用，請重新載入學期清單。"
+    },
+    {
+      "name": "detail_content_required",
+      "value": "請輸入內容"
+    },
+    {
+      "name": "detail_operation_success",
+      "value": "操作成功"
+    },
+    {
+      "name": "detail_copied",
+      "value": "已複製"
+    },
+    {
+      "name": "detail_delete_floor",
+      "value": "刪除樓層"
+    },
+    {
+      "name": "detail_delete_note",
+      "value": "刪除後無法直接撤銷，請確認該樓層。"
+    },
+    {
+      "name": "detail_confirm",
+      "value": "確認操作"
+    },
+    {
+      "name": "detail_admin",
+      "value": "管理員操作"
+    },
+    {
+      "name": "detail_admin_note",
+      "value": "將修改伺服器內容，請核對對象及操作。"
+    },
+    {
+      "name": "detail_missing_division",
+      "value": "無法取得分區，請重新整理後重試"
+    },
+    {
+      "name": "detail_favorite",
+      "value": "收藏帖子"
+    },
+    {
+      "name": "detail_unfavorite",
+      "value": "取消收藏"
+    },
+    {
+      "name": "detail_subscribe",
+      "value": "訂閱回覆"
+    },
+    {
+      "name": "detail_unsubscribe",
+      "value": "取消訂閱"
+    },
+    {
+      "name": "detail_subscription_note",
+      "value": "訂閱後，新回覆提醒遵循樹洞通知設定。"
+    },
+    {
+      "name": "detail_show_all",
+      "value": "顯示全部回覆"
+    },
+    {
+      "name": "detail_only_op",
+      "value": "只看樓主"
+    },
+    {
+      "name": "detail_only_author",
+      "value": "只看此人"
+    },
+    {
+      "name": "detail_to_top",
+      "value": "回到首樓"
+    },
+    {
+      "name": "detail_to_end",
+      "value": "直達最新回覆"
+    },
+    {
+      "name": "detail_copy_hole",
+      "value": "複製帖子編號"
+    },
+    {
+      "name": "detail_copy_floor",
+      "value": "複製樓層編號"
+    },
+    {
+      "name": "detail_copy_time",
+      "value": "複製發佈時間"
+    },
+    {
+      "name": "detail_copy_content",
+      "value": "複製內容"
+    },
+    {
+      "name": "detail_select_text",
+      "value": "自由選擇文字"
+    },
+    {
+      "name": "detail_share_post",
+      "value": "選擇樓層分享"
+    },
+    {
+      "name": "detail_share_floor",
+      "value": "複製樓層分享文字"
+    },
+    {
+      "name": "detail_share_note",
+      "value": "選擇樓層後複製分享文字；更多回覆可繼續載入。"
+    },
+    {
+      "name": "detail_copy_selected",
+      "value": "複製所選樓層"
+    },
+    {
+      "name": "detail_load_more",
+      "value": "載入更多樓層"
+    },
+    {
+      "name": "detail_summary",
+      "value": "AI 總結"
+    },
+    {
+      "name": "detail_summary_pending",
+      "value": "總結尚未生成，可稍後重試"
+    },
+    {
+      "name": "detail_summary_note",
+      "value": "AI 總結僅供參考，可點擊引用回到原樓層核對。"
+    },
+    {
+      "name": "detail_summary_refresh",
+      "value": "重新生成總結"
+    },
+    {
+      "name": "detail_hide",
+      "value": "本機隱藏帖子"
+    },
+    {
+      "name": "detail_hide_note",
+      "value": "僅從本機資訊流隱藏，可在樹洞設定中恢復。"
+    },
+    {
+      "name": "detail_reply_floor",
+      "value": "回覆該樓層"
+    },
+    {
+      "name": "detail_full_editor",
+      "value": "開啟完整編輯器"
+    },
+    {
+      "name": "detail_history",
+      "value": "修改紀錄"
+    },
+    {
+      "name": "detail_no_history",
+      "value": "尚無修改紀錄"
+    },
+    {
+      "name": "detail_edit",
+      "value": "修改內容"
+    },
+    {
+      "name": "detail_report",
+      "value": "檢舉樓層"
+    },
+    {
+      "name": "detail_report_note",
+      "value": "請說明檢舉原因，管理員將按社群規則處理。"
+    },
+    {
+      "name": "detail_markdown_note",
+      "value": "支援 Markdown、LaTeX 及原版表情，發佈前可預覽。"
+    },
+    {
+      "name": "detail_preview",
+      "value": "預覽"
+    },
+    {
+      "name": "detail_submit",
+      "value": "提交"
+    },
+    {
+      "name": "detail_lock",
+      "value": "鎖定／解鎖帖子"
+    },
+    {
+      "name": "detail_freeze",
+      "value": "凍結／解凍帖子"
+    },
+    {
+      "name": "detail_hide_server",
+      "value": "隱藏／恢復帖子"
+    },
+    {
+      "name": "detail_delete_force",
+      "value": "永久刪除帖子"
+    },
+    {
+      "name": "detail_pin",
+      "value": "置頂／取消置頂"
+    },
+    {
+      "name": "detail_tags_division",
+      "value": "修改標籤及分區"
+    },
+    {
+      "name": "detail_special_tag",
+      "value": "設定特殊標記"
+    },
+    {
+      "name": "detail_fold_floor",
+      "value": "設定樓層摺疊原因"
+    },
+    {
+      "name": "detail_sensitive",
+      "value": "標記敏感"
+    },
+    {
+      "name": "detail_unmark_sensitive",
+      "value": "取消敏感標記"
+    },
+    {
+      "name": "detail_penalty",
+      "value": "設定禁言天數"
+    },
+    {
+      "name": "detail_reason_note",
+      "value": "填寫說明；摺疊原因每行一項；禁言填非負天數。"
+    },
+    {
+      "name": "detail_more",
+      "value": "更多操作"
+    },
+    {
+      "name": "detail_op",
+      "value": "樓主"
+    },
+    {
+      "name": "detail_me",
+      "value": "本人"
+    },
+    {
+      "name": "detail_modified",
+      "value": "已修改"
+    },
+    {
+      "name": "detail_reply_unavailable",
+      "value": "帖子已鎖定、凍結或隱藏，暫不能回覆"
+    },
+    {
+      "name": "detail_all_loaded",
+      "value": "已顯示全部回覆"
+    },
+    {
+      "name": "detail_filter_none",
+      "value": "目前篩選沒有回覆"
+    },
+    {
+      "name": "detail_restore_hidden",
+      "value": "恢復本機隱藏帖子"
+    },
+    {
+      "name": "detail_helpful",
+      "value": "總結有幫助"
+    },
+    {
+      "name": "detail_unhelpful",
+      "value": "回報總結問題"
+    },
+    {
+      "name": "detail_image_add",
+      "value": "新增圖片"
+    },
+    {
+      "name": "detail_image_uploading",
+      "value": "正在上傳圖片…"
+    },
+    {
+      "name": "detail_image_upload_failed",
+      "value": "圖片上傳失敗，請檢查網路、登入狀態及圖片存取權限後再試。正文已保留。"
+    },
+    {
+      "name": "detail_image_too_long",
+      "value": "正文已接近字數上限，請縮短後再新增圖片。正文已保留。"
+    },
+    {
+      "name": "detail_content_limit",
+      "value": "內容最多 2000 個字元，請縮短後再操作。"
+    },
+    {
+      "name": "feature_academic",
+      "value": "考試與成績"
+    },
+    {
+      "name": "academic_overview",
+      "value": "考試與成績"
+    },
+    {
+      "name": "academic_grades",
+      "value": "課程成績"
+    },
+    {
+      "name": "academic_ranking",
+      "value": "GPA 與排名"
+    },
+    {
+      "name": "academic_semester",
+      "value": "選擇學期"
+    },
+    {
+      "name": "academic_semester_missing",
+      "value": "該學期已不可用，請重新選擇。"
+    },
+    {
+      "name": "academic_my_gpa",
+      "value": "本機 GPA"
+    },
+    {
+      "name": "academic_my_gpa_unavailable",
+      "value": "已取得課程暫不足以計算 GPA"
+    },
+    {
+      "name": "academic_gpa_note",
+      "value": "依已取得課程在本機計算：Σ（學校發布的單課績點 × 學分）÷ 計入學分。僅統計目前清單，不代表畢業審核或全學程 GPA；P/NP、本科轉換成績、已標明的研究生補修及必修環節、考查課程不計入。缺少績點或學分時不估算。"
+    },
+    {
+      "name": "academic_rank_all",
+      "value": "全部專業"
+    },
+    {
+      "name": "academic_rank_same",
+      "value": "同專業"
+    },
+    {
+      "name": "academic_percentile",
+      "value": "百分位（目前範圍）"
+    },
+    {
+      "name": "academic_gradepoint",
+      "value": "單科績點"
+    },
+    {
+      "name": "academic_other_exams",
+      "value": "其他考試與課程成績"
+    },
+    {
+      "name": "academic_empty_grades",
+      "value": "暫無已發布的課程成績"
+    },
+    {
+      "name": "academic_empty_rank",
+      "value": "暫無已發布的 GPA 排名"
+    },
+    {
+      "name": "academic_export_exams",
+      "value": "匯出考試日曆"
+    },
+    {
+      "name": "academic_export_unavailable",
+      "value": "暫無日期及時間完整的考試可匯出。"
+    },
+    {
+      "name": "academic_retry",
+      "value": "重新載入學業資料"
+    },
+    {
+      "name": "academic_grade_not_for_exam",
+      "value": "補考、緩考不關聯原考試成績"
+    },
+    {
+      "name": "academic_fallback_note",
+      "value": "目前使用資料中心提供的全部成績；學期導覽、考試安排及 GPA 排名暫不可用。"
+    },
+    {
+      "name": "academic_exam_date",
+      "value": "日期"
+    },
+    {
+      "name": "academic_exam_time",
+      "value": "時間"
+    },
+    {
+      "name": "academic_exam_room",
+      "value": "地點"
+    },
+    {
+      "name": "academic_exam_note",
+      "value": "考試備註"
+    },
+    {
+      "name": "academic_grade",
+      "value": "成績"
+    },
+    {
+      "name": "academic_gpa",
+      "value": "GPA"
+    },
+    {
+      "name": "academic_credits",
+      "value": "學分"
+    },
+    {
+      "name": "academic_rank",
+      "value": "排名"
+    },
+    {
+      "name": "classroom_periods",
+      "value": "查看課節使用情況"
+    },
+    {
+      "name": "classroom_period_free",
+      "value": "第 %1$d 節：空閒"
+    },
+    {
+      "name": "classroom_period_occupied",
+      "value": "第 %1$d 節：%2$s"
+    },
+    {
+      "name": "classroom_no_rows",
+      "value": "暫無該教學樓的教室資料"
+    },
+    {
+      "name": "classroom_busy",
+      "value": "今日課節均佔用"
+    },
+    {
+      "name": "classroom_free_summary",
+      "value": "空閒課節：%1$s"
+    },
+    {
+      "name": "academic_semester_label",
+      "value": "學期"
+    },
+    {
+      "name": "forum_divisions_loading",
+      "value": "正在載入分區"
+    },
+    {
+      "name": "forum_divisions_retry",
+      "value": "分區載入失敗，重試"
+    },
+    {
+      "name": "campus_welcome_national_day",
+      "value": "國慶節快樂！"
+    },
+    {
+      "name": "campus_welcome_late",
+      "value": "披星戴月，不負韶華"
+    },
+    {
+      "name": "campus_welcome_morning",
+      "value": "一日之計在于晨"
+    },
+    {
+      "name": "campus_welcome_noon",
+      "value": "快到中午啦"
+    },
+    {
+      "name": "campus_welcome_afternoon",
+      "value": "下午的悠閒時光～"
+    },
+    {
+      "name": "campus_welcome_evening",
+      "value": "晚上好～"
+    },
+    {
+      "name": "campus_welcome_name",
+      "value": "歡迎你，{name}"
+    },
+    {
+      "name": "campus_welcome_guest",
+      "value": "歡迎來到旦撻校園助手"
+    },
+    {
+      "name": "campus_no_notices",
+      "value": "暂無最新通知"
+    },
+    {
+      "name": "campus_preview_open",
+      "value": "查看詳情"
+    },
+    {
+      "name": "campus_preview_classroom",
+      "value": "選擇校区、教學楼与日期，查詢空閒課節"
+    },
+    {
+      "name": "campus_preview_academic",
+      "value": "查看考試安排、成績与 GPA"
+    },
+    {
+      "name": "campus_preview_timetable",
+      "value": "查看課表或添加自己的課程"
+    },
+    {
+      "name": "campus_preview_bus",
+      "value": "選擇始發和终點校区，查看下班校车"
+    },
+    {
+      "name": "campus_preview_card",
+      "value": "查看校园卡餘額与消費紀錄"
+    },
+    {
+      "name": "campus_preview_retry",
+      "value": "點击重新加載"
+    },
+    {
+      "name": "campus_preview_failed",
+      "value": "摘要暫時不可用，可重試或進入詳情"
+    },
+    {
+      "name": "campus_preview_loading",
+      "value": "正在讀取摘要…"
+    },
+    {
+      "name": "campus_card_refresh",
+      "value": "刷新"
+    },
+    {
+      "name": "campus_move_up",
+      "value": "向前移动卡片"
+    },
+    {
+      "name": "campus_move_down",
+      "value": "向後移动卡片"
+    },
+    {
+      "name": "campus_size_compact",
+      "value": "橫向小卡片"
+    },
+    {
+      "name": "campus_size_small",
+      "value": "小卡片"
+    },
+    {
+      "name": "campus_size_large",
+      "value": "大卡片"
+    },
+    {
+      "name": "campus_remove_card",
+      "value": "移除卡片"
+    },
+    {
+      "name": "campus_edit_note",
+      "value": "長按卡片後拖動調整位置；按住卡片時，可用另一根手指上下滑動頁面。"
+    },
+    {
+      "name": "campus_restore_layout",
+      "value": "恢復預設佈局"
+    },
+    {
+      "name": "campus_add_card",
+      "value": "添加"
+    },
+    {
+      "name": "campus_edit_layout",
+      "value": "佈局編輯"
+    },
+    {
+      "name": "campus_classroom_count",
+      "value": "{count} 間空閒教室"
+    },
+    {
+      "name": "campus_academic_count",
+      "value": "{count} 門課程成績"
+    },
+    {
+      "name": "ui_could_not_open_details",
+      "value": "無法打開詳情，请重試"
+    },
+    {
+      "name": "classroom_morning",
+      "value": "上午"
+    },
+    {
+      "name": "classroom_afternoon",
+      "value": "下午"
+    },
+    {
+      "name": "classroom_evening",
+      "value": "晚上"
+    },
+    {
+      "name": "classroom_campus",
+      "value": "查詢校區"
+    },
+    {
+      "name": "classroom_building",
+      "value": "教學樓"
+    },
+    {
+      "name": "classroom_date",
+      "value": "查詢日期"
+    },
+    {
+      "name": "classroom_time_range",
+      "value": "查詢時段"
+    },
+    {
+      "name": "classroom_whole_day",
+      "value": "全天"
+    },
+    {
+      "name": "classroom_range",
+      "value": "第 %1$d–%2$d 節"
+    },
+    {
+      "name": "classroom_only_free",
+      "value": "只看空閒教室"
+    },
+    {
+      "name": "classroom_display_settings",
+      "value": "顯示設定"
+    },
+    {
+      "name": "classroom_remember_building",
+      "value": "記住上次教學樓"
+    },
+    {
+      "name": "classroom_high_contrast",
+      "value": "高對比課節矩陣"
+    },
+    {
+      "name": "classroom_settings_note",
+      "value": "記憶教學樓按校區分別儲存。高對比模式以實心格表示佔用、空心格表示空閒，便於不依賴顏色辨認。"
+    },
+    {
+      "name": "classroom_filter_note",
+      "value": "選擇時段後，開啟「只看空閒教室」可篩出該時段連續空閒的教室。日期可查昨天至未來 14 天。"
+    },
+    {
+      "name": "classroom_result_count",
+      "value": "顯示 %1$d / %2$d 間"
+    },
+    {
+      "name": "classroom_free",
+      "value": "空閒"
+    },
+    {
+      "name": "classroom_occupied",
+      "value": "佔用"
+    },
+    {
+      "name": "classroom_matrix_note",
+      "value": "數字為節次；描邊標出今天目前節次。點按課節可查看使用詳情。"
+    },
+    {
+      "name": "classroom_period_unknown",
+      "value": "第 %1$d 節：暫無資料"
+    },
+    {
+      "name": "classroom_hide_periods",
+      "value": "收起使用詳情"
+    },
+    {
+      "name": "classroom_loading",
+      "value": "正在更新教室使用情況"
+    },
+    {
+      "name": "classroom_filter_empty",
+      "value": "目前時段沒有連續空閒的教室，可調整時段或關閉空閒篩選。"
+    },
+    {
+      "name": "timetable_edit_title",
+      "value": "編輯課程"
+    },
+    {
+      "name": "timetable_editor_intro",
+      "value": "課程名稱、上課時間和教學週為必填，其餘項可按需填寫。"
+    },
+    {
+      "name": "timetable_editor_optional",
+      "value": "選填"
+    },
+    {
+      "name": "timetable_weekday",
+      "value": "星期"
+    },
+    {
+      "name": "timetable_select_weekday",
+      "value": "請選擇上課星期"
+    },
+    {
+      "name": "timetable_editor_period_hint",
+      "value": "請選擇節次"
+    },
+    {
+      "name": "timetable_editor_weeks_placeholder",
+      "value": "輸入週次或範圍"
+    },
+    {
+      "name": "timetable_editor_error_name",
+      "value": "請填寫課程名稱"
+    },
+    {
+      "name": "timetable_editor_error_weekday",
+      "value": "請選擇上課星期"
+    },
+    {
+      "name": "timetable_editor_error_first_unit",
+      "value": "請填寫 1–15 之間的開始節次"
+    },
+    {
+      "name": "timetable_editor_error_last_unit",
+      "value": "請填寫 1–15 之間的結束節次"
+    },
+    {
+      "name": "timetable_editor_error_order",
+      "value": "結束節次不能早於開始節次"
+    },
+    {
+      "name": "timetable_editor_error_weeks",
+      "value": "請填寫 1–30 週內的有效教學週，例如 1-18 或 1,3,5-8"
+    },
+    {
+      "name": "timetable_editor_local_note",
+      "value": "僅儲存至本機課表，不會修改教務選課紀錄。"
+    },
+    {
+      "name": "classroom_save_failed",
+      "value": "設定未能儲存，請重試。"
+    },
+    {
+      "name": "profile_current_campus",
+      "value": "目前校區"
+    },
+    {
+      "name": "profile_campus_hint",
+      "value": "用於校園卡片、教室日程及校車的預設校區；各頁面仍可暫時切換。"
+    },
+    {
+      "name": "profile_save_failed",
+      "value": "設定儲存失敗，請重試"
+    },
+    {
+      "name": "profile_logout_hint",
+      "value": "登出校園帳號並清除本機登入工作階段。課程、校園版面與一般設定會保留。"
+    },
+    {
+      "name": "forum_account_id",
+      "value": "已登入 · ID %d"
+    },
+    {
+      "name": "forum_signed_in",
+      "value": "已登入樹洞"
+    },
+    {
+      "name": "forum_signed_out",
+      "value": "未登入樹洞"
+    },
+    {
+      "name": "forum_account_hint",
+      "value": "樹洞帳號與復旦校園帳號獨立。"
+    },
+    {
+      "name": "forum_logout_hint",
+      "value": "僅登出樹洞帳號，校園服務仍可使用。"
+    },
+    {
+      "name": "forum_browsing_settings",
+      "value": "瀏覽與通知"
+    },
+    {
+      "name": "forum_sort_title",
+      "value": "預設排序"
+    },
+    {
+      "name": "forum_sort_replied",
+      "value": "最近回覆"
+    },
+    {
+      "name": "forum_sort_created",
+      "value": "最新發佈"
+    },
+    {
+      "name": "forum_clean_title",
+      "value": "清淨模式"
+    },
+    {
+      "name": "forum_clean_hint",
+      "value": "依原版規則隱藏部分容易引起不適的 Emoji，不修改帖子原文。"
+    },
+    {
+      "name": "forum_summary_hint",
+      "value": "在支援的帖子詳情中顯示 AI 總結入口。"
+    },
+    {
+      "name": "forum_hidden_tags",
+      "value": "封鎖標籤"
+    },
+    {
+      "name": "forum_hidden_tag_count",
+      "value": "已封鎖 %d 個標籤"
+    },
+    {
+      "name": "forum_hidden_tags_hint",
+      "value": "帶有這些標籤的帖子將在資訊流中隱藏。點選已選標籤可移除，也可輸入名稱新增。"
+    },
+    {
+      "name": "forum_tag_search",
+      "value": "搜尋或輸入標籤名稱"
+    },
+    {
+      "name": "forum_tag_add",
+      "value": "新增"
+    },
+    {
+      "name": "forum_account_content",
+      "value": "我的樹洞"
+    },
+    {
+      "name": "forum_my_posts",
+      "value": "我的帖子"
+    },
+    {
+      "name": "forum_my_replies",
+      "value": "我的回覆"
+    },
+    {
+      "name": "forum_favorites",
+      "value": "收藏"
+    },
+    {
+      "name": "forum_subscriptions",
+      "value": "訂閱"
+    },
+    {
+      "name": "forum_view_history",
+      "value": "瀏覽紀錄"
+    },
+    {
+      "name": "forum_history_hint",
+      "value": "僅儲存在本機，最多保留最近 500 筆。"
+    },
+    {
+      "name": "forum_punishments",
+      "value": "處分紀錄"
+    },
+    {
+      "name": "forum_change_password",
+      "value": "修改密碼"
+    },
+    {
+      "name": "forum_display_storage",
+      "value": "外觀與儲存"
+    },
+    {
+      "name": "forum_background",
+      "value": "樹洞背景圖片"
+    },
+    {
+      "name": "forum_background_hint",
+      "value": "選擇本機圖片，以柔和背景顯示。"
+    },
+    {
+      "name": "forum_background_set",
+      "value": "已設定 · 點選更換"
+    },
+    {
+      "name": "forum_background_remove",
+      "value": "移除背景圖片"
+    },
+    {
+      "name": "forum_background_limit",
+      "value": "背景圖片不能超過 20 MB"
+    },
+    {
+      "name": "forum_clear_cache",
+      "value": "清理圖片快取"
+    },
+    {
+      "name": "forum_clear_cache_hint",
+      "value": "僅清理已下載圖片，帳號與設定會保留。"
+    },
+    {
+      "name": "forum_cache_cleared",
+      "value": "圖片快取已清理"
+    },
+    {
+      "name": "forum_clear_history",
+      "value": "清空"
+    },
+    {
+      "name": "forum_clear_history_hint",
+      "value": "清空本機瀏覽紀錄？不會刪除伺服器上的帖子。"
+    },
+    {
+      "name": "forum_account_empty",
+      "value": "暫無內容"
+    },
+    {
+      "name": "forum_punishment_revoked",
+      "value": "已撤銷"
+    },
+    {
+      "value": "復旦帳號",
+      "name": "account_signed_in"
+    },
+    {
+      "value": "復旦 ID · %s",
+      "name": "account_fudan_id"
+    },
+    {
+      "value": "帳號頭像",
+      "name": "account_avatar"
+    },
+    {
+      "value": "已登入復旦帳號",
+      "name": "account_verified"
+    },
+    {
+      "value": "藍色邊框和勾表示目前卡片，點選其它尺寸可更換；尚未加入的卡片可直接點選加入。",
+      "name": "campus_catalog_note"
+    },
+    {
+      "value": "春風來不遠，只在屋東頭。",
+      "name": "campus_welcome_lunar_eve"
+    },
+    {
+      "value": "爆竹聲中一歲除，春風送暖入屠蘇。",
+      "name": "campus_welcome_spring"
+    },
+    {
+      "value": "元宵快樂，願團圓常伴！",
+      "name": "campus_welcome_lantern"
+    },
+    {
+      "value": "端午安康！",
+      "name": "campus_welcome_dragon"
+    },
+    {
+      "value": "中秋快樂，月圓人團圓！",
+      "name": "campus_welcome_midautumn"
+    },
+    {
+      "value": "新年快樂！",
+      "name": "campus_welcome_new_year"
+    },
+    {
+      "value": "勞動節快樂！",
+      "name": "campus_welcome_labour"
+    },
+    {
+      "value": "教師節快樂！",
+      "name": "campus_welcome_teachers"
+    },
+    {
+      "name": "forum_activities_title",
+      "value": "顯示一些活動"
+    },
+    {
+      "name": "forum_activities_hint",
+      "value": "在樹洞資訊流中展示官方活動，點擊查看詳情；沒有活動時自動收起，關閉後隱藏活動區域。"
+    },
+    {
+      "name": "forum_activities_cached",
+      "value": "暫時無法更新，正在顯示此前取得的活動。"
+    },
+    {
+      "name": "forum_activities_unavailable",
+      "value": "活動暫時無法取得，可稍後重試。"
+    },
+    {
+      "name": "forum_activities_all",
+      "value": "查看所有活動"
+    },
+    {
+      "name": "forum_activity_open",
+      "value": "查看"
+    },
+    {
+      "name": "forum_messages",
+      "value": "訊息"
+    },
+    {
+      "name": "forum_show_unread",
+      "value": "僅未讀"
+    },
+    {
+      "name": "forum_message_no_detail",
+      "value": "這則訊息沒有更多內容。"
+    },
+    {
+      "name": "forum_message_ack_failed",
+      "value": "訊息狀態暫未同步，可下拉重新整理再試。"
+    },
+    {
+      "name": "forum_activities_loading",
+      "value": "正在取得活動"
+    },
+    {
+      "name": "forum_activities_source",
+      "value": "旦夕官方活動"
+    },
+    {
+      "name": "forum_activities_empty",
+      "value": "暫無活動"
+    },
+    {
+      "name": "forum_activities_empty_hint",
+      "value": "官方目前未發布活動，可稍後重新整理。"
+    },
+    {
+      "name": "forum_activities_retry_hint",
+      "value": "未能取得官方活動，點按重試。"
+    },
+    {
+      "name": "feature_evaluation",
+      "value": "課評"
+    },
+    {
+      "name": "feature_campus_access",
+      "value": "入校權限"
+    },
+    {
+      "name": "feature_sports",
+      "value": "場館預約"
+    },
+    {
+      "name": "feature_life_code",
+      "value": "復旦生活碼"
+    },
+    {
+      "name": "feature_developer_notice",
+      "value": "開發組公告"
+    },
+    {
+      "name": "feature_dining",
+      "value": "食堂排隊人數"
+    },
+    {
+      "name": "feature_library",
+      "value": "圖書館人數"
+    },
+    {
+      "name": "feature_electricity",
+      "value": "寢室電費"
+    },
+    {
+      "name": "live_dining_title",
+      "value": "食堂排隊人數"
+    },
+    {
+      "name": "live_library_title",
+      "value": "圖書館人數"
+    },
+    {
+      "name": "live_electricity_title",
+      "value": "寢室電費"
+    },
+    {
+      "name": "live_developer_title",
+      "value": "開發組公告"
+    },
+    {
+      "name": "live_sign_in_hint",
+      "value": "登入復旦帳號後查看校園服務"
+    },
+    {
+      "name": "live_load_error",
+      "value": "暫時無法讀取資料，請檢查網路後重新載入。"
+    },
+    {
+      "name": "live_dining_outside",
+      "value": "目前不在供餐統計時段"
+    },
+    {
+      "name": "live_dining_hint",
+      "value": "保留學校回傳的全部窗口，按校區與食堂分組。人數為消費活躍度參考，不等於現場排隊人數；相對擁擠按各食堂人數與高峰參考之比比較。"
+    },
+    {
+      "name": "live_library_hint",
+      "value": "在館人數、剩餘可入館人數及容量來自圖書館；下拉重新整理獲取最新狀態。"
+    },
+    {
+      "name": "live_electricity_hint",
+      "value": "目前電量與寢室資訊按校園帳號讀取；歷史紀錄來自資料中心，統計時間可能與目前電量不同。"
+    },
+    {
+      "name": "live_developer_hint",
+      "value": "公告來自旦夕開發組，保留原文及發布時間。最新公告與歷史公告可切換查看。"
+    },
+    {
+      "name": "live_no_notices",
+      "value": "暫無公告"
+    },
+    {
+      "name": "live_visitors",
+      "value": "在館人數"
+    },
+    {
+      "name": "live_remaining_kwh",
+      "value": "剩餘電量 · kWh"
+    },
+    {
+      "name": "live_used_kwh",
+      "value": "已用電量 · kWh"
+    },
+    {
+      "name": "live_least_busy",
+      "value": "相對空閒"
+    },
+    {
+      "name": "live_most_busy",
+      "value": "相對擁擠"
+    },
+    {
+      "name": "live_notice_range",
+      "value": "公告範圍"
+    },
+    {
+      "name": "live_latest",
+      "value": "最新公告"
+    },
+    {
+      "name": "live_history",
+      "value": "歷史公告"
+    },
+    {
+      "name": "live_view_full",
+      "value": "查看全文"
+    },
+    {
+      "name": "live_query_campus",
+      "value": "查詢校區"
+    },
+    {
+      "name": "live_transactions",
+      "value": "消費人數"
+    },
+    {
+      "name": "live_peak_reference",
+      "value": "高峰參考 %d 人"
+    },
+    {
+      "name": "live_usage_history",
+      "value": "每日用電"
+    },
+    {
+      "name": "live_last_days",
+      "value": "最近 %d 筆"
+    },
+    {
+      "name": "live_open_error",
+      "value": "無法開啟連結，請稍後重試。"
+    },
+    {
+      "name": "utility_evaluation",
+      "value": "課評"
+    },
+    {
+      "name": "utility_access",
+      "value": "入校權限"
+    },
+    {
+      "name": "utility_life_code",
+      "value": "復旦生活碼"
+    },
+    {
+      "name": "utility_sports",
+      "value": "場館預約"
+    },
+    {
+      "name": "utility_code_entry",
+      "value": "點擊查看生活碼"
+    },
+    {
+      "name": "utility_code_preview_hint",
+      "value": "進入後取得即時二維碼"
+    },
+    {
+      "name": "utility_not_provided",
+      "value": "學校未提供"
+    },
+    {
+      "name": "utility_no_access",
+      "value": "暫無入校權限記錄"
+    },
+    {
+      "name": "utility_sports_summary",
+      "value": "早鍛 %s · 必鍛 %s · 選鍛 %s"
+    },
+    {
+      "name": "utility_login_value",
+      "value": "登入後查詢"
+    },
+    {
+      "name": "utility_forum_login_hint",
+      "value": "使用樹洞帳號查看課程評價"
+    },
+    {
+      "name": "utility_campus_login_hint",
+      "value": "進入詳情後使用復旦身分驗證"
+    },
+    {
+      "name": "utility_access_permission",
+      "value": "入校權限"
+    },
+    {
+      "name": "utility_card_status",
+      "value": "帳戶狀態"
+    },
+    {
+      "name": "utility_access_expiry",
+      "value": "有效期"
+    },
+    {
+      "name": "utility_access_hint",
+      "value": "顯示學校資料中心公布的一卡通入校權限和有效期。如需變更，請在學校官方系統辦理。"
+    },
+    {
+      "name": "utility_sports_morning",
+      "value": "早鍛"
+    },
+    {
+      "name": "utility_sports_required",
+      "value": "必鍛"
+    },
+    {
+      "name": "utility_sports_optional",
+      "value": "選鍛"
+    },
+    {
+      "name": "utility_sports_hint",
+      "value": "體育章和單項成績以體育教學系統記錄為準。未提供或無法解析的次數顯示為「—」，不計為零。"
+    },
+    {
+      "name": "utility_result",
+      "value": "成績"
+    },
+    {
+      "name": "utility_score",
+      "value": "分數"
+    },
+    {
+      "name": "utility_code_fetched",
+      "value": "更新於 %s"
+    },
+    {
+      "name": "utility_code_hint",
+      "value": "生活碼僅在此頁展示，不儲存到本機；下拉或點擊重新載入取得最新二維碼。離開後恢復螢幕亮度。"
+    },
+    {
+      "name": "utility_open_official",
+      "value": "開啟學校官網"
+    },
+    {
+      "name": "utility_browser_failed",
+      "value": "暫時無法開啟瀏覽器，請重試。"
+    },
+    {
+      "name": "utility_rating_overall",
+      "value": "總體評價"
+    },
+    {
+      "name": "utility_rating_content",
+      "value": "課程風格"
+    },
+    {
+      "name": "utility_rating_workload",
+      "value": "工作量"
+    },
+    {
+      "name": "utility_rating_assessment",
+      "value": "考核要求"
+    },
+    {
+      "name": "utility_review_deleted",
+      "value": "該評價已刪除"
+    },
+    {
+      "name": "utility_view_course",
+      "value": "查看課程"
+    },
+    {
+      "name": "utility_edit_review",
+      "value": "編輯"
+    },
+    {
+      "name": "utility_delete_review",
+      "value": "刪除評價"
+    },
+    {
+      "name": "utility_delete_review_hint",
+      "value": "刪除後無法恢復，確定刪除這則評價？"
+    },
+    {
+      "name": "utility_credits",
+      "value": "學分 %s"
+    },
+    {
+      "name": "utility_review_count",
+      "value": "%d 則評價"
+    },
+    {
+      "name": "utility_course_count",
+      "value": "%d 個開課記錄"
+    },
+    {
+      "name": "utility_search_hint",
+      "value": "課程名稱、代碼或教師"
+    },
+    {
+      "name": "utility_search",
+      "value": "搜尋"
+    },
+    {
+      "name": "utility_no_courses",
+      "value": "沒有找到相關課程，可調整關鍵字重試。"
+    },
+    {
+      "name": "utility_load_more",
+      "value": "載入更多"
+    },
+    {
+      "name": "utility_evaluation_hint",
+      "value": "課評使用樹洞帳號，與復旦校園帳號分開登入。可依課程、教師搜尋，在課程詳情中依教師和學期篩選評價。"
+    },
+    {
+      "name": "utility_teacher",
+      "value": "教師"
+    },
+    {
+      "name": "utility_term",
+      "value": "學期"
+    },
+    {
+      "name": "utility_all",
+      "value": "全部"
+    },
+    {
+      "name": "utility_term_unknown",
+      "value": "未知學期"
+    },
+    {
+      "name": "utility_term_autumn",
+      "value": "秋季"
+    },
+    {
+      "name": "utility_term_winter",
+      "value": "寒假"
+    },
+    {
+      "name": "utility_term_spring",
+      "value": "春季"
+    },
+    {
+      "name": "utility_term_summer",
+      "value": "暑假"
+    },
+    {
+      "name": "utility_write_review",
+      "value": "撰寫評價"
+    },
+    {
+      "name": "utility_no_reviews",
+      "value": "目前篩選條件下暫無評價"
+    },
+    {
+      "name": "utility_evaluation_editor_hint",
+      "value": "請先選擇你實際修讀的課程，完整填寫四項評分。風格和工作量沿用原版評分方向。"
+    },
+    {
+      "name": "utility_course_offering",
+      "value": "開課教師與學期"
+    },
+    {
+      "name": "utility_select_course",
+      "value": "選擇開課記錄"
+    },
+    {
+      "name": "utility_review_title",
+      "value": "評價標題"
+    },
+    {
+      "name": "utility_review_title_hint",
+      "value": "簡要概括你的體驗"
+    },
+    {
+      "name": "utility_review_body",
+      "value": "評價正文"
+    },
+    {
+      "name": "utility_review_body_hint",
+      "value": "課程內容、課堂體驗和建議…"
+    },
+    {
+      "name": "utility_sending",
+      "value": "正在提交"
+    },
+    {
+      "name": "utility_submit",
+      "value": "提交評價"
+    },
+    {
+      "name": "utility_open_terms",
+      "value": "閱讀官方條款"
+    },
+    {
+      "name": "utility_login_forum",
+      "value": "登入樹洞"
+    },
+    {
+      "name": "utility_course_details",
+      "value": "課程評價"
+    },
+    {
+      "name": "utility_sports_migrated_value",
+      "value": "查看體育鍛鍊指南"
+    },
+    {
+      "name": "utility_sports_migrated_hint",
+      "value": "學校已將體育鍛鍊查詢遷移至「復旦智慧體育系統」小程式，請依官方學生指南查詢運動記錄和統計。本頁僅相容已有驗證的舊網頁記錄。"
+    },
+    {
+      "name": "utility_sports_guide",
+      "value": "學生端使用說明"
+    },
+    {
+      "name": "utility_rating_overall_words",
+      "value": "特別差評;差評;中等;好評;特別好評"
+    },
+    {
+      "name": "utility_rating_content_words",
+      "value": "硬核;較難;中等;容易;非常容易"
+    },
+    {
+      "name": "utility_rating_workload_words",
+      "value": "非常大;較大;中等;較小;非常小"
+    },
+    {
+      "name": "utility_rating_assessment_words",
+      "value": "非常嚴格;嚴格;中等;寬鬆;非常寬鬆"
+    },
+    {
+      "name": "utility_rating_unset",
+      "value": "請選擇評分"
+    },
+    {
+      "name": "utility_reviewer",
+      "value": "使用者 %d"
+    },
+    {
+      "name": "utility_invalid_service",
+      "value": "此校園服務暫不可用，請重新選擇。"
+    },
+    {
+      "name": "utility_account_changed",
+      "value": "帳號或語言已切換，請重新載入。"
+    },
+    {
+      "name": "utility_invalid_response",
+      "value": "學校服務的頁面或資料格式已變更，請重試或開啟官方網頁。"
+    },
+    {
+      "name": "utility_invalid_review",
+      "value": "請完整填寫課程、標題、正文和四項評分；修改時課程不可更換。"
+    },
+    {
+      "name": "utility_review_owned_only",
+      "value": "僅能修改或刪除本人未刪除的課程評價。"
+    },
+    {
+      "name": "utility_invalid_identifier",
+      "value": "課程、評價標識或搜尋頁碼無效，請重新載入。"
+    },
+    {
+      "name": "utility_code_terms_required",
+      "value": "需要先在官方網頁閱讀並同意生活碼條款。"
+    },
+    {
+      "name": "utility_code_too_long",
+      "value": "生活碼超出原生二維碼元件範圍，請使用官方網頁。"
+    },
+    {
+      "name": "campus_verify_continue",
+      "value": "繼續身分驗證"
+    },
+    {
+      "name": "campus_unit_cny",
+      "value": "元"
+    },
+    {
+      "name": "campus_unit_people",
+      "value": "人"
+    },
+    {
+      "name": "campus_unit_kwh",
+      "value": "度"
+    },
+    {
+      "name": "campus_unit_rooms",
+      "value": "間"
+    },
+    {
+      "name": "campus_hint_announcement",
+      "value": "最新教務動態"
+    },
+    {
+      "name": "campus_hint_bus",
+      "value": "下一班 · 始發時間"
+    },
+    {
+      "name": "campus_hint_empty_classroom",
+      "value": "按教學樓與日期查看教室日程、課程和空閒課節"
+    },
+    {
+      "name": "campus_hint_academic",
+      "value": "考試安排與成績摘要"
+    },
+    {
+      "name": "campus_hint_timetable",
+      "value": "今日課程安排"
+    },
+    {
+      "name": "campus_hint_card",
+      "value": "可用餘額"
+    },
+    {
+      "name": "campus_hint_evaluation",
+      "value": "課程評價與體驗"
+    },
+    {
+      "name": "campus_hint_campus_access",
+      "value": "入校資格與有效期"
+    },
+    {
+      "name": "campus_hint_sports",
+      "value": "選擇場館、日期與可預約時段"
+    },
+    {
+      "name": "campus_hint_life_code",
+      "value": "動態 QR 碼 · 點擊出示"
+    },
+    {
+      "name": "campus_hint_developer_notice",
+      "value": "開發組最新消息"
+    },
+    {
+      "name": "campus_hint_dining",
+      "value": "目前較空閒窗口"
+    },
+    {
+      "name": "campus_hint_library",
+      "value": "即時在館人數"
+    },
+    {
+      "name": "campus_hint_electricity",
+      "value": "寢室剩餘電量"
+    },
+    {
+      "name": "forum_webvpn_verification_hint",
+      "value": "樹洞直連暫不可用，請完成校園 WebVPN 身分驗證後繼續。樹洞仍使用獨立的信箱與密碼登入。"
+    },
+    {
+      "name": "forum_login_timeout_hint",
+      "value": "樹洞登入請求逾時（2300028），暫時無法確認伺服器是否已收到。請稍後點擊登入重試；不會自動重複提交密碼。"
+    },
+    {
+      "name": "live_load_usage_history",
+      "value": "查看用電紀錄"
+    },
+    {
+      "name": "review_net_against",
+      "value": "淨反對"
+    },
+    {
+      "name": "review_net_support",
+      "value": "淨贊同"
+    },
+    {
+      "name": "review_net_score",
+      "value": "淨評價"
+    },
+    {
+      "name": "review_average_rating",
+      "value": "平均評價"
+    },
+    {
+      "name": "settings_high_contrast",
+      "value": "輔助功能：高對比度顏色"
+    },
+    {
+      "name": "settings_high_contrast_hint",
+      "value": "教室日程查詢和樹洞標籤"
+    },
+    {
+      "name": "settings_haptics",
+      "value": "觸覺回饋"
+    },
+    {
+      "name": "settings_haptics_hint",
+      "value": "在切換、按讚和拖動等操作時提供輕觸回饋，強度遵循系統設定。"
+    },
+    {
+      "name": "settings_proxy",
+      "value": "代理設定"
+    },
+    {
+      "name": "settings_proxy_none",
+      "value": "不使用代理"
+    },
+    {
+      "name": "settings_proxy_hint",
+      "value": "儲存常用 HTTP 代理，點選即可切換；移除正在使用的代理後自動關閉。"
+    },
+    {
+      "name": "settings_proxy_scope",
+      "value": "適用於應用網路請求、圖片下載和應用內身份驗證網頁。與「自動使用 WebVPN 代理」分別設定；切換後從下一次請求生效。"
+    },
+    {
+      "name": "settings_proxy_input",
+      "value": "如 127.0.0.1:1234"
+    },
+    {
+      "name": "settings_proxy_add",
+      "value": "新增代理"
+    },
+    {
+      "name": "settings_proxy_save",
+      "value": "儲存位址"
+    },
+    {
+      "name": "settings_proxy_remove",
+      "value": "移除代理"
+    },
+    {
+      "name": "settings_proxy_invalid",
+      "value": "請輸入有效的 HTTP 代理位址和連接埠（1–65535），例如 127.0.0.1:1234。"
+    },
+    {
+      "name": "settings_cancel",
+      "value": "取消"
+    },
+    {
+      "name": "settings_save_failed",
+      "value": "設定未能儲存，請重試。"
+    },
+    {
+      "name": "settings_open_failed",
+      "value": "無法開啟連結，請檢查是否已安裝瀏覽器。"
+    },
+    {
+      "name": "settings_intro",
+      "value": "簡介"
+    },
+    {
+      "name": "settings_description",
+      "value": "由幾位復旦本科學生用愛發電打造的微型復旦綜合服務 App，希望能為你的生活提供便利～"
+    },
+    {
+      "name": "settings_harmony_intro",
+      "value": "本應用為旦夕的 HarmonyOS 適配內測版。感謝原專案及所有貢獻者。"
+    },
+    {
+      "name": "settings_legal",
+      "value": "法律"
+    },
+    {
+      "name": "settings_legal_text",
+      "value": "登入即表示您已閱讀並同意隱私政策和使用條款。旦夕採用 GNU GPL v3 開源許可；第三方元件的許可可在下方離線查看。"
+    },
+    {
+      "name": "settings_privacy",
+      "value": "隱私政策和使用條款"
+    },
+    {
+      "name": "settings_licenses",
+      "value": "開源軟體許可"
+    },
+    {
+      "name": "settings_license_hint",
+      "value": "以下列出本應用實際使用的開源專案。點選可離線查看完整許可。"
+    },
+    {
+      "name": "settings_thanks",
+      "value": "致謝"
+    },
+    {
+      "name": "settings_thanks_text",
+      "value": "我們感謝 [IvanFei](https://github.com/ivanfei-1) 爲本 App 設計圖標，[MSapphire](https://www.xiaohongshu.com/user/profile/6575475f000000001902d794)、[Lin2510]()、[zzz111]() 爲本 App 貢獻表情包等藝術設計。"
+    },
+    {
+      "name": "settings_developers",
+      "value": "原專案開發者"
+    },
+    {
+      "name": "settings_contact",
+      "value": "聯絡我們"
+    },
+    {
+      "name": "settings_contact_hint",
+      "value": "回報問題時可附上版本號、重現步驟和「讀取診斷」。請勿附上密碼或認證票據。"
+    },
+    {
+      "name": "settings_email",
+      "value": "撰寫回饋郵件"
+    },
+    {
+      "name": "settings_copy_email",
+      "value": "複製信箱位址"
+    },
+    {
+      "name": "settings_email_copied",
+      "value": "信箱位址已複製"
+    },
+    {
+      "name": "settings_email_unavailable",
+      "value": "未能開啟郵件應用，可複製信箱位址後聯絡。"
+    },
+    {
+      "name": "settings_project",
+      "value": "專案網頁"
+    },
+    {
+      "name": "settings_source",
+      "value": "原專案原始碼與貢獻記錄"
+    },
+    {
+      "name": "settings_latest_reply",
+      "value": "%s 於%s回覆："
+    },
+    {
+      "name": "settings_deleted_reply",
+      "value": "該回覆已被刪除"
+    },
+    {
+      "name": "settings_image_summary",
+      "value": "[圖片]"
+    },
+    {
+      "name": "settings_sticker_summary",
+      "value": "[表情]"
+    },
+    {
+      "name": "settings_quote_summary",
+      "value": "引用"
+    },
+    {
+      "name": "summary_queued",
+      "value": "已進入生成佇列"
+    },
+    {
+      "name": "summary_processing",
+      "value": "正在整理討論內容"
+    },
+    {
+      "name": "summary_loading",
+      "value": "正在取得 AI 總結"
+    },
+    {
+      "name": "summary_empty",
+      "value": "暫無可用的總結內容"
+    },
+    {
+      "name": "summary_timeout",
+      "value": "生成時間較長，請稍後重試"
+    },
+    {
+      "name": "summary_error",
+      "value": "暫時無法生成總結，請稍後重試"
+    },
+    {
+      "name": "summary_count",
+      "value": "正在分析 %s 層樓的討論"
+    },
+    {
+      "name": "summary_wait_note",
+      "value": "結果將自動顯示；關閉面板後停止查詢。"
+    },
+    {
+      "name": "summary_disclaimer",
+      "value": "AI 輔助總結，僅供參考 · 校內科研測試，不對外提供服務"
+    },
+    {
+      "name": "summary_keywords",
+      "value": "關鍵詞"
+    },
+    {
+      "name": "summary_core",
+      "value": "核心摘要"
+    },
+    {
+      "name": "summary_branches",
+      "value": "討論分支"
+    },
+    {
+      "name": "summary_interactions",
+      "value": "熱門互動"
+    },
+    {
+      "name": "summary_references",
+      "value": "相關樓層 · 點擊查看原文"
+    },
+    {
+      "name": "summary_support",
+      "value": "支持了"
+    },
+    {
+      "name": "summary_rebuttal",
+      "value": "反駁了"
+    },
+    {
+      "name": "summary_supplement",
+      "value": "補充了"
+    },
+    {
+      "name": "summary_question",
+      "value": "質疑了"
+    },
+    {
+      "name": "summary_reply",
+      "value": "回覆了"
+    },
+    {
+      "name": "summary_generated",
+      "value": "生成於"
+    },
+    {
+      "name": "summary_feedback_sent",
+      "value": "感謝回饋，已提交"
+    },
+    {
+      "name": "summary_feedback_sending",
+      "value": "正在提交回饋…"
+    },
+    {
+      "name": "summary_copy",
+      "value": "複製總結"
+    },
+    {
+      "name": "summary_unsupported",
+      "value": "該帖暫不支援 AI 總結"
+    },
+    {
+      "name": "summary_permission",
+      "value": "你暫無使用 AI 總結的權限"
+    },
+    {
+      "name": "summary_feedback_note",
+      "value": "回饋可以幫助改進總結。可填寫遺漏或不準確之處（選填）。"
+    },
+    {
+      "name": "settings_original_version",
+      "value": "原專案版本 1.5.3 build 350 #7fe64c6"
+    },
+    {
+      "name": "settings_original_developer_motto",
+      "value": "Passionate developers\nfrom A.I. & C.S. & Economics & Physics\nat Fudan University"
+    },
+    {
+      "name": "campus_classroom_period_note",
+      "value": "目前節次空閒教室"
+    },
+    {
+      "name": "campus_academic_summary",
+      "value": "本學期考試 {exams} 門 · 已公布成績 {grades} 門"
+    },
+    {
+      "name": "academic_gpa_credits",
+      "value": "學分"
+    },
+    {
+      "name": "composer_tags_note",
+      "value": "可複選，也可建立標籤"
+    },
+    {
+      "name": "composer_search_custom_tag",
+      "value": "搜尋或輸入新標籤"
+    },
+    {
+      "name": "composer_add_tag",
+      "value": "新增"
+    },
+    {
+      "name": "composer_draft_note",
+      "value": "本次使用期間自動保留草稿"
+    },
+    {
+      "name": "composer_bold",
+      "value": "粗體"
+    },
+    {
+      "name": "composer_italic",
+      "value": "斜體"
+    },
+    {
+      "name": "composer_formula",
+      "value": "數學公式"
+    },
+    {
+      "name": "composer_stickers",
+      "value": "表情"
+    },
+    {
+      "name": "composer_images_note",
+      "value": "已新增圖片，可移除後重新選擇"
+    },
+    {
+      "name": "composer_image_number",
+      "value": "圖片 {index}"
+    },
+    {
+      "name": "composer_remove_image",
+      "value": "移除圖片"
+    },
+    {
+      "name": "composer_fullscreen",
+      "value": "專注編輯"
+    },
+    {
+      "name": "composer_help",
+      "value": "編輯說明"
+    },
+    {
+      "name": "composer_help_note",
+      "value": "支援 Markdown 與 LaTeX。\n\n**粗體**、*斜體*、# 標題、[文字](https://example.com)\n\n行內公式：$x^2$；獨立公式：$$x^2$$\n\n選取文字後點工具按鈕可套用格式；點眼睛預覽。圖片上傳後會自動插入內文，表情可連續新增。"
+    },
+    {
+      "name": "composer_community",
+      "value": "社群公約"
+    },
+    {
+      "name": "composer_warning_title",
+      "value": "傳送前請確認"
+    },
+    {
+      "name": "composer_warning",
+      "value": "內容包含「{word}」，請確認符合社群公約後再傳送。"
+    },
+    {
+      "name": "composer_send_anyway",
+      "value": "繼續傳送"
+    },
+    {
+      "name": "composer_recommend",
+      "value": "推薦標籤"
+    },
+    {
+      "name": "composer_recommend_note",
+      "value": "僅在本機比對內文中的既有標籤，不上傳內文。可複選，也可略過。"
+    },
+    {
+      "name": "campus_classroom_outside_period",
+      "value": "目前非上課時段"
+    },
+    {
+      "name": "academic_local_scope",
+      "value": "計入 {included} 門 · 不計入 {excluded} 門 · 資料缺失 {incomplete} 門"
+    },
+    {
+      "name": "review_no_ratings",
+      "value": "暫無評價"
+    },
+    {
+      "name": "review_rating_unavailable",
+      "value": "查看課程評分"
+    },
+    {
+      "name": "review_count_unavailable",
+      "value": "評價數量待取得"
+    },
+    {
+      "name": "review_summary_loading",
+      "value": "正在讀取評價"
+    },
+    {
+      "name": "review_summary_failed",
+      "value": "評價暫不可用"
+    },
+    {
+      "name": "forum_all_tags",
+      "value": "所有標籤"
+    },
+    {
+      "name": "forum_before_date",
+      "value": "篩選不晚於日期"
+    },
+    {
+      "name": "forum_clear_date",
+      "value": "清除日期篩選"
+    },
+    {
+      "name": "forum_before_date_value",
+      "value": "不晚於 %s"
+    },
+    {
+      "name": "forum_pinned",
+      "value": "置頂"
+    },
+    {
+      "name": "forum_tags_search",
+      "value": "搜尋標籤"
+    },
+    {
+      "name": "forum_tag_popularity",
+      "value": "熱度 %d"
+    },
+    {
+      "name": "campus_academic_exam_count",
+      "value": "考試 {count} 門"
+    },
+    {
+      "name": "campus_academic_grade_count",
+      "value": "已出成績 {count} 門"
+    },
+    {
+      "name": "live_history_diagnostics",
+      "value": "讀取診斷"
+    },
+    {
+      "name": "live_history_diagnostics_hint",
+      "value": "診斷保留本次錯誤與近期請求的去識別資訊，不包含密碼、驗證憑證或資料內容。可複製後用於回報問題。"
+    },
+    {
+      "name": "live_history_diagnostics_copy",
+      "value": "複製診斷"
+    },
+    {
+      "name": "diagnostics_read",
+      "value": "讀取診斷"
+    },
+    {
+      "name": "diagnostics_error",
+      "value": "具體錯誤"
+    },
+    {
+      "name": "diagnostics_logs",
+      "value": "相關日誌"
+    },
+    {
+      "name": "diagnostics_hint",
+      "value": "診斷保留本次錯誤與近期請求的去識別資訊，不包含密碼、驗證憑證或資料內容。可複製後用於回報問題。"
+    },
+    {
+      "name": "diagnostics_no_logs",
+      "value": "沒有可用的請求日誌。"
+    },
+    {
+      "name": "diagnostics_expired",
+      "value": "診斷已過期，請返回原頁面重新讀取。"
+    },
+    {
+      "name": "diagnostics_open_failed",
+      "value": "無法開啟診斷，請稍後重試。"
+    },
+    {
+      "name": "diagnostics_copy_failed",
+      "value": "複製失敗"
+    },
+    {
+      "name": "diagnostics_network_brief",
+      "value": "網路連線失敗，請檢查網路後重新載入。"
+    },
+    {
+      "name": "diagnostics_generic_brief",
+      "value": "暫時無法完成操作，請稍後重試。"
+    },
+    {
+      "name": "settings_original_project",
+      "value": "原專案 · DanXi-Dev / DanXi"
+    },
+    {
+      "name": "settings_all_contributors",
+      "value": "查看全部貢獻者"
+    },
+    {
+      "name": "campus_bus_closed",
+      "value": "已無班次"
+    },
+    {
+      "name": "campus_bus_following",
+      "value": "下一班 %s"
+    },
+    {
+      "name": "campus_classroom_current",
+      "value": "目前節次空閒"
+    },
+    {
+      "name": "campus_classroom_scope",
+      "value": "已確認 %d 間教室狀態"
+    },
+    {
+      "name": "campus_classroom_none",
+      "value": "目前節次暫無空閒教室"
+    },
+    {
+      "name": "campus_room_seats",
+      "value": "%s 席"
+    },
+    {
+      "name": "campus_library_more",
+      "value": "另有 %d 個館，點按查看"
+    },
+    {
+      "name": "campus_library_hours",
+      "value": "開放 %s"
+    },
+    {
+      "name": "campus_bus_last",
+      "value": "暫無後續班次"
+    },
+    {
+      "name": "campus_bus_timetable",
+      "value": "點按查看時刻表"
+    },
+    {
+      "name": "calendar_manual_sync_hint",
+      "value": "手動選擇其他學期；同步僅在點按後更新目前學期的第一週週一。"
+    },
+    {
+      "name": "timetable_semester_not_found",
+      "value": "找不到所選日期（%s）對應的教務學期，請核對第一教學週的週一。"
+    },
+    {
+      "name": "timetable_graduate_history_unavailable",
+      "value": "研究生教務介面僅提供目前課表，本機尚未儲存所選學期的課程。可新增本機課程，或切換回目前學期。"
+    },
+    {
+      "name": "reservation_all_campuses",
+      "value": "全部校區"
+    },
+    {
+      "name": "reservation_all_categories",
+      "value": "全部項目"
+    },
+    {
+      "name": "reservation_date",
+      "value": "預約日期"
+    },
+    {
+      "name": "reservation_available_only",
+      "value": "僅顯示可預約時段"
+    },
+    {
+      "name": "reservation_capacity",
+      "value": "已預約 %s / %s"
+    },
+    {
+      "name": "reservation_book",
+      "value": "預約"
+    },
+    {
+      "name": "reservation_full",
+      "value": "已約滿"
+    },
+    {
+      "name": "reservation_unavailable",
+      "value": "無法預約"
+    },
+    {
+      "name": "reservation_no_places",
+      "value": "目前篩選下沒有場館，可切換校區或項目。"
+    },
+    {
+      "name": "reservation_no_slots",
+      "value": "此日期沒有符合條件的時段，可切換日期或關閉可預約篩選。"
+    },
+    {
+      "name": "reservation_booking_hint",
+      "value": "場館與時段以學校即時資訊為準；選擇時段後，在學校預約頁面核對並提交。"
+    },
+    {
+      "name": "reservation_booking_form",
+      "value": "學校預約頁面"
+    },
+    {
+      "name": "reservation_verification_hint",
+      "value": "場館預約需要復旦身分驗證，請點按繼續身分驗證。"
+    },
+    {
+      "name": "reservation_data_invalid",
+      "value": "暫時無法解析場館預約傳回內容，請重新載入。"
+    },
+    {
+      "name": "reservation_choose_place",
+      "value": "選擇預約場館"
+    },
+    {
+      "name": "reservation_place_count",
+      "value": "%s 個場館"
+    },
+    {
+      "name": "reservation_preview_hint",
+      "value": "查看開放場館與可預約時段"
+    },
+    {
+      "name": "feature_library_books",
+      "value": "圖書館借書"
+    },
+    {
+      "name": "campus_hint_library_books",
+      "value": "檢索書目、查看館藏位置與可借狀態，收藏常用圖書"
+    },
+    {
+      "name": "live_dining_people",
+      "value": "人"
+    },
+    {
+      "name": "library_remaining",
+      "value": "可入館 %d 人"
+    },
+    {
+      "name": "library_capacity",
+      "value": "容量 %d 人"
+    },
+    {
+      "name": "classroom_schedule_search",
+      "value": "搜尋教室、課程或教師"
+    },
+    {
+      "name": "classroom_schedule_hint",
+      "value": "左右滑動查看不同教室，沿節次向下閱讀；點擊課程查看詳情。日期查詢以學校回傳的日程為準。"
+    },
+    {
+      "name": "classroom_query_date",
+      "value": "查詢日期"
+    },
+    {
+      "name": "classroom_period",
+      "value": "節次"
+    },
+    {
+      "name": "classroom_room",
+      "value": "教室"
+    },
+    {
+      "name": "classroom_course_id",
+      "value": "課程代碼"
+    },
+    {
+      "name": "classroom_teacher",
+      "value": "任課教師"
+    },
+    {
+      "name": "classroom_category",
+      "value": "課程類別"
+    },
+    {
+      "name": "classroom_enrollment",
+      "value": "課程人數"
+    },
+    {
+      "name": "classroom_building_h2",
+      "value": "第二教學樓"
+    },
+    {
+      "name": "classroom_building_h3",
+      "value": "第三教學樓"
+    },
+    {
+      "name": "classroom_building_h4",
+      "value": "第四教學樓"
+    },
+    {
+      "name": "classroom_building_h5",
+      "value": "第五教學樓"
+    },
+    {
+      "name": "classroom_building_h6",
+      "value": "第六教學樓"
+    },
+    {
+      "name": "classroom_building_hgx",
+      "value": "光華樓西輔樓"
+    },
+    {
+      "name": "classroom_building_hgd",
+      "value": "光華樓東輔樓"
+    },
+    {
+      "name": "classroom_building_hq",
+      "value": "新聞學院"
+    },
+    {
+      "name": "classroom_building_j",
+      "value": "江灣校區"
+    },
+    {
+      "name": "classroom_building_z",
+      "value": "張江校區"
+    },
+    {
+      "name": "classroom_building_f",
+      "value": "楓林校區"
+    },
+    {
+      "name": "books_search",
+      "value": "輸入書名，自動搜尋"
+    },
+    {
+      "name": "books_results_hint",
+      "value": "按圖書館相關度排序，滑到底部自動接續；點擊書目查看館藏。"
+    },
+    {
+      "name": "books_pinned_hint",
+      "value": "搜尋無需登入；收藏的圖書會儲存在本機，方便下次查看。"
+    },
+    {
+      "name": "books_empty",
+      "value": "輸入書名，查找圖書和館藏位置"
+    },
+    {
+      "name": "books_view_holdings",
+      "value": "查看館藏與可借狀態"
+    },
+    {
+      "name": "books_authors",
+      "value": "作者"
+    },
+    {
+      "name": "books_publisher",
+      "value": "出版資訊"
+    },
+    {
+      "name": "books_holdings",
+      "value": "館藏與可借狀態"
+    },
+    {
+      "name": "books_holdings_hint",
+      "value": "可借狀態由圖書館即時回傳；請按館藏位置和索書號到館借閱。"
+    },
+    {
+      "name": "books_call_number",
+      "value": "索書號"
+    },
+    {
+      "name": "books_no_holdings",
+      "value": "暫無實體館藏記錄"
+    },
+    {
+      "name": "books_load_more",
+      "value": "繼續讀取"
+    },
+    {
+      "name": "books_pin",
+      "value": "收藏圖書"
+    },
+    {
+      "name": "books_unpin",
+      "value": "取消收藏"
+    },
+    {
+      "name": "books_pin_failed",
+      "value": "圖書收藏未能儲存"
+    },
+    {
+      "name": "books_pinned_count",
+      "value": "%d 本收藏"
+    },
+    {
+      "name": "books_search_short",
+      "value": "檢索與借閱"
+    },
+    {
+      "name": "books_preview_hint",
+      "value": "館藏位置 · 可借狀態"
+    },
+    {
+      "name": "books_public_hint",
+      "value": "無需校園帳號登入"
+    },
+    {
+      "name": "classroom_capacity",
+      "value": "%d 個座位"
+    },
+    {
+      "name": "timetable_calendar_name",
+      "value": "旦夕課表 · %s"
+    },
+    {
+      "name": "timetable_calendar_hint",
+      "value": "選擇要匯出的課程，寫入系統日曆中的「旦夕課表 · %s」。重複匯出會更新已有日程，不會重複新增。"
+    },
+    {
+      "name": "timetable_calendar_done",
+      "value": "已同步 %s 筆課程日程 · 新增或更新 %s 筆，保留 %s 筆。可在系統日曆查看。"
+    },
+    {
+      "name": "timetable_calendar_permission_reason",
+      "value": "將所選課程寫入系統日曆，並識別旦夕已匯出的課程，避免重複新增。"
+    },
+    {
+      "name": "timetable_calendar_permission_denied",
+      "value": "需要日曆權限才能匯出課程，可在系統設定中允許旦夕存取日曆。"
+    },
+    {
+      "name": "timetable_export_empty",
+      "value": "請先選擇至少一門課程。"
+    },
+    {
+      "name": "timetable_select_all",
+      "value": "全選"
+    },
+    {
+      "name": "timetable_unselect_all",
+      "value": "取消全選"
+    },
+    {
+      "name": "timetable_history_diary_hint",
+      "value": "往期課程由研究生教務日程補讀；該資料來源可能未收錄全部課程，可新增本地課程補充。"
+    },
+    {
+      "name": "reservation_browser_hint",
+      "value": "學校預約頁面要求完成網頁檢查。請在下方官方頁面完成提示，系統會繼續讀取場地與時段；也可直接在官網預約。"
+    },
+    {
+      "name": "reservation_browser_continue",
+      "value": "繼續讀取"
+    },
+    {
+      "name": "reservation_browser_title",
+      "value": "學校預約頁面"
+    },
+    {
+      "name": "reservation_browser_incomplete",
+      "value": "學校預約頁面尚未傳回場地資訊，可完成網頁提示後重試。"
+    },
+    {
+      "name": "reservation_places_title",
+      "value": "場地列表"
+    },
+    {
+      "name": "reservation_time",
+      "value": "預約時段"
+    },
+    {
+      "name": "reservation_remaining",
+      "value": "剩餘 %s / %s"
+    },
+    {
+      "name": "booking_my_reservations",
+      "value": "我的預約"
+    },
+    {
+      "name": "booking_type",
+      "value": "場館類型"
+    },
+    {
+      "name": "booking_environment",
+      "value": "室內／室外"
+    },
+    {
+      "name": "booking_available",
+      "value": "可預約 %d 個場地"
+    },
+    {
+      "name": "booking_reserve",
+      "value": "預約"
+    },
+    {
+      "name": "booking_full",
+      "value": "已滿"
+    },
+    {
+      "name": "booking_rules",
+      "value": "預約須知"
+    },
+    {
+      "name": "booking_required",
+      "value": "請填寫所有必填項。"
+    },
+    {
+      "name": "booking_success",
+      "value": "預約成功，可在「我的預約」查看分配場地。"
+    },
+    {
+      "name": "booking_cancel",
+      "value": "取消這項預約？"
+    },
+    {
+      "name": "booking_cancel_confirm",
+      "value": "取消預約"
+    },
+    {
+      "name": "booking_action_failed",
+      "value": "預約操作未完成。"
+    },
+    {
+      "name": "booking_unavailable",
+      "value": "該場館暫不開放預約。"
+    },
+    {
+      "name": "booking_no_times",
+      "value": "所選日期暫無開放時段。"
+    },
+    {
+      "name": "booking_number",
+      "value": "預約數量"
+    },
+    {
+      "name": "booking_captcha_web",
+      "value": "該場館需要驗證，請在官方頁面完成預約。"
+    },
+    {
+      "name": "booking_web",
+      "value": "開啟官方預約"
+    },
+    {
+      "name": "booking_submit",
+      "value": "確認預約"
+    },
+    {
+      "name": "booking_no_venues",
+      "value": "沒有符合篩選條件的場館。"
+    },
+    {
+      "name": "booking_no_appointments",
+      "value": "暫無預約記錄。"
+    },
+    {
+      "name": "library_my_loans",
+      "value": "我的借閱"
+    },
+    {
+      "name": "library_my_requests",
+      "value": "我的預約"
+    },
+    {
+      "name": "library_verify_hint",
+      "value": "請在圖書館官方頁面完成身分驗證，完成後會接續原來的操作。"
+    },
+    {
+      "name": "library_cancel_request",
+      "value": "取消預約"
+    },
+    {
+      "name": "library_renew_confirm",
+      "value": "續借這本書？"
+    },
+    {
+      "name": "library_renew",
+      "value": "續借"
+    },
+    {
+      "name": "library_action_failed",
+      "value": "圖書館操作未完成。"
+    },
+    {
+      "name": "library_due",
+      "value": "應還日期 %s"
+    },
+    {
+      "name": "library_borrowed",
+      "value": "借出日期 %s"
+    },
+    {
+      "name": "library_returned",
+      "value": "歸還日期 %s"
+    },
+    {
+      "name": "library_renew_count",
+      "value": "已續借 %d 次"
+    },
+    {
+      "name": "library_expected",
+      "value": "預計取書 %s"
+    },
+    {
+      "name": "library_queue",
+      "value": "排隊位置 %d"
+    },
+    {
+      "name": "library_current",
+      "value": "目前"
+    },
+    {
+      "name": "library_history",
+      "value": "歷史"
+    },
+    {
+      "name": "library_account_empty",
+      "value": "暫無記錄。"
+    },
+    {
+      "name": "library_request_book",
+      "value": "預約此書"
+    },
+    {
+      "name": "library_pickup",
+      "value": "取書地點"
+    },
+    {
+      "name": "library_pickup_date",
+      "value": "預計取書日期"
+    },
+    {
+      "name": "library_allow_replace",
+      "value": "允許替換為其他冊"
+    },
+    {
+      "name": "library_submit_request",
+      "value": "提交預約"
+    },
+    {
+      "name": "library_request_success",
+      "value": "圖書預約已提交，可在「我的預約」查看。"
+    },
+    {
+      "name": "library_no_pickup",
+      "value": "暫無可選取書地點。"
+    },
+    {
+      "name": "classroom_day_empty",
+      "value": "所選日期暫無課程安排。\n左側為完整節次時間表。"
+    },
+    {
+      "name": "classroom_search_empty",
+      "value": "沒有符合搜尋條件的教室或課程。"
+    },
+    {
+      "name": "booking_search",
+      "value": "搜尋場館"
+    },
+    {
+      "name": "timetable_period_times",
+      "value": "節次\n起–止"
+    },
+    {
+      "name": "timetable_month_heading",
+      "value": "{year}年{month}月"
+    },
+    {
+      "name": "timetable_previous_week",
+      "value": "上一週"
+    },
+    {
+      "name": "timetable_next_week",
+      "value": "下一週"
+    },
+    {
+      "name": "detail_cancel_reply",
+      "value": "取消回覆該樓層"
+    },
+    {
+      "name": "forum_remove_hidden_tag",
+      "value": "取消隱藏標籤 %s"
+    },
+    {
+      "name": "library_history_missing",
+      "value": "歷史借閱資料暫不可用，可重試或前往圖書館官網查看。"
+    },
+    {
+      "name": "library_official_query",
+      "value": "圖書館官網"
+    },
+    {
+      "name": "campus_dining_no_activity",
+      "value": "暫未回傳消費活躍紀錄"
+    },
+    {
+      "name": "campus_dining_peak_ratio",
+      "value": "高峰參考的 %d%%"
+    },
+    {
+      "name": "campus_dining_reference",
+      "value": "按食堂高峰參考比較"
+    },
+    {
+      "name": "dining_peak_missing",
+      "value": "暫無高峰參考"
+    },
+    {
+      "name": "campus_preview_unavailable",
+      "value": "尚未取得摘要"
+    },
+    {
+      "name": "campus_academic_counts_compact",
+      "value": "考試 {exams} 門 · 成績 {grades} 門"
+    },
+    {
+      "name": "campus_catalog_selected",
+      "value": "已加入 · 目前尺寸"
+    },
+    {
+      "name": "campus_catalog_resize",
+      "value": "已加入 · 點選更換尺寸"
+    },
+    {
+      "name": "campus_catalog_available",
+      "value": "點選加入"
+    },
+    {
+      "name": "campus_preview_classroom_compact",
+      "value": "教室日程與空閒課節"
+    },
+    {
+      "name": "campus_preview_books_compact",
+      "value": "館藏檢索、借閱與預約"
+    },
+    {
+      "name": "campus_preview_sports_compact",
+      "value": "場館與預約時段"
+    },
+    {
+      "name": "settings_original_flutter",
+      "value": "Flutter 原專案"
+    },
+    {
+      "name": "settings_ios_developers",
+      "value": "iOS 原專案開發者"
+    },
+    {
+      "name": "settings_ios_contributors_order",
+      "value": "依姓名字母順序排列。"
+    },
+    {
+      "name": "settings_ios_project",
+      "value": "iOS 原專案 · DanXi-Dev / DanXi-swift"
+    },
+    {
+      "name": "settings_ios_contributors",
+      "value": "查看 iOS 全部貢獻者"
+    },
+    {
+      "name": "settings_ios_version",
+      "value": "iOS 原專案原始碼版本 2.4.1 build 500 #fe3c20c"
+    },
+    {
+      "name": "settings_ios_copyright",
+      "value": "iOS 原專案 · Copyright © 2024-2025 DanXi-Dev"
+    },
+    {
+      "name": "settings_ios_filing",
+      "value": "iOS 原專案備案 · 沪ICP备2021032046号-4A"
+    },
+    {
+      "name": "settings_thanks_merged",
+      "value": "感謝 Flutter 與 iOS 原專案的開發者、設計貢獻者及開源社群。"
+    },
+    {
+      "name": "settings_contributors_merged",
+      "value": "名單合併去重，依姓名排列；同時保留圖示與表情設計貢獻。"
+    },
+    {
+      "name": "settings_credit_icon_design",
+      "value": "Flutter 圖示設計"
+    },
+    {
+      "name": "settings_credit_art_design",
+      "value": "Flutter 表情設計"
+    },
+    {
+      "name": "settings_original_ios",
+      "value": "iOS 原專案"
+    },
+    {
+      "name": "settings_original_libraries",
+      "value": "原專案開源致謝"
+    },
+    {
+      "name": "settings_original_libraries_hint",
+      "value": "彙整 Flutter 與 iOS 原專案公開致謝的開源軟體，依名稱排列，並標示來源平台及原文授權資訊。"
+    }
+  ]
+}

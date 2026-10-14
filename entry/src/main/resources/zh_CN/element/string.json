@@ -1,0 +1,4040 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "旦夕 - 复旦大学校园助手"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "旦夕"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "旦夕"
+    },
+    {
+      "name": "bus_weekday",
+      "value": "工作日"
+    },
+    {
+      "name": "bus_holiday",
+      "value": "休息日"
+    },
+    {
+      "name": "bus_start",
+      "value": "始发站"
+    },
+    {
+      "name": "bus_end",
+      "value": "终点站"
+    },
+    {
+      "name": "bus_swap",
+      "value": "互换"
+    },
+    {
+      "name": "bus_all",
+      "value": "显示全部班次"
+    },
+    {
+      "name": "bus_upcoming",
+      "value": "仅显示当前时间之后的班次"
+    },
+    {
+      "name": "bus_time_note",
+      "value": "左右时间分别为两端发车时间；双向箭头表示往返班次。节假日请手动选择休息日。"
+    },
+    {
+      "name": "bus_same_station",
+      "value": "请选择不同的始发站和终点站"
+    },
+    {
+      "name": "bus_empty",
+      "value": "当前筛选下没有班次，可切换日期类型或显示全部"
+    },
+    {
+      "name": "card_recent",
+      "value": "最近交易"
+    },
+    {
+      "name": "card_7_days",
+      "value": "近7天"
+    },
+    {
+      "name": "card_15_days",
+      "value": "近15天"
+    },
+    {
+      "name": "card_30_days",
+      "value": "近30天"
+    },
+    {
+      "name": "card_progress",
+      "value": "正在读取交易记录 %s"
+    },
+    {
+      "name": "card_loading",
+      "value": "正在加载一卡通…"
+    },
+    {
+      "name": "card_low_balance",
+      "value": "余额低于 20 元"
+    },
+    {
+      "name": "card_records_days",
+      "value": "近 %d 天交易记录"
+    },
+    {
+      "name": "account_undergraduate",
+      "value": "复旦本科生"
+    },
+    {
+      "name": "account_postgraduate",
+      "value": "复旦研究生"
+    },
+    {
+      "name": "account_type",
+      "value": "教务账号类型"
+    },
+    {
+      "name": "app_preferences",
+      "value": "外观与通知设置"
+    },
+    {
+      "name": "settings_back",
+      "value": "返回"
+    },
+    {
+      "name": "theme_mode",
+      "value": "主题模式"
+    },
+    {
+      "name": "theme_system",
+      "value": "跟随系统"
+    },
+    {
+      "name": "theme_light",
+      "value": "浅色"
+    },
+    {
+      "name": "theme_dark",
+      "value": "深色"
+    },
+    {
+      "name": "graduate_start",
+      "value": "研究生课表：第一教学周的周一日期"
+    },
+    {
+      "name": "save_settings",
+      "value": "保存"
+    },
+    {
+      "name": "notification_settings",
+      "value": "通知设置"
+    },
+    {
+      "name": "notification_allowed",
+      "value": "系统通知权限：已允许"
+    },
+    {
+      "name": "notification_denied",
+      "value": "系统通知权限：未允许"
+    },
+    {
+      "name": "notification_unknown",
+      "value": "系统通知权限：无法读取"
+    },
+    {
+      "name": "notification_permission",
+      "value": "申请系统通知权限"
+    },
+    {
+      "name": "notification_system_hint",
+      "value": "声音、振动及关闭通知可在系统设置 → 通知与状态栏 → 旦夕中调整。"
+    },
+    {
+      "name": "notification_login",
+      "value": "请先登录树洞账号，再设置通知类型。"
+    },
+    {
+      "name": "notification_mention",
+      "value": "被提及或回复"
+    },
+    {
+      "name": "notification_favorite",
+      "value": "订阅的树洞更新"
+    },
+    {
+      "name": "notification_report",
+      "value": "举报处理结果"
+    },
+    {
+      "name": "notification_delivery",
+      "value": "通知类型会同步到树洞账号。本版本尚未接入后台推送，允许系统通知不会自动启用离线推送。"
+    },
+    {
+      "name": "graduate_scores_note",
+      "value": "研究生：课程成绩与单科绩点（原版研究生系统不提供本科生 GPA 排名或考试安排）"
+    },
+    {
+      "name": "graduate_week_hint",
+      "value": "请在“我的 → 教务账号类型”设置本学期第一教学周的周一日期，以按当前周显示课表。"
+    },
+    {
+      "name": "theme_choice_hint",
+      "value": "跟随系统时，配色随系统深浅色切换。沉浸光感强度始终跟随系统设置。"
+    },
+    {
+      "name": "caution_menu_title",
+      "value": "谨慎阅读内容"
+    },
+    {
+      "name": "caution_settings_title",
+      "value": "具有谨慎阅读（带星号）标签的内容"
+    },
+    {
+      "name": "caution_choice_hint",
+      "value": "带星号的标签表示谨慎阅读。默认折叠正文，此设置与树洞账号同步。"
+    },
+    {
+      "name": "caution_fold",
+      "value": "折叠"
+    },
+    {
+      "name": "caution_hide",
+      "value": "隐藏"
+    },
+    {
+      "name": "caution_show",
+      "value": "显示"
+    },
+    {
+      "name": "caution_fold_hint",
+      "value": "点击再阅读"
+    },
+    {
+      "name": "caution_hide_hint",
+      "value": "列表中不显示"
+    },
+    {
+      "name": "caution_show_hint",
+      "value": "直接显示正文"
+    },
+    {
+      "name": "account_choice_hint",
+      "value": "按实际账号类型选择教务系统。研究生可查看课程成绩与单科绩点；研究生系统不提供本科生 GPA 排名或考试安排。"
+    },
+    {
+      "name": "graduate_start_hint",
+      "value": "选择本学期第一教学周的周一，用于计算研究生课表的当前教学周。"
+    },
+    {
+      "name": "forum_settings",
+      "value": "树洞设置"
+    },
+    {
+      "name": "forum_compose",
+      "value": "发布新帖"
+    },
+    {
+      "name": "forum_cancel",
+      "value": "取消"
+    },
+    {
+      "name": "forum_publish",
+      "value": "发布"
+    },
+    {
+      "name": "forum_publishing",
+      "value": "发布中"
+    },
+    {
+      "name": "forum_post",
+      "value": "发帖"
+    },
+    {
+      "name": "ui_enter_the_monday_of_the_first_teaching_week_e_g_",
+      "value": "请输入有效的第一教学周周一日期，例如 2026-09-07"
+    },
+    {
+      "name": "ui_semester_start_saved",
+      "value": "开学日期已保存"
+    },
+    {
+      "name": "ui_adjust_permission_sound_and_vibration_in_system_",
+      "value": "可在系统设置 → 通知与状态栏 → 旦夕中调整通知权限、声音和振动"
+    },
+    {
+      "name": "ui_handan",
+      "value": "邯郸"
+    },
+    {
+      "name": "ui_jiangwan",
+      "value": "江湾"
+    },
+    {
+      "name": "ui_shuttle_departures",
+      "value": "校车班次"
+    },
+    {
+      "name": "ui_bus",
+      "value": "校车"
+    },
+    {
+      "name": "ui_classrooms",
+      "value": "教室日程"
+    },
+    {
+      "name": "ui_exam_schedule",
+      "value": "考试安排"
+    },
+    {
+      "name": "ui_grades_gpa",
+      "value": "成绩与 GPA"
+    },
+    {
+      "name": "ui_timetable",
+      "value": "课表"
+    },
+    {
+      "name": "ui_campus",
+      "value": "校园"
+    },
+    {
+      "name": "ui_notices",
+      "value": "通知"
+    },
+    {
+      "name": "ui_exams",
+      "value": "考试"
+    },
+    {
+      "name": "ui_campus_card",
+      "value": "一卡通"
+    },
+    {
+      "name": "ui_unavailable",
+      "value": "暂不可用"
+    },
+    {
+      "name": "ui_reload",
+      "value": "重新加载"
+    },
+    {
+      "name": "ui_log_in_to_campus_account",
+      "value": "登录校园账号"
+    },
+    {
+      "name": "ui_could_not_open_login_please_try_again",
+      "value": "无法打开登录页面，请重试"
+    },
+    {
+      "name": "ui_could_not_load_academic_notices",
+      "value": "教务处通知加载失败"
+    },
+    {
+      "name": "ui_source_jwc_fudan_edu_cn_may_require_campus_netwo",
+      "value": "数据来源 jwc.fudan.edu.cn（校园网外可能不可达）"
+    },
+    {
+      "name": "ui_fenglin",
+      "value": "枫林"
+    },
+    {
+      "name": "ui_zhangjiang",
+      "value": "张江"
+    },
+    {
+      "name": "ui_today_s_classrooms_choose_a_building",
+      "value": "今日教室日程 · 选择教学楼"
+    },
+    {
+      "name": "ui_seats",
+      "value": "人"
+    },
+    {
+      "name": "ui_unknown_capacity",
+      "value": "座位数未知"
+    },
+    {
+      "name": "ui_grade",
+      "value": "成绩 "
+    },
+    {
+      "name": "ui_gpa",
+      "value": " · 绩点 "
+    },
+    {
+      "name": "ui_credits",
+      "value": " · 学分 "
+    },
+    {
+      "name": "ui_rank",
+      "value": "排名 "
+    },
+    {
+      "name": "ui_credits_30",
+      "value": "学分 "
+    },
+    {
+      "name": "ui_cohort",
+      "value": " 级 · "
+    },
+    {
+      "name": "ui_period",
+      "value": "第"
+    },
+    {
+      "name": "ui_",
+      "value": "节"
+    },
+    {
+      "name": "ui_no_loaded_courses_for_today",
+      "value": "今天没有已加载的课程安排"
+    },
+    {
+      "name": "ui_no_classes_today",
+      "value": "今天没有课！"
+    },
+    {
+      "name": "ui_card_balance",
+      "value": "校园卡余额"
+    },
+    {
+      "name": "ui_no_transactions_in_this_date_range",
+      "value": "所选时间范围内没有交易记录"
+    },
+    {
+      "name": "ui_complete_verification_on_fudan_s_official_page_y",
+      "value": "请在复旦官方页面完成验证，完成后将自动返回。"
+    },
+    {
+      "name": "ui_verification_has_ended_return_to_login_and_try_a",
+      "value": "验证已结束，请返回登录页重试。"
+    },
+    {
+      "name": "ui_could_not_initialize_verification_tap_retry",
+      "value": "无法初始化验证页面，请点击重试。"
+    },
+    {
+      "name": "ui_could_not_open_verification_tap_retry",
+      "value": "无法打开验证网页，请点击重试。"
+    },
+    {
+      "name": "ui_verify_on_fudan_s_official_page_return_is_automa",
+      "value": "请在复旦官方页面完成验证，完成后将自动返回。支持双指缩放。"
+    },
+    {
+      "name": "ui_verify_on_fudan_s_official_page_pinch_to_zoom",
+      "value": "请在复旦官方页面完成验证。页面支持双指缩放。"
+    },
+    {
+      "name": "ui_the_graduate_system_has_not_returned_a_timetable",
+      "value": "研究生教务尚未返回课表数据，请点击重试或返回后稍后加载。"
+    },
+    {
+      "name": "ui_no_login_session_was_received_from_the_campus_se",
+      "value": "页面已返回校园服务，但尚未取得登录会话。请重试或返回重新登录。"
+    },
+    {
+      "name": "ui_verification_is_not_ready_yet_retry_later_or_log",
+      "value": "验证网页尚未就绪，请稍后重试或返回重新登录。"
+    },
+    {
+      "name": "ui_could_not_reload_verification_check_your_connect",
+      "value": "无法重新加载验证网页，请检查网络后重试。"
+    },
+    {
+      "name": "ui_loading_fudan_verification",
+      "value": "正在加载复旦官方验证页面…"
+    },
+    {
+      "name": "ui_verification_is_loading_slowly_check_your_connec",
+      "value": "验证网页加载较慢，请检查网络或点击重试。"
+    },
+    {
+      "name": "ui_fudan_verification",
+      "value": "复旦身份验证"
+    },
+    {
+      "name": "ui_retry",
+      "value": "重试"
+    },
+    {
+      "name": "ui_could_not_load_verification_check_your_connectio",
+      "value": "验证网页加载失败，请检查网络后重试。"
+    },
+    {
+      "name": "ui_verification_is_temporarily_unavailable_try_agai",
+      "value": "验证服务暂时不可用，请稍后重试。"
+    },
+    {
+      "name": "ui_missing_post_information",
+      "value": "缺少帖子参数"
+    },
+    {
+      "name": "ui_could_not_open_the_quoted_post",
+      "value": "无法打开引用所在帖子"
+    },
+    {
+      "name": "ui_this_floor_was_deleted_or_is_unavailable",
+      "value": "该楼层已被删除或当前不可见"
+    },
+    {
+      "name": "ui_enter_a_reply",
+      "value": "请输入回复内容"
+    },
+    {
+      "name": "ui_reply_sent",
+      "value": "回复成功"
+    },
+    {
+      "name": "ui_like",
+      "value": "赞 "
+    },
+    {
+      "name": "ui_dislike",
+      "value": "踩 "
+    },
+    {
+      "name": "ui_anonymous",
+      "value": "匿名"
+    },
+    {
+      "name": "ui_this_floor_was_deleted",
+      "value": "该楼层已被删除"
+    },
+    {
+      "name": "ui_say_something",
+      "value": "说点什么…"
+    },
+    {
+      "name": "ui_sending",
+      "value": "发送中"
+    },
+    {
+      "name": "ui_reply",
+      "value": "回复"
+    },
+    {
+      "name": "ui_loading_failed",
+      "value": "加载失败"
+    },
+    {
+      "name": "ui_read_with_care",
+      "value": "谨慎阅读"
+    },
+    {
+      "name": "ui_this_post_has_starred_tags_its_content_is_collap",
+      "value": "此楼含带星号的标签，正文已折叠。"
+    },
+    {
+      "name": "ui_view_content",
+      "value": "查看内容"
+    },
+    {
+      "name": "ui_replies",
+      "value": " 回复"
+    },
+    {
+      "name": "ui_views",
+      "value": " 浏览"
+    },
+    {
+      "name": "ui_loading_failed_tap_to_retry",
+      "value": "加载失败，点击重试"
+    },
+    {
+      "name": "ui_scroll_up_for_more_replies",
+      "value": "继续上滑加载回复"
+    },
+    {
+      "name": "ui_locating_tap_to_cancel",
+      "value": "定位中 · 点击取消"
+    },
+    {
+      "name": "ui_could_not_locate_tap_to_retry",
+      "value": "定位失败 · 点击重试"
+    },
+    {
+      "name": "ui_post_details",
+      "value": "帖子详情"
+    },
+    {
+      "name": "ui_enter_some_content",
+      "value": "请输入内容"
+    },
+    {
+      "name": "ui_choose_a_section",
+      "value": "请选择分区"
+    },
+    {
+      "name": "ui_post_published",
+      "value": "发布成功"
+    },
+    {
+      "name": "ui_choose_section",
+      "value": "选择分区"
+    },
+    {
+      "name": "ui_section",
+      "value": "分区"
+    },
+    {
+      "name": "ui_tags",
+      "value": "标签"
+    },
+    {
+      "name": "ui_optional_up_to_one",
+      "value": "（可选，最多一个）"
+    },
+    {
+      "name": "ui_search_tags",
+      "value": "搜索标签"
+    },
+    {
+      "name": "ui_no_matching_tags_you_can_publish_without_one",
+      "value": "没有匹配的标签，可不选标签发布"
+    },
+    {
+      "name": "ui_previous",
+      "value": "上一页"
+    },
+    {
+      "name": "ui_next",
+      "value": "下一页"
+    },
+    {
+      "name": "detail_image_previous",
+      "value": "上一张"
+    },
+    {
+      "name": "detail_image_next",
+      "value": "下一张"
+    },
+    {
+      "name": "ui_original_image_saved",
+      "value": "原图已保存"
+    },
+    {
+      "name": "ui_could_not_save_check_your_connection_and_storage",
+      "value": "未能保存原图，请检查网络和存储空间后重试"
+    },
+    {
+      "name": "ui_could_not_load_image",
+      "value": "图片加载失败"
+    },
+    {
+      "name": "ui_saving",
+      "value": "正在保存…"
+    },
+    {
+      "name": "ui_download_original",
+      "value": "下载原图"
+    },
+    {
+      "name": "gallery_original_loading",
+      "value": "正在加载原图…"
+    },
+    {
+      "name": "gallery_original_failed_preview",
+      "value": "原图暂不可用，已保留预览"
+    },
+    {
+      "name": "ui_enter_your_forum_email",
+      "value": "请输入树洞账号邮箱"
+    },
+    {
+      "name": "ui_enter_your_password",
+      "value": "请输入密码"
+    },
+    {
+      "name": "ui_logged_in",
+      "value": "登录成功"
+    },
+    {
+      "name": "ui_log_in_to_forum",
+      "value": "登录树洞"
+    },
+    {
+      "name": "ui_use_your_danxi_forum_account_separate_from_uis",
+      "value": "使用旦夕树洞账号（非 UIS 账号）"
+    },
+    {
+      "name": "ui_email",
+      "value": "邮箱"
+    },
+    {
+      "name": "ui_password",
+      "value": "密码"
+    },
+    {
+      "name": "ui_logging_in",
+      "value": "登录中..."
+    },
+    {
+      "name": "ui_log_in",
+      "value": "登录"
+    },
+    {
+      "name": "ui_register_on_the_forum_website_this_is_separate_f",
+      "value": "树洞账号在 web 端注册，与复旦大学 UIS 账号不同"
+    },
+    {
+      "name": "ui_could_not_open_post_please_retry",
+      "value": "无法打开帖子，请重试"
+    },
+    {
+      "name": "ui_read_with_care_content_collapsed_tap_to_expand",
+      "value": "谨慎阅读 · 内容已折叠，点击展开"
+    },
+    {
+      "name": "ui_log_in_to_browse_the_forum",
+      "value": "登录后浏览树洞"
+    },
+    {
+      "name": "ui_a_fduhole_com_account_is_required_please_log_in",
+      "value": "树洞内容需要 fduhole.com 账号，请先登录"
+    },
+    {
+      "name": "ui_search_forum",
+      "value": "搜索树洞内容"
+    },
+    {
+      "name": "ui_clear",
+      "value": "清除"
+    },
+    {
+      "name": "ui_no_matching_content",
+      "value": "没有匹配的内容"
+    },
+    {
+      "name": "ui_try_a_different_keyword",
+      "value": "换个关键词试试"
+    },
+    {
+      "name": "ui_no_posts_to_display",
+      "value": "暂无可显示的帖子"
+    },
+    {
+      "name": "ui_posts_on_this_page_are_hidden_you_can_load_more",
+      "value": "当前页内容已隐藏，可以继续加载"
+    },
+    {
+      "name": "ui_forum",
+      "value": "树洞"
+    },
+    {
+      "name": "ui_could_not_open_editor_please_retry",
+      "value": "无法打开编辑器，请重试"
+    },
+    {
+      "name": "ui_all",
+      "value": "全部"
+    },
+    {
+      "name": "ui_loading",
+      "value": "正在加载…"
+    },
+    {
+      "name": "ui_scroll_up_to_load_more",
+      "value": "继续上滑加载"
+    },
+    {
+      "name": "ui_please_log_in_to_the_forum_first",
+      "value": "请先登录树洞账号"
+    },
+    {
+      "name": "ui_me",
+      "value": "我的"
+    },
+    {
+      "name": "ui_enter_your_student_id",
+      "value": "请输入学号"
+    },
+    {
+      "name": "ui_login_failed",
+      "value": "登录失败"
+    },
+    {
+      "name": "ui_login_incomplete_check_your_connection_and_retry",
+      "value": "登录未完成，请检查网络后重试"
+    },
+    {
+      "name": "ui_fudan_campus_assistant",
+      "value": "复旦大学校园助手"
+    },
+    {
+      "name": "ui_student_id",
+      "value": "学号"
+    },
+    {
+      "name": "ui_log_in_with_your_fudan_id_official_verification_",
+      "value": "使用复旦大学 ID 账号登录；如需二次验证，将打开官方验证页面"
+    },
+    {
+      "name": "ui_continue_as_guest",
+      "value": "游客进入"
+    },
+    {
+      "name": "ui_could_not_save_theme_please_retry",
+      "value": "主题保存失败，请重试"
+    },
+    {
+      "name": "ui_could_not_save_account_type_please_retry",
+      "value": "账号类型保存失败，请重试"
+    },
+    {
+      "name": "ui_choose_the_monday_of_the_first_teaching_week",
+      "value": "请选择第一教学周的周一"
+    },
+    {
+      "name": "ui_could_not_save_semester_start_please_retry",
+      "value": "开学日期保存失败，请重试"
+    },
+    {
+      "name": "ui_graduate",
+      "value": "研究生"
+    },
+    {
+      "name": "ui_undergraduate",
+      "value": "本科生"
+    },
+    {
+      "name": "ui_choose",
+      "value": "请选择"
+    },
+    {
+      "name": "ui_logged_out",
+      "value": "已退出登录"
+    },
+    {
+      "name": "ui_could_not_log_out",
+      "value": "退出失败"
+    },
+    {
+      "name": "ui_cohort_145",
+      "value": "级"
+    },
+    {
+      "name": "ui_welcome_to_danxi",
+      "value": "欢迎使用旦夕"
+    },
+    {
+      "name": "ui_log_in_to_view_grades_timetables_and_campus_serv",
+      "value": "登录后可查看成绩、课表等校园信息"
+    },
+    {
+      "name": "ui_general",
+      "value": "通用设置"
+    },
+    {
+      "name": "ui_monday_of_the_first_teaching_week",
+      "value": "第一教学周的周一"
+    },
+    {
+      "name": "ui_choose_semester_start",
+      "value": "请选择开学日期"
+    },
+    {
+      "name": "ui_language",
+      "value": "语言"
+    },
+    {
+      "name": "ui__156",
+      "value": "简体中文"
+    },
+    {
+      "name": "ui_coming_soon",
+      "value": "功能开发中"
+    },
+    {
+      "name": "ui_system_permission_forum_notification_types",
+      "value": "系统权限与树洞通知类型"
+    },
+    {
+      "name": "ui_dashboard_order",
+      "value": "仪表盘排序"
+    },
+    {
+      "name": "ui_default_order",
+      "value": "默认排序"
+    },
+    {
+      "name": "ui_about",
+      "value": "关于"
+    },
+    {
+      "name": "ui_about_danxi",
+      "value": "关于旦夕"
+    },
+    {
+      "name": "ui_danxi_for_harmonyos_v",
+      "value": "旦夕 HarmonyOS版 v"
+    },
+    {
+      "name": "ui_open_source_licenses",
+      "value": "开源许可"
+    },
+    {
+      "name": "ui_diagnostics",
+      "value": "诊断控制台"
+    },
+    {
+      "name": "ui_log_out",
+      "value": "退出登录"
+    },
+    {
+      "name": "ui_loading_168",
+      "value": "加载中..."
+    },
+    {
+      "name": "ui_no_data",
+      "value": "暂无数据"
+    },
+    {
+      "name": "ui_image_unavailable",
+      "value": " · 图片暂不可用]"
+    },
+    {
+      "name": "ui_could_not_open_image_please_retry",
+      "value": "无法打开图片，请重试"
+    },
+    {
+      "name": "ui_quoted_content",
+      "value": "引用内容"
+    },
+    {
+      "name": "ui_quoted_content_collapsed",
+      "value": "引用内容已折叠："
+    },
+    {
+      "name": "ui_expand_content",
+      "value": "展开内容"
+    },
+    {
+      "name": "ui_go_to_quoted_floor",
+      "value": "跳转到所在楼层"
+    },
+    {
+      "name": "ui_close",
+      "value": "关闭"
+    },
+    {
+      "name": "ui_quote",
+      "value": "引用 "
+    },
+    {
+      "name": "ui_quote_not_found_tap_to_retry",
+      "value": "无法找到引用，点击重试"
+    },
+    {
+      "name": "ui_loading_quote",
+      "value": "正在加载引用…"
+    },
+    {
+      "name": "ui_tap_to_view_quote",
+      "value": "点击查看引用内容"
+    },
+    {
+      "name": "ui_quoted_content_collapsed_tap_to_view",
+      "value": "引用内容已折叠，点击查看"
+    },
+    {
+      "name": "language_zh_cn",
+      "value": "简体中文"
+    },
+    {
+      "name": "language_zh_tw",
+      "value": "繁體中文"
+    },
+    {
+      "name": "language_en",
+      "value": "English"
+    },
+    {
+      "name": "language_ja",
+      "value": "日本語"
+    },
+    {
+      "name": "language_choice_hint",
+      "value": "语言立即生效。跟随系统时，暂不支持的系统语言使用简体中文。"
+    },
+    {
+      "name": "language_save_failed",
+      "value": "语言保存失败，请重试"
+    },
+    {
+      "name": "layout_default",
+      "value": "默认排序"
+    },
+    {
+      "name": "layout_custom",
+      "value": "自定义排序"
+    },
+    {
+      "name": "layout_hint",
+      "value": "长按模块拖动排序，勾选控制是否显示；至少保留一个模块。点击完成后应用到校园页面。"
+    },
+    {
+      "name": "layout_keep_one",
+      "value": "至少保留一个校园模块"
+    },
+    {
+      "name": "layout_reset",
+      "value": "恢复默认"
+    },
+    {
+      "name": "layout_done",
+      "value": "完成"
+    },
+    {
+      "name": "layout_save_failed",
+      "value": "排序保存失败，请重试"
+    },
+    {
+      "name": "announcement_open_failed",
+      "value": "无法打开通知网站，请检查浏览器后重试"
+    },
+    {
+      "name": "feature_announcement",
+      "value": "教务处通知"
+    },
+    {
+      "name": "feature_bus",
+      "value": "校车"
+    },
+    {
+      "name": "feature_empty_classroom",
+      "value": "教室日程"
+    },
+    {
+      "name": "feature_exam",
+      "value": "考试"
+    },
+    {
+      "name": "feature_gpa",
+      "value": "GPA"
+    },
+    {
+      "name": "feature_timetable",
+      "value": "课表"
+    },
+    {
+      "name": "feature_card",
+      "value": "一卡通"
+    },
+    {
+      "name": "campus_handan",
+      "value": "邯郸"
+    },
+    {
+      "name": "campus_fenglin",
+      "value": "枫林"
+    },
+    {
+      "name": "campus_jiangwan",
+      "value": "江湾"
+    },
+    {
+      "name": "campus_zhangjiang",
+      "value": "张江"
+    },
+    {
+      "name": "weekday_mon",
+      "value": "周一"
+    },
+    {
+      "name": "weekday_tue",
+      "value": "周二"
+    },
+    {
+      "name": "weekday_wed",
+      "value": "周三"
+    },
+    {
+      "name": "weekday_thu",
+      "value": "周四"
+    },
+    {
+      "name": "weekday_fri",
+      "value": "周五"
+    },
+    {
+      "name": "weekday_sat",
+      "value": "周六"
+    },
+    {
+      "name": "weekday_sun",
+      "value": "周日"
+    },
+    {
+      "name": "time_just_now",
+      "value": "刚刚"
+    },
+    {
+      "name": "time_minutes_ago",
+      "value": "%d分钟前"
+    },
+    {
+      "name": "time_hours_ago",
+      "value": "%d小时前"
+    },
+    {
+      "name": "time_days_ago",
+      "value": "%d天前"
+    },
+    {
+      "name": "forum_webvpn_login_required",
+      "value": "当前网络无法直连树洞。校外访问需要复旦 WebVPN，请先登录复旦账号；树洞登录凭证会保留。"
+    },
+    {
+      "name": "webvpn_auto",
+      "value": "自动使用 WebVPN 代理"
+    },
+    {
+      "name": "webvpn_hint",
+      "value": "校内优先直连；校外无法直连时使用复旦 WebVPN，并复用身份验证。关闭后仅直连。"
+    },
+    {
+      "name": "webvpn_save_failed",
+      "value": "代理设置保存失败，请重试"
+    },
+    {
+      "name": "calendar_auto",
+      "value": "自动同步"
+    },
+    {
+      "name": "calendar_manual",
+      "value": "选择日期"
+    },
+    {
+      "name": "calendar_sync_now",
+      "value": "同步当前学期"
+    },
+    {
+      "name": "calendar_choice_hint",
+      "value": "“同步当前学期”按今天的日期读取官方校历，保存该学期第一教学周的周一，并替换已选日期。查询其他学期时请手动选择日期；不会后台自动同步。如需验证，沿用复旦身份验证。"
+    },
+    {
+      "name": "calendar_date_unknown",
+      "value": "尚未取得学期日期，可同步或手动指定"
+    },
+    {
+      "name": "calendar_syncing",
+      "value": "正在读取官方校历…"
+    },
+    {
+      "name": "calendar_sync_failed",
+      "value": "校历暂时无法同步，保留已有日期。可下拉重试或手动指定。"
+    },
+    {
+      "name": "calendar_unrecognized",
+      "value": "官方校历日期未能可靠识别，保留已有日期。请查看来源或手动指定。"
+    },
+    {
+      "name": "calendar_login_required",
+      "value": "读取校历需要复旦身份验证"
+    },
+    {
+      "name": "calendar_source",
+      "value": "来源"
+    },
+    {
+      "name": "calendar_source_account",
+      "value": "教务系统学期日期"
+    },
+    {
+      "name": "calendar_source_official",
+      "value": "学校官方校历"
+    },
+    {
+      "name": "calendar_source_open",
+      "value": "查看官方校历"
+    },
+    {
+      "name": "timetable_week",
+      "value": "第 {week} 周"
+    },
+    {
+      "name": "timetable_today",
+      "value": "本周"
+    },
+    {
+      "name": "timetable_week_view",
+      "value": "周视图"
+    },
+    {
+      "name": "timetable_agenda",
+      "value": "日程"
+    },
+    {
+      "name": "timetable_add",
+      "value": "添加课程"
+    },
+    {
+      "name": "timetable_edit",
+      "value": "编辑"
+    },
+    {
+      "name": "timetable_remove",
+      "value": "从课表移除"
+    },
+    {
+      "name": "timetable_save",
+      "value": "保存课程"
+    },
+    {
+      "name": "timetable_semester_date",
+      "value": "学期日期与校历同步"
+    },
+    {
+      "name": "timetable_export",
+      "value": "导出到日历"
+    },
+    {
+      "name": "timetable_restore",
+      "value": "恢复教务课程显示"
+    },
+    {
+      "name": "timetable_local_hint",
+      "value": "添加、编辑和移除仅改变本机课表，不会修改教务选课记录。移除的教务课程可在菜单中恢复显示。"
+    },
+    {
+      "name": "timetable_invalid",
+      "value": "请填写课程名称、1–15 节的有效范围，以及 1–30 周的有效周次。"
+    },
+    {
+      "name": "timetable_save_failed",
+      "value": "课表修改保存失败，请重试"
+    },
+    {
+      "name": "timetable_exported",
+      "value": "日历已保存，可导入系统日历"
+    },
+    {
+      "name": "timetable_export_failed",
+      "value": "日历未能保存，请重试"
+    },
+    {
+      "name": "timetable_load_failed",
+      "value": "课表加载失败，请下拉重试"
+    },
+    {
+      "name": "timetable_loading",
+      "value": "正在同步课程…"
+    },
+    {
+      "name": "timetable_empty",
+      "value": "本学期尚未返回课程，可下拉刷新或添加本地课程。"
+    },
+    {
+      "name": "timetable_guest",
+      "value": "登录复旦账号可导入教务课表，也可以先添加本地课程。"
+    },
+    {
+      "name": "timetable_date_hint",
+      "value": "学期开始日期未确定，点击同步或手动指定；当前仅预览所选周课程。"
+    },
+    {
+      "name": "timetable_outside_term",
+      "value": "今天不在本学期教学周范围内，正在预览所选周。"
+    },
+    {
+      "name": "timetable_no_class_day",
+      "value": "这一天没有课程"
+    },
+    {
+      "name": "timetable_updated",
+      "value": "上次同步"
+    },
+    {
+      "name": "timetable_course_name",
+      "value": "课程名称（必填）"
+    },
+    {
+      "name": "timetable_teacher",
+      "value": "教师"
+    },
+    {
+      "name": "timetable_room",
+      "value": "教室 / 地点"
+    },
+    {
+      "name": "timetable_code",
+      "value": "课程代码（选填）"
+    },
+    {
+      "name": "timetable_first_unit",
+      "value": "开始节次"
+    },
+    {
+      "name": "timetable_last_unit",
+      "value": "结束节次"
+    },
+    {
+      "name": "timetable_weeks",
+      "value": "教学周"
+    },
+    {
+      "name": "timetable_weeks_hint",
+      "value": "例：1-18，或 1,3,5-8；逗号分隔，可输入 1–30 周。"
+    },
+    {
+      "name": "timetable_semester_unavailable",
+      "value": "所选学期不可用，请重新加载学期列表。"
+    },
+    {
+      "name": "detail_content_required",
+      "value": "请输入内容"
+    },
+    {
+      "name": "detail_operation_success",
+      "value": "操作成功"
+    },
+    {
+      "name": "detail_copied",
+      "value": "已复制"
+    },
+    {
+      "name": "detail_delete_floor",
+      "value": "删除楼层"
+    },
+    {
+      "name": "detail_delete_note",
+      "value": "删除后无法直接撤销，请确认该楼层。"
+    },
+    {
+      "name": "detail_confirm",
+      "value": "确认操作"
+    },
+    {
+      "name": "detail_admin",
+      "value": "管理员操作"
+    },
+    {
+      "name": "detail_admin_note",
+      "value": "将修改服务器内容，请核对对象及操作。"
+    },
+    {
+      "name": "detail_missing_division",
+      "value": "无法获取分区，请刷新后重试"
+    },
+    {
+      "name": "detail_favorite",
+      "value": "收藏帖子"
+    },
+    {
+      "name": "detail_unfavorite",
+      "value": "取消收藏"
+    },
+    {
+      "name": "detail_subscribe",
+      "value": "订阅回复"
+    },
+    {
+      "name": "detail_unsubscribe",
+      "value": "取消订阅"
+    },
+    {
+      "name": "detail_subscription_note",
+      "value": "订阅后，新回复提醒遵循树洞通知设置。"
+    },
+    {
+      "name": "detail_show_all",
+      "value": "显示全部回复"
+    },
+    {
+      "name": "detail_only_op",
+      "value": "只看楼主"
+    },
+    {
+      "name": "detail_only_author",
+      "value": "只看此人"
+    },
+    {
+      "name": "detail_to_top",
+      "value": "回到首楼"
+    },
+    {
+      "name": "detail_to_end",
+      "value": "直达最新回复"
+    },
+    {
+      "name": "detail_copy_hole",
+      "value": "复制帖子编号"
+    },
+    {
+      "name": "detail_copy_floor",
+      "value": "复制楼层编号"
+    },
+    {
+      "name": "detail_copy_time",
+      "value": "复制发布时间"
+    },
+    {
+      "name": "detail_copy_content",
+      "value": "复制内容"
+    },
+    {
+      "name": "detail_select_text",
+      "value": "自由选择文字"
+    },
+    {
+      "name": "detail_share_post",
+      "value": "选择楼层分享"
+    },
+    {
+      "name": "detail_share_floor",
+      "value": "复制楼层分享文本"
+    },
+    {
+      "name": "detail_share_note",
+      "value": "选择楼层后复制分享文本；更多回复可继续加载。"
+    },
+    {
+      "name": "detail_copy_selected",
+      "value": "复制所选楼层"
+    },
+    {
+      "name": "detail_load_more",
+      "value": "加载更多楼层"
+    },
+    {
+      "name": "detail_summary",
+      "value": "AI 总结"
+    },
+    {
+      "name": "detail_summary_pending",
+      "value": "总结暂未生成，可稍后重试"
+    },
+    {
+      "name": "detail_summary_note",
+      "value": "AI 总结仅供参考，可点击引用回到原楼层核对。"
+    },
+    {
+      "name": "detail_summary_refresh",
+      "value": "重新生成总结"
+    },
+    {
+      "name": "detail_hide",
+      "value": "本机隐藏帖子"
+    },
+    {
+      "name": "detail_hide_note",
+      "value": "仅从本机信息流隐藏，可在树洞设置中恢复。"
+    },
+    {
+      "name": "detail_reply_floor",
+      "value": "回复该楼层"
+    },
+    {
+      "name": "detail_full_editor",
+      "value": "打开完整编辑器"
+    },
+    {
+      "name": "detail_history",
+      "value": "修改记录"
+    },
+    {
+      "name": "detail_no_history",
+      "value": "暂无修改记录"
+    },
+    {
+      "name": "detail_edit",
+      "value": "修改内容"
+    },
+    {
+      "name": "detail_report",
+      "value": "举报楼层"
+    },
+    {
+      "name": "detail_report_note",
+      "value": "请说明举报原因，管理员将按社区规则处理。"
+    },
+    {
+      "name": "detail_markdown_note",
+      "value": "支持 Markdown、LaTeX 及原版表情，发布前可预览。"
+    },
+    {
+      "name": "detail_preview",
+      "value": "预览"
+    },
+    {
+      "name": "detail_submit",
+      "value": "提交"
+    },
+    {
+      "name": "detail_lock",
+      "value": "锁定／解锁帖子"
+    },
+    {
+      "name": "detail_freeze",
+      "value": "冻结／解冻帖子"
+    },
+    {
+      "name": "detail_hide_server",
+      "value": "隐藏／恢复帖子"
+    },
+    {
+      "name": "detail_delete_force",
+      "value": "永久删除帖子"
+    },
+    {
+      "name": "detail_pin",
+      "value": "置顶／取消置顶"
+    },
+    {
+      "name": "detail_tags_division",
+      "value": "修改标签及分区"
+    },
+    {
+      "name": "detail_special_tag",
+      "value": "设置特殊标记"
+    },
+    {
+      "name": "detail_fold_floor",
+      "value": "设置楼层折叠原因"
+    },
+    {
+      "name": "detail_sensitive",
+      "value": "标记敏感"
+    },
+    {
+      "name": "detail_unmark_sensitive",
+      "value": "取消敏感标记"
+    },
+    {
+      "name": "detail_penalty",
+      "value": "设置禁言天数"
+    },
+    {
+      "name": "detail_reason_note",
+      "value": "填写说明；折叠原因每行一项；禁言填非负天数。"
+    },
+    {
+      "name": "detail_more",
+      "value": "更多操作"
+    },
+    {
+      "name": "detail_op",
+      "value": "楼主"
+    },
+    {
+      "name": "detail_me",
+      "value": "本人"
+    },
+    {
+      "name": "detail_modified",
+      "value": "已修改"
+    },
+    {
+      "name": "detail_reply_unavailable",
+      "value": "帖子已锁定、冻结或隐藏，暂不能回复"
+    },
+    {
+      "name": "detail_all_loaded",
+      "value": "已显示全部回复"
+    },
+    {
+      "name": "detail_filter_none",
+      "value": "当前筛选没有回复"
+    },
+    {
+      "name": "detail_restore_hidden",
+      "value": "恢复本机隐藏帖子"
+    },
+    {
+      "name": "detail_helpful",
+      "value": "总结有帮助"
+    },
+    {
+      "name": "detail_unhelpful",
+      "value": "反馈总结问题"
+    },
+    {
+      "name": "detail_image_add",
+      "value": "添加图片"
+    },
+    {
+      "name": "detail_image_uploading",
+      "value": "正在上传图片…"
+    },
+    {
+      "name": "detail_image_upload_failed",
+      "value": "图片上传失败，请检查网络、登录状态和图片访问权限后重试。正文已保留。"
+    },
+    {
+      "name": "detail_image_too_long",
+      "value": "正文已接近字数上限，请缩短后再添加图片。正文已保留。"
+    },
+    {
+      "name": "detail_content_limit",
+      "value": "正文最多 2000 个字符，请缩短后再操作。"
+    },
+    {
+      "name": "feature_academic",
+      "value": "考试与成绩"
+    },
+    {
+      "name": "academic_overview",
+      "value": "考试与成绩"
+    },
+    {
+      "name": "academic_grades",
+      "value": "课程成绩"
+    },
+    {
+      "name": "academic_ranking",
+      "value": "GPA 与排名"
+    },
+    {
+      "name": "academic_semester",
+      "value": "选择学期"
+    },
+    {
+      "name": "academic_semester_missing",
+      "value": "该学期已不可用，请重新选择。"
+    },
+    {
+      "name": "academic_my_gpa",
+      "value": "本地 GPA"
+    },
+    {
+      "name": "academic_my_gpa_unavailable",
+      "value": "已获取课程暂不足以计算 GPA"
+    },
+    {
+      "name": "academic_gpa_note",
+      "value": "按已获取课程在本地计算：Σ（学校发布的单课绩点 × 学分）÷ 计入学分。仅统计当前列表，不代表毕业审核或全学程 GPA；P/NP、本科转换成绩、已标明的研究生补修及必修环节、考查课程不计入。缺失绩点或学分时不估算。"
+    },
+    {
+      "name": "academic_rank_all",
+      "value": "全部专业"
+    },
+    {
+      "name": "academic_rank_same",
+      "value": "同专业"
+    },
+    {
+      "name": "academic_percentile",
+      "value": "百分位（当前范围）"
+    },
+    {
+      "name": "academic_gradepoint",
+      "value": "单科绩点"
+    },
+    {
+      "name": "academic_other_exams",
+      "value": "其他考试与课程成绩"
+    },
+    {
+      "name": "academic_empty_grades",
+      "value": "暂无已发布的课程成绩"
+    },
+    {
+      "name": "academic_empty_rank",
+      "value": "暂无已发布的 GPA 排名"
+    },
+    {
+      "name": "academic_export_exams",
+      "value": "导出考试日历"
+    },
+    {
+      "name": "academic_export_unavailable",
+      "value": "暂无日期及时间完整的考试可导出。"
+    },
+    {
+      "name": "academic_retry",
+      "value": "重新加载学业数据"
+    },
+    {
+      "name": "academic_grade_not_for_exam",
+      "value": "补考、缓考不关联原考试成绩"
+    },
+    {
+      "name": "academic_fallback_note",
+      "value": "当前使用数据中心提供的全部成绩；学期导航、考试安排及 GPA 排名暂不可用。"
+    },
+    {
+      "name": "academic_exam_date",
+      "value": "日期"
+    },
+    {
+      "name": "academic_exam_time",
+      "value": "时间"
+    },
+    {
+      "name": "academic_exam_room",
+      "value": "地点"
+    },
+    {
+      "name": "academic_exam_note",
+      "value": "考试备注"
+    },
+    {
+      "name": "academic_grade",
+      "value": "成绩"
+    },
+    {
+      "name": "academic_gpa",
+      "value": "GPA"
+    },
+    {
+      "name": "academic_credits",
+      "value": "学分"
+    },
+    {
+      "name": "academic_rank",
+      "value": "排名"
+    },
+    {
+      "name": "classroom_periods",
+      "value": "查看课节使用情况"
+    },
+    {
+      "name": "classroom_period_free",
+      "value": "第 %1$d 节：空闲"
+    },
+    {
+      "name": "classroom_period_occupied",
+      "value": "第 %1$d 节：%2$s"
+    },
+    {
+      "name": "classroom_no_rows",
+      "value": "暂无该教学楼的教室资料"
+    },
+    {
+      "name": "classroom_busy",
+      "value": "今日课节均占用"
+    },
+    {
+      "name": "classroom_free_summary",
+      "value": "空闲课节：%1$s"
+    },
+    {
+      "name": "academic_semester_label",
+      "value": "学期"
+    },
+    {
+      "name": "forum_divisions_loading",
+      "value": "正在加载分区"
+    },
+    {
+      "name": "forum_divisions_retry",
+      "value": "分区加载失败，重试"
+    },
+    {
+      "name": "campus_welcome_national_day",
+      "value": "国庆节快乐！"
+    },
+    {
+      "name": "campus_welcome_late",
+      "value": "披星戴月，不负韶华"
+    },
+    {
+      "name": "campus_welcome_morning",
+      "value": "一日之计在于晨"
+    },
+    {
+      "name": "campus_welcome_noon",
+      "value": "快到中午啦"
+    },
+    {
+      "name": "campus_welcome_afternoon",
+      "value": "下午的悠闲时光~"
+    },
+    {
+      "name": "campus_welcome_evening",
+      "value": "晚上好~"
+    },
+    {
+      "name": "campus_welcome_name",
+      "value": "欢迎你，{name}"
+    },
+    {
+      "name": "campus_welcome_guest",
+      "value": "欢迎来到旦挞校园助手"
+    },
+    {
+      "name": "campus_no_notices",
+      "value": "暂无最新通知"
+    },
+    {
+      "name": "campus_preview_open",
+      "value": "查看详情"
+    },
+    {
+      "name": "campus_preview_classroom",
+      "value": "选择校区、教学楼与日期，查询空闲课节"
+    },
+    {
+      "name": "campus_preview_academic",
+      "value": "查看考试安排、成绩与 GPA"
+    },
+    {
+      "name": "campus_preview_timetable",
+      "value": "查看课表或添加自己的课程"
+    },
+    {
+      "name": "campus_preview_bus",
+      "value": "选择始发和终点校区，查看下班校车"
+    },
+    {
+      "name": "campus_preview_card",
+      "value": "查看校园卡余额与消费记录"
+    },
+    {
+      "name": "campus_preview_retry",
+      "value": "点击重新加载"
+    },
+    {
+      "name": "campus_preview_failed",
+      "value": "摘要暂时不可用，可重试或进入详情"
+    },
+    {
+      "name": "campus_preview_loading",
+      "value": "正在读取摘要…"
+    },
+    {
+      "name": "campus_card_refresh",
+      "value": "刷新"
+    },
+    {
+      "name": "campus_move_up",
+      "value": "向前移动卡片"
+    },
+    {
+      "name": "campus_move_down",
+      "value": "向后移动卡片"
+    },
+    {
+      "name": "campus_size_compact",
+      "value": "横向小卡片"
+    },
+    {
+      "name": "campus_size_small",
+      "value": "小卡片"
+    },
+    {
+      "name": "campus_size_large",
+      "value": "大卡片"
+    },
+    {
+      "name": "campus_remove_card",
+      "value": "移除卡片"
+    },
+    {
+      "name": "campus_edit_note",
+      "value": "长按卡片后拖动调整位置；按住卡片时，可用另一根手指上下滑动页面。"
+    },
+    {
+      "name": "campus_restore_layout",
+      "value": "恢复默认布局"
+    },
+    {
+      "name": "campus_add_card",
+      "value": "添加"
+    },
+    {
+      "name": "campus_edit_layout",
+      "value": "布局编辑"
+    },
+    {
+      "name": "campus_classroom_count",
+      "value": "{count} 间空闲教室"
+    },
+    {
+      "name": "campus_academic_count",
+      "value": "{count} 门课程成绩"
+    },
+    {
+      "name": "ui_could_not_open_details",
+      "value": "无法打开详情，请重试"
+    },
+    {
+      "name": "classroom_morning",
+      "value": "上午"
+    },
+    {
+      "name": "classroom_afternoon",
+      "value": "下午"
+    },
+    {
+      "name": "classroom_evening",
+      "value": "晚上"
+    },
+    {
+      "name": "classroom_campus",
+      "value": "查询校区"
+    },
+    {
+      "name": "classroom_building",
+      "value": "教学楼"
+    },
+    {
+      "name": "classroom_date",
+      "value": "查询日期"
+    },
+    {
+      "name": "classroom_time_range",
+      "value": "查询时段"
+    },
+    {
+      "name": "classroom_whole_day",
+      "value": "全天"
+    },
+    {
+      "name": "classroom_range",
+      "value": "第 %1$d–%2$d 节"
+    },
+    {
+      "name": "classroom_only_free",
+      "value": "只看空闲教室"
+    },
+    {
+      "name": "classroom_display_settings",
+      "value": "显示设置"
+    },
+    {
+      "name": "classroom_remember_building",
+      "value": "记住上次教学楼"
+    },
+    {
+      "name": "classroom_high_contrast",
+      "value": "高对比课节矩阵"
+    },
+    {
+      "name": "classroom_settings_note",
+      "value": "记忆教学楼按校区分别保存。高对比模式以实心格表示占用、空心格表示空闲，便于不依赖颜色辨认。"
+    },
+    {
+      "name": "classroom_filter_note",
+      "value": "选择时段后，开启“只看空闲教室”可筛出该时段连续空闲的教室。日期可查昨天至未来 14 天。"
+    },
+    {
+      "name": "classroom_result_count",
+      "value": "显示 %1$d / %2$d 间"
+    },
+    {
+      "name": "classroom_free",
+      "value": "空闲"
+    },
+    {
+      "name": "classroom_occupied",
+      "value": "占用"
+    },
+    {
+      "name": "classroom_matrix_note",
+      "value": "数字为节次；描边标出今天当前节次。点按课节可查看使用详情。"
+    },
+    {
+      "name": "classroom_period_unknown",
+      "value": "第 %1$d 节：暂无资料"
+    },
+    {
+      "name": "classroom_hide_periods",
+      "value": "收起使用详情"
+    },
+    {
+      "name": "classroom_loading",
+      "value": "正在更新教室使用情况"
+    },
+    {
+      "name": "classroom_filter_empty",
+      "value": "当前时段没有连续空闲的教室，可调整时段或关闭空闲筛选。"
+    },
+    {
+      "name": "timetable_edit_title",
+      "value": "编辑课程"
+    },
+    {
+      "name": "timetable_editor_intro",
+      "value": "课程名称、上课时间和教学周为必填，其余项可按需填写。"
+    },
+    {
+      "name": "timetable_editor_optional",
+      "value": "选填"
+    },
+    {
+      "name": "timetable_weekday",
+      "value": "星期"
+    },
+    {
+      "name": "timetable_select_weekday",
+      "value": "请选择上课星期"
+    },
+    {
+      "name": "timetable_editor_period_hint",
+      "value": "请选择节次"
+    },
+    {
+      "name": "timetable_editor_weeks_placeholder",
+      "value": "输入周次或范围"
+    },
+    {
+      "name": "timetable_editor_error_name",
+      "value": "请填写课程名称"
+    },
+    {
+      "name": "timetable_editor_error_weekday",
+      "value": "请选择上课星期"
+    },
+    {
+      "name": "timetable_editor_error_first_unit",
+      "value": "请填写 1–15 之间的开始节次"
+    },
+    {
+      "name": "timetable_editor_error_last_unit",
+      "value": "请填写 1–15 之间的结束节次"
+    },
+    {
+      "name": "timetable_editor_error_order",
+      "value": "结束节次不能早于开始节次"
+    },
+    {
+      "name": "timetable_editor_error_weeks",
+      "value": "请填写 1–30 周内的有效教学周，例如 1-18 或 1,3,5-8"
+    },
+    {
+      "name": "timetable_editor_local_note",
+      "value": "仅保存至本机课表，不会修改教务选课记录。"
+    },
+    {
+      "name": "classroom_save_failed",
+      "value": "设置未能保存，请重试。"
+    },
+    {
+      "name": "profile_current_campus",
+      "value": "当前校区"
+    },
+    {
+      "name": "profile_campus_hint",
+      "value": "用于校园卡片、教室日程及校车的默认校区；各页面仍可临时切换。"
+    },
+    {
+      "name": "profile_save_failed",
+      "value": "设置保存失败，请重试"
+    },
+    {
+      "name": "profile_logout_hint",
+      "value": "退出校园账号并清除本机登录会话。课程、校园布局和通用设置会保留。"
+    },
+    {
+      "name": "forum_account_id",
+      "value": "已登录 · ID %d"
+    },
+    {
+      "name": "forum_signed_in",
+      "value": "已登录树洞"
+    },
+    {
+      "name": "forum_signed_out",
+      "value": "未登录树洞"
+    },
+    {
+      "name": "forum_account_hint",
+      "value": "树洞账号与复旦校园账号独立。"
+    },
+    {
+      "name": "forum_logout_hint",
+      "value": "仅退出树洞账号，校园服务仍可使用。"
+    },
+    {
+      "name": "forum_browsing_settings",
+      "value": "浏览与通知"
+    },
+    {
+      "name": "forum_sort_title",
+      "value": "默认排序"
+    },
+    {
+      "name": "forum_sort_replied",
+      "value": "最近回复"
+    },
+    {
+      "name": "forum_sort_created",
+      "value": "最新发布"
+    },
+    {
+      "name": "forum_clean_title",
+      "value": "清净模式"
+    },
+    {
+      "name": "forum_clean_hint",
+      "value": "按原版规则隐藏部分容易引起不适的 Emoji，不修改帖子原文。"
+    },
+    {
+      "name": "forum_summary_hint",
+      "value": "在支持的帖子详情中显示 AI 总结入口。"
+    },
+    {
+      "name": "forum_hidden_tags",
+      "value": "屏蔽标签"
+    },
+    {
+      "name": "forum_hidden_tag_count",
+      "value": "已屏蔽 %d 个标签"
+    },
+    {
+      "name": "forum_hidden_tags_hint",
+      "value": "带有这些标签的帖子将在信息流中隐藏。点击已选标签可移除；也可输入标签名称添加。"
+    },
+    {
+      "name": "forum_tag_search",
+      "value": "搜索或输入标签名称"
+    },
+    {
+      "name": "forum_tag_add",
+      "value": "添加"
+    },
+    {
+      "name": "forum_account_content",
+      "value": "我的树洞"
+    },
+    {
+      "name": "forum_my_posts",
+      "value": "我的帖子"
+    },
+    {
+      "name": "forum_my_replies",
+      "value": "我的回复"
+    },
+    {
+      "name": "forum_favorites",
+      "value": "收藏"
+    },
+    {
+      "name": "forum_subscriptions",
+      "value": "订阅"
+    },
+    {
+      "name": "forum_view_history",
+      "value": "浏览记录"
+    },
+    {
+      "name": "forum_history_hint",
+      "value": "仅保存在本机，最多保留最近 500 条。"
+    },
+    {
+      "name": "forum_punishments",
+      "value": "处罚记录"
+    },
+    {
+      "name": "forum_change_password",
+      "value": "修改密码"
+    },
+    {
+      "name": "forum_display_storage",
+      "value": "外观与存储"
+    },
+    {
+      "name": "forum_background",
+      "value": "树洞背景图片"
+    },
+    {
+      "name": "forum_background_hint",
+      "value": "选择本机图片，以柔和背景显示。"
+    },
+    {
+      "name": "forum_background_set",
+      "value": "已设置 · 点击更换"
+    },
+    {
+      "name": "forum_background_remove",
+      "value": "移除背景图片"
+    },
+    {
+      "name": "forum_background_limit",
+      "value": "背景图片不能超过 20 MB"
+    },
+    {
+      "name": "forum_clear_cache",
+      "value": "清理图片缓存"
+    },
+    {
+      "name": "forum_clear_cache_hint",
+      "value": "仅清理已下载图片，账号与设置会保留。"
+    },
+    {
+      "name": "forum_cache_cleared",
+      "value": "图片缓存已清理"
+    },
+    {
+      "name": "forum_clear_history",
+      "value": "清空"
+    },
+    {
+      "name": "forum_clear_history_hint",
+      "value": "清空本机浏览记录？不会删除服务器上的帖子。"
+    },
+    {
+      "name": "forum_account_empty",
+      "value": "暂无内容"
+    },
+    {
+      "name": "forum_punishment_revoked",
+      "value": "已撤销"
+    },
+    {
+      "value": "复旦账号",
+      "name": "account_signed_in"
+    },
+    {
+      "value": "复旦 ID · %s",
+      "name": "account_fudan_id"
+    },
+    {
+      "value": "账号头像",
+      "name": "account_avatar"
+    },
+    {
+      "value": "已登录复旦账号",
+      "name": "account_verified"
+    },
+    {
+      "value": "蓝色边框和勾表示当前卡片，点按其它尺寸可更换；没有添加的卡片可直接点按加入。",
+      "name": "campus_catalog_note"
+    },
+    {
+      "value": "春风来不远，只在屋东头。",
+      "name": "campus_welcome_lunar_eve"
+    },
+    {
+      "value": "爆竹声中一岁除，春风送暖入屠苏。",
+      "name": "campus_welcome_spring"
+    },
+    {
+      "value": "元宵快乐，愿团圆常伴！",
+      "name": "campus_welcome_lantern"
+    },
+    {
+      "value": "端午安康！",
+      "name": "campus_welcome_dragon"
+    },
+    {
+      "value": "中秋快乐，月圆人团圆！",
+      "name": "campus_welcome_midautumn"
+    },
+    {
+      "value": "新年快乐！",
+      "name": "campus_welcome_new_year"
+    },
+    {
+      "value": "劳动节快乐！",
+      "name": "campus_welcome_labour"
+    },
+    {
+      "value": "教师节快乐！",
+      "name": "campus_welcome_teachers"
+    },
+    {
+      "name": "forum_activities_title",
+      "value": "显示一些活动"
+    },
+    {
+      "name": "forum_activities_hint",
+      "value": "在树洞信息流中展示官方活动，点击查看详情；没有活动时自动收起，关闭后隐藏活动区域。"
+    },
+    {
+      "name": "forum_activities_cached",
+      "value": "暂时无法更新，正在显示此前获取的活动。"
+    },
+    {
+      "name": "forum_activities_unavailable",
+      "value": "活动暂时无法获取，可稍后重试。"
+    },
+    {
+      "name": "forum_activities_all",
+      "value": "查看所有活动"
+    },
+    {
+      "name": "forum_activity_open",
+      "value": "查看"
+    },
+    {
+      "name": "forum_messages",
+      "value": "消息"
+    },
+    {
+      "name": "forum_show_unread",
+      "value": "仅未读"
+    },
+    {
+      "name": "forum_message_no_detail",
+      "value": "这条消息没有更多内容。"
+    },
+    {
+      "name": "forum_message_ack_failed",
+      "value": "消息状态暂未同步，可下拉刷新重试。"
+    },
+    {
+      "name": "forum_activities_loading",
+      "value": "正在获取活动"
+    },
+    {
+      "name": "forum_activities_source",
+      "value": "旦夕官方活动"
+    },
+    {
+      "name": "forum_activities_empty",
+      "value": "暂无活动"
+    },
+    {
+      "name": "forum_activities_empty_hint",
+      "value": "官方当前没有发布活动，可稍后刷新。"
+    },
+    {
+      "name": "forum_activities_retry_hint",
+      "value": "未能获取官方活动，点按重试。"
+    },
+    {
+      "name": "feature_evaluation",
+      "value": "课评"
+    },
+    {
+      "name": "feature_campus_access",
+      "value": "入校权限"
+    },
+    {
+      "name": "feature_sports",
+      "value": "场馆预约"
+    },
+    {
+      "name": "feature_life_code",
+      "value": "复旦生活码"
+    },
+    {
+      "name": "feature_developer_notice",
+      "value": "开发组公告"
+    },
+    {
+      "name": "feature_dining",
+      "value": "食堂排队人数"
+    },
+    {
+      "name": "feature_library",
+      "value": "图书馆人数"
+    },
+    {
+      "name": "feature_electricity",
+      "value": "寝室电费"
+    },
+    {
+      "name": "live_dining_title",
+      "value": "食堂排队人数"
+    },
+    {
+      "name": "live_library_title",
+      "value": "图书馆人数"
+    },
+    {
+      "name": "live_electricity_title",
+      "value": "寝室电费"
+    },
+    {
+      "name": "live_developer_title",
+      "value": "开发组公告"
+    },
+    {
+      "name": "live_sign_in_hint",
+      "value": "登录复旦账号后查看校园服务"
+    },
+    {
+      "name": "live_load_error",
+      "value": "暂时无法读取数据，请检查网络后重新加载。"
+    },
+    {
+      "name": "live_dining_outside",
+      "value": "目前不在供餐统计时段"
+    },
+    {
+      "name": "live_dining_hint",
+      "value": "保留学校返回的全部窗口，按校区与食堂分组。人数为消费活跃度参考，不等于现场排队人数；相对拥挤按各食堂人数与高峰参考之比比较。"
+    },
+    {
+      "name": "live_library_hint",
+      "value": "在馆人数、剩余可入馆人数及容量来自图书馆；下拉刷新获取最新状态。"
+    },
+    {
+      "name": "live_electricity_hint",
+      "value": "当前电量与寝室信息按校园账户读取；历史记录来自数据中心，统计时间可能与当前电量不同。"
+    },
+    {
+      "name": "live_developer_hint",
+      "value": "公告来自旦夕开发组，保留原文及发布时间。最新公告与历史公告可切换查看。"
+    },
+    {
+      "name": "live_no_notices",
+      "value": "暂无公告"
+    },
+    {
+      "name": "live_visitors",
+      "value": "在馆人数"
+    },
+    {
+      "name": "live_remaining_kwh",
+      "value": "剩余电量 · kWh"
+    },
+    {
+      "name": "live_used_kwh",
+      "value": "已用电量 · kWh"
+    },
+    {
+      "name": "live_least_busy",
+      "value": "相对空闲"
+    },
+    {
+      "name": "live_most_busy",
+      "value": "相对拥挤"
+    },
+    {
+      "name": "live_notice_range",
+      "value": "公告范围"
+    },
+    {
+      "name": "live_latest",
+      "value": "最新公告"
+    },
+    {
+      "name": "live_history",
+      "value": "历史公告"
+    },
+    {
+      "name": "live_view_full",
+      "value": "查看全文"
+    },
+    {
+      "name": "live_query_campus",
+      "value": "查询校区"
+    },
+    {
+      "name": "live_transactions",
+      "value": "消费人数"
+    },
+    {
+      "name": "live_peak_reference",
+      "value": "高峰参考 %d 人"
+    },
+    {
+      "name": "live_usage_history",
+      "value": "每日用电"
+    },
+    {
+      "name": "live_last_days",
+      "value": "最近 %d 条"
+    },
+    {
+      "name": "live_open_error",
+      "value": "无法打开链接，请稍后重试。"
+    },
+    {
+      "name": "utility_evaluation",
+      "value": "课评"
+    },
+    {
+      "name": "utility_access",
+      "value": "入校权限"
+    },
+    {
+      "name": "utility_life_code",
+      "value": "复旦生活码"
+    },
+    {
+      "name": "utility_sports",
+      "value": "场馆预约"
+    },
+    {
+      "name": "utility_code_entry",
+      "value": "点击查看生活码"
+    },
+    {
+      "name": "utility_code_preview_hint",
+      "value": "进入后获取实时二维码"
+    },
+    {
+      "name": "utility_not_provided",
+      "value": "学校未提供"
+    },
+    {
+      "name": "utility_no_access",
+      "value": "暂无入校权限记录"
+    },
+    {
+      "name": "utility_sports_summary",
+      "value": "早锻 %s · 必锻 %s · 选锻 %s"
+    },
+    {
+      "name": "utility_login_value",
+      "value": "登录后查询"
+    },
+    {
+      "name": "utility_forum_login_hint",
+      "value": "使用树洞账号查看课程评价"
+    },
+    {
+      "name": "utility_campus_login_hint",
+      "value": "进入详情后使用复旦身份验证"
+    },
+    {
+      "name": "utility_access_permission",
+      "value": "入校权限"
+    },
+    {
+      "name": "utility_card_status",
+      "value": "账户状态"
+    },
+    {
+      "name": "utility_access_expiry",
+      "value": "有效期"
+    },
+    {
+      "name": "utility_access_hint",
+      "value": "显示学校数据中心公布的一卡通入校权限和有效期。如需变更，请在学校官方系统办理。"
+    },
+    {
+      "name": "utility_sports_morning",
+      "value": "早锻"
+    },
+    {
+      "name": "utility_sports_required",
+      "value": "必锻"
+    },
+    {
+      "name": "utility_sports_optional",
+      "value": "选锻"
+    },
+    {
+      "name": "utility_sports_hint",
+      "value": "体育章和单项成绩以体育教学系统记录为准。未提供或无法解析的次数显示为“—”，不计为零。"
+    },
+    {
+      "name": "utility_result",
+      "value": "成绩"
+    },
+    {
+      "name": "utility_score",
+      "value": "分数"
+    },
+    {
+      "name": "utility_code_fetched",
+      "value": "更新于 %s"
+    },
+    {
+      "name": "utility_code_hint",
+      "value": "生活码仅在此页展示，不保存到本地；下拉或点击重新加载获取最新二维码。离开后恢复屏幕亮度。"
+    },
+    {
+      "name": "utility_open_official",
+      "value": "打开学校官网"
+    },
+    {
+      "name": "utility_browser_failed",
+      "value": "暂时无法打开浏览器，请重试。"
+    },
+    {
+      "name": "utility_rating_overall",
+      "value": "总体评价"
+    },
+    {
+      "name": "utility_rating_content",
+      "value": "课程风格"
+    },
+    {
+      "name": "utility_rating_workload",
+      "value": "工作量"
+    },
+    {
+      "name": "utility_rating_assessment",
+      "value": "考核要求"
+    },
+    {
+      "name": "utility_review_deleted",
+      "value": "该评价已删除"
+    },
+    {
+      "name": "utility_view_course",
+      "value": "查看课程"
+    },
+    {
+      "name": "utility_edit_review",
+      "value": "编辑"
+    },
+    {
+      "name": "utility_delete_review",
+      "value": "删除评价"
+    },
+    {
+      "name": "utility_delete_review_hint",
+      "value": "删除后无法恢复，确定删除这条评价？"
+    },
+    {
+      "name": "utility_credits",
+      "value": "学分 %s"
+    },
+    {
+      "name": "utility_review_count",
+      "value": "%d 条评价"
+    },
+    {
+      "name": "utility_course_count",
+      "value": "%d 个开课记录"
+    },
+    {
+      "name": "utility_search_hint",
+      "value": "课程名称、代码或教师"
+    },
+    {
+      "name": "utility_search",
+      "value": "搜索"
+    },
+    {
+      "name": "utility_no_courses",
+      "value": "没有找到相关课程，可调整关键词重试。"
+    },
+    {
+      "name": "utility_load_more",
+      "value": "加载更多"
+    },
+    {
+      "name": "utility_evaluation_hint",
+      "value": "课评使用树洞账号，与复旦校园账号分开登录。可按课程、教师搜索，在课程详情中按教师和学期筛选评价。"
+    },
+    {
+      "name": "utility_teacher",
+      "value": "教师"
+    },
+    {
+      "name": "utility_term",
+      "value": "学期"
+    },
+    {
+      "name": "utility_all",
+      "value": "全部"
+    },
+    {
+      "name": "utility_term_unknown",
+      "value": "未知学期"
+    },
+    {
+      "name": "utility_term_autumn",
+      "value": "秋季"
+    },
+    {
+      "name": "utility_term_winter",
+      "value": "寒假"
+    },
+    {
+      "name": "utility_term_spring",
+      "value": "春季"
+    },
+    {
+      "name": "utility_term_summer",
+      "value": "暑假"
+    },
+    {
+      "name": "utility_write_review",
+      "value": "撰写评价"
+    },
+    {
+      "name": "utility_no_reviews",
+      "value": "当前筛选下暂无评价"
+    },
+    {
+      "name": "utility_evaluation_editor_hint",
+      "value": "请先选择你实际修读的课程，完整填写四项评分。风格和工作量沿用原版评分方向。"
+    },
+    {
+      "name": "utility_course_offering",
+      "value": "开课教师与学期"
+    },
+    {
+      "name": "utility_select_course",
+      "value": "选择开课记录"
+    },
+    {
+      "name": "utility_review_title",
+      "value": "评价标题"
+    },
+    {
+      "name": "utility_review_title_hint",
+      "value": "简要概括你的体验"
+    },
+    {
+      "name": "utility_review_body",
+      "value": "评价正文"
+    },
+    {
+      "name": "utility_review_body_hint",
+      "value": "课程内容、课堂体验和建议…"
+    },
+    {
+      "name": "utility_sending",
+      "value": "正在提交"
+    },
+    {
+      "name": "utility_submit",
+      "value": "提交评价"
+    },
+    {
+      "name": "utility_open_terms",
+      "value": "阅读官方条款"
+    },
+    {
+      "name": "utility_login_forum",
+      "value": "登录树洞"
+    },
+    {
+      "name": "utility_course_details",
+      "value": "课程评价"
+    },
+    {
+      "name": "utility_sports_migrated_value",
+      "value": "查看体育锻炼指南"
+    },
+    {
+      "name": "utility_sports_migrated_hint",
+      "value": "学校已将体育锻炼查询迁移至“复旦智慧体育系统”小程序，请按官方学生指南查询运动记录和统计。本页仅兼容已有验证的旧网页记录。"
+    },
+    {
+      "name": "utility_sports_guide",
+      "value": "学生端使用说明"
+    },
+    {
+      "name": "utility_rating_overall_words",
+      "value": "特别差评;差评;中等;好评;特别好评"
+    },
+    {
+      "name": "utility_rating_content_words",
+      "value": "硬核;较难;中等;容易;非常容易"
+    },
+    {
+      "name": "utility_rating_workload_words",
+      "value": "非常大;较大;中等;较小;非常小"
+    },
+    {
+      "name": "utility_rating_assessment_words",
+      "value": "非常严格;严格;中等;宽松;非常宽松"
+    },
+    {
+      "name": "utility_rating_unset",
+      "value": "请选择评分"
+    },
+    {
+      "name": "utility_reviewer",
+      "value": "用户 %d"
+    },
+    {
+      "name": "utility_invalid_service",
+      "value": "此校园服务暂不可用，请重新选择。"
+    },
+    {
+      "name": "utility_account_changed",
+      "value": "账号或语言已切换，请重新加载。"
+    },
+    {
+      "name": "utility_invalid_response",
+      "value": "学校服务的页面或数据格式已变化，请重试或打开官方网页。"
+    },
+    {
+      "name": "utility_invalid_review",
+      "value": "请完整填写课程、标题、正文和四项评分；修改时课程不可更换。"
+    },
+    {
+      "name": "utility_review_owned_only",
+      "value": "仅能修改或删除本人未删除的课程评价。"
+    },
+    {
+      "name": "utility_invalid_identifier",
+      "value": "课程、评价标识或搜索页码无效，请重新加载。"
+    },
+    {
+      "name": "utility_code_terms_required",
+      "value": "需要先在官方网页阅读并同意生活码条款。"
+    },
+    {
+      "name": "utility_code_too_long",
+      "value": "生活码超出原生二维码组件范围，请使用官方网页。"
+    },
+    {
+      "name": "campus_verify_continue",
+      "value": "继续身份验证"
+    },
+    {
+      "name": "campus_unit_cny",
+      "value": "元"
+    },
+    {
+      "name": "campus_unit_people",
+      "value": "人"
+    },
+    {
+      "name": "campus_unit_kwh",
+      "value": "度"
+    },
+    {
+      "name": "campus_unit_rooms",
+      "value": "间"
+    },
+    {
+      "name": "campus_hint_announcement",
+      "value": "最新教务动态"
+    },
+    {
+      "name": "campus_hint_bus",
+      "value": "下一班 · 始发时间"
+    },
+    {
+      "name": "campus_hint_empty_classroom",
+      "value": "按教学楼与日期查看教室日程、课程和空闲课节"
+    },
+    {
+      "name": "campus_hint_academic",
+      "value": "考试安排与成绩摘要"
+    },
+    {
+      "name": "campus_hint_timetable",
+      "value": "今日课程安排"
+    },
+    {
+      "name": "campus_hint_card",
+      "value": "可用余额"
+    },
+    {
+      "name": "campus_hint_evaluation",
+      "value": "课程评价与体验"
+    },
+    {
+      "name": "campus_hint_campus_access",
+      "value": "入校资格与有效期"
+    },
+    {
+      "name": "campus_hint_sports",
+      "value": "选择场馆、日期与可预约时段"
+    },
+    {
+      "name": "campus_hint_life_code",
+      "value": "动态二维码 · 点击出示"
+    },
+    {
+      "name": "campus_hint_developer_notice",
+      "value": "开发组最新消息"
+    },
+    {
+      "name": "campus_hint_dining",
+      "value": "当前较空闲窗口"
+    },
+    {
+      "name": "campus_hint_library",
+      "value": "实时在馆人数"
+    },
+    {
+      "name": "campus_hint_electricity",
+      "value": "寝室剩余电量"
+    },
+    {
+      "name": "forum_webvpn_verification_hint",
+      "value": "树洞直连暂不可用，请完成校园 WebVPN 身份验证后继续。树洞仍使用独立的邮箱和密码登录。"
+    },
+    {
+      "name": "forum_login_timeout_hint",
+      "value": "树洞登录请求超时（2300028），暂时无法确认服务器是否已收到。请稍后点击登录重试；不会自动重复提交密码。"
+    },
+    {
+      "name": "live_load_usage_history",
+      "value": "查看用电记录"
+    },
+    {
+      "name": "review_net_against",
+      "value": "净反对"
+    },
+    {
+      "name": "review_net_support",
+      "value": "净赞同"
+    },
+    {
+      "name": "review_net_score",
+      "value": "净评价"
+    },
+    {
+      "name": "review_average_rating",
+      "value": "平均评价"
+    },
+    {
+      "name": "settings_high_contrast",
+      "value": "辅助功能：高对比度颜色"
+    },
+    {
+      "name": "settings_high_contrast_hint",
+      "value": "教室日程查询和树洞标签"
+    },
+    {
+      "name": "settings_haptics",
+      "value": "触觉反馈"
+    },
+    {
+      "name": "settings_haptics_hint",
+      "value": "在切换、点赞和拖动等操作时提供轻触反馈，强度遵循系统设置。"
+    },
+    {
+      "name": "settings_proxy",
+      "value": "代理设置"
+    },
+    {
+      "name": "settings_proxy_none",
+      "value": "不使用代理"
+    },
+    {
+      "name": "settings_proxy_hint",
+      "value": "保存常用 HTTP 代理，点选即可切换；移除正在使用的代理后自动关闭。"
+    },
+    {
+      "name": "settings_proxy_scope",
+      "value": "适用于应用网络请求、图片下载和应用内身份验证网页。与「自动使用 WebVPN 代理」分别设置；切换后从下一次请求生效。"
+    },
+    {
+      "name": "settings_proxy_input",
+      "value": "如 127.0.0.1:1234"
+    },
+    {
+      "name": "settings_proxy_add",
+      "value": "添加新代理"
+    },
+    {
+      "name": "settings_proxy_save",
+      "value": "保存地址"
+    },
+    {
+      "name": "settings_proxy_remove",
+      "value": "移除代理"
+    },
+    {
+      "name": "settings_proxy_invalid",
+      "value": "请输入有效的 HTTP 代理地址和端口（1–65535），例如 127.0.0.1:1234。"
+    },
+    {
+      "name": "settings_cancel",
+      "value": "取消"
+    },
+    {
+      "name": "settings_save_failed",
+      "value": "设置未能保存，请重试。"
+    },
+    {
+      "name": "settings_open_failed",
+      "value": "无法打开链接，请检查是否已安装浏览器。"
+    },
+    {
+      "name": "settings_intro",
+      "value": "简介"
+    },
+    {
+      "name": "settings_description",
+      "value": "由几位复旦本科学生用爱发电打造的微型复旦综合服务 App，希望能为你的生活提供便利～"
+    },
+    {
+      "name": "settings_harmony_intro",
+      "value": "本应用为旦夕的 HarmonyOS 适配内测版。感谢原项目及所有贡献者。"
+    },
+    {
+      "name": "settings_legal",
+      "value": "法律"
+    },
+    {
+      "name": "settings_legal_text",
+      "value": "登录即表示您已阅读并同意隐私政策和使用条款。旦夕采用 GNU GPL v3 开源许可；第三方组件的许可可在下方离线查看。"
+    },
+    {
+      "name": "settings_privacy",
+      "value": "隐私政策和使用条款"
+    },
+    {
+      "name": "settings_licenses",
+      "value": "开源软件许可"
+    },
+    {
+      "name": "settings_license_hint",
+      "value": "以下列出本应用实际使用的开源项目。点击可离线查看完整许可。"
+    },
+    {
+      "name": "settings_thanks",
+      "value": "致谢"
+    },
+    {
+      "name": "settings_thanks_text",
+      "value": "我们感谢 [IvanFei](https://github.com/ivanfei-1) 为本 App 设计图标，[MSapphire](https://www.xiaohongshu.com/user/profile/6575475f000000001902d794)、[Lin2510]()、[zzz111]() 为本 App 贡献表情包等艺术设计。"
+    },
+    {
+      "name": "settings_developers",
+      "value": "原项目开发者"
+    },
+    {
+      "name": "settings_contact",
+      "value": "联系我们"
+    },
+    {
+      "name": "settings_contact_hint",
+      "value": "反馈问题时可附上版本号、复现步骤和「读取诊断」。请勿附上密码或认证票据。"
+    },
+    {
+      "name": "settings_email",
+      "value": "撰写反馈邮件"
+    },
+    {
+      "name": "settings_copy_email",
+      "value": "复制邮箱地址"
+    },
+    {
+      "name": "settings_email_copied",
+      "value": "邮箱地址已复制"
+    },
+    {
+      "name": "settings_email_unavailable",
+      "value": "未能打开邮件应用，可复制邮箱地址后联系。"
+    },
+    {
+      "name": "settings_project",
+      "value": "项目网页"
+    },
+    {
+      "name": "settings_source",
+      "value": "原项目源代码与贡献记录"
+    },
+    {
+      "name": "settings_latest_reply",
+      "value": "%s 于%s回复："
+    },
+    {
+      "name": "settings_deleted_reply",
+      "value": "该回复已被删除"
+    },
+    {
+      "name": "settings_image_summary",
+      "value": "[图片]"
+    },
+    {
+      "name": "settings_sticker_summary",
+      "value": "[表情]"
+    },
+    {
+      "name": "settings_quote_summary",
+      "value": "引用"
+    },
+    {
+      "name": "summary_queued",
+      "value": "已进入生成队列"
+    },
+    {
+      "name": "summary_processing",
+      "value": "正在整理讨论内容"
+    },
+    {
+      "name": "summary_loading",
+      "value": "正在获取 AI 总结"
+    },
+    {
+      "name": "summary_empty",
+      "value": "暂无可用的总结内容"
+    },
+    {
+      "name": "summary_timeout",
+      "value": "生成时间较长，请稍后重试"
+    },
+    {
+      "name": "summary_error",
+      "value": "暂时无法生成总结，请稍后重试"
+    },
+    {
+      "name": "summary_count",
+      "value": "正在分析 %s 层楼的讨论"
+    },
+    {
+      "name": "summary_wait_note",
+      "value": "结果将自动显示；关闭面板后停止查询。"
+    },
+    {
+      "name": "summary_disclaimer",
+      "value": "AI 辅助总结，仅供参考 · 校内科研测试，不对外提供服务"
+    },
+    {
+      "name": "summary_keywords",
+      "value": "关键词"
+    },
+    {
+      "name": "summary_core",
+      "value": "核心摘要"
+    },
+    {
+      "name": "summary_branches",
+      "value": "讨论分支"
+    },
+    {
+      "name": "summary_interactions",
+      "value": "热门互动"
+    },
+    {
+      "name": "summary_references",
+      "value": "相关楼层 · 点击查看原文"
+    },
+    {
+      "name": "summary_support",
+      "value": "支持了"
+    },
+    {
+      "name": "summary_rebuttal",
+      "value": "反驳了"
+    },
+    {
+      "name": "summary_supplement",
+      "value": "补充了"
+    },
+    {
+      "name": "summary_question",
+      "value": "质疑了"
+    },
+    {
+      "name": "summary_reply",
+      "value": "回复了"
+    },
+    {
+      "name": "summary_generated",
+      "value": "生成于"
+    },
+    {
+      "name": "summary_feedback_sent",
+      "value": "感谢反馈，已提交"
+    },
+    {
+      "name": "summary_feedback_sending",
+      "value": "正在提交反馈…"
+    },
+    {
+      "name": "summary_copy",
+      "value": "复制总结"
+    },
+    {
+      "name": "summary_unsupported",
+      "value": "该帖暂不支持 AI 总结"
+    },
+    {
+      "name": "summary_permission",
+      "value": "你暂无使用 AI 总结的权限"
+    },
+    {
+      "name": "summary_feedback_note",
+      "value": "反馈可以帮助改进总结。可填写遗漏或不准确之处（选填）。"
+    },
+    {
+      "name": "settings_original_version",
+      "value": "原项目版本 1.5.3 build 350 #7fe64c6"
+    },
+    {
+      "name": "settings_original_developer_motto",
+      "value": "Passionate developers\nfrom A.I. & C.S. & Economics & Physics\nat Fudan University"
+    },
+    {
+      "name": "campus_classroom_period_note",
+      "value": "当前节次空闲教室"
+    },
+    {
+      "name": "campus_academic_summary",
+      "value": "本学期考试 {exams} 门 · 已出成绩 {grades} 门"
+    },
+    {
+      "name": "academic_gpa_credits",
+      "value": "学分"
+    },
+    {
+      "name": "composer_tags_note",
+      "value": "可多选，也可创建标签"
+    },
+    {
+      "name": "composer_search_custom_tag",
+      "value": "搜索或输入新标签"
+    },
+    {
+      "name": "composer_add_tag",
+      "value": "添加"
+    },
+    {
+      "name": "composer_draft_note",
+      "value": "本次使用期间自动保留草稿"
+    },
+    {
+      "name": "composer_bold",
+      "value": "加粗"
+    },
+    {
+      "name": "composer_italic",
+      "value": "斜体"
+    },
+    {
+      "name": "composer_formula",
+      "value": "数学公式"
+    },
+    {
+      "name": "composer_stickers",
+      "value": "表情"
+    },
+    {
+      "name": "composer_images_note",
+      "value": "已添加图片，可移除后重新选择"
+    },
+    {
+      "name": "composer_image_number",
+      "value": "图片 {index}"
+    },
+    {
+      "name": "composer_remove_image",
+      "value": "移除图片"
+    },
+    {
+      "name": "composer_fullscreen",
+      "value": "专注编辑"
+    },
+    {
+      "name": "composer_help",
+      "value": "编辑帮助"
+    },
+    {
+      "name": "composer_help_note",
+      "value": "支持 Markdown 与 LaTeX。\n\n**加粗**、*斜体*、# 标题、[文字](https://example.com)\n\n行内公式：$x^2$；独立公式：$$x^2$$\n\n选中文字后点工具按钮可套用格式；点眼睛查看实际效果。图片上传后会自动插入正文，表情可以连续添加。"
+    },
+    {
+      "name": "composer_community",
+      "value": "社区公约"
+    },
+    {
+      "name": "composer_warning_title",
+      "value": "发送前请确认"
+    },
+    {
+      "name": "composer_warning",
+      "value": "内容中包含“{word}”，请确认符合社区公约后再发送。"
+    },
+    {
+      "name": "composer_send_anyway",
+      "value": "继续发送"
+    },
+    {
+      "name": "composer_recommend",
+      "value": "推荐标签"
+    },
+    {
+      "name": "composer_recommend_note",
+      "value": "仅在本机匹配正文中的已有标签，不上传正文。可多选，也可忽略。"
+    },
+    {
+      "name": "campus_classroom_outside_period",
+      "value": "当前非上课时段"
+    },
+    {
+      "name": "academic_local_scope",
+      "value": "计入 {included} 门 · 不计入 {excluded} 门 · 数据缺失 {incomplete} 门"
+    },
+    {
+      "name": "review_no_ratings",
+      "value": "暂无评价"
+    },
+    {
+      "name": "review_rating_unavailable",
+      "value": "查看课程评分"
+    },
+    {
+      "name": "review_count_unavailable",
+      "value": "评价数量待获取"
+    },
+    {
+      "name": "review_summary_loading",
+      "value": "正在读取评价"
+    },
+    {
+      "name": "review_summary_failed",
+      "value": "评价暂不可用"
+    },
+    {
+      "name": "forum_all_tags",
+      "value": "所有标签"
+    },
+    {
+      "name": "forum_before_date",
+      "value": "筛选不晚于日期"
+    },
+    {
+      "name": "forum_clear_date",
+      "value": "清除日期筛选"
+    },
+    {
+      "name": "forum_before_date_value",
+      "value": "不晚于 %s"
+    },
+    {
+      "name": "forum_pinned",
+      "value": "置顶"
+    },
+    {
+      "name": "forum_tags_search",
+      "value": "搜索标签"
+    },
+    {
+      "name": "forum_tag_popularity",
+      "value": "热度 %d"
+    },
+    {
+      "name": "campus_academic_exam_count",
+      "value": "考试 {count} 门"
+    },
+    {
+      "name": "campus_academic_grade_count",
+      "value": "已出成绩 {count} 门"
+    },
+    {
+      "name": "live_history_diagnostics",
+      "value": "读取诊断"
+    },
+    {
+      "name": "live_history_diagnostics_hint",
+      "value": "诊断保留本次错误和近期请求的脱敏信息，不包含密码、认证凭据或数据正文。可复制后用于反馈问题。"
+    },
+    {
+      "name": "live_history_diagnostics_copy",
+      "value": "复制诊断"
+    },
+    {
+      "name": "diagnostics_read",
+      "value": "读取诊断"
+    },
+    {
+      "name": "diagnostics_error",
+      "value": "具体报错"
+    },
+    {
+      "name": "diagnostics_logs",
+      "value": "相关日志"
+    },
+    {
+      "name": "diagnostics_hint",
+      "value": "诊断保留本次错误和近期请求的脱敏信息，不包含密码、认证凭据或数据正文。可复制后用于反馈问题。"
+    },
+    {
+      "name": "diagnostics_no_logs",
+      "value": "没有可用的请求日志。"
+    },
+    {
+      "name": "diagnostics_expired",
+      "value": "诊断已过期，请返回原页面重新读取。"
+    },
+    {
+      "name": "diagnostics_open_failed",
+      "value": "无法打开诊断，请稍后重试。"
+    },
+    {
+      "name": "diagnostics_copy_failed",
+      "value": "复制失败"
+    },
+    {
+      "name": "diagnostics_network_brief",
+      "value": "网络连接失败，请检查网络后重新加载。"
+    },
+    {
+      "name": "diagnostics_generic_brief",
+      "value": "暂时无法完成操作，请稍后重试。"
+    },
+    {
+      "name": "settings_original_project",
+      "value": "原项目 · DanXi-Dev / DanXi"
+    },
+    {
+      "name": "settings_all_contributors",
+      "value": "查看全部贡献者"
+    },
+    {
+      "name": "campus_bus_closed",
+      "value": "已无班次"
+    },
+    {
+      "name": "campus_bus_following",
+      "value": "下一班 %s"
+    },
+    {
+      "name": "campus_classroom_current",
+      "value": "当前节次空闲"
+    },
+    {
+      "name": "campus_classroom_scope",
+      "value": "已确认 %d 间教室状态"
+    },
+    {
+      "name": "campus_classroom_none",
+      "value": "当前节次暂无空闲教室"
+    },
+    {
+      "name": "campus_room_seats",
+      "value": "%s 座"
+    },
+    {
+      "name": "campus_library_more",
+      "value": "另有 %d 个馆，点按查看"
+    },
+    {
+      "name": "campus_library_hours",
+      "value": "开放 %s"
+    },
+    {
+      "name": "campus_bus_last",
+      "value": "暂无后续班次"
+    },
+    {
+      "name": "campus_bus_timetable",
+      "value": "点按查看时刻表"
+    },
+    {
+      "name": "calendar_manual_sync_hint",
+      "value": "手动选择其他学期；同步只在点按后更新当前学期的第一周周一。"
+    },
+    {
+      "name": "timetable_semester_not_found",
+      "value": "未找到所选日期（%s）对应的教务学期，请核对第一教学周的周一。"
+    },
+    {
+      "name": "timetable_graduate_history_unavailable",
+      "value": "研究生教务接口仅提供当前课表，本机尚未保存所选学期的课程。可添加本地课程，或切换回当前学期。"
+    },
+    {
+      "name": "reservation_all_campuses",
+      "value": "全部校区"
+    },
+    {
+      "name": "reservation_all_categories",
+      "value": "全部项目"
+    },
+    {
+      "name": "reservation_date",
+      "value": "预约日期"
+    },
+    {
+      "name": "reservation_available_only",
+      "value": "只显示可预约时段"
+    },
+    {
+      "name": "reservation_capacity",
+      "value": "已预约 %s / %s"
+    },
+    {
+      "name": "reservation_book",
+      "value": "预约"
+    },
+    {
+      "name": "reservation_full",
+      "value": "已约满"
+    },
+    {
+      "name": "reservation_unavailable",
+      "value": "不可预约"
+    },
+    {
+      "name": "reservation_no_places",
+      "value": "当前筛选下没有场馆，可切换校区或项目。"
+    },
+    {
+      "name": "reservation_no_slots",
+      "value": "该日期没有符合条件的时段，可切换日期或关闭可预约筛选。"
+    },
+    {
+      "name": "reservation_booking_hint",
+      "value": "场馆与时段以学校实时信息为准；选择时段后，在学校预约页面核对并提交。"
+    },
+    {
+      "name": "reservation_booking_form",
+      "value": "学校预约页面"
+    },
+    {
+      "name": "reservation_verification_hint",
+      "value": "场馆预约需要复旦身份验证，请点击继续身份验证。"
+    },
+    {
+      "name": "reservation_data_invalid",
+      "value": "场馆预约返回内容暂时无法解析，请重新加载。"
+    },
+    {
+      "name": "reservation_choose_place",
+      "value": "选择预约场馆"
+    },
+    {
+      "name": "reservation_place_count",
+      "value": "%s 个场馆"
+    },
+    {
+      "name": "reservation_preview_hint",
+      "value": "查看开放场馆与可预约时段"
+    },
+    {
+      "name": "feature_library_books",
+      "value": "图书馆借书"
+    },
+    {
+      "name": "campus_hint_library_books",
+      "value": "检索书目、查看馆藏位置与可借状态，收藏常用图书"
+    },
+    {
+      "name": "live_dining_people",
+      "value": "人"
+    },
+    {
+      "name": "library_remaining",
+      "value": "可入馆 %d 人"
+    },
+    {
+      "name": "library_capacity",
+      "value": "容量 %d 人"
+    },
+    {
+      "name": "classroom_schedule_search",
+      "value": "搜索教室、课程或教师"
+    },
+    {
+      "name": "classroom_schedule_hint",
+      "value": "左右滑动查看不同教室，沿节次向下阅读；点击课程查看详情。日期查询以学校返回的日程为准。"
+    },
+    {
+      "name": "classroom_query_date",
+      "value": "查询日期"
+    },
+    {
+      "name": "classroom_period",
+      "value": "节次"
+    },
+    {
+      "name": "classroom_room",
+      "value": "教室"
+    },
+    {
+      "name": "classroom_course_id",
+      "value": "课程代码"
+    },
+    {
+      "name": "classroom_teacher",
+      "value": "任课教师"
+    },
+    {
+      "name": "classroom_category",
+      "value": "课程类别"
+    },
+    {
+      "name": "classroom_enrollment",
+      "value": "课程人数"
+    },
+    {
+      "name": "classroom_building_h2",
+      "value": "第二教学楼"
+    },
+    {
+      "name": "classroom_building_h3",
+      "value": "第三教学楼"
+    },
+    {
+      "name": "classroom_building_h4",
+      "value": "第四教学楼"
+    },
+    {
+      "name": "classroom_building_h5",
+      "value": "第五教学楼"
+    },
+    {
+      "name": "classroom_building_h6",
+      "value": "第六教学楼"
+    },
+    {
+      "name": "classroom_building_hgx",
+      "value": "光华楼西辅楼"
+    },
+    {
+      "name": "classroom_building_hgd",
+      "value": "光华楼东辅楼"
+    },
+    {
+      "name": "classroom_building_hq",
+      "value": "新闻学院"
+    },
+    {
+      "name": "classroom_building_j",
+      "value": "江湾校区"
+    },
+    {
+      "name": "classroom_building_z",
+      "value": "张江校区"
+    },
+    {
+      "name": "classroom_building_f",
+      "value": "枫林校区"
+    },
+    {
+      "name": "books_search",
+      "value": "输入书名，自动搜索"
+    },
+    {
+      "name": "books_results_hint",
+      "value": "按图书馆相关度排序，滑到底部自动接续；点击书目查看馆藏。"
+    },
+    {
+      "name": "books_pinned_hint",
+      "value": "搜索无需登录；收藏的图书会保存在本机，方便下次查看。"
+    },
+    {
+      "name": "books_empty",
+      "value": "输入书名，查找图书和馆藏位置"
+    },
+    {
+      "name": "books_view_holdings",
+      "value": "查看馆藏与可借状态"
+    },
+    {
+      "name": "books_authors",
+      "value": "作者"
+    },
+    {
+      "name": "books_publisher",
+      "value": "出版信息"
+    },
+    {
+      "name": "books_holdings",
+      "value": "馆藏与可借状态"
+    },
+    {
+      "name": "books_holdings_hint",
+      "value": "可借状态由图书馆实时返回；请按馆藏位置和索书号到馆借阅。"
+    },
+    {
+      "name": "books_call_number",
+      "value": "索书号"
+    },
+    {
+      "name": "books_no_holdings",
+      "value": "暂无实体馆藏记录"
+    },
+    {
+      "name": "books_load_more",
+      "value": "继续读取"
+    },
+    {
+      "name": "books_pin",
+      "value": "收藏图书"
+    },
+    {
+      "name": "books_unpin",
+      "value": "取消收藏"
+    },
+    {
+      "name": "books_pin_failed",
+      "value": "图书收藏未能保存"
+    },
+    {
+      "name": "books_pinned_count",
+      "value": "%d 本收藏"
+    },
+    {
+      "name": "books_search_short",
+      "value": "检索与借阅"
+    },
+    {
+      "name": "books_preview_hint",
+      "value": "馆藏位置 · 可借状态"
+    },
+    {
+      "name": "books_public_hint",
+      "value": "无需校园账号登录"
+    },
+    {
+      "name": "classroom_capacity",
+      "value": "%d 个座位"
+    },
+    {
+      "name": "timetable_calendar_name",
+      "value": "旦夕课表 · %s"
+    },
+    {
+      "name": "timetable_calendar_hint",
+      "value": "选择要导出的课程，写入系统日历中的「旦夕课表 · %s」。重复导出会更新已有日程，不会重复添加。"
+    },
+    {
+      "name": "timetable_calendar_done",
+      "value": "已同步 %s 条课程日程 · 新增或更新 %s 条，保持 %s 条。可在系统日历查看。"
+    },
+    {
+      "name": "timetable_calendar_permission_reason",
+      "value": "将所选课程写入系统日历，并识别旦夕已导出的课程，避免重复添加。"
+    },
+    {
+      "name": "timetable_calendar_permission_denied",
+      "value": "需要日历权限才能导出课程，可在系统设置中允许旦夕访问日历。"
+    },
+    {
+      "name": "timetable_export_empty",
+      "value": "请先选择至少一门课程。"
+    },
+    {
+      "name": "timetable_select_all",
+      "value": "全选"
+    },
+    {
+      "name": "timetable_unselect_all",
+      "value": "取消全选"
+    },
+    {
+      "name": "timetable_history_diary_hint",
+      "value": "往期课程由研究生教务日程补读；该数据源可能未收录全部课程，可添加本地课程补充。"
+    },
+    {
+      "name": "reservation_browser_hint",
+      "value": "学校预约页面要求完成网页检查。请在下方官方页面完成提示，系统会继续读取场地与时段；也可直接在官网预约。"
+    },
+    {
+      "name": "reservation_browser_continue",
+      "value": "继续读取"
+    },
+    {
+      "name": "reservation_browser_title",
+      "value": "学校预约页面"
+    },
+    {
+      "name": "reservation_browser_incomplete",
+      "value": "学校预约页面尚未返回场地信息，可完成网页提示后重试。"
+    },
+    {
+      "name": "reservation_places_title",
+      "value": "场地列表"
+    },
+    {
+      "name": "reservation_time",
+      "value": "预约时段"
+    },
+    {
+      "name": "reservation_remaining",
+      "value": "剩余 %s / %s"
+    },
+    {
+      "name": "booking_my_reservations",
+      "value": "我的预约"
+    },
+    {
+      "name": "booking_type",
+      "value": "场馆类型"
+    },
+    {
+      "name": "booking_environment",
+      "value": "室内／室外"
+    },
+    {
+      "name": "booking_available",
+      "value": "可预约 %d 个场地"
+    },
+    {
+      "name": "booking_reserve",
+      "value": "预约"
+    },
+    {
+      "name": "booking_full",
+      "value": "已满"
+    },
+    {
+      "name": "booking_rules",
+      "value": "预约须知"
+    },
+    {
+      "name": "booking_required",
+      "value": "请填写所有必填项。"
+    },
+    {
+      "name": "booking_success",
+      "value": "预约成功，可在“我的预约”查看分配场地。"
+    },
+    {
+      "name": "booking_cancel",
+      "value": "取消这项预约？"
+    },
+    {
+      "name": "booking_cancel_confirm",
+      "value": "取消预约"
+    },
+    {
+      "name": "booking_action_failed",
+      "value": "预约操作未完成。"
+    },
+    {
+      "name": "booking_unavailable",
+      "value": "该场馆暂不开放预约。"
+    },
+    {
+      "name": "booking_no_times",
+      "value": "所选日期暂无开放时段。"
+    },
+    {
+      "name": "booking_number",
+      "value": "预约数量"
+    },
+    {
+      "name": "booking_captcha_web",
+      "value": "该场馆需要验证，请在官方页面完成预约。"
+    },
+    {
+      "name": "booking_web",
+      "value": "打开官方预约"
+    },
+    {
+      "name": "booking_submit",
+      "value": "确认预约"
+    },
+    {
+      "name": "booking_no_venues",
+      "value": "没有符合筛选条件的场馆。"
+    },
+    {
+      "name": "booking_no_appointments",
+      "value": "暂无预约记录。"
+    },
+    {
+      "name": "library_my_loans",
+      "value": "我的借阅"
+    },
+    {
+      "name": "library_my_requests",
+      "value": "我的预约"
+    },
+    {
+      "name": "library_verify_hint",
+      "value": "请在图书馆官方页面完成身份验证，完成后会接续原来的操作。"
+    },
+    {
+      "name": "library_cancel_request",
+      "value": "取消预约"
+    },
+    {
+      "name": "library_renew_confirm",
+      "value": "续借这本书？"
+    },
+    {
+      "name": "library_renew",
+      "value": "续借"
+    },
+    {
+      "name": "library_action_failed",
+      "value": "图书馆操作未完成。"
+    },
+    {
+      "name": "library_due",
+      "value": "应还日期 %s"
+    },
+    {
+      "name": "library_borrowed",
+      "value": "借出日期 %s"
+    },
+    {
+      "name": "library_returned",
+      "value": "归还日期 %s"
+    },
+    {
+      "name": "library_renew_count",
+      "value": "已续借 %d 次"
+    },
+    {
+      "name": "library_expected",
+      "value": "预计取书 %s"
+    },
+    {
+      "name": "library_queue",
+      "value": "排队位置 %d"
+    },
+    {
+      "name": "library_current",
+      "value": "当前"
+    },
+    {
+      "name": "library_history",
+      "value": "历史"
+    },
+    {
+      "name": "library_account_empty",
+      "value": "暂无记录。"
+    },
+    {
+      "name": "library_request_book",
+      "value": "预约此书"
+    },
+    {
+      "name": "library_pickup",
+      "value": "取书地点"
+    },
+    {
+      "name": "library_pickup_date",
+      "value": "预计取书日期"
+    },
+    {
+      "name": "library_allow_replace",
+      "value": "允许替换为其他册"
+    },
+    {
+      "name": "library_submit_request",
+      "value": "提交预约"
+    },
+    {
+      "name": "library_request_success",
+      "value": "图书预约已提交，可在“我的预约”查看。"
+    },
+    {
+      "name": "library_no_pickup",
+      "value": "暂无可选取书地点。"
+    },
+    {
+      "name": "classroom_day_empty",
+      "value": "所选日期暂无课程安排。\n左侧为完整节次时间表。"
+    },
+    {
+      "name": "classroom_search_empty",
+      "value": "没有符合搜索条件的教室或课程。"
+    },
+    {
+      "name": "booking_search",
+      "value": "搜索场馆"
+    },
+    {
+      "name": "timetable_period_times",
+      "value": "节次\n起–止"
+    },
+    {
+      "name": "timetable_month_heading",
+      "value": "{year}年{month}月"
+    },
+    {
+      "name": "timetable_previous_week",
+      "value": "上一周"
+    },
+    {
+      "name": "timetable_next_week",
+      "value": "下一周"
+    },
+    {
+      "name": "detail_cancel_reply",
+      "value": "取消回复该楼层"
+    },
+    {
+      "name": "forum_remove_hidden_tag",
+      "value": "取消屏蔽标签 %s"
+    },
+    {
+      "name": "library_history_missing",
+      "value": "历史借阅数据暂不可用，可重试或前往图书馆官网查看。"
+    },
+    {
+      "name": "library_official_query",
+      "value": "图书馆官网"
+    },
+    {
+      "name": "campus_dining_no_activity",
+      "value": "暂未返回消费活跃记录"
+    },
+    {
+      "name": "campus_dining_peak_ratio",
+      "value": "高峰参考的 %d%%"
+    },
+    {
+      "name": "campus_dining_reference",
+      "value": "按食堂高峰参考比较"
+    },
+    {
+      "name": "dining_peak_missing",
+      "value": "暂无高峰参考"
+    },
+    {
+      "name": "campus_preview_unavailable",
+      "value": "尚未获取摘要"
+    },
+    {
+      "name": "campus_academic_counts_compact",
+      "value": "考试 {exams} 门 · 成绩 {grades} 门"
+    },
+    {
+      "name": "campus_catalog_selected",
+      "value": "已添加 · 当前尺寸"
+    },
+    {
+      "name": "campus_catalog_resize",
+      "value": "已添加 · 点按更换尺寸"
+    },
+    {
+      "name": "campus_catalog_available",
+      "value": "点按添加"
+    },
+    {
+      "name": "campus_preview_classroom_compact",
+      "value": "教室日程与空闲课节"
+    },
+    {
+      "name": "campus_preview_books_compact",
+      "value": "馆藏检索、借阅与预约"
+    },
+    {
+      "name": "campus_preview_sports_compact",
+      "value": "场馆与预约时段"
+    },
+    {
+      "name": "settings_original_flutter",
+      "value": "Flutter 原项目"
+    },
+    {
+      "name": "settings_ios_developers",
+      "value": "iOS 原项目开发者"
+    },
+    {
+      "name": "settings_ios_contributors_order",
+      "value": "按姓名字母顺序排列。"
+    },
+    {
+      "name": "settings_ios_project",
+      "value": "iOS 原项目 · DanXi-Dev / DanXi-swift"
+    },
+    {
+      "name": "settings_ios_contributors",
+      "value": "查看 iOS 全部贡献者"
+    },
+    {
+      "name": "settings_ios_version",
+      "value": "iOS 原项目源码版本 2.4.1 build 500 #fe3c20c"
+    },
+    {
+      "name": "settings_ios_copyright",
+      "value": "iOS 原项目 · Copyright © 2024-2025 DanXi-Dev"
+    },
+    {
+      "name": "settings_ios_filing",
+      "value": "iOS 原项目备案 · 沪ICP备2021032046号-4A"
+    },
+    {
+      "name": "settings_thanks_merged",
+      "value": "感谢 Flutter 与 iOS 原项目的开发者、设计贡献者以及开源社区。"
+    },
+    {
+      "name": "settings_contributors_merged",
+      "value": "名单合并去重，按姓名排列；同时保留图标与表情设计贡献。"
+    },
+    {
+      "name": "settings_credit_icon_design",
+      "value": "Flutter 图标设计"
+    },
+    {
+      "name": "settings_credit_art_design",
+      "value": "Flutter 表情设计"
+    },
+    {
+      "name": "settings_original_ios",
+      "value": "iOS 原项目"
+    },
+    {
+      "name": "settings_original_libraries",
+      "value": "原项目开源致谢"
+    },
+    {
+      "name": "settings_original_libraries_hint",
+      "value": "汇总 Flutter 与 iOS 原项目公开致谢的开源软件，按名称排列，并标注来源平台及原文许可信息。"
+    }
+  ]
+}

@@ -1,0 +1,320 @@
+{
+  "color": [
+    {
+      "name": "floating_card_tint",
+      "value": "#148096B6"
+    },
+    {
+      "name": "floating_card_fallback",
+      "value": "#EEF3FA"
+    },
+    {
+      "name": "start_window_background",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "surface_fallback",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "surface_tint",
+      "value": "#CFFFFFFF"
+    },
+    {
+      "name": "surface_outline",
+      "value": "#50909AAE"
+    },
+    {
+      "name": "theme_primary",
+      "value": "#087AF0"
+    },
+    {
+      "name": "theme_primary_light",
+      "value": "#2796F7"
+    },
+    {
+      "name": "theme_primary_dark",
+      "value": "#0064D2"
+    },
+    {
+      "name": "theme_accent",
+      "value": "#F33B76"
+    },
+    {
+      "name": "theme_bg_start",
+      "value": "#E8F0FE"
+    },
+    {
+      "name": "theme_bg_end",
+      "value": "#EDF1F7"
+    },
+    {
+      "name": "theme_card_bg",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "theme_card_glass",
+      "value": "#B8FFFFFF"
+    },
+    {
+      "name": "theme_text_primary",
+      "value": "#1A1A2E"
+    },
+    {
+      "name": "theme_text_secondary",
+      "value": "#5A5A7A"
+    },
+    {
+      "name": "theme_text_hint",
+      "value": "#9A9AB0"
+    },
+    {
+      "name": "theme_divider",
+      "value": "#0F000000"
+    },
+    {
+      "name": "theme_success",
+      "value": "#168943"
+    },
+    {
+      "name": "theme_warning",
+      "value": "#BA6500"
+    },
+    {
+      "name": "theme_error",
+      "value": "#D92D32"
+    },
+    {
+      "name": "theme_info",
+      "value": "#087AF0"
+    },
+    {
+      "name": "theme_tab_bar_bg",
+      "value": "#D9FFFFFF"
+    },
+    {
+      "name": "theme_tab_active",
+      "value": "#087AF0"
+    },
+    {
+      "name": "theme_tab_inactive",
+      "value": "#9A9AB0"
+    },
+    {
+      "name": "floating_fallback",
+      "value": "#D9F4F7FC"
+    },
+    {
+      "name": "floating_outline",
+      "value": "#70FFFFFF"
+    },
+    {
+      "name": "top_fade",
+      "value": "#66E8F0FE"
+    },
+    {
+      "name": "floating_tint",
+      "value": "#33FFFFFF"
+    },
+    {
+      "name": "input_surface",
+      "value": "#F2F2F7"
+    },
+    {
+      "name": "bottom_fade_mid",
+      "value": "#10000000"
+    },
+    {
+      "name": "bottom_fade_edge",
+      "value": "#50000000"
+    },
+    {
+      "name": "campus_text_accent",
+      "value": "#0085FF"
+    },
+    {
+      "name": "campus_text_available",
+      "value": "#00C382"
+    },
+    {
+      "name": "campus_text_attention",
+      "value": "#FF3336"
+    },
+    {
+      "name": "campus_highlight",
+      "value": "#EAF1FA"
+    },
+    {
+      "name": "campus_available_surface",
+      "value": "#EDF6F0"
+    },
+    {
+      "name": "campus_card_blue",
+      "value": "#F0F6FF"
+    },
+    {
+      "name": "campus_card_mint",
+      "value": "#EEF7F1"
+    },
+    {
+      "name": "campus_card_lilac",
+      "value": "#F4F0FA"
+    },
+    {
+      "name": "campus_card_warm",
+      "value": "#FBF4EA"
+    },
+    {
+      "name": "campus_text_warm",
+      "value": "#FFAC00"
+    },
+    {
+      "name": "campus_text_violet",
+      "value": "#C14EFF"
+    },
+    {
+      "name": "review_level_1",
+      "value": "#CC273C"
+    },
+    {
+      "name": "review_level_2",
+      "value": "#AE5900"
+    },
+    {
+      "name": "review_level_3",
+      "value": "#887100"
+    },
+    {
+      "name": "review_level_4",
+      "value": "#54821B"
+    },
+    {
+      "name": "review_level_5",
+      "value": "#137E42"
+    },
+    {
+      "name": "review_badge_blue",
+      "value": "#E62196F3"
+    },
+    {
+      "name": "review_badge_purple",
+      "value": "#E69C27B0"
+    },
+    {
+      "name": "review_badge_text",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "gallery_foreground",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "gallery_background",
+      "value": "#0B0F16"
+    },
+    {
+      "name": "gallery_control_tint",
+      "value": "#A60B0F16"
+    },
+    {
+      "name": "gallery_accent",
+      "value": "#8FC1FF"
+    },
+    {
+      "name": "gallery_action",
+      "value": "#1866CE"
+    },
+    {
+      "name": "gallery_edge_shade",
+      "value": "#CC000000"
+    },
+    {
+      "name": "gallery_edge_fade",
+      "value": "#80000000"
+    },
+    {
+      "name": "quote_surface",
+      "value": "#F4F5F7"
+    },
+    {
+      "name": "campus_palette_indigo",
+      "value": "#597BFF"
+    },
+    {
+      "name": "campus_palette_blue",
+      "value": "#00AEF4"
+    },
+    {
+      "name": "campus_palette_teal",
+      "value": "#00B9C3"
+    },
+    {
+      "name": "campus_palette_green",
+      "value": "#00C600"
+    },
+    {
+      "name": "campus_palette_lime",
+      "value": "#88CD00"
+    },
+    {
+      "name": "campus_palette_violet",
+      "value": "#C14EFF"
+    },
+    {
+      "name": "campus_palette_pink",
+      "value": "#FF1494"
+    },
+    {
+      "name": "campus_palette_red",
+      "value": "#FF3336"
+    },
+    {
+      "name": "campus_palette_orange",
+      "value": "#FF8C00"
+    },
+    {
+      "name": "campus_palette_amber",
+      "value": "#FFAC00"
+    },
+    {
+      "name": "campus_palette_yellow",
+      "value": "#F2BA00"
+    },
+    {
+      "name": "ai_summary_icon",
+      "value": "#FFD60A"
+    },
+    {
+      "name": "campus_text_warning",
+      "value": "#FFAC00"
+    },
+    {
+      "name": "campus_search_surface",
+      "value": "#DCE6F6"
+    },
+    {
+      "name": "calendar_grid_line",
+      "value": "#09000000"
+    },
+    {
+      "name": "calendar_time_label",
+      "value": "#73737D"
+    },
+    {
+      "name": "calendar_today",
+      "value": "#FF624C"
+    },
+    {
+      "name": "calendar_event_surface",
+      "value": "#EAF0F9"
+    },
+    {
+      "name": "forum_author_neutral",
+      "value": "#808080"
+    },
+    {
+      "name": "card_control_background",
+      "value": "#E7EFF6"
+    }
+  ]
+}
