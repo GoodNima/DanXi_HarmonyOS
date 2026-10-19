@@ -1,6 +1,6 @@
 <div align="center">
-  <img src="AppScope/resources/base/media/launcher.png" width="100" alt="DanXi 应用图标" />
-  <h1>DanXi · 鸿蒙版</h1>
+  <img src="AppScope/resources/base/media/launcher.png" width="100" alt="旦挞应用图标" />
+  <h1>旦挞 · HarmonyOS</h1>
   <p>面向复旦大学学生的校园服务应用，使用 ArkTS / ArkUI 适配 HarmonyOS。</p>
   <p>
     <a href="https://github.com/GoodNima/DanXi_HarmonyOS/releases">下载 Alpha 内测包</a> ·
@@ -14,7 +14,7 @@
 [![HarmonyOS](https://img.shields.io/badge/HarmonyOS-API%2026-blue)](build-profile.json5)
 [![源码许可](https://img.shields.io/badge/上游许可-GPL--3.0-blue)](LICENSE)
 
-本仓库维护 **DanXi 的原生鸿蒙移植版本**。当前版本为 **0.1.33.30 Alpha**，升级编号 `1000124`，构建号 `125`。应用仍处于内部测试阶段；功能清单表示当前源码已实现的范围，实际服务可用性取决于账号权限、校园网络及服务端状态。
+本仓库维护 **旦挞（DanTa）——基于 DanXi 的原生鸿蒙移植版本**。当前版本为 **0.1.35.3 Alpha**，升级编号 `1000154`，构建号 `155`。应用仍处于内部测试阶段；功能清单表示当前源码已实现的范围，实际服务可用性取决于账号权限、校园网络及服务端状态。
 
 ## 功能
 
@@ -22,15 +22,20 @@
 | --- | --- |
 | 校园 | 可编辑的校园服务卡片，校区切换、搜索、刷新与缓存；校园卡、入校权限、食堂、空教室、图书馆、校车、宿舍电费、体育与场馆预约等入口 |
 | 学业与课表 | 教务通知、考试与成绩、GPA、历史学期课程、课表与手动课程；系统日历导出 |
-| 树洞 | 分区与排序、帖子列表、楼层及引用、发帖与回复、投票、收藏、图片浏览、富文本及 AI 总结状态展示 |
+| 茶楼 | 分区与排序、帖子列表、楼层及引用、发帖与回复、投票、收藏、图片浏览、富文本及 AI 总结状态展示 |
 | 课评 | 独立课程评价页，课程搜索、评分摘要、课程详情、评价读取与撰写入口 |
+| 桌面卡片 | 课表、校车支持半高、方形、大卡片；一卡通、寝室电费支持半高和方形；读取应用已缓存的摘要，点击进入对应功能刷新 |
 | 设置 | 账号与会话管理、明暗主题、多语言、触觉与辅助功能、简洁报错及脱敏读取诊断 |
 
 使用系统日历时按需申请日历权限；网络服务需要联网和相应账号授权。服务请求、会话接续与 UI 状态由原生 ArkTS 工程维护，富文本渲染资源随应用离线打包。
 
+桌面卡片复用主应用已读取的数据，不在桌面独立登录或请求校园服务。账号、校区变化时清除旧私人摘要，过期信息提示更新。
+
+本版相对首次公开版本的完整更新见 [版本说明](docs/RELEASE_NOTES.md)。应用名称已更改，应用标识仍为 `com.danxi.ohmo`。
+
 ## 下载与安装
 
-前往本仓库的 [Releases](https://github.com/GoodNima/DanXi_HarmonyOS/releases)，下载 `DanXi-HarmonyOS-…-unsigned.hap`。`SHA256SUMS.txt` 是可选的下载校验文件，安装不依赖它。Alpha 版本发布为 GitHub **Pre-release**，请使用完整发布列表查找。
+前往本仓库的 [Releases](https://github.com/GoodNima/DanXi_HarmonyOS/releases)，下载 `DanTa-HarmonyOS-…-unsigned.hap`。`SHA256SUMS.txt` 是可选的下载校验文件，安装不依赖它。Alpha 版本发布为 GitHub **Pre-release**，请使用完整发布列表查找。
 
 推荐使用 [小白调试助手](https://github.com/likuai2010/auto-installer/releases) 或 [HoKit](https://github.com/yabi-zzh/HoKit/releases) 侧载。**当前公开资产是未签名开发 HAP**：小白可按自动签名/调试流程签名安装；HoKit 先使用自己的华为开发者账号、证书和设备授权 Profile 重签名，再安装输出的 HAP。无需先编译源码，但不能直接安装 unsigned 文件。
 
@@ -40,12 +45,9 @@
 
 ## 界面示例
 
-以下为鸿蒙模拟器界面。校园和树洞内容均为合成测试数据；关于页来自未登录模拟器。截图不代表真实账号服务验证。
+以下为 0.1.35.3 的鸿蒙虚拟机公告卡片界面，内容为合成测试数据，不代表线上公告或真实账号服务验证。
 
-| 校园 · 浅色 | 校园 · 深色 | 树洞 |
-| :---: | :---: | :---: |
-
-| 关于 · 浅色 | 关于 · 深色 |
+| 公告卡片 · 浅色 | 公告卡片 · 深色 |
 | :---: | :---: |
 
 ## 开发
@@ -68,7 +70,7 @@ docs/              安装、版本、许可与多人维护文档
 ## 验证与已知限制
 
 - 本版已有构建、未登录模拟器明暗 UI 与相同测试签名覆盖升级记录；这些记录不等同于真实账号或所有手机验证，详见版本说明。
-- 2026-10-14 仓库与历史整理只调整开发材料、构建测试目标和文档；安装包及应用版本不变。Alpha tag 已按授权改指同版本的净化源码，见 [历史净化记录](https://github.com/GoodNima/DanXi_HarmonyOS/blob/main/docs/HISTORY_CLEANUP.md)。
+- 本次公开源码包含 0.1.33.30 之后至 0.1.35.3 的最终应用改动，沿用既有版本与构建编号。历史整理记录仍见 [历史净化记录](docs/HISTORY_CLEANUP.md)。
 - 真实账号下全部校园服务、不同手机与网络条件尚未完整验证。宿舍用电记录的真实账号超时原因仍需补充验证。
 - Alpha 版本可能受上游服务变更影响。遇到问题请在 [本仓库提交 Issue](https://github.com/GoodNima/DanXi_HarmonyOS/issues/new/choose)，附上复现步骤、设备系统、展示版本、升级编号、构建号及脱敏诊断。
 

@@ -1,16 +1,19 @@
 # DanXi HarmonyOS 版本政策与发布历史
 
-当前公开应用为 **0.1.33.30 Alpha**，`versionCode=1000124`，`buildVersion=125`。本页记录公开应用发布与后续版本规则；个人开发交付流水不属于公开发布历史。
+当前公开应用为 **0.1.35.3 Alpha**，`versionCode=1000154`，`buildVersion=155`。本页记录公开应用发布与后续版本规则；个人开发交付流水不属于公开发布历史。
 
 ## 已公开发布
 
 | 发布日期 | 版本 | 升级编号 | 构建号 | tag 与说明 |
 | --- | --- | --- | --- | --- |
+| 2026-10-19 | 0.1.35.3 Alpha | 1000154 | 155 | [v0.1.35.3-alpha](https://github.com/GoodNima/DanXi_HarmonyOS/releases/tag/v0.1.35.3-alpha)：旦挞命名、桌面卡片及校园/茶楼交互与排版更新 |
 | 2026-10-14 | 0.1.33.30 Alpha | 1000124 | 125 | [v0.1.33.30-alpha](https://github.com/GoodNima/DanXi_HarmonyOS/releases/tag/v0.1.33.30-alpha)：首次公开鸿蒙源码与既有未签名 HAP，应用构建于 2026-10-13 |
 
 功能、包哈希及验证边界见 [RELEASE_NOTES](RELEASE_NOTES.md)，小白调试工具与 HoKit 侧载步骤见 [INSTALLATION](INSTALLATION.md)。
 
 2026-10-14 的仓库清理和安装文档维护没有生成新 HAP，不递增应用版本、升级编号或构建号。已有包、版本和哈希保持原值；本页不把仓库文档提交计为新应用发布。后续授权历史净化调整同名 Alpha tag 的来源编号，映射见当前 main 的 [历史净化记录](https://github.com/GoodNima/DanXi_HarmonyOS/blob/main/docs/HISTORY_CLEANUP.md)。
+
+2026-10-19 公开发布汇总此前 30 次本地开发交付（0.1.33.31 至 0.1.35.3）的最终变化，复用第 175 次交付的版本及编号；从公开源码重新构建未签名分发包属于同版本重复构建，不额外递增。中间开发包不等同于 GitHub 公开 Release。系统字号跟随曾在 0.1.35.0 尝试，随后按要求在 0.1.35.1 撤回，当前保持默认字号。
 
 ## 四段式与 Alpha
 
@@ -22,7 +25,7 @@
 - **D** 在局部修复、外观微调或随新包交付的发布元数据维护时递增。
 - 问答、只读检查、同轮续接、QA 包、重复构建及没有新包的仓库文档整理不重复计次；没有连续若干次小修自动提升版本段的规则。
 
-当前下一次小修为 **0.1.33.31 Alpha**，下一次特性更新为 **0.1.34.0 Alpha**；明确建立下一条次版本主线时为 **0.2.0.0**。
+当前下一次小修为 **0.1.35.4 Alpha**，下一次特性更新为 **0.1.36.0 Alpha**；明确建立下一条次版本主线时为 **0.2.0.0**。
 
 `AppScope/app.json5.versionName` 与 `Constant.APP_VERSION` 保持四段数字。应用和诊断使用 `APP_DISPLAY_VERSION` 显示数字版本加 `Alpha`，不增加 Alpha 序号，不因此修改 SDK releaseType。
 

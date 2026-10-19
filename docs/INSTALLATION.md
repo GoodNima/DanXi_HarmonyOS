@@ -2,7 +2,9 @@
 
 从 [DanXi_HarmonyOS Releases](https://github.com/GoodNima/DanXi_HarmonyOS/releases) 下载 HAP 后，可用 **小白调试助手**或 **HoKit** 完成调试签名及侧载，无需为了安装应用而先编译整个工程。开发者也可使用 DevEco Studio。
 
-当前下载包为 `DanXi-HarmonyOS-0.1.33.30-Alpha-build125-unsigned.hap`，版本 **0.1.33.30 Alpha**，升级编号 `1000124`，构建号 `125`，应用标识 `com.danxi.ohmo`。它是 **未签名开发包**（`debug=true`），先完成适用于自己设备的签名，再安装签名后的文件；直接打开或直接侧载 unsigned 文件不会完成签名。
+当前下载包为 `DanTa-HarmonyOS-0.1.35.3-Alpha-build155-unsigned.hap`，版本 **0.1.35.3 Alpha**，升级编号 `1000154`，构建号 `155`，应用标识 `com.danxi.ohmo`。它是 **未签名开发包**（`debug=true`），先完成适用于自己设备的签名，再安装签名后的文件；直接打开或直接侧载 unsigned 文件不会完成签名。
+
+应用现名为“旦挞”，应用标识仍为 `com.danxi.ohmo`。从旧版升级时继续使用原有兼容签名；名称更改本身无需卸载。
 
 ## 先确认设备与下载文件
 
@@ -11,13 +13,13 @@
 3. 可选：在电脑校验未签名原始下载文件。SHA-256 是文件摘要，相同下载原件应得到相同结果；它不代替签名，也不能单独证明应用安全。Windows 可使用下面的命令。签名后文件会改变，不应再拿签名产物与原 unsigned 哈希比较。
 
 ```bat
-certutil -hashfile DanXi-HarmonyOS-0.1.33.30-Alpha-build125-unsigned.hap SHA256
+certutil -hashfile DanTa-HarmonyOS-0.1.35.3-Alpha-build155-unsigned.hap SHA256
 ```
 
-原文件大小 **10408732 字节**，SHA-256：
+原文件大小 **10708731 字节**，SHA-256：
 
 ```text
-957083f41c705a080054c449e513a2fc60f62995e4625e056df40e755e99dc17
+43b966142d818529d8838a35968f1e09dd683350e4de5f2b9275115db3fec323
 ```
 
 ## 准备调试连接和签名

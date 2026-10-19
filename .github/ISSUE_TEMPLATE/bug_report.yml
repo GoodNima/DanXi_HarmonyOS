@@ -9,7 +9,7 @@ body:
     id: version
     attributes:
       label: 应用版本、升级编号与构建号
-      placeholder: 0.1.33.30 Alpha / versionCode 1000124 / buildVersion 125
+      placeholder: 0.1.35.3 Alpha / versionCode 1000154 / buildVersion 155
     validations:
       required: true
   - type: input

@@ -1,4 +1,4 @@
-# 参与 DanXi HarmonyOS 开发
+# 参与旦挞 HarmonyOS 开发
 
 本仓库的 `main` 维护 Stage 模型的原生 ArkTS / ArkUI 鸿蒙工程。开始前请阅读 [维护手册](docs/MAINTAINING.md)、[版本政策与发布记录](docs/VERSION_HISTORY.md) 和 [安装说明](docs/INSTALLATION.md)。
 
@@ -31,6 +31,7 @@ git switch -c fix/short-description
 | 页面及交互 | `entry/src/main/ets/pages/`、`components/` | 生命周期、返回位置、焦点、触控和明暗显示 |
 | 通用逻辑与模型 | `common/`、`model/`、`util/` | 类型、边界、缓存与存储兼容性 |
 | 服务读取 | `repository/` 及相关通用模块 | 认证接续、超时、取消、错误与重复请求 |
+| 桌面卡片 | `widget/`、`resources/base/profile/campus_forms.json` | 尺寸注册、实例路由、过期缓存与账号切换清理 |
 | 资源 | `entry/src/main/resources/` | 所有已有语言、深色资源、引用和来源许可 |
 | 能力与权限 | `entry/src/main/module.json5` | 当前 SDK、设备支持、权限理由与使用场景 |
 | 版本 | `AppScope/app.json5`、`common/Constant.ets` | 展示版本、升级编号、构建号一致 |
