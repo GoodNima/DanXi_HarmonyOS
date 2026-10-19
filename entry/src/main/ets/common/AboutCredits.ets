@@ -23,11 +23,12 @@ export class ContributorCredit {
   url: string
   flutter: boolean
   ios: boolean
+  harmony: boolean
   design: string
-  constructor(developer: DeveloperCredit, flutter: boolean, ios: boolean) {
+  constructor(developer: DeveloperCredit, flutter: boolean, ios: boolean, harmony: boolean = false) {
     this.identity = AboutCredits.identity(developer.name)
     this.name = developer.name; this.avatar = developer.avatar; this.url = developer.url
-    this.flutter = flutter; this.ios = ios; this.design = ''
+    this.flutter = flutter; this.ios = ios; this.harmony = harmony; this.design = ''
   }
 }
 
@@ -49,12 +50,15 @@ export class AboutCredits {
   static readonly IOS_PROJECT_URL: string = 'https://github.com/DanXi-Dev/DanXi-swift'
   static readonly IOS_CONTRIBUTORS_URL: string = 'https://github.com/DanXi-Dev/DanXi-swift/graphs/contributors'
   static readonly IOS_FILING_URL: string = 'https://beian.miit.gov.cn/'
+  static readonly HARMONY_PROJECT_URL: string = 'https://github.com/GoodNima/DanXi_HarmonyOS'
+  static readonly HARMONY_CONTRIBUTORS_URL: string = 'https://github.com/GoodNima/DanXi_HarmonyOS/graphs/contributors'
+  static readonly HARMONY_PROFILE_URL: string = 'https://github.com/GoodNima'
   /** Explicit aliases verified against the original profile and iOS portrait's GitHub user ID. */
   static identity(name: string): string {
     const normalized = name.toLowerCase()
     return normalized === 'ivan fei' || normalized === 'ivanfei' ? 'ivanfei-1' : normalized
   }
-  static contributors(): ContributorCredit[] {
+  static contributors(includeHarmony: boolean = true): ContributorCredit[] {
     const merged: ContributorCredit[] = []
     for (const developer of AboutCredits.developers()) merged.push(new ContributorCredit(developer, true, false))
     for (const developer of AboutCredits.iosDevelopers()) {
@@ -80,6 +84,8 @@ export class AboutCredits {
       if (!person.url) person.url = artist.url
       person.design = index === 0 ? 'icon' : 'art'
     }
+    if (includeHarmony) merged.push(new ContributorCredit(
+      new DeveloperCredit('GoodNima', $r('app.media.credit_goodnima'), AboutCredits.HARMONY_PROFILE_URL), false, false, true))
     return merged.sort((a: ContributorCredit, b: ContributorCredit): number => a.identity < b.identity ? -1 : a.identity > b.identity ? 1 : 0)
   }
   static acknowledgement(markdown: string): AcknowledgementRun[] {

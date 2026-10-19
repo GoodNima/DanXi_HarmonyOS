@@ -27,6 +27,7 @@ struct Index {
   @StorageLink('ui_material_revision') materialRevision: number = 0
   @StorageLink('campus_layout_editing') campusLayoutEditing: boolean = false
   @StorageLink('main_tab_request') @Watch('requestedTab') requested: number = 0
+  @StorageLink('desktop_feature_request') @Watch('desktopRequested') desktopRequest: string = ''
   private tabsController: TabsController = new TabsController()
   private refreshTimer: number = -1
   @StorageLink(Constant.KEY_BOTTOM_BAR_INSET_PX) bottomBarInsetPx: number = 0
@@ -63,8 +64,18 @@ struct Index {
   }
 
   aboutToDisappear(): void { if (this.refreshTimer >= 0) clearTimeout(this.refreshTimer) }
-  onPageShow(): void { AppStorage.setOrCreate<boolean>('main_route_visible', true) }
+  onPageShow(): void { AppStorage.setOrCreate<boolean>('main_route_visible', true); this.desktopRequested() }
   onPageHide(): void { AppStorage.setOrCreate<boolean>('main_route_visible', false) }
+
+  private desktopRequested(): void {
+    if (!this.desktopRequest || (!AppState.isLoggedIn() && !AppState.isGuest())) return
+    if (AppStorage.get<boolean>('main_route_visible') === false) {
+      router.back({ url: 'pages/Index' }); return
+    }
+    const feature = this.desktopRequest; this.desktopRequest = ''
+    AppStorage.setOrCreate<number>('main_tab_request', feature === 'timetable' ? 1 : 0)
+    if (feature !== 'timetable') AppStorage.setOrCreate<string>('campus_feature_request', feature)
+  }
 
   private activateTab(index: number): void {
     if (AppStorage.get<number>('main_active_tab') !== index) HapticFeedback.selection()

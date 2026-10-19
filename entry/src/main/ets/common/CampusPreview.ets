@@ -29,6 +29,8 @@ import { ClassroomPresentation } from './ClassroomPresentation'
 import { ClassroomPreference } from './ClassroomPreference'
 import { CampusSignal } from './CampusSignal'
 import { LocalGpa } from './LocalGpa'
+import { CampusFormData, CampusFormRow } from '../widget/CampusFormData'
+import { CampusFormStore } from '../widget/CampusFormStore'
 
 export class CampusPreview {
   items: CampusPreviewItem[] = []
@@ -88,6 +90,15 @@ export class CampusPreviewStore {
   }
   static async publish(row: CampusPreview, owner: string): Promise<void> {
     if (owner !== CampusPreviewStore.owner()) return
+    if (CampusFormData.supports(row.id) && row.status === 'ready' && row.updatedAt > 0) {
+      const form = new CampusFormData()
+      form.feature = row.id; form.value = row.value; form.description = row.description
+      form.secondary = row.secondary; form.tone = row.tone; form.updatedAt = row.id === 'timetable' ? Date.now() : row.updatedAt
+      form.rows = row.items.map(item => {
+        const line = new CampusFormRow(); line.label = item.label; line.value = item.value; line.detail = item.detail; return line
+      })
+      try { CampusFormStore.publish(form) } catch (error) { /* Desktop availability must not fail the campus request. */ }
+    }
     // These protected previews are already scoped by their live repositories;
     // writing unusable private snapshots to disk was both wasteful and stale.
     if (['evaluation', 'campus_access', 'sports', 'life_code', 'dining', 'electricity'].includes(row.id)) return
@@ -244,6 +255,12 @@ export class DefaultCampusPreviewSource implements CampusPreviewSource {
       row.value = courses[0]?.name ?? AppLanguage.text($r('app.string.ui_no_classes_today'))
       row.description = courses.slice(0, 3).map(course => String(course.startUnit) + '–' + String(course.endUnit) +
         ' · ' + course.name + (course.room ? ' · ' + course.room : '')).join('\n')
+      row.items = courses.slice(0, 3).map(course => {
+        const item = new CampusPreviewItem()
+        item.label = course.name; item.value = String(course.startUnit) + '–' + String(course.endUnit)
+        item.detail = course.room
+        return item
+      })
       row.secondary = semester.name
       row.updatedAt = snapshot?.updatedAt ?? now.getTime()
     } else if (id === 'card' && repo.cookiesFor(CampusService.ECARD)) {

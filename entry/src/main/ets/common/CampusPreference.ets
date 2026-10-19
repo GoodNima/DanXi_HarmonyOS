@@ -1,5 +1,6 @@
 import { PreferencesUtil } from '../util/PreferencesUtil'
 import { Constant } from './Constant'
+import { CampusFormStore } from '../widget/CampusFormStore'
 
 /** Same four campus choices as upstream SettingsProvider.campus. */
 export class CampusPreference {
@@ -24,6 +25,7 @@ export class CampusPreference {
     if (!CampusPreference.CHOICES.includes(value)) return Promise.reject(new Error('Invalid campus'))
     const task = CampusPreference.pending.catch(() => {}).then(async (): Promise<void> => {
       await PreferencesUtil.getInstance().putString(CampusPreference.KEY, value)
+      if (value !== CampusPreference.current()) CampusFormStore.clear()
       AppStorage.setOrCreate<string>(CampusPreference.KEY, value)
       AppStorage.setOrCreate<number>(CampusPreference.REVISION_KEY, (AppStorage.get<number>(CampusPreference.REVISION_KEY) ?? 0) + 1)
     })

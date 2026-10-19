@@ -438,7 +438,7 @@ struct ForumAccountPage {
               ListItem() {
                 Row({ space: 8 }) {
                   if (this.loadingMore) { LoadingProgress().width(20).height(20) }
-                  if (this.moreError) { ErrorNotice({ message: this.moreError, controlId: 'forum-account-more-diagnostics' }) }
+                  if (this.moreError) { ErrorNotice({ message: this.moreError, controlId: 'forum-account-more-diagnostics' }).padding({ left: 12, right: 12 }) }
                   else Text(AppLanguage.text(this.loadingMore ? $r('app.string.ui_loading') : $r('app.string.ui_scroll_up_to_load_more'), this.languageRevision))
                     .fontSize(13).fontColor(ThemeColors.textSecondary)
                 }.width('100%').constraintSize({ minHeight: 48 }).justifyContent(FlexAlign.Center).onClick(() => { this.more() })

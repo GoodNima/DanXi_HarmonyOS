@@ -16,7 +16,7 @@ import { TopFade } from '../components/TopFade'
 import { FloatingActionButton } from '../components/FloatingActionButton'
 import { adaptiveMaterial } from '../common/AdaptiveMaterial'
 /**
- * Tree Hole feed (树洞首页).
+ * Tree Hole feed (茶楼首页).
  *
  * Backed by the real fduhole.com API: GET /holes/_homepage for the default feed,
  * GET /holes?division_id=… when a division chip is active, GET /floors/search for
@@ -105,6 +105,7 @@ export struct ForumPage {
   @State private contentOpacity: number = 1
   @State private contentShift: number = 0
   private contentMotionRevision: number = 0
+  private resetScrollOnContent: boolean = false
 
   private contentMotionCurrent(revision: number, generation: number, scope: number): boolean {
     return revision === this.contentMotionRevision && generation === this.requestGeneration && this.isCurrentSession(scope)
@@ -118,6 +119,12 @@ export struct ForumPage {
       if (!this.contentMotionCurrent(revision, generation, scope)) return
       this.getUIContext().postFrameCallback({ onFrame: () => {
         if (!this.contentMotionCurrent(revision, generation, scope)) return
+        if (this.resetScrollOnContent) {
+          // The list's top includes contentStartOffset for the floating header.
+          // scrollTo(0) would put the first post underneath that header.
+          this.touchScroller.scrollEdge(Edge.Top)
+          this.resetScrollOnContent = false
+        }
         this.getUIContext().animateTo({ duration: 280, curve: Curve.EaseOut }, () => {
           this.contentOpacity = 1; this.contentShift = 0
         })
@@ -683,6 +690,7 @@ export struct ForumPage {
     FloatingActionButton({ label: name, controlHeight: 36, emphasized: this.selectedDivision === divisionId,
       onAction: () => {
         if (this.selectedDivision === divisionId) return
+        this.resetScrollOnContent = true
         this.getUIContext().animateTo({ duration: 360, curve: Curve.Friction }, () => {
           this.selectedDivision = divisionId
         })
@@ -811,7 +819,7 @@ export struct ForumPage {
       ForumContentView({ content: floor.content, mentions: floor.mention, preview: true,
         previewWork: this.previewWork,
         coordinatedPreview: true, onPrepared: prepared,
-        onPreviewOpen: () => { this.openHole(floor.holeId) } })
+        onPreviewOpen: () => { this.openHole(floor.holeId, floor.floorId) } })
       Row() {
         Text(floor.anonyname.length > 0 ? floor.anonyname : AppLanguage.text($r('app.string.ui_anonymous'), this.languageRevision))
           .fontSize(ThemeDimens.textSizeSmall)
@@ -834,11 +842,11 @@ export struct ForumPage {
       
     .borderRadius(ThemeDimens.radiusMedium)
     .margin({ bottom: 12 })
-    .onClick(() => this.openHole(floor.holeId))
+    .onClick(() => this.openHole(floor.holeId, floor.floorId))
   }
 
   @Builder
-  StatusBlock(iconName: string, title: string, detail: string) {
+  StatusBlock(iconName: string, title: string, detail: string, summary: string = '') {
     Column() {
       SymbolGlyph(getSymbolIcon(iconName))
         .fontSize(40)
@@ -846,10 +854,10 @@ export struct ForumPage {
       Text(title)
         .fontSize(ThemeDimens.textSizeTitle)
         .fontColor(ThemeColors.textSecondary)
-        .margin({ top: 12 })
+        .margin({ top: 12 }).width('100%').textAlign(TextAlign.Center)
       if (detail.length > 0) {
         if (iconName === 'about') {
-          ErrorNotice({ message: detail, controlId: 'forum-page-diagnostics' }).margin({ top: 6 })
+          ErrorNotice({ message: detail, summary: summary, controlId: 'forum-page-diagnostics' }).margin({ top: 8 })
         } else { Text(detail)
           .fontSize(ThemeDimens.textSizeSmall)
           .fontColor(ThemeColors.textHint)
@@ -859,7 +867,7 @@ export struct ForumPage {
       }
     }
     .width('100%')
-    .padding({ top: 64, bottom: 64 })
+    .padding({ top: 40, bottom: 16, left: 20, right: 20 })
     .alignItems(HorizontalAlign.Center)
   }
 
@@ -872,12 +880,12 @@ export struct ForumPage {
       Text(AppLanguage.text($r('app.string.ui_log_in_to_browse_the_forum'), this.languageRevision))
         .fontSize(ThemeDimens.textSizeTitle)
         .fontColor(ThemeColors.textPrimary)
-        .margin({ top: 16 })
+        .margin({ top: 16 }).width('100%').textAlign(TextAlign.Center)
       Text(AppLanguage.text($r('app.string.ui_a_fduhole_com_account_is_required_please_log_in'), this.languageRevision))
         .fontSize(ThemeDimens.textSizeSmall)
         .fontColor(ThemeColors.textHint)
         .margin({ top: 8 })
-        .textAlign(TextAlign.Center)
+        .textAlign(TextAlign.Center).width('100%').lineHeight(22)
       Button(AppLanguage.text($r('app.string.ui_log_in_to_forum'), this.languageRevision))
         .type(ButtonType.Normal)
         .width(180)
@@ -892,7 +900,7 @@ export struct ForumPage {
         })
     }
     .width('100%')
-    .padding({ top: 72, bottom: 72 })
+    .padding({ top: 72, bottom: 72, left: 20, right: 20 })
     .alignItems(HorizontalAlign.Center)
   }
 
@@ -1025,12 +1033,14 @@ export struct ForumPage {
   PageFailure() {
     Column({ space: 12 }) {
       this.StatusBlock('about', AppLanguage.text($r('app.string.ui_loading_failed'), this.languageRevision),
-        this.errorMessage.length > 0 ? this.errorMessage : this.divisionsError)
+        this.errorMessage.length > 0 ? this.errorMessage : this.divisionsError,
+        this.campusLoginRequired || this.divisionsNeedLogin ? AppLanguage.text($r('app.string.forum_campus_login_brief'), this.languageRevision) :
+          this.verificationRequired || this.divisionsVerificationRequired ? AppLanguage.text($r('app.string.forum_campus_verify_brief'), this.languageRevision) : '')
       FloatingActionButton({ label: this.campusLoginRequired || this.divisionsNeedLogin ? $r('app.string.ui_log_in_to_campus_account') :
         this.verificationRequired || this.divisionsVerificationRequired ? $r('app.string.campus_verify_continue') : $r('app.string.ui_retry'),
         controlHeight: 42, controlId: 'forum-page-retry', emphasized: true, actionEnabled: !this.verifying,
         onAction: () => { this.retryVerification() } }).width(160)
-    }.width('100%').alignItems(HorizontalAlign.Center)
+    }.width('100%').alignItems(HorizontalAlign.Center).padding({ bottom: 24 })
   }
 
   build() {

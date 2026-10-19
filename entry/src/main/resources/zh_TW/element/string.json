@@ -2,15 +2,15 @@
   "string": [
     {
       "name": "module_desc",
-      "value": "旦夕 - 復旦大學校園助手"
+      "value": "旦挞 - 復旦大學校園助手"
     },
     {
       "name": "EntryAbility_desc",
-      "value": "旦夕"
+      "value": "旦挞"
     },
     {
       "name": "EntryAbility_label",
-      "value": "旦夕"
+      "value": "旦挞"
     },
     {
       "name": "bus_weekday",
@@ -150,11 +150,11 @@
     },
     {
       "name": "notification_system_hint",
-      "value": "聲音、振動及關閉通知可在系統設置 → 通知與狀態欄 → 旦夕中調整。"
+      "value": "聲音、振動及關閉通知可在系統設置 → 通知與狀態欄 → 旦挞中調整。"
     },
     {
       "name": "notification_login",
-      "value": "請先登錄樹洞賬號，再設置通知類型。"
+      "value": "請先登錄茶樓賬號，再設置通知類型。"
     },
     {
       "name": "notification_mention",
@@ -162,7 +162,7 @@
     },
     {
       "name": "notification_favorite",
-      "value": "訂閱的樹洞更新"
+      "value": "訂閱的茶樓更新"
     },
     {
       "name": "notification_report",
@@ -170,7 +170,7 @@
     },
     {
       "name": "notification_delivery",
-      "value": "通知類型會同步到樹洞賬號。本版本尚未接入後臺推送，允許系統通知不會自動啓用離線推送。"
+      "value": "通知類型會同步到茶樓賬號。本版本尚未接入後臺推送，允許系統通知不會自動啓用離線推送。"
     },
     {
       "name": "graduate_scores_note",
@@ -194,7 +194,7 @@
     },
     {
       "name": "caution_choice_hint",
-      "value": "帶星號的標籤表示謹慎閱讀。默認摺疊正文，此設置與樹洞賬號同步。"
+      "value": "帶星號的標籤表示謹慎閱讀。默認摺疊正文，此設置與茶樓賬號同步。"
     },
     {
       "name": "caution_fold",
@@ -230,7 +230,7 @@
     },
     {
       "name": "forum_settings",
-      "value": "樹洞設置"
+      "value": "茶樓設置"
     },
     {
       "name": "forum_compose",
@@ -262,7 +262,7 @@
     },
     {
       "name": "ui_adjust_permission_sound_and_vibration_in_system_",
-      "value": "可在系統設置 → 通知與狀態欄 → 旦夕中調整通知權限、聲音和振動"
+      "value": "可在系統設置 → 通知與狀態欄 → 旦挞中調整通知權限、聲音和振動"
     },
     {
       "name": "ui_handan",
@@ -642,7 +642,7 @@
     },
     {
       "name": "ui_enter_your_forum_email",
-      "value": "請輸入樹洞賬號郵箱"
+      "value": "請輸入茶樓賬號郵箱"
     },
     {
       "name": "ui_enter_your_password",
@@ -654,11 +654,11 @@
     },
     {
       "name": "ui_log_in_to_forum",
-      "value": "登錄樹洞"
+      "value": "登錄茶樓"
     },
     {
       "name": "ui_use_your_danxi_forum_account_separate_from_uis",
-      "value": "使用旦夕樹洞賬號（非 UIS 賬號）"
+      "value": "使用旦挞茶樓賬號（非 UIS 賬號）"
     },
     {
       "name": "ui_email",
@@ -678,7 +678,7 @@
     },
     {
       "name": "ui_register_on_the_forum_website_this_is_separate_f",
-      "value": "樹洞賬號在 web 端註冊，與復旦大學 UIS 賬號不同"
+      "value": "茶樓賬號在 web 端註冊，與復旦大學 UIS 賬號不同"
     },
     {
       "name": "ui_could_not_open_post_please_retry",
@@ -690,15 +690,15 @@
     },
     {
       "name": "ui_log_in_to_browse_the_forum",
-      "value": "登錄後瀏覽樹洞"
+      "value": "登錄後瀏覽茶樓"
     },
     {
       "name": "ui_a_fduhole_com_account_is_required_please_log_in",
-      "value": "樹洞內容需要 fduhole.com 賬號，請先登錄"
+      "value": "茶樓內容需要 fduhole.com 賬號，請先登錄"
     },
     {
       "name": "ui_search_forum",
-      "value": "搜索樹洞內容"
+      "value": "搜索茶樓內容"
     },
     {
       "name": "ui_clear",
@@ -722,7 +722,7 @@
     },
     {
       "name": "ui_forum",
-      "value": "樹洞"
+      "value": "茶樓"
     },
     {
       "name": "ui_could_not_open_editor_please_retry",
@@ -742,7 +742,7 @@
     },
     {
       "name": "ui_please_log_in_to_the_forum_first",
-      "value": "請先登錄樹洞賬號"
+      "value": "請先登錄茶樓賬號"
     },
     {
       "name": "ui_me",
@@ -818,7 +818,7 @@
     },
     {
       "name": "ui_welcome_to_danxi",
-      "value": "歡迎使用旦夕"
+      "value": "歡迎使用旦挞"
     },
     {
       "name": "ui_log_in_to_view_grades_timetables_and_campus_serv",
@@ -850,7 +850,7 @@
     },
     {
       "name": "ui_system_permission_forum_notification_types",
-      "value": "系統權限與樹洞通知類型"
+      "value": "系統權限與茶樓通知類型"
     },
     {
       "name": "ui_dashboard_order",
@@ -866,11 +866,11 @@
     },
     {
       "name": "ui_about_danxi",
-      "value": "關於旦夕"
+      "value": "關於旦挞"
     },
     {
       "name": "ui_danxi_for_harmonyos_v",
-      "value": "旦夕 HarmonyOS版 v"
+      "value": "旦挞 HarmonyOS版 v"
     },
     {
       "name": "ui_open_source_licenses",
@@ -1086,7 +1086,7 @@
     },
     {
       "name": "forum_webvpn_login_required",
-      "value": "目前網路無法直連樹洞。校外存取需要復旦 WebVPN，請先登入復旦帳號；樹洞登入憑證會保留。"
+      "value": "目前網路無法直連茶樓。校外存取需要復旦 WebVPN，請先登入復旦帳號；茶樓登入憑證會保留。"
     },
     {
       "name": "webvpn_auto",
@@ -1114,7 +1114,7 @@
     },
     {
       "name": "calendar_choice_hint",
-      "value": "「同步目前學期」依今天的日期讀取官方校曆，儲存該學期第一教學週的週一，並取代已選日期。查詢其他學期時請手動選擇日期；不會背景自動同步。如需驗證，沿用復旦身分驗證。"
+      "value": "同步當前學期：按今天的日期讀取官方校曆，更新第一教學週的週一，並替換已選日期。\n其他學期請手動選擇，不會自動同步。\n如需登入，將使用復旦身分驗證。"
     },
     {
       "name": "calendar_date_unknown",
@@ -1338,7 +1338,7 @@
     },
     {
       "name": "detail_subscription_note",
-      "value": "訂閱後，新回覆提醒遵循樹洞通知設定。"
+      "value": "訂閱後，新回覆提醒遵循茶樓通知設定。"
     },
     {
       "name": "detail_show_all",
@@ -1422,7 +1422,7 @@
     },
     {
       "name": "detail_hide_note",
-      "value": "僅從本機資訊流隱藏，可在樹洞設定中恢復。"
+      "value": "僅從本機資訊流隱藏，可在茶樓設定中恢復。"
     },
     {
       "name": "detail_reply_floor",
@@ -1606,7 +1606,7 @@
     },
     {
       "name": "academic_gpa_note",
-      "value": "依已取得課程在本機計算：Σ（學校發布的單課績點 × 學分）÷ 計入學分。僅統計目前清單，不代表畢業審核或全學程 GPA；P/NP、本科轉換成績、已標明的研究生補修及必修環節、考查課程不計入。缺少績點或學分時不估算。"
+      "value": "使用已取得課程的官方績點與學分，依上式在本機計算。僅統計目前清單，不代表畢業審核或全學程 GPA；P/NP、本科轉換成績、已標明的研究生補修及必修環節、考查課程不計入。缺少績點或學分時不估算。"
     },
     {
       "name": "academic_rank_all",
@@ -2026,19 +2026,19 @@
     },
     {
       "name": "forum_signed_in",
-      "value": "已登入樹洞"
+      "value": "已登入茶樓"
     },
     {
       "name": "forum_signed_out",
-      "value": "未登入樹洞"
+      "value": "未登入茶樓"
     },
     {
       "name": "forum_account_hint",
-      "value": "樹洞帳號與復旦校園帳號獨立。"
+      "value": "茶樓帳號與復旦校園帳號獨立。"
     },
     {
       "name": "forum_logout_hint",
-      "value": "僅登出樹洞帳號，校園服務仍可使用。"
+      "value": "僅登出茶樓帳號，校園服務仍可使用。"
     },
     {
       "name": "forum_browsing_settings",
@@ -2090,7 +2090,7 @@
     },
     {
       "name": "forum_account_content",
-      "value": "我的樹洞"
+      "value": "我的茶樓"
     },
     {
       "name": "forum_my_posts",
@@ -2130,7 +2130,7 @@
     },
     {
       "name": "forum_background",
-      "value": "樹洞背景圖片"
+      "value": "茶樓背景圖片"
     },
     {
       "name": "forum_background_hint",
@@ -2234,7 +2234,7 @@
     },
     {
       "name": "forum_activities_hint",
-      "value": "在樹洞資訊流中展示官方活動，點擊查看詳情；沒有活動時自動收起，關閉後隱藏活動區域。"
+      "value": "在茶樓資訊流中展示官方活動，點擊查看詳情；沒有活動時自動收起，關閉後隱藏活動區域。"
     },
     {
       "name": "forum_activities_cached",
@@ -2274,7 +2274,7 @@
     },
     {
       "name": "forum_activities_source",
-      "value": "旦夕官方活動"
+      "value": "旦挞官方活動"
     },
     {
       "name": "forum_activities_empty",
@@ -2349,6 +2349,10 @@
       "value": "目前不在供餐統計時段"
     },
     {
+      "name": "campus_dining_outside_hint",
+      "value": "供餐時段可查看窗口活躍人數及相對擁擠情況。"
+    },
+    {
       "name": "live_dining_hint",
       "value": "保留學校回傳的全部窗口，按校區與食堂分組。人數為消費活躍度參考，不等於現場排隊人數；相對擁擠按各食堂人數與高峰參考之比比較。"
     },
@@ -2362,7 +2366,7 @@
     },
     {
       "name": "live_developer_hint",
-      "value": "公告來自旦夕開發組，保留原文及發布時間。最新公告與歷史公告可切換查看。"
+      "value": "公告來自旦挞開發組，保留原文及發布時間。最新公告與歷史公告可切換查看。"
     },
     {
       "name": "live_no_notices",
@@ -2470,7 +2474,7 @@
     },
     {
       "name": "utility_forum_login_hint",
-      "value": "使用樹洞帳號查看課程評價"
+      "value": "使用茶樓帳號查看課程評價"
     },
     {
       "name": "utility_campus_login_hint",
@@ -2598,7 +2602,7 @@
     },
     {
       "name": "utility_evaluation_hint",
-      "value": "課評使用樹洞帳號，與復旦校園帳號分開登入。可依課程、教師搜尋，在課程詳情中依教師和學期篩選評價。"
+      "value": "課評使用茶樓帳號，與復旦校園帳號分開登入。可依課程、教師搜尋，在課程詳情中依教師和學期篩選評價。"
     },
     {
       "name": "utility_teacher",
@@ -2682,7 +2686,7 @@
     },
     {
       "name": "utility_login_forum",
-      "value": "登入樹洞"
+      "value": "登入茶樓"
     },
     {
       "name": "utility_course_details",
@@ -2834,11 +2838,11 @@
     },
     {
       "name": "forum_webvpn_verification_hint",
-      "value": "樹洞直連暫不可用，請完成校園 WebVPN 身分驗證後繼續。樹洞仍使用獨立的信箱與密碼登入。"
+      "value": "茶樓直連暫不可用，請完成校園 WebVPN 身分驗證後繼續。茶樓仍使用獨立的信箱與密碼登入。"
     },
     {
       "name": "forum_login_timeout_hint",
-      "value": "樹洞登入請求逾時（2300028），暫時無法確認伺服器是否已收到。請稍後點擊登入重試；不會自動重複提交密碼。"
+      "value": "茶樓登入請求逾時（2300028），暫時無法確認伺服器是否已收到。請稍後點擊登入重試；不會自動重複提交密碼。"
     },
     {
       "name": "live_load_usage_history",
@@ -2866,7 +2870,7 @@
     },
     {
       "name": "settings_high_contrast_hint",
-      "value": "教室日程查詢和樹洞標籤"
+      "value": "教室日程查詢和茶樓標籤"
     },
     {
       "name": "settings_haptics",
@@ -2934,7 +2938,7 @@
     },
     {
       "name": "settings_harmony_intro",
-      "value": "本應用為旦夕的 HarmonyOS 適配內測版。感謝原專案及所有貢獻者。"
+      "value": "本應用為旦挞的 HarmonyOS 適配內測版。感謝原專案及所有貢獻者。"
     },
     {
       "name": "settings_legal",
@@ -2942,7 +2946,7 @@
     },
     {
       "name": "settings_legal_text",
-      "value": "登入即表示您已閱讀並同意隱私政策和使用條款。旦夕採用 GNU GPL v3 開源許可；第三方元件的許可可在下方離線查看。"
+      "value": "登入即表示您已閱讀並同意隱私政策和使用條款。旦挞採用 GNU GPL v3 開源許可；第三方元件的許可可在下方離線查看。"
     },
     {
       "name": "settings_privacy",
@@ -2974,7 +2978,7 @@
     },
     {
       "name": "settings_contact_hint",
-      "value": "回報問題時可附上版本號、重現步驟和「讀取診斷」。請勿附上密碼或認證票據。"
+      "value": "回報時請附版本號、重現步驟和「讀取診斷」。\n請勿提供密碼或認證票據。"
     },
     {
       "name": "settings_email",
@@ -3390,7 +3394,7 @@
     },
     {
       "name": "calendar_manual_sync_hint",
-      "value": "手動選擇其他學期；同步僅在點按後更新目前學期的第一週週一。"
+      "value": "手動選擇：可指定其他學期。\n同步當前學期：點按後才會更新日期。"
     },
     {
       "name": "timetable_semester_not_found",
@@ -3650,11 +3654,11 @@
     },
     {
       "name": "timetable_calendar_name",
-      "value": "旦夕課表 · %s"
+      "value": "旦挞課表 · %s"
     },
     {
       "name": "timetable_calendar_hint",
-      "value": "選擇要匯出的課程，寫入系統日曆中的「旦夕課表 · %s」。重複匯出會更新已有日程，不會重複新增。"
+      "value": "選擇要匯出的課程，寫入系統日曆中的「旦挞課表 · %s」。重複匯出會更新已有日程，不會重複新增。"
     },
     {
       "name": "timetable_calendar_done",
@@ -3662,11 +3666,11 @@
     },
     {
       "name": "timetable_calendar_permission_reason",
-      "value": "將所選課程寫入系統日曆，並識別旦夕已匯出的課程，避免重複新增。"
+      "value": "將所選課程寫入系統日曆，並識別旦挞已匯出的課程，避免重複新增。"
     },
     {
       "name": "timetable_calendar_permission_denied",
-      "value": "需要日曆權限才能匯出課程，可在系統設定中允許旦夕存取日曆。"
+      "value": "需要日曆權限才能匯出課程，可在系統設定中允許旦挞存取日曆。"
     },
     {
       "name": "timetable_export_empty",
@@ -3950,7 +3954,7 @@
     },
     {
       "name": "campus_academic_counts_compact",
-      "value": "考試 {exams} 門 · 成績 {grades} 門"
+      "value": "考試 {exams} · 成績 {grades}"
     },
     {
       "name": "campus_catalog_selected",
@@ -3978,7 +3982,7 @@
     },
     {
       "name": "settings_original_flutter",
-      "value": "Flutter 原專案"
+      "value": "Android 原專案"
     },
     {
       "name": "settings_ios_developers",
@@ -4010,7 +4014,7 @@
     },
     {
       "name": "settings_thanks_merged",
-      "value": "感謝 Flutter 與 iOS 原專案的開發者、設計貢獻者及開源社群。"
+      "value": "感謝 Android 與 iOS 原專案的開發者、設計貢獻者及開源社群。"
     },
     {
       "name": "settings_contributors_merged",
@@ -4018,11 +4022,11 @@
     },
     {
       "name": "settings_credit_icon_design",
-      "value": "Flutter 圖示設計"
+      "value": "Android 圖示設計"
     },
     {
       "name": "settings_credit_art_design",
-      "value": "Flutter 表情設計"
+      "value": "Android 表情設計"
     },
     {
       "name": "settings_original_ios",
@@ -4034,7 +4038,171 @@
     },
     {
       "name": "settings_original_libraries_hint",
-      "value": "彙整 Flutter 與 iOS 原專案公開致謝的開源軟體，依名稱排列，並標示來源平台及原文授權資訊。"
+      "value": "彙整 Android 與 iOS 原專案公開致謝的開源軟體，依名稱排列，並標示來源平台及原文授權資訊。"
+    },
+    {
+      "name": "card_identity_required",
+      "value": "一卡通需要確認校園帳號身分，請點按繼續驗證。"
+    },
+    {
+      "name": "settings_app_developers",
+      "value": "開發者與貢獻者"
+    },
+    {
+      "name": "settings_harmony_platform",
+      "value": "HarmonyOS 版"
+    },
+    {
+      "name": "settings_harmony_project",
+      "value": "專案網頁"
+    },
+    {
+      "name": "settings_harmony_contributors",
+      "value": "貢獻紀錄"
+    },
+    {
+      "name": "settings_harmony_version",
+      "value": "HarmonyOS 版 %s · build %s"
+    },
+    {
+      "name": "settings_harmony_upgrade",
+      "value": "升級編號 %d"
+    },
+    {
+      "name": "settings_harmony_note",
+      "value": "ArkTS / ArkUI 原生開發\nAndroid / iOS 原專案移植"
+    },
+    {
+      "name": "settings_harmony_build",
+      "value": "組建 %s"
+    },
+    {
+      "name": "forum_campus_login_brief",
+      "value": "請登入校園帳號後繼續瀏覽茶樓。"
+    },
+    {
+      "name": "forum_campus_verify_brief",
+      "value": "請完成校園身分驗證後繼續瀏覽茶樓。"
+    },
+    {
+      "name": "academic_gpa_formula_description",
+      "value": "GPA 等於各課程績點與學分乘積之和，除以計入計算的總學分。"
+    },
+    {
+      "name": "academic_gpa_symbols",
+      "value": "n 為計入課程數，gᵢ 為第 i 門課的官方績點，cᵢ 為該課學分。"
+    },
+    {
+      "name": "desktop_forms_description",
+      "value": "將校園資訊放在桌面，點按查看詳情。"
+    },
+    {
+      "name": "desktop_forms_hint",
+      "value": "點按開啟並更新"
+    },
+    {
+      "name": "desktop_forms_empty",
+      "value": "尚未讀取"
+    },
+    {
+      "name": "desktop_forms_saved",
+      "value": "上次更新"
+    },
+    {
+      "name": "desktop_forms_old",
+      "value": "資訊已過期，點按更新"
+    },
+    {
+      "name": "desktop_forms_timetable",
+      "value": "課表"
+    },
+    {
+      "name": "desktop_forms_card",
+      "value": "一卡通"
+    },
+    {
+      "name": "desktop_forms_electricity",
+      "value": "寢室電費"
+    },
+    {
+      "name": "desktop_forms_bus",
+      "value": "校車"
+    },
+    {
+      "name": "academic_gpa_explanation",
+      "value": "計算說明"
+    },
+    {
+      "name": "academic_gpa_brief",
+      "value": "僅按已取得課程計算，不代表全學程 GPA。"
+    },
+    {
+      "name": "desktop_forms_following",
+      "value": "後續 %s"
+    },
+    {
+      "name": "desktop_forms_balance",
+      "value": "餘額"
+    },
+    {
+      "name": "desktop_forms_remaining",
+      "value": "剩餘電量"
+    },
+    {
+      "name": "academic_gpa_symbol_courses",
+      "value": "計入計算的課程數"
+    },
+    {
+      "name": "academic_gpa_symbol_points",
+      "value": "對應課程的官方績點"
+    },
+    {
+      "name": "academic_gpa_symbol_credits",
+      "value": "對應課程的學分"
+    },
+    {
+      "name": "campus_course_periods",
+      "value": "%s 節"
+    },
+    {
+      "name": "desktop_bus_direction",
+      "value": "方向"
+    },
+    {
+      "name": "desktop_bus_next",
+      "value": "下一班"
+    },
+    {
+      "name": "desktop_bus_later",
+      "value": "後續"
+    },
+    {
+      "name": "campus_academic_gpa_pending",
+      "value": "GPA 待計算"
+    },
+    {
+      "name": "campus_dining_outside_short",
+      "value": "非供餐時段"
+    },
+    {
+      "name": "campus_sports_short_hint",
+      "value": "查看場館與時段"
+    },
+    {
+      "name": "campus_dining_compact_hint",
+      "value": "供餐時段可查看"
+    },
+    {
+      "name": "campus_notice_read_full",
+      "value": "閱讀全文"
+    },
+    {
+      "name": "campus_notice_updated",
+      "value": "%s 更新"
+    },
+    {
+      "name": "campus_notice_more",
+      "value": "另有 %d 則公告"
     }
   ]
 }

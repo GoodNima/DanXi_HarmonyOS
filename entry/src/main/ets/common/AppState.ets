@@ -13,6 +13,7 @@ import { AcademicCalendar } from './AcademicCalendar'
 import { CampusPreference } from './CampusPreference'
 import { ForumPreferences } from './ForumPreferences'
 import { ForumRepository } from '../repository/ForumRepository'
+import { CampusFormStore } from '../widget/CampusFormStore'
 
 export class AppState {
   private static accountEpoch: number = 0
@@ -71,6 +72,7 @@ export class AppState {
       if (epoch === AppState.accountEpoch) await PreferencesUtil.getInstance().putString(Constant.KEY_USER_INFO, json)
     })
     if (epoch !== AppState.accountEpoch) return
+    if (AppState.getPerson().getStudentId() !== person.getStudentId() || !person.isLoggedIn()) CampusFormStore.clear()
     AppStorage.setOrCreate<string>(AppState.KEY_PERSON, json)
     AppStorage.setOrCreate<boolean>(AppState.KEY_IS_LOGGED_IN, person.isLoggedIn())
   }
@@ -106,6 +108,7 @@ export class AppState {
    */
   static async setGuest(): Promise<void> {
     ++AppState.accountEpoch
+    CampusFormStore.clear()
     AppStorage.setOrCreate<boolean>(AppState.KEY_IS_GUEST, true)
     AppStorage.setOrCreate<boolean>(AppState.KEY_IS_LOGGED_IN, false)
     AppStorage.setOrCreate<string>(AppState.KEY_PERSON, '')
@@ -134,6 +137,7 @@ export class AppState {
    */
   static async logout(): Promise<void> {
     ++AppState.accountEpoch
+    CampusFormStore.clear()
     FduRepository.getInstance().forgetCredentials()
     AppStorage.setOrCreate<string>(AppState.KEY_PERSON, '')
     AppStorage.setOrCreate<boolean>(AppState.KEY_IS_LOGGED_IN, false)

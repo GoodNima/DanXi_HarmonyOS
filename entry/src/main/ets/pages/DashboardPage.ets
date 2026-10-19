@@ -1,10 +1,10 @@
+import { ReadableText } from '../common/ReadableText'
 import { DiagnosticNavigation } from '../common/DiagnosticNavigation'
 import { ErrorNotice } from '../components/ErrorNotice'
 import { settleScrollTouch } from '../common/ScrollTouch'
 import { ErrorDiagnostics } from '../model/ErrorDiagnostics'
 import { CenterLoadingProgress } from '../components/CenterLoadingProgress'
 import { AcademicAccount } from '../common/AcademicAccount'
-import { EmptyRefreshIndicator, FeedRefreshProgress } from '../components/FeedRefreshProgress'
 import { TopFade } from '../components/TopFade'
 import { FloatingSurface } from '../components/FloatingSurface'
 import { adaptiveMaterial } from '../common/AdaptiveMaterial'
@@ -17,7 +17,8 @@ import { adaptiveMaterial } from '../common/AdaptiveMaterial'
 import { router, promptAction } from '@kit.ArkUI'
 import { FduRepository } from '../repository/FduRepository'
 import { ForumListSource } from '../common/ForumListSource'
-import { CardRepository } from '../repository/CardRepository'
+import { CampusCardSource, DefaultCampusCardSource } from '../common/CampusCardSource'
+import { HttpError } from '../util/HttpUtil'
 import { CampusService } from '../common/CampusService'
 import { ThemeColors, ThemeDimens } from '../common/Theme'
 import { Constant } from '../common/Constant'
@@ -75,6 +76,7 @@ class DashboardAcademicSource implements AcademicSource {
 
 @Component
 export struct DashboardPage {
+  cardSource: CampusCardSource = new DefaultCampusCardSource()
   @Prop @Watch('detailChanged') detailFeature: string = ''
   @Prop @Watch('visibilityChanged') detailVisible: boolean = true
   private touchScroller: Scroller = new Scroller()
@@ -158,6 +160,7 @@ export struct DashboardPage {
   @State cardError: string = ''
   @State cardLoading: boolean = false
   @State cardLoaded: boolean = false
+  @State private cardVerification: boolean = false
   // One error slot per campus service. These failures used to be swallowed by
   // `.catch(() => {})`, which hid the fact that the values on screen were
   // invented. Kept per-service rather than shared so that wiring one service
@@ -186,7 +189,6 @@ export struct DashboardPage {
     })
   }
   @State refreshing: boolean = false
-  @State private pullOffset: number = 0
   @State activeFeature: string = 'announcement'
   @StorageLink(AppState.KEY_PERSON) @Watch('accountChanged') personJson: string = ''
   @StorageLink(AppState.KEY_DASHBOARD_ORDER) @Watch('layoutChanged') dashboardJson: string = ''
@@ -200,6 +202,7 @@ export struct DashboardPage {
   @StorageLink('campus_refresh') @Watch('resumeCampus') campusRefresh: number = 0
   private loadedFeatures: Set<string> = new Set<string>()
   private active: boolean = false
+  private needsInitialRead: boolean = true
   private accountScope: string = ''
   private academicGroup: string = ''
 
@@ -408,6 +411,7 @@ export struct DashboardPage {
     this.busLoaded = false
     this.busSchedules = []; this.emptyClassrooms = []; this.cardInfo = null
     this.announcements = []; this.cardLoaded = false
+    this.cardVerification = false; this.cardError = ''
     this.noticeGeneration++; this.noticeLoadingMore = false; this.noticeHasMore = false; this.noticeSource.update([])
     this.busLoading = false; this.cardLoading = false; this.classroomLoading = false
     this.academicChanged(true)
@@ -448,7 +452,10 @@ export struct DashboardPage {
   }
 
   loadData(): void {
-    if (this.active && this.detailFeature && this.detailVisible) this.loadFeature(this.activeFeature)
+    if (this.active && this.detailFeature && this.detailVisible) {
+      this.needsInitialRead = false
+      this.loadFeature(this.activeFeature)
+    }
   }
 
   private service(): string {
@@ -460,17 +467,21 @@ export struct DashboardPage {
   }
 
   private verificationRequired(): boolean {
+    if (this.activeFeature === 'card') return this.cardSource.canVerify() && (this.cardVerification || this.cardSource.needsVerification())
     const service: string = this.service()
     return service.length > 0 && this.fduRepo.canLoginOnDemand() && this.fduRepo.needsVerification(service)
   }
+  private canVerify(): boolean { return this.activeFeature === 'card' ? this.cardSource.canVerify() : this.fduRepo.canLoginOnDemand() }
 
-  private refreshRunning: boolean = false
+  @State private refreshRunning: boolean = false
   private resumeVerified: boolean = false
   private visibilityChanged(): void {
     if (!this.detailVisible) { this.detailMotionRevision++; this.detailOpacity = 1 }
     if (this.active && this.detailVisible && this.resumeVerified && !this.refreshRunning) {
       this.resumeVerified = false
       this.refreshData()
+    } else if (this.active && this.detailVisible && this.needsInitialRead && !this.refreshRunning) {
+      this.loadData()
     }
   }
   private async refreshData(verify: boolean = false): Promise<void> {
@@ -485,7 +496,10 @@ export struct DashboardPage {
     const owner: string = this.currentAccountScope()
     const generation: number = this.featureGeneration
     try {
-      if (verify && this.verificationRequired()) await this.fduRepo.verifyService(this.service())
+      if (verify && this.verificationRequired()) {
+        if (feature === 'card') await this.cardSource.verify()
+        else await this.fduRepo.verifyService(this.service())
+      }
       if (!this.active || owner !== this.currentAccountScope() || generation !== this.featureGeneration || feature !== this.activeFeature) return
       if (!this.detailVisible) { this.resumeVerified = verify; return }
       if (this.activeFeature === 'empty_classroom') await this.loadClassrooms(true)
@@ -662,31 +676,34 @@ export struct DashboardPage {
 
   async loadCard(force: boolean = false): Promise<void> {
     const generation = ++this.cardGeneration
+    const owner: string = this.cardSource.owner()
     const days = this.cardDays
     this.cardLoading = true
-    this.cardLoaded = true
+    this.cardLoaded = false
+    this.cardVerification = false
     this.cardError = ''
     this.cardProgress = ''
     try {
-      const info = await this.fduRepo.withService(CampusService.ECARD, async (cookies: string) => {
-        const repository = CardRepository.getInstance()
-        repository.setSession(cookies)
-        if (force) repository.invalidate()
-        const balance = await repository.getCardInfo(-1)
-        if (generation === this.cardGeneration) this.cardInfo = balance
-        balance.records = await repository.getCardRecords(days, (page: number, total: number) => {
-          if (generation === this.cardGeneration) this.cardProgress = String(page) + ' / ' + String(total)
-        }, (rows: CardRecord[]) => {
-          if (generation === this.cardGeneration) this.cardInfo = { name: balance.name, cash: balance.cash, records: rows }
-        })
-        return balance
+      const info = await this.cardSource.read(days, force, (balance: CardInfo) => {
+        if (generation === this.cardGeneration && owner === this.cardSource.owner()) this.cardInfo = balance
+      }, (page: number, total: number) => {
+        if (generation === this.cardGeneration && owner === this.cardSource.owner()) this.cardProgress = String(page) + ' / ' + String(total)
       })
-      if (generation === this.cardGeneration) {
-        await this.revealDetail(() => { this.cardInfo = { name: info.name, cash: info.cash, records: info.records } }, () => generation === this.cardGeneration)
-        this.publishPreview('card', CardPresentation.balance(info.cash), AppLanguage.text($r('app.string.ui_card_balance')), info.name, CampusSignal.amount(info.cash))
+      if (generation === this.cardGeneration && owner === this.cardSource.owner()) {
+        if (this.detailVisible) {
+          await this.revealDetail(() => { this.cardInfo = { name: info.name, cash: info.cash, records: info.records } },
+            () => generation === this.cardGeneration && owner === this.cardSource.owner())
+        } else this.cardInfo = { name: info.name, cash: info.cash, records: info.records }
+        if (generation === this.cardGeneration && owner === this.cardSource.owner()) {
+          this.cardLoaded = true; this.cardVerification = false
+          this.publishPreview('card', CardPresentation.balance(info.cash), AppLanguage.text($r('app.string.ui_card_balance')), info.name, CampusSignal.amount(info.cash))
+        }
       }
     } catch (e) {
-      if (generation === this.cardGeneration) this.cardError = DashboardPage.errorText(e)
+      if (generation === this.cardGeneration && owner === this.cardSource.owner()) {
+        this.cardVerification = e instanceof HttpError && (e.statusCode === -2 || e.statusCode === 401)
+        this.cardError = ErrorDiagnostics.message(e as Object)
+      }
     } finally {
       if (generation === this.cardGeneration) this.cardLoading = false
     }
@@ -697,7 +714,6 @@ export struct DashboardPage {
       CampusHome()
     } else {
     Stack({ alignContent: Alignment.Top }) {
-        Refresh({ refreshing: $$this.refreshing, builder: EmptyRefreshIndicator }) {
       Column() {
       if (this.activeFeature === 'announcement') {
         List({ scroller: this.touchScroller }) { this.AnnouncementContent() }
@@ -711,7 +727,7 @@ export struct DashboardPage {
           Column() {
             if (this.activeFeature === 'bus') {
               Column() {
-                this.CampusUnavailable(AppLanguage.text($r('app.string.ui_bus'), this.languageRevision), this.busError)
+                this.CampusUnavailable(AppLanguage.text($r('app.string.ui_bus'), this.languageRevision), () => this.busError)
                 this.BusContent()
               }
                 .transition(TransitionEffect.OPACITY.animation({ duration: 200 }))
@@ -733,7 +749,7 @@ export struct DashboardPage {
                 .transition(TransitionEffect.OPACITY.animation({ duration: 200 }))
             } else if (this.activeFeature === 'timetable') {
               Column() {
-                this.CampusUnavailable(AppLanguage.text($r('app.string.ui_timetable'), this.languageRevision), this.timetableError)
+                this.CampusUnavailable(AppLanguage.text($r('app.string.ui_timetable'), this.languageRevision), () => this.timetableError)
                 if (this.timetableError.length === 0) this.TimetableContent()
               }
                 .transition(TransitionEffect.OPACITY.animation({ duration: 200 }))
@@ -754,10 +770,8 @@ export struct DashboardPage {
       }
       }.width('100%').height('100%').renderGroup(true)
         .opacity(this.detailOpacity * (this.detailLoading() && !this.refreshing ? 0.45 : 1)).animation({ duration: 220, curve: Curve.EaseOut })
-      }.height('100%').width('100%').onOffsetChange((offset: number) => { this.pullOffset = offset }).onRefreshing(() => { this.refreshData() })
-      CenterLoadingProgress({ busy: this.detailLoading() && !this.refreshing })
+      CenterLoadingProgress({ busy: this.detailLoading() || this.refreshRunning })
       TopFade({ extent: px2vp(this.topPx) + 56 })
-      FeedRefreshProgress({ topInset: px2vp(this.topPx) + 84, pullOffset: this.pullOffset, refreshing: this.refreshing })
       Column() {
       // Header
       Row({ space: 12 }) {
@@ -854,27 +868,28 @@ export struct DashboardPage {
    * send anyone debugging a failure after the wrong cause.
    */
   @Builder
-  CampusUnavailable(featureLabel: string, message: string) {
-    if (message.length > 0) {
+  CampusUnavailable(featureLabel: string, message: () => string) {
+    if (message().length > 0) {
       Column() {
         Text(featureLabel + AppLanguage.text($r('app.string.ui_unavailable'), this.languageRevision))
           .fontSize(ThemeDimens.textSizeTitle)
           .fontWeight(FontWeight.Medium)
           .fontColor(ThemeColors.textPrimary)
-        ErrorNotice({ message: message, controlId: 'dashboardpage-diagnostics', textSize: ThemeDimens.textSizeSmall, textColor: ThemeColors.textHint })
+        ErrorNotice({ message: message(), controlId: 'dashboardpage-diagnostics', textSize: ThemeDimens.textSizeSmall, textColor: ThemeColors.textHint })
           .margin({ top: 6 })
-        if (this.fduRepo.canLoginOnDemand() && !this.verificationRequired()) {
+        if (this.canVerify() && !this.verificationRequired()) {
           FloatingActionButton({ label: $r('app.string.ui_reload'), icon: 'refresh', onCard: true, zeroContentPadding: true, controlHeight: 48,
             actionEnabled: !this.detailLoading() && !this.refreshing,
             onAction: () => { this.refreshData(this.verificationRequired()) } }).width(48).margin({ top: 12 })
         } else {
-        Button(this.fduRepo.canLoginOnDemand() ? AppLanguage.text($r('app.string.campus_verify_continue'), this.languageRevision) : AppLanguage.text($r('app.string.ui_log_in_to_campus_account'), this.languageRevision))
-          .margin({ top: 12 }).onClick(() => {
-            if (this.fduRepo.canLoginOnDemand()) this.refreshData(this.verificationRequired())
+        FloatingActionButton({ label: this.canVerify() ? $r('app.string.campus_verify_continue') : $r('app.string.ui_log_in_to_campus_account'),
+          controlId: 'campus-detail-verify', actionEnabled: !this.detailLoading() && !this.refreshRunning,
+          onAction: () => {
+            if (this.canVerify()) this.refreshData(this.verificationRequired())
             else router.pushUrl({ url: 'pages/LoginPage' }).catch((diagnosticFailure: Object) => {
               DiagnosticNavigation.feedback(this.getUIContext(), diagnosticFailure as Object, AppLanguage.text($r('app.string.ui_could_not_open_login_please_try_again'), this.languageRevision))
             })
-          })
+          } }).width(184).margin({ top: 12 })
         }
       }
       .width('100%')
@@ -1016,7 +1031,7 @@ export struct DashboardPage {
             })
           })
       }
-      Text($r('app.string.bus_time_note')).fontSize(12).fontColor(ThemeColors.textSecondary)
+      Text(ReadableText.resource($r('app.string.bus_time_note'))).fontSize(12).lineHeight(20).fontColor(ThemeColors.textSecondary).lineBreakStrategy(LineBreakStrategy.GREEDY)
     }.width('100%').padding(16).margin({ top: 8 }).borderRadius(16)
       .backgroundColor($r('app.color.surface_fallback')).systemMaterial(adaptiveMaterial(this.materialRevision))
       
@@ -1058,7 +1073,7 @@ export struct DashboardPage {
   @Builder
   TimetableContent() {
     if (this.graduate && !this.graduateStartKnown) {
-      Text($r('app.string.graduate_week_hint')).fontColor(ThemeColors.textSecondary).padding(12)
+      Text(ReadableText.resource($r('app.string.graduate_week_hint'))).fontColor(ThemeColors.textSecondary).padding(12)
     }
     ForEach(this.timetable.filter((t: TimeTableEntry) => t.weekday === DateTimeUtils.getTodayWeekday()), (item: TimeTableEntry) => {
       Row() {
@@ -1146,7 +1161,8 @@ export struct DashboardPage {
     }
 
     // Not logged in, or the site refused us: say which, in the site's terms.
-    this.CampusUnavailable(AppLanguage.text($r('app.string.ui_campus_card'), this.languageRevision), this.cardError)
+    this.CampusUnavailable(AppLanguage.text($r('app.string.ui_campus_card'), this.languageRevision), () => this.cardError ||
+      (!this.cardLoading && this.cardInfo === null && this.verificationRequired() ? AppLanguage.text($r('app.string.card_identity_required'), this.languageRevision) : ''))
 
     if (this.cardInfo !== null) {
       // ── Balance card ──

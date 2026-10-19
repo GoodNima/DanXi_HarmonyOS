@@ -2,15 +2,15 @@
   "string": [
     {
       "name": "module_desc",
-      "value": "DanXi - 復旦大学のキャンパスアシスタント"
+      "value": "DanTa - 復旦大学のキャンパスアシスタント"
     },
     {
       "name": "EntryAbility_desc",
-      "value": "DanXi"
+      "value": "DanTa"
     },
     {
       "name": "EntryAbility_label",
-      "value": "DanXi"
+      "value": "DanTa"
     },
     {
       "name": "bus_weekday",
@@ -150,7 +150,7 @@
     },
     {
       "name": "notification_system_hint",
-      "value": "システム設定 → 通知とステータスバー → DanXi で通知の音・振動・許可を設定できます。"
+      "value": "システム設定 → 通知とステータスバー → DanTa で通知の音・振動・許可を設定できます。"
     },
     {
       "name": "notification_login",
@@ -262,7 +262,7 @@
     },
     {
       "name": "ui_adjust_permission_sound_and_vibration_in_system_",
-      "value": "システム設定 → 通知とステータスバー → DanXi で通知の権限・音・振動を設定できます"
+      "value": "システム設定 → 通知とステータスバー → DanTa で通知の権限・音・振動を設定できます"
     },
     {
       "name": "ui_handan",
@@ -658,7 +658,7 @@
     },
     {
       "name": "ui_use_your_danxi_forum_account_separate_from_uis",
-      "value": "DanXi の掲示板アカウントを使用してください（UIS とは別です）"
+      "value": "DanTa の掲示板アカウントを使用してください（UIS とは別です）"
     },
     {
       "name": "ui_email",
@@ -818,7 +818,7 @@
     },
     {
       "name": "ui_welcome_to_danxi",
-      "value": "DanXi へようこそ"
+      "value": "DanTa へようこそ"
     },
     {
       "name": "ui_log_in_to_view_grades_timetables_and_campus_serv",
@@ -866,11 +866,11 @@
     },
     {
       "name": "ui_about_danxi",
-      "value": "DanXi について"
+      "value": "DanTa について"
     },
     {
       "name": "ui_danxi_for_harmonyos_v",
-      "value": "DanXi HarmonyOS版 v"
+      "value": "DanTa HarmonyOS版 v"
     },
     {
       "name": "ui_open_source_licenses",
@@ -1606,7 +1606,7 @@
     },
     {
       "name": "academic_gpa_note",
-      "value": "取得済み一覧から端末上で計算：Σ（大学公表の科目別 GP × 単位数）÷ 算入単位数。卒業判定や全学期 GPA ではありません。P/NP、学部の認定成績、明示された大学院の補修・必修課程・考査科目は除外します。GP または単位数が欠ける科目は推定しません。"
+      "value": "取得済み科目の公式 GP と単位数を用いて、上式により端末上で計算します。卒業判定や全学期 GPA ではありません。P/NP、学部の認定成績、明示された大学院の補修・必修課程・考査科目は除外します。GP または単位数が欠ける科目は推定しません。"
     },
     {
       "name": "academic_rank_all",
@@ -1754,7 +1754,7 @@
     },
     {
       "name": "campus_welcome_guest",
-      "value": "DanXi へようこそ"
+      "value": "DanTa へようこそ"
     },
     {
       "name": "campus_no_notices",
@@ -2274,7 +2274,7 @@
     },
     {
       "name": "forum_activities_source",
-      "value": "旦夕公式イベント"
+      "value": "旦挞公式イベント"
     },
     {
       "name": "forum_activities_empty",
@@ -2349,6 +2349,10 @@
       "value": "現在は食事の集計時間外です"
     },
     {
+      "name": "campus_dining_outside_hint",
+      "value": "食事時間帯には窓口の利用人数と相対的な混雑状況を確認できます。"
+    },
+    {
       "name": "live_dining_hint",
       "value": "大学が提供する全窓口をキャンパスと食堂別に表示。人数は利用状況の目安で、実際の待ち人数ではありません。相対的な混雑は各食堂の人数とピーク目安の比率で比較します。"
     },
@@ -2362,7 +2366,7 @@
     },
     {
       "name": "live_developer_hint",
-      "value": "旦夕開発チームの原文と公開日時を表示します。最新と過去のお知らせを切り替えられます。"
+      "value": "旦挞開発チームの原文と公開日時を表示します。最新と過去のお知らせを切り替えられます。"
     },
     {
       "name": "live_no_notices",
@@ -2834,7 +2838,7 @@
     },
     {
       "name": "forum_webvpn_verification_hint",
-      "value": "樹洞への直接接続ができません。大学 WebVPN の認証後、樹洞専用のメールアドレスとパスワードでログインしてください。"
+      "value": "茶樓への直接接続ができません。大学 WebVPN の認証後、茶樓専用のメールアドレスとパスワードでログインしてください。"
     },
     {
       "name": "forum_login_timeout_hint",
@@ -2934,7 +2938,7 @@
     },
     {
       "name": "settings_harmony_intro",
-      "value": "本アプリは DanXi の HarmonyOS 向け内部テスト版です。元のプロジェクトとすべての貢献者に感謝します。"
+      "value": "本アプリは DanTa の HarmonyOS 向け内部テスト版です。元のプロジェクトとすべての貢献者に感謝します。"
     },
     {
       "name": "settings_legal",
@@ -2942,7 +2946,7 @@
     },
     {
       "name": "settings_legal_text",
-      "value": "ログインすると、プライバシーポリシーと利用規約を読み、同意したものとみなされます。DanXi は GNU GPL v3 で公開されています。サードパーティーのライセンスはオフラインで閲覧できます。"
+      "value": "ログインすると、プライバシーポリシーと利用規約を読み、同意したものとみなされます。DanTa は GNU GPL v3 で公開されています。サードパーティーのライセンスはオフラインで閲覧できます。"
     },
     {
       "name": "settings_privacy",
@@ -3650,11 +3654,11 @@
     },
     {
       "name": "timetable_calendar_name",
-      "value": "旦夕時間割 · %s"
+      "value": "旦挞時間割 · %s"
     },
     {
       "name": "timetable_calendar_hint",
-      "value": "授業を選択し、システムカレンダーの「旦夕時間割 · %s」に追加します。再度追加しても重複しません。"
+      "value": "授業を選択し、システムカレンダーの「旦挞時間割 · %s」に追加します。再度追加しても重複しません。"
     },
     {
       "name": "timetable_calendar_done",
@@ -3666,7 +3670,7 @@
     },
     {
       "name": "timetable_calendar_permission_denied",
-      "value": "カレンダーの権限が必要です。システム設定で旦夕のアクセスを許可してください。"
+      "value": "カレンダーの権限が必要です。システム設定で旦挞のアクセスを許可してください。"
     },
     {
       "name": "timetable_export_empty",
@@ -3978,7 +3982,7 @@
     },
     {
       "name": "settings_original_flutter",
-      "value": "Flutter 原プロジェクト"
+      "value": "Android 原プロジェクト"
     },
     {
       "name": "settings_ios_developers",
@@ -4010,7 +4014,7 @@
     },
     {
       "name": "settings_thanks_merged",
-      "value": "Flutter・iOS 原プロジェクトの開発者、デザイナー、オープンソースコミュニティに感謝します。"
+      "value": "Android・iOS 原プロジェクトの開発者、デザイナー、オープンソースコミュニティに感謝します。"
     },
     {
       "name": "settings_contributors_merged",
@@ -4018,11 +4022,11 @@
     },
     {
       "name": "settings_credit_icon_design",
-      "value": "Flutter アイコン制作"
+      "value": "Android アイコン制作"
     },
     {
       "name": "settings_credit_art_design",
-      "value": "Flutter 絵文字制作"
+      "value": "Android 絵文字制作"
     },
     {
       "name": "settings_original_ios",
@@ -4034,7 +4038,171 @@
     },
     {
       "name": "settings_original_libraries_hint",
-      "value": "Flutter・iOS 原プロジェクトが謝辞に掲載するオープンソースソフトウェアを名前順でまとめ、対象プラットフォームと原文のライセンス情報を併記します。"
+      "value": "Android・iOS 原プロジェクトが謝辞に掲載するオープンソースソフトウェアを名前順でまとめ、対象プラットフォームと原文のライセンス情報を併記します。"
+    },
+    {
+      "name": "card_identity_required",
+      "value": "キャンパスカードには本人確認が必要です。認証を続けてください。"
+    },
+    {
+      "name": "settings_app_developers",
+      "value": "開発者・貢献者"
+    },
+    {
+      "name": "settings_harmony_platform",
+      "value": "HarmonyOS 版"
+    },
+    {
+      "name": "settings_harmony_project",
+      "value": "プロジェクトページ"
+    },
+    {
+      "name": "settings_harmony_contributors",
+      "value": "貢献履歴"
+    },
+    {
+      "name": "settings_harmony_version",
+      "value": "HarmonyOS 版 %s · build %s"
+    },
+    {
+      "name": "settings_harmony_upgrade",
+      "value": "更新コード %d"
+    },
+    {
+      "name": "settings_harmony_note",
+      "value": "ArkTS / ArkUI 開発\nAndroid / iOS から移植"
+    },
+    {
+      "name": "settings_harmony_build",
+      "value": "ビルド %s"
+    },
+    {
+      "name": "forum_campus_login_brief",
+      "value": "学内アカウントでログインして続行してください。"
+    },
+    {
+      "name": "forum_campus_verify_brief",
+      "value": "学内の本人確認を完了して続行してください。"
+    },
+    {
+      "name": "academic_gpa_formula_description",
+      "value": "GPA は各科目の GP と単位数の積の合計を、算入単位数で割った値です。"
+    },
+    {
+      "name": "academic_gpa_symbols",
+      "value": "n は対象科目数、gᵢ は科目 i の公式 GP、cᵢ はその単位数です。"
+    },
+    {
+      "name": "desktop_forms_description",
+      "value": "ホーム画面で学内情報を確認できます。"
+    },
+    {
+      "name": "desktop_forms_hint",
+      "value": "タップして開き、更新"
+    },
+    {
+      "name": "desktop_forms_empty",
+      "value": "未取得"
+    },
+    {
+      "name": "desktop_forms_saved",
+      "value": "更新"
+    },
+    {
+      "name": "desktop_forms_old",
+      "value": "古い情報です。タップして更新"
+    },
+    {
+      "name": "desktop_forms_timetable",
+      "value": "時間割"
+    },
+    {
+      "name": "desktop_forms_card",
+      "value": "キャンパスカード"
+    },
+    {
+      "name": "desktop_forms_electricity",
+      "value": "寮の電気代"
+    },
+    {
+      "name": "desktop_forms_bus",
+      "value": "学内バス"
+    },
+    {
+      "name": "academic_gpa_explanation",
+      "value": "計算方法"
+    },
+    {
+      "name": "academic_gpa_brief",
+      "value": "取得済みの科目のみで計算。全課程の GPA ではありません。"
+    },
+    {
+      "name": "desktop_forms_following",
+      "value": "次便 %s"
+    },
+    {
+      "name": "desktop_forms_balance",
+      "value": "残高"
+    },
+    {
+      "name": "desktop_forms_remaining",
+      "value": "電力残量"
+    },
+    {
+      "name": "academic_gpa_symbol_courses",
+      "value": "計算対象の科目数"
+    },
+    {
+      "name": "academic_gpa_symbol_points",
+      "value": "各科目の公式評点"
+    },
+    {
+      "name": "academic_gpa_symbol_credits",
+      "value": "各科目の単位数"
+    },
+    {
+      "name": "campus_course_periods",
+      "value": "%s 限"
+    },
+    {
+      "name": "desktop_bus_direction",
+      "value": "路線"
+    },
+    {
+      "name": "desktop_bus_next",
+      "value": "次の便"
+    },
+    {
+      "name": "desktop_bus_later",
+      "value": "その後"
+    },
+    {
+      "name": "campus_academic_gpa_pending",
+      "value": "GPA 計算待ち"
+    },
+    {
+      "name": "campus_dining_outside_short",
+      "value": "提供時間外"
+    },
+    {
+      "name": "campus_sports_short_hint",
+      "value": "施設・予約時間"
+    },
+    {
+      "name": "campus_dining_compact_hint",
+      "value": "食事時間帯に確認"
+    },
+    {
+      "name": "campus_notice_read_full",
+      "value": "全文を読む"
+    },
+    {
+      "name": "campus_notice_updated",
+      "value": "%s 更新"
+    },
+    {
+      "name": "campus_notice_more",
+      "value": "ほか %d 件のお知らせ"
     }
   ]
 }

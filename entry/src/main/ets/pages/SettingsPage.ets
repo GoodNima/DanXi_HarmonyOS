@@ -1,3 +1,4 @@
+import { ReadableText } from '../common/ReadableText'
 import { DiagnosticNavigation } from '../common/DiagnosticNavigation'
 import { settleScrollTouch } from '../common/ScrollTouch'
 import { ClassroomPreference } from '../common/ClassroomPreference'
@@ -220,7 +221,7 @@ export struct SettingsPage {
   @Builder
   ChoiceNote(hint: Resource) {
     Column() {
-      Text(hint).fontSize(12).lineHeight(18).fontColor(ThemeColors.textSecondary).width('100%')
+      Text(ReadableText.resource(hint)).fontSize(12).lineHeight(20).lineBreakStrategy(LineBreakStrategy.GREEDY).fontColor(ThemeColors.textSecondary).width('100%')
     }.width(240).padding({ left: 8, right: 8, top: 8, bottom: 8 }).alignItems(HorizontalAlign.Start)
   }
   @Builder
@@ -343,7 +344,7 @@ export struct SettingsPage {
       SymbolGlyph(getSymbolIcon(key === HapticFeedback.KEY_ENABLED ? 'haptics' : 'contrast')).fontSize(22).fontColor([ThemeColors.primary])
       Column({ space: 5 }) {
         Text(title).fontSize(15).fontColor(ThemeColors.textPrimary)
-        Text(hint).fontSize(12).lineHeight(18).fontColor(ThemeColors.textSecondary)
+        Text(ReadableText.resource(hint)).fontSize(12).lineHeight(20).lineBreakStrategy(LineBreakStrategy.GREEDY).fontColor(ThemeColors.textSecondary)
       }.layoutWeight(1).alignItems(HorizontalAlign.Start)
       Toggle({ type: ToggleType.Switch, isOn: value }).onChange((enabled: boolean) => {
         const save = key === HapticFeedback.KEY_ENABLED ? HapticFeedback.set(enabled) : ClassroomPreference.set(key, enabled)
@@ -367,7 +368,7 @@ export struct SettingsPage {
                 SymbolGlyph(getSymbolIcon('proxy')).fontSize(22).fontColor([ThemeColors.primary])
                 Column({ space: 5 }) {
                   Text($r('app.string.webvpn_auto')).fontSize(15).fontColor(ThemeColors.textPrimary)
-                  Text($r('app.string.webvpn_hint')).fontSize(12).lineHeight(18).fontColor(ThemeColors.textSecondary)
+                  Text(ReadableText.resource($r('app.string.webvpn_hint'))).fontSize(12).lineHeight(20).fontColor(ThemeColors.textSecondary).lineBreakStrategy(LineBreakStrategy.GREEDY)
                 }.layoutWeight(1).alignItems(HorizontalAlign.Start)
                 Toggle({ type: ToggleType.Switch, isOn: this.useWebVpn }).onChange((value: boolean) => { this.saveWebVpn(value) })
               }.padding(16).width('100%')

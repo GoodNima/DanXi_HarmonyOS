@@ -2,15 +2,15 @@
   "string": [
     {
       "name": "module_desc",
-      "value": "旦夕 - 复旦大学校园助手"
+      "value": "旦挞 - 复旦大学校园助手"
     },
     {
       "name": "EntryAbility_desc",
-      "value": "旦夕"
+      "value": "旦挞"
     },
     {
       "name": "EntryAbility_label",
-      "value": "旦夕"
+      "value": "旦挞"
     },
     {
       "name": "bus_weekday",
@@ -150,11 +150,11 @@
     },
     {
       "name": "notification_system_hint",
-      "value": "声音、振动及关闭通知可在系统设置 → 通知与状态栏 → 旦夕中调整。"
+      "value": "声音、振动及关闭通知可在系统设置 → 通知与状态栏 → 旦挞中调整。"
     },
     {
       "name": "notification_login",
-      "value": "请先登录树洞账号，再设置通知类型。"
+      "value": "请先登录茶楼账号，再设置通知类型。"
     },
     {
       "name": "notification_mention",
@@ -162,7 +162,7 @@
     },
     {
       "name": "notification_favorite",
-      "value": "订阅的树洞更新"
+      "value": "订阅的茶楼更新"
     },
     {
       "name": "notification_report",
@@ -170,7 +170,7 @@
     },
     {
       "name": "notification_delivery",
-      "value": "通知类型会同步到树洞账号。本版本尚未接入后台推送，允许系统通知不会自动启用离线推送。"
+      "value": "通知类型会同步到茶楼账号。本版本尚未接入后台推送，允许系统通知不会自动启用离线推送。"
     },
     {
       "name": "graduate_scores_note",
@@ -194,7 +194,7 @@
     },
     {
       "name": "caution_choice_hint",
-      "value": "带星号的标签表示谨慎阅读。默认折叠正文，此设置与树洞账号同步。"
+      "value": "带星号的标签表示谨慎阅读。默认折叠正文，此设置与茶楼账号同步。"
     },
     {
       "name": "caution_fold",
@@ -230,7 +230,7 @@
     },
     {
       "name": "forum_settings",
-      "value": "树洞设置"
+      "value": "茶楼设置"
     },
     {
       "name": "forum_compose",
@@ -262,7 +262,7 @@
     },
     {
       "name": "ui_adjust_permission_sound_and_vibration_in_system_",
-      "value": "可在系统设置 → 通知与状态栏 → 旦夕中调整通知权限、声音和振动"
+      "value": "可在系统设置 → 通知与状态栏 → 旦挞中调整通知权限、声音和振动"
     },
     {
       "name": "ui_handan",
@@ -642,7 +642,7 @@
     },
     {
       "name": "ui_enter_your_forum_email",
-      "value": "请输入树洞账号邮箱"
+      "value": "请输入茶楼账号邮箱"
     },
     {
       "name": "ui_enter_your_password",
@@ -654,11 +654,11 @@
     },
     {
       "name": "ui_log_in_to_forum",
-      "value": "登录树洞"
+      "value": "登录茶楼"
     },
     {
       "name": "ui_use_your_danxi_forum_account_separate_from_uis",
-      "value": "使用旦夕树洞账号（非 UIS 账号）"
+      "value": "使用旦挞茶楼账号（非 UIS 账号）"
     },
     {
       "name": "ui_email",
@@ -678,7 +678,7 @@
     },
     {
       "name": "ui_register_on_the_forum_website_this_is_separate_f",
-      "value": "树洞账号在 web 端注册，与复旦大学 UIS 账号不同"
+      "value": "茶楼账号在 web 端注册，与复旦大学 UIS 账号不同"
     },
     {
       "name": "ui_could_not_open_post_please_retry",
@@ -690,15 +690,15 @@
     },
     {
       "name": "ui_log_in_to_browse_the_forum",
-      "value": "登录后浏览树洞"
+      "value": "登录后浏览茶楼"
     },
     {
       "name": "ui_a_fduhole_com_account_is_required_please_log_in",
-      "value": "树洞内容需要 fduhole.com 账号，请先登录"
+      "value": "茶楼内容需要 fduhole.com 账号，请先登录"
     },
     {
       "name": "ui_search_forum",
-      "value": "搜索树洞内容"
+      "value": "搜索茶楼内容"
     },
     {
       "name": "ui_clear",
@@ -722,7 +722,7 @@
     },
     {
       "name": "ui_forum",
-      "value": "树洞"
+      "value": "茶楼"
     },
     {
       "name": "ui_could_not_open_editor_please_retry",
@@ -742,7 +742,7 @@
     },
     {
       "name": "ui_please_log_in_to_the_forum_first",
-      "value": "请先登录树洞账号"
+      "value": "请先登录茶楼账号"
     },
     {
       "name": "ui_me",
@@ -818,7 +818,7 @@
     },
     {
       "name": "ui_welcome_to_danxi",
-      "value": "欢迎使用旦夕"
+      "value": "欢迎使用旦挞"
     },
     {
       "name": "ui_log_in_to_view_grades_timetables_and_campus_serv",
@@ -850,7 +850,7 @@
     },
     {
       "name": "ui_system_permission_forum_notification_types",
-      "value": "系统权限与树洞通知类型"
+      "value": "系统权限与茶楼通知类型"
     },
     {
       "name": "ui_dashboard_order",
@@ -866,11 +866,11 @@
     },
     {
       "name": "ui_about_danxi",
-      "value": "关于旦夕"
+      "value": "关于旦挞"
     },
     {
       "name": "ui_danxi_for_harmonyos_v",
-      "value": "旦夕 HarmonyOS版 v"
+      "value": "旦挞 HarmonyOS版 v"
     },
     {
       "name": "ui_open_source_licenses",
@@ -1086,7 +1086,7 @@
     },
     {
       "name": "forum_webvpn_login_required",
-      "value": "当前网络无法直连树洞。校外访问需要复旦 WebVPN，请先登录复旦账号；树洞登录凭证会保留。"
+      "value": "当前网络无法直连茶楼。校外访问需要复旦 WebVPN，请先登录复旦账号；茶楼登录凭证会保留。"
     },
     {
       "name": "webvpn_auto",
@@ -1114,7 +1114,7 @@
     },
     {
       "name": "calendar_choice_hint",
-      "value": "“同步当前学期”按今天的日期读取官方校历，保存该学期第一教学周的周一，并替换已选日期。查询其他学期时请手动选择日期；不会后台自动同步。如需验证，沿用复旦身份验证。"
+      "value": "同步当前学期：按今天的日期读取官方校历，更新第一教学周的周一，并替换已选日期。\n其他学期请手动选择，不会自动同步。\n如需登录，将使用复旦身份验证。"
     },
     {
       "name": "calendar_date_unknown",
@@ -1338,7 +1338,7 @@
     },
     {
       "name": "detail_subscription_note",
-      "value": "订阅后，新回复提醒遵循树洞通知设置。"
+      "value": "订阅后，新回复提醒遵循茶楼通知设置。"
     },
     {
       "name": "detail_show_all",
@@ -1422,7 +1422,7 @@
     },
     {
       "name": "detail_hide_note",
-      "value": "仅从本机信息流隐藏，可在树洞设置中恢复。"
+      "value": "仅从本机信息流隐藏，可在茶楼设置中恢复。"
     },
     {
       "name": "detail_reply_floor",
@@ -1606,7 +1606,7 @@
     },
     {
       "name": "academic_gpa_note",
-      "value": "按已获取课程在本地计算：Σ（学校发布的单课绩点 × 学分）÷ 计入学分。仅统计当前列表，不代表毕业审核或全学程 GPA；P/NP、本科转换成绩、已标明的研究生补修及必修环节、考查课程不计入。缺失绩点或学分时不估算。"
+      "value": "使用已获取课程的官方绩点与学分，按上式在本地计算。仅统计当前列表，不代表毕业审核或全学程 GPA；P/NP、本科转换成绩、已标明的研究生补修及必修环节、考查课程不计入。缺失绩点或学分时不估算。"
     },
     {
       "name": "academic_rank_all",
@@ -2026,19 +2026,19 @@
     },
     {
       "name": "forum_signed_in",
-      "value": "已登录树洞"
+      "value": "已登录茶楼"
     },
     {
       "name": "forum_signed_out",
-      "value": "未登录树洞"
+      "value": "未登录茶楼"
     },
     {
       "name": "forum_account_hint",
-      "value": "树洞账号与复旦校园账号独立。"
+      "value": "茶楼账号与复旦校园账号独立。"
     },
     {
       "name": "forum_logout_hint",
-      "value": "仅退出树洞账号，校园服务仍可使用。"
+      "value": "仅退出茶楼账号，校园服务仍可使用。"
     },
     {
       "name": "forum_browsing_settings",
@@ -2090,7 +2090,7 @@
     },
     {
       "name": "forum_account_content",
-      "value": "我的树洞"
+      "value": "我的茶楼"
     },
     {
       "name": "forum_my_posts",
@@ -2130,7 +2130,7 @@
     },
     {
       "name": "forum_background",
-      "value": "树洞背景图片"
+      "value": "茶楼背景图片"
     },
     {
       "name": "forum_background_hint",
@@ -2234,7 +2234,7 @@
     },
     {
       "name": "forum_activities_hint",
-      "value": "在树洞信息流中展示官方活动，点击查看详情；没有活动时自动收起，关闭后隐藏活动区域。"
+      "value": "在茶楼信息流中展示官方活动，点击查看详情；没有活动时自动收起，关闭后隐藏活动区域。"
     },
     {
       "name": "forum_activities_cached",
@@ -2274,7 +2274,7 @@
     },
     {
       "name": "forum_activities_source",
-      "value": "旦夕官方活动"
+      "value": "旦挞官方活动"
     },
     {
       "name": "forum_activities_empty",
@@ -2349,6 +2349,10 @@
       "value": "目前不在供餐统计时段"
     },
     {
+      "name": "campus_dining_outside_hint",
+      "value": "供餐时段可查看窗口活跃人数及相对拥挤情况。"
+    },
+    {
       "name": "live_dining_hint",
       "value": "保留学校返回的全部窗口，按校区与食堂分组。人数为消费活跃度参考，不等于现场排队人数；相对拥挤按各食堂人数与高峰参考之比比较。"
     },
@@ -2362,7 +2366,7 @@
     },
     {
       "name": "live_developer_hint",
-      "value": "公告来自旦夕开发组，保留原文及发布时间。最新公告与历史公告可切换查看。"
+      "value": "公告来自旦挞开发组，保留原文及发布时间。最新公告与历史公告可切换查看。"
     },
     {
       "name": "live_no_notices",
@@ -2470,7 +2474,7 @@
     },
     {
       "name": "utility_forum_login_hint",
-      "value": "使用树洞账号查看课程评价"
+      "value": "使用茶楼账号查看课程评价"
     },
     {
       "name": "utility_campus_login_hint",
@@ -2598,7 +2602,7 @@
     },
     {
       "name": "utility_evaluation_hint",
-      "value": "课评使用树洞账号，与复旦校园账号分开登录。可按课程、教师搜索，在课程详情中按教师和学期筛选评价。"
+      "value": "课评使用茶楼账号，与复旦校园账号分开登录。可按课程、教师搜索，在课程详情中按教师和学期筛选评价。"
     },
     {
       "name": "utility_teacher",
@@ -2682,7 +2686,7 @@
     },
     {
       "name": "utility_login_forum",
-      "value": "登录树洞"
+      "value": "登录茶楼"
     },
     {
       "name": "utility_course_details",
@@ -2834,11 +2838,11 @@
     },
     {
       "name": "forum_webvpn_verification_hint",
-      "value": "树洞直连暂不可用，请完成校园 WebVPN 身份验证后继续。树洞仍使用独立的邮箱和密码登录。"
+      "value": "茶楼直连暂不可用，请完成校园 WebVPN 身份验证后继续。茶楼仍使用独立的邮箱和密码登录。"
     },
     {
       "name": "forum_login_timeout_hint",
-      "value": "树洞登录请求超时（2300028），暂时无法确认服务器是否已收到。请稍后点击登录重试；不会自动重复提交密码。"
+      "value": "茶楼登录请求超时（2300028），暂时无法确认服务器是否已收到。请稍后点击登录重试；不会自动重复提交密码。"
     },
     {
       "name": "live_load_usage_history",
@@ -2866,7 +2870,7 @@
     },
     {
       "name": "settings_high_contrast_hint",
-      "value": "教室日程查询和树洞标签"
+      "value": "教室日程查询和茶楼标签"
     },
     {
       "name": "settings_haptics",
@@ -2934,7 +2938,7 @@
     },
     {
       "name": "settings_harmony_intro",
-      "value": "本应用为旦夕的 HarmonyOS 适配内测版。感谢原项目及所有贡献者。"
+      "value": "本应用为旦挞的 HarmonyOS 适配内测版。感谢原项目及所有贡献者。"
     },
     {
       "name": "settings_legal",
@@ -2942,7 +2946,7 @@
     },
     {
       "name": "settings_legal_text",
-      "value": "登录即表示您已阅读并同意隐私政策和使用条款。旦夕采用 GNU GPL v3 开源许可；第三方组件的许可可在下方离线查看。"
+      "value": "登录即表示您已阅读并同意隐私政策和使用条款。旦挞采用 GNU GPL v3 开源许可；第三方组件的许可可在下方离线查看。"
     },
     {
       "name": "settings_privacy",
@@ -2974,7 +2978,7 @@
     },
     {
       "name": "settings_contact_hint",
-      "value": "反馈问题时可附上版本号、复现步骤和「读取诊断」。请勿附上密码或认证票据。"
+      "value": "反馈时请附版本号、复现步骤和「读取诊断」。\n请勿提供密码或认证票据。"
     },
     {
       "name": "settings_email",
@@ -3390,7 +3394,7 @@
     },
     {
       "name": "calendar_manual_sync_hint",
-      "value": "手动选择其他学期；同步只在点按后更新当前学期的第一周周一。"
+      "value": "手动选择：可指定其他学期。\n同步当前学期：点按后才会更新日期。"
     },
     {
       "name": "timetable_semester_not_found",
@@ -3650,11 +3654,11 @@
     },
     {
       "name": "timetable_calendar_name",
-      "value": "旦夕课表 · %s"
+      "value": "旦挞课表 · %s"
     },
     {
       "name": "timetable_calendar_hint",
-      "value": "选择要导出的课程，写入系统日历中的「旦夕课表 · %s」。重复导出会更新已有日程，不会重复添加。"
+      "value": "选择要导出的课程，写入系统日历中的「旦挞课表 · %s」。重复导出会更新已有日程，不会重复添加。"
     },
     {
       "name": "timetable_calendar_done",
@@ -3662,11 +3666,11 @@
     },
     {
       "name": "timetable_calendar_permission_reason",
-      "value": "将所选课程写入系统日历，并识别旦夕已导出的课程，避免重复添加。"
+      "value": "将所选课程写入系统日历，并识别旦挞已导出的课程，避免重复添加。"
     },
     {
       "name": "timetable_calendar_permission_denied",
-      "value": "需要日历权限才能导出课程，可在系统设置中允许旦夕访问日历。"
+      "value": "需要日历权限才能导出课程，可在系统设置中允许旦挞访问日历。"
     },
     {
       "name": "timetable_export_empty",
@@ -3950,7 +3954,7 @@
     },
     {
       "name": "campus_academic_counts_compact",
-      "value": "考试 {exams} 门 · 成绩 {grades} 门"
+      "value": "考试 {exams} · 成绩 {grades}"
     },
     {
       "name": "campus_catalog_selected",
@@ -3978,7 +3982,7 @@
     },
     {
       "name": "settings_original_flutter",
-      "value": "Flutter 原项目"
+      "value": "Android 原项目"
     },
     {
       "name": "settings_ios_developers",
@@ -4010,19 +4014,19 @@
     },
     {
       "name": "settings_thanks_merged",
-      "value": "感谢 Flutter 与 iOS 原项目的开发者、设计贡献者以及开源社区。"
+      "value": "感谢 Android 与 iOS 原项目的开发者、设计贡献者以及开源社区。"
     },
     {
       "name": "settings_contributors_merged",
-      "value": "名单合并去重，按姓名排列；同时保留图标与表情设计贡献。"
+      "value": "按姓名排列，跨平台贡献合并展示。\n包含图标与表情设计贡献者。"
     },
     {
       "name": "settings_credit_icon_design",
-      "value": "Flutter 图标设计"
+      "value": "Android 图标设计"
     },
     {
       "name": "settings_credit_art_design",
-      "value": "Flutter 表情设计"
+      "value": "Android 表情设计"
     },
     {
       "name": "settings_original_ios",
@@ -4034,7 +4038,171 @@
     },
     {
       "name": "settings_original_libraries_hint",
-      "value": "汇总 Flutter 与 iOS 原项目公开致谢的开源软件，按名称排列，并标注来源平台及原文许可信息。"
+      "value": "汇总 Android 与 iOS 原项目公开致谢的开源软件，按名称排列，并标注来源平台及原文许可信息。"
+    },
+    {
+      "name": "card_identity_required",
+      "value": "一卡通需要确认校园账号身份，请点击继续验证。"
+    },
+    {
+      "name": "settings_app_developers",
+      "value": "开发者与贡献者"
+    },
+    {
+      "name": "settings_harmony_platform",
+      "value": "HarmonyOS 版"
+    },
+    {
+      "name": "settings_harmony_project",
+      "value": "项目网页"
+    },
+    {
+      "name": "settings_harmony_contributors",
+      "value": "贡献记录"
+    },
+    {
+      "name": "settings_harmony_version",
+      "value": "鸿蒙版 %s · build %s"
+    },
+    {
+      "name": "settings_harmony_upgrade",
+      "value": "升级编号 %d"
+    },
+    {
+      "name": "settings_harmony_note",
+      "value": "ArkTS / ArkUI 原生开发\nAndroid / iOS 原项目适配"
+    },
+    {
+      "name": "settings_harmony_build",
+      "value": "构建 %s"
+    },
+    {
+      "name": "forum_campus_login_brief",
+      "value": "请登录校园账号后继续访问茶楼。"
+    },
+    {
+      "name": "forum_campus_verify_brief",
+      "value": "请完成校园身份验证后继续访问茶楼。"
+    },
+    {
+      "name": "academic_gpa_formula_description",
+      "value": "GPA 等于各门课程绩点与学分乘积之和，除以计入计算的总学分。"
+    },
+    {
+      "name": "academic_gpa_symbols",
+      "value": "n 为计入课程数，gᵢ 为第 i 门课的官方绩点，cᵢ 为该课学分。"
+    },
+    {
+      "name": "desktop_forms_description",
+      "value": "把校园信息放在桌面，点按查看详情。"
+    },
+    {
+      "name": "desktop_forms_hint",
+      "value": "点按打开并更新"
+    },
+    {
+      "name": "desktop_forms_empty",
+      "value": "尚未读取"
+    },
+    {
+      "name": "desktop_forms_saved",
+      "value": "上次更新"
+    },
+    {
+      "name": "desktop_forms_old",
+      "value": "信息已过期，点按更新"
+    },
+    {
+      "name": "desktop_forms_timetable",
+      "value": "课表"
+    },
+    {
+      "name": "desktop_forms_card",
+      "value": "一卡通"
+    },
+    {
+      "name": "desktop_forms_electricity",
+      "value": "寝室电费"
+    },
+    {
+      "name": "desktop_forms_bus",
+      "value": "校车"
+    },
+    {
+      "name": "academic_gpa_explanation",
+      "value": "计算说明"
+    },
+    {
+      "name": "academic_gpa_brief",
+      "value": "仅按已获取课程计算，不代表全学程 GPA。"
+    },
+    {
+      "name": "desktop_forms_following",
+      "value": "后续 %s"
+    },
+    {
+      "name": "desktop_forms_balance",
+      "value": "余额"
+    },
+    {
+      "name": "desktop_forms_remaining",
+      "value": "剩余电量"
+    },
+    {
+      "name": "academic_gpa_symbol_courses",
+      "value": "计入计算的课程数"
+    },
+    {
+      "name": "academic_gpa_symbol_points",
+      "value": "对应课程的官方绩点"
+    },
+    {
+      "name": "academic_gpa_symbol_credits",
+      "value": "对应课程的学分"
+    },
+    {
+      "name": "campus_course_periods",
+      "value": "%s 节"
+    },
+    {
+      "name": "desktop_bus_direction",
+      "value": "方向"
+    },
+    {
+      "name": "desktop_bus_next",
+      "value": "下一班"
+    },
+    {
+      "name": "desktop_bus_later",
+      "value": "后续"
+    },
+    {
+      "name": "campus_academic_gpa_pending",
+      "value": "GPA 待计算"
+    },
+    {
+      "name": "campus_dining_outside_short",
+      "value": "非供餐时段"
+    },
+    {
+      "name": "campus_sports_short_hint",
+      "value": "查看场馆与时段"
+    },
+    {
+      "name": "campus_dining_compact_hint",
+      "value": "供餐时段可查看"
+    },
+    {
+      "name": "campus_notice_read_full",
+      "value": "阅读全文"
+    },
+    {
+      "name": "campus_notice_updated",
+      "value": "%s 更新"
+    },
+    {
+      "name": "campus_notice_more",
+      "value": "另有 %d 条公告"
     }
   ]
 }

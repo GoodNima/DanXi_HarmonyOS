@@ -5,13 +5,13 @@
 
 export class Constant {
   // App info
-  static readonly APP_NAME: string = '旦夕'
-  static readonly APP_VERSION: string = '0.1.33.30'
-  static readonly APP_VERSION_CODE: number = 1000124
-  static readonly APP_BUILD_VERSION: string = '125'
+  static readonly APP_NAME: string = '旦挞'
+  static readonly APP_VERSION: string = '0.1.35.3'
+  static readonly APP_VERSION_CODE: number = 1000154
+  static readonly APP_BUILD_VERSION: string = '155'
   static readonly APP_RELEASE_STAGE: string = 'Alpha'
   static readonly APP_DISPLAY_VERSION: string = Constant.APP_VERSION + ' ' + Constant.APP_RELEASE_STAGE
-  static readonly APP_DIAGNOSTIC_HEADER: string = 'DanXi HarmonyOS ' + Constant.APP_DISPLAY_VERSION +
+  static readonly APP_DIAGNOSTIC_HEADER: string = 'DanTa HarmonyOS ' + Constant.APP_DISPLAY_VERSION +
     ' build ' + Constant.APP_BUILD_VERSION + ' (versionCode ' + Constant.APP_VERSION_CODE + ')'
 
   // ── Backend endpoints ──
@@ -97,11 +97,11 @@ export class Constant {
     Constant.FEATURE_TIMETABLE,
     Constant.FEATURE_ACADEMIC,
     Constant.FEATURE_EMPTY_CLASSROOM,
-    Constant.FEATURE_LIBRARY,
-    Constant.FEATURE_LIBRARY_BOOKS,
-    Constant.FEATURE_ANNOUNCEMENT,
     Constant.FEATURE_CARD,
     Constant.FEATURE_ELECTRICITY,
+    Constant.FEATURE_ANNOUNCEMENT,
+    Constant.FEATURE_LIBRARY,
+    Constant.FEATURE_LIBRARY_BOOKS,
     Constant.FEATURE_DINING,
     Constant.FEATURE_SPORTS,
     Constant.FEATURE_BUS,

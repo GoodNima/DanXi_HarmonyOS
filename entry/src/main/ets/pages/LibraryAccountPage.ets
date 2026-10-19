@@ -21,7 +21,6 @@ import { LibraryVerification } from '../components/LibraryVerification'
 import { TopFade } from '../components/TopFade'
 import { CenterLoadingProgress } from '../components/CenterLoadingProgress'
 import { ErrorNotice } from '../components/ErrorNotice'
-import { EmptyRefreshIndicator, FeedRefreshProgress } from '../components/FeedRefreshProgress'
 import { settleScrollTouch } from '../common/ScrollTouch'
 
 interface LibraryAccountParams { kind?: string }
@@ -61,7 +60,6 @@ export struct LibraryAccountPage {
   @State private paging: boolean = false
   @State private more: boolean = false
   @State private refreshing: boolean = false
-  @State private pullOffset: number = 0
   @State private error: string = ''
   @State private verification: boolean = false
   @State private dataMissing: boolean = false
@@ -69,6 +67,7 @@ export struct LibraryAccountPage {
   @State private pendingId: string = ''
   private owner: string = ''
   private active: boolean = false
+  private resumeRead: boolean = false
   private revision: number = 0
   private page: number = 1
   private ranges: Map<string, LibraryRangeSnapshot> = new Map()
@@ -91,13 +90,15 @@ export struct LibraryAccountPage {
     this.active = true
     if (this.owner && this.owner !== this.source.owner()) this.accountChanged()
     else if (this.switching) { this.displayHistory = this.history; this.restoreRange(); this.switching = false; this.contentOpacity = 0; this.load(false) }
+    else if (this.resumeRead) { this.resumeRead = false; this.load(false) }
   }
-  onPageHide(): void { this.active = false; this.revision++; this.loading = false; this.paging = false; this.refreshing = false }
+  onPageHide(): void { this.resumeRead = this.resumeRead || this.loading; this.active = false; this.revision++; this.loading = false; this.paging = false; this.refreshing = false }
   aboutToDisappear(): void { this.active = false; this.revision++; this.switching = false }
   accountChanged(): void { if (!this.active || this.owner === this.source.owner()) return; this.ranges.clear(); this.revision++; this.loading = false; this.paging = false; this.switching = false; this.displayHistory = this.history; this.contentOpacity = 1; this.updateRows([]); this.pendingId = ''; this.webSheet = false; this.load(false) }
   private updateRows(rows: LibraryAccountItem[]): void { this.rows = rows; this.list.update(rows) }
   private async load(force: boolean): Promise<void> {
     if (!this.active || this.loading) return
+    this.resumeRead = false
     const revision = ++this.revision, owner = this.source.owner(); this.owner = owner; this.loading = true; this.error = ''; this.verification = false; this.dataMissing = false
     try { const result = await this.source.list(this.kind, this.history, 1, force)
       if (this.active && revision === this.revision && owner === this.source.owner()) {
@@ -182,7 +183,6 @@ export struct LibraryAccountPage {
   }
   build() {
     Stack({ alignContent: Alignment.Top }) {
-      Refresh({ refreshing: $$this.refreshing, builder: EmptyRefreshIndicator }) {
         List({ scroller: this.scroller, space: 12 }) {
           ListItem() {
             TabSegmentButtonV2({ items: this.rangeItems, selectedIndex: this.history ? 1 : 0,
@@ -217,10 +217,8 @@ export struct LibraryAccountPage {
           }.opacity(this.contentOpacity).enabled(!this.switching)
         }.width('100%').height('100%').padding({ left: ThemeDimens.cardGutter, right: ThemeDimens.cardGutter, bottom: Math.max(20, px2vp(this.bottomPx)) + 24 })
           .cachedCount(3).scrollBar(BarState.Off).edgeEffect(EdgeEffect.Spring, { alwaysEnabled: true }).onReachEnd(() => { this.next() }).onTouch((event: TouchEvent) => { settleScrollTouch(this.scroller, event) })
-      }.width('100%').height('100%').onRefreshing(() => { this.load(true) }).onOffsetChange((offset: number) => { this.pullOffset = offset })
-      CenterLoadingProgress({ busy: this.loading && !this.refreshing })
+      CenterLoadingProgress({ busy: this.loading })
       TopFade({ extent: px2vp(this.topPx) + 62 })
-      FeedRefreshProgress({ topInset: px2vp(this.topPx) + 82, pullOffset: this.pullOffset, refreshing: this.refreshing })
       Row({ space: 12 }) {
         FloatingActionButton({ label: $r('app.string.settings_back'), icon: 'back', controlHeight: 44, onAction: () => { router.back() } }).width(44)
         Text(this.kind === 'requests' ? $r('app.string.library_my_requests') : $r('app.string.library_my_loans')).fontSize(20).fontWeight(FontWeight.Bold).fontColor(ThemeColors.textPrimary).layoutWeight(1).textAlign(TextAlign.Center)

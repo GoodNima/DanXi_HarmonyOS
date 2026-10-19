@@ -1,3 +1,4 @@
+import { ReadableText } from '../common/ReadableText'
 import { DiagnosticNavigation } from '../common/DiagnosticNavigation'
 import { ErrorNotice } from './ErrorNotice'
 import { promptAction } from '@kit.ArkUI'
@@ -73,7 +74,7 @@ export struct CalendarSettings {
   @Builder
   ChoiceNote() {
     Column() {
-      Text($r('app.string.calendar_choice_hint')).fontSize(12).lineHeight(18).fontColor(ThemeColors.textSecondary).width('100%')
+      Text(ReadableText.keepWords(AppLanguage.text($r('app.string.calendar_choice_hint'), this.languageRevision))).fontSize(12).lineHeight(20).lineBreakStrategy(LineBreakStrategy.GREEDY).fontColor(ThemeColors.textSecondary).width('100%')
     }.width(268).padding({ left: 8, right: 8, top: 8, bottom: 8 }).alignItems(HorizontalAlign.Start)
   }
 
@@ -110,7 +111,7 @@ export struct CalendarSettings {
       if (this.error) {
         ErrorNotice({ message: this.error, controlId: 'calendarsettings-diagnostics', textSize: 12, textColor: ThemeColors.error }).width('100%')
       }
-      Text($r('app.string.calendar_manual_sync_hint')).fontSize(12).lineHeight(18)
+      Text(ReadableText.keepWords(AppLanguage.text($r('app.string.calendar_manual_sync_hint'), this.languageRevision))).fontSize(12).lineHeight(20).lineBreakStrategy(LineBreakStrategy.GREEDY)
         .fontColor(ThemeColors.textSecondary).width('100%')
       if (this.source) {
         Text(AppLanguage.text($r('app.string.calendar_source'), this.languageRevision) + ' · ' +

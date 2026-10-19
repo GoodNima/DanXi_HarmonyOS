@@ -62,6 +62,7 @@ export function getSymbolIcon(name: string): Resource {
     'reply': $r('sys.symbol.arrowshape_turn_up_left'),
     'replies': $r('sys.symbol.ellipsis_bubble'),
     'share': $r('sys.symbol.share'),
+    'download': $r('sys.symbol.arrow_down_to_line'),
     'delete': $r('sys.symbol.trash'),
     'pin': $r('sys.symbol.pin_fill'),
     'lock': $r('sys.symbol.lock'),

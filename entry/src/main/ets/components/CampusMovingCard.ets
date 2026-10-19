@@ -46,7 +46,7 @@ export struct CampusDragCard {
   build() {
     Stack() { this.content() }
       .width(this.dragPosition.width).height(this.dragPosition.height)
-      .position({ x: 0, y: 0 }).attributeModifier(this.dragAttributes)
+      .position({ x: 0, y: 0 }).attributeModifier(this.dragAttributes).opacity(0.68)
       .id('campus-drag-card-' + this.cardId).hitTestBehavior(HitTestMode.None)
       .accessibilityLevel('no-hide-descendants')
   }

@@ -208,7 +208,7 @@ struct LoginPage {
 
       // Footer
       Column() {
-        Text('DanXi HarmonyOS Edition')
+        Text('DanTa HarmonyOS Edition')
           .fontSize(ThemeDimens.textSizeSmall)
           .fontColor(ThemeColors.textHint)
         Text('v' + Constant.APP_DISPLAY_VERSION)

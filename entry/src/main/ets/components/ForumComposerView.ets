@@ -1,3 +1,4 @@
+import { ReadableText } from '../common/ReadableText'
 import { ErrorNotice } from './ErrorNotice'
 import { AppLanguage } from '../common/AppLanguage'
 import { SearchClearButton } from './SearchClearButton'
@@ -313,7 +314,7 @@ export struct ForumComposerView {
       }.columnsTemplate('1fr 1fr 1fr 1fr 1fr 1fr').rowsGap(10).height(224).width('100%')
     }
     if (ForumComposer.images(this.content).length > 0) {
-      Text($r('app.string.composer_images_note')).fontSize(12).fontColor(ThemeColors.textSecondary).width('100%')
+      Text(ReadableText.resource($r('app.string.composer_images_note'))).fontSize(12).lineHeight(20).fontColor(ThemeColors.textSecondary).width('100%').lineBreakStrategy(LineBreakStrategy.GREEDY)
       ForEach(ForumComposer.images(this.content), (source: string, index: number) => {
         Row({ space: 8 }) {
           SymbolGlyph(getSymbolIcon('image')).fontSize(16).fontColor([ThemeColors.primary])
@@ -437,7 +438,7 @@ export struct ForumComposerView {
                 .onTextSelectionChange((start: number, end: number) => { this.selectionStart = start; this.selectionEnd = end })
               }
               Row() {
-                Text($r('app.string.composer_draft_note')).fontSize(11).fontColor(ThemeColors.textHint).layoutWeight(1)
+                Text(ReadableText.resource($r('app.string.composer_draft_note'))).fontSize(11).lineHeight(19).fontColor(ThemeColors.textHint).layoutWeight(1).lineBreakStrategy(LineBreakStrategy.GREEDY)
                 Text(this.content.length + ' / ' + MAX_LENGTH)
                   .fontSize(ThemeDimens.textSizeSmall)
                   .fontColor(ThemeColors.textHint)
@@ -477,7 +478,7 @@ export struct ForumComposerView {
                 Toggle({ type: ToggleType.Switch, isOn: this.suggestionsEnabled }).onChange((enabled: boolean) => { this.suggest(enabled) })
               }.width('100%').margin({ top: 8 })
               if (this.suggestionsEnabled) {
-                Text($r('app.string.composer_recommend_note')).fontSize(11).lineHeight(18).fontColor(ThemeColors.textHint).width('100%')
+                Text(ReadableText.resource($r('app.string.composer_recommend_note'))).fontSize(11).lineHeight(19).fontColor(ThemeColors.textHint).width('100%').lineBreakStrategy(LineBreakStrategy.GREEDY)
                 Flex({ wrap: FlexWrap.Wrap }) {
                   ForEach(ForumComposer.recommendations(this.allTags, this.content).filter(tag => !this.selectedTags.some(item => item.name === tag.name)),
                     (tag: ForumTag) => { this.TagChip(tag) }, (tag: ForumTag) => tag.name)

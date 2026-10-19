@@ -84,12 +84,14 @@ export class CampusLiveServices {
       result.description = AppLanguage.text($r('app.string.live_sign_in_hint'))
     } else if (data.status === 'outside') {
       result.value = AppLanguage.text($r('app.string.live_dining_outside'))
-      result.description = AppLanguage.text($r('app.string.live_dining_hint'))
+      result.description = AppLanguage.text($r('app.string.campus_dining_outside_hint'))
     } else if (feature === 'developer_notice') {
       const notices = CampusLiveServices.currentNotices(data.notices)
-      result.value = notices[0]?.content.split('\n')[0] ?? AppLanguage.text($r('app.string.live_no_notices'))
-      result.description = notices[1]?.content.split('\n')[0] ?? ''
-      result.secondary = CampusLiveServices.noticeDateLabel(notices[0]?.updatedAt ?? '')
+      result.value = notices[0]?.content.trim() ?? AppLanguage.text($r('app.string.live_no_notices'))
+      result.description = notices.length > 0 ? AppLanguage.text($r('app.string.campus_notice_read_full')) : ''
+      const date: string = CampusLiveServices.noticeDateLabel(notices[0]?.updatedAt ?? '').split(' ')[0]
+      result.secondary = date ? AppLanguage.text($r('app.string.campus_notice_updated'), 0, date) : ''
+      if (notices.length > 1) result.secondary += ' · ' + AppLanguage.text($r('app.string.campus_notice_more'), 0, notices.length - 1)
     } else if (feature === 'library') {
       const current: string = CampusPreference.current()
       const selected = data.libraries.find(item => current === '邯郸' ? /文科|理科|邯郸/.test(item.name) :

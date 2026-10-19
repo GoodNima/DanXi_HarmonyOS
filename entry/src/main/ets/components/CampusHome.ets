@@ -1,3 +1,4 @@
+import { ReadableText } from '../common/ReadableText'
 import { SheetTransitionGuard } from '../common/SheetTransitionGuard'
 import { DiagnosticNavigation } from '../common/DiagnosticNavigation'
 import { ErrorNotice, DiagnosticLink } from './ErrorNotice'
@@ -63,6 +64,7 @@ export struct CampusHome {
   @StorageLink(AnnouncementConfig.KEY_REVISION) @Watch('configurationChanged') configRevision: number = 0
   @StorageLink(AccountIdentity.KEY_REVISION) identityRevision: number = 0
   @StorageLink('main_active_tab') @Watch('resume') activeTab: number = 0
+  @StorageLink('campus_feature_request') @Watch('desktopRequested') desktopRequest: string = ''
   @StorageLink(Constant.KEY_STATUS_BAR_INSET_PX) topPx: number = 0
   @StorageLink(Constant.KEY_BOTTOM_BAR_INSET_PX) bottomPx: number = 0
   @State rows: CampusModule[] = []
@@ -158,6 +160,7 @@ export struct CampusHome {
     this.boundOwner = CampusPreviewStore.owner(); this.boundForum = this.forumRevision
     this.greetingDay = new Date(this.clock).toDateString()
     this.updateGreeting(false, false); this.rows = this.layoutSource.read(); this.refresh(false)
+    this.getUIContext().postFrameCallback({ onFrame: () => { this.desktopRequested() }, onIdle: () => {} })
     AccountIdentity.syncName(AppState.getPerson()).catch(() => {})
     AnnouncementConfig.load().then(() => { if (this.active) this.configurationChanged() }).catch(() => {})
     this.timer = setInterval(() => {
@@ -224,7 +227,7 @@ export struct CampusHome {
       this.updateGreeting(!this.homeWasVisible, true)
     }
     this.homeWasVisible = visible
-    if (visible && !this.editing) this.restorePreviews()
+    if (visible && !this.editing) { this.restorePreviews(); this.desktopRequested() }
   }
   previewChanged(): void { if (this.active && this.activeTab === 0 && !this.editing) this.restorePreviews() }
   private liveChanged(): void {
@@ -234,6 +237,7 @@ export struct CampusHome {
       if (!this.active || epoch !== this.epoch || owner !== CampusPreviewStore.owner() || row === undefined) return
       if (row.status === 'ready' && row.updatedAt >= this.preview(row.id).updatedAt) {
         this.previewFailures.delete(row.id); this.replace(row)
+        this.source.publish(row, owner).catch(() => {})
       }
     }).catch(() => {})
   }
@@ -288,13 +292,41 @@ export struct CampusHome {
     return CampusLayout.metric(this.preview(id).value, unit === undefined ? '' : AppLanguage.text(unit, this.languageRevision))
   }
   private compactCaption(id: string): string {
+    if (id === 'dining' && this.preview(id).status === 'outside') {
+      return AppLanguage.text($r('app.string.campus_dining_compact_hint'), this.languageRevision)
+    }
+    if (id === 'academic' && this.preview(id).calculation === 'local-v1') return this.academicCompactCaption()
+    if (id === 'sports') return AppLanguage.text($r('app.string.campus_sports_short_hint'), this.languageRevision)
     if (id === 'empty_classroom') return this.preview(id).description.split('\n').slice(-1)[0]?.split(' · ')[0] || AppLanguage.text(CampusLayout.hint(id), this.languageRevision)
     const description: string = (this.preview(id).description || '').split('\n')[0].trim()
     return description || AppLanguage.text(CampusLayout.hint(id), this.languageRevision)
   }
+  private cardKeyValue(row: CampusModule): string {
+    if (row.id === 'bus' && !CampusLayout.large(row) && this.preview(row.id).status === 'ready' &&
+      this.preview(row.id).items.length > 0 && !this.preview(row.id).items[0].value) {
+      return AppLanguage.text($r('app.string.campus_bus_closed'), this.languageRevision)
+    }
+    if (row.id === 'academic' && !this.preview(row.id).gpa && this.preview(row.id).calculation === 'local-v1') {
+      return AppLanguage.text($r('app.string.campus_academic_gpa_pending'), this.languageRevision)
+    }
+    if (row.id === 'dining' && CampusLayout.compact(row)) {
+      if (this.preview(row.id).status === 'outside') return AppLanguage.text($r('app.string.campus_dining_outside_short'), this.languageRevision)
+      if (this.preview(row.id).items.length > 0) return this.preview(row.id).items[0].value
+    }
+    return this.keyValue(row.id)
+  }
   private previewUnavailable(row: CampusModule): boolean {
     const value: CampusPreview = this.preview(row.id)
     return value.status === 'pending' || (!value.value && !value.gpa)
+  }
+  private informationKey(row: CampusModule): string {
+    const value: CampusPreview = this.preview(row.id)
+    if (value.status === 'error') return 'error:' + (this.previewFailures.get(row.id) ?? '')
+    if (this.previewUnavailable(row)) return JSON.stringify([
+      this.loadingIds.includes(row.id), this.waitingCaption(row.id, CampusLayout.compact(row))])
+    // Refresh timestamps and the footer do not change the information body.
+    return JSON.stringify([value.value, value.description, value.gpa, value.credits,
+      value.examCount, value.gradeCount, value.items, value.total, value.tone])
   }
   private waitingCaption(id: string, compact: boolean = false): string {
     if (compact) {
@@ -894,6 +926,12 @@ export struct CampusHome {
       .catch((diagnosticFailure: Object) => { DiagnosticNavigation.feedback(this.getUIContext(), diagnosticFailure as Object, AppLanguage.text($r('app.string.ui_could_not_open_details'))) })
   }
 
+  private desktopRequested(): void {
+    if (!this.active || !this.desktopRequest || this.editing) return
+    const feature = this.desktopRequest; this.desktopRequest = ''
+    if (['card', 'electricity', 'bus'].includes(feature)) this.open(feature)
+  }
+
   @Builder
   ElectricityDetails() {
     CampusLiveServicesPage({ source: this.electricitySource, initialFeature: 'electricity', sheetMode: true,
@@ -917,15 +955,86 @@ export struct CampusHome {
 
   @Builder
   NoticePreview(row: CampusModule, catalog: boolean = false) {
+    if (row.id === 'announcement') {
+      Column({ space: 4 }) {
+        Text(ReadableText.keepWords(this.keyValue(row.id) || AppLanguage.text(catalog ? $r('app.string.campus_preview_open') : $r('app.string.campus_preview_loading'), this.languageRevision)))
+          .draggable(false).fontSize(18).minFontSize(14).maxFontSize(18).maxLines(4)
+          .heightAdaptivePolicy(TextHeightAdaptivePolicy.LAYOUT_CONSTRAINT_FIRST)
+          .fontWeight(FontWeight.Bold).fontColor(this.keyColor(row.id))
+          .lineBreakStrategy(LineBreakStrategy.GREEDY)
+          .width('100%').layoutWeight(1).id('campus-announcement-headline')
+        ForEach(this.preview(row.id).description.split('\n').filter(value => value.trim().length > 0)
+          .slice(0, this.keyValue(row.id).length > 40 ? 1 : 2), (title: string) => {
+          Text(ReadableText.keepWords(title)).draggable(false).fontSize(13).lineHeight(19).fontColor(ThemeColors.textSecondary)
+            .width('100%').maxLines(1).textOverflow({ overflow: TextOverflow.Ellipsis })
+        }, (title: string, index: number): string => String(index) + title)
+      }.width('100%').layoutWeight(1).alignItems(HorizontalAlign.Start)
+    } else {
     Column({ space: 3 }) {
-      Text(this.keyValue(row.id) || AppLanguage.text(catalog ? $r('app.string.campus_preview_open') : $r('app.string.campus_preview_loading'), this.languageRevision))
-        .draggable(false).fontSize(row.id === 'timetable' ? 20 : 18).lineHeight(24).fontWeight(FontWeight.Bold).fontColor(this.keyColor(row.id))
+      Text(ReadableText.keepWords(this.keyValue(row.id) || AppLanguage.text(catalog ? $r('app.string.campus_preview_open') : $r('app.string.campus_preview_loading'), this.languageRevision)))
+        .draggable(false).fontSize(18).lineHeight(24).fontWeight(FontWeight.Bold).fontColor(this.keyColor(row.id))
         .width('100%').maxLines(1).textOverflow({ overflow: TextOverflow.Ellipsis })
       ForEach(this.preview(row.id).description.split('\n').filter(value => value.trim().length > 0).slice(0, 3), (title: string) => {
-        Text(title).draggable(false).fontSize(13).lineHeight(19).fontColor(ThemeColors.textSecondary)
+        Text(ReadableText.keepWords(title)).draggable(false).fontSize(13).lineHeight(19).fontColor(ThemeColors.textSecondary)
           .width('100%').maxLines(1).textOverflow({ overflow: TextOverflow.Ellipsis })
       }, (title: string, index: number): string => String(index) + title)
     }.width('100%').layoutWeight(1).alignItems(HorizontalAlign.Start).justifyContent(FlexAlign.Center)
+    }
+  }
+
+  @Builder
+  DeveloperNoticePreview(row: CampusModule) {
+    Column() {
+      Text(ReadableText.keepWords(this.keyValue(row.id).replace(/\s+/g, ' ').trim()))
+        .draggable(false).fontSize(15).lineHeight(22).fontColor(ThemeColors.textPrimary)
+        .lineBreakStrategy(LineBreakStrategy.GREEDY).maxLines(4)
+        .textOverflow({ overflow: TextOverflow.Ellipsis }).width('100%')
+        .id('campus-developer-notice-body')
+    }.width('100%').layoutWeight(1).alignItems(HorizontalAlign.Start).justifyContent(FlexAlign.Start)
+  }
+
+  @Builder
+  TimetablePreview(row: CampusModule) {
+    if (CampusLayout.large(row) && this.preview(row.id).items.length > 0) {
+      Column({ space: 3 }) {
+        ForEach(this.preview(row.id).items.slice(0, 3), (item: CampusPreviewItem, index: number) => {
+          Row({ space: 8 }) {
+            Text($r('app.string.campus_course_periods', item.value)).width(56).fontSize(13)
+              .minFontSize(11).maxFontSize(13).maxLines(1).fontColor(ThemeColors.textSecondary)
+              .id('campus-course-period-' + String(index))
+            Text(ReadableText.keepWords(item.label)).layoutWeight(1).fontSize(14).minFontSize(12).maxFontSize(14)
+              .lineHeight(14).maxLines(2).fontWeight(FontWeight.Medium).fontColor(this.keyColor(row.id))
+              .lineBreakStrategy(LineBreakStrategy.GREEDY)
+              .id('campus-course-name-' + String(index))
+            Text(item.detail || '—').width('27%').fontSize(12).minFontSize(10).maxFontSize(12)
+              .lineHeight(14).maxLines(2).fontColor(ThemeColors.textSecondary)
+              .id('campus-course-room-' + String(index))
+          }.width('100%').layoutWeight(1).alignItems(VerticalAlign.Center)
+        }, (item: CampusPreviewItem, index: number) => String(index) + ':' + item.label + ':' + item.value + ':' + item.detail)
+      }.width('100%').layoutWeight(1)
+    } else {
+      Column({ space: CampusLayout.compact(row) ? 5 : CampusLayout.large(row) ? 12 : 6 }) {
+        Text(this.keyValue(row.id)).width('100%').fontSize(CampusLayout.compact(row) ? 15 : CampusLayout.large(row) ? 20 : 18)
+          .minFontSize(CampusLayout.compact(row) ? 11 : 16).maxFontSize(CampusLayout.compact(row) ? 15 : CampusLayout.large(row) ? 20 : 18)
+          .lineHeight(CampusLayout.compact(row) ? 16 : CampusLayout.large(row) ? 24 : 20).maxLines(2)
+          .fontWeight(FontWeight.Bold).fontColor(this.keyColor(row.id)).id('campus-course-name-0')
+        if (this.preview(row.id).items.length > 0) {
+          Column({ space: CampusLayout.compact(row) || CampusLayout.large(row) ? 6 : 3 }) {
+            if (!CampusLayout.compact(row)) {
+              Text($r('app.string.campus_course_periods', this.preview(row.id).items[0].value))
+                .fontSize(12).lineHeight(14).maxLines(1).fontColor(ThemeColors.textSecondary).id('campus-course-period-0')
+            }
+            Text(this.preview(row.id).items[0].detail || '—').width('100%')
+              .fontSize(CampusLayout.compact(row) ? 10 : 12).minFontSize(CampusLayout.compact(row) ? 9 : 11)
+              .maxFontSize(CampusLayout.compact(row) ? 10 : 12).lineHeight(CampusLayout.compact(row) ? 12 : CampusLayout.large(row) ? 17 : 14)
+              .maxLines(CampusLayout.compact(row) ? 1 : 2).fontColor(ThemeColors.textSecondary)
+              .id('campus-course-room-0')
+          }.width('100%').alignItems(HorizontalAlign.Start)
+            .padding({ right: CampusLayout.compact(row) ? 24 : 0 })
+        }
+      }.width('100%').layoutWeight(1).alignItems(HorizontalAlign.Start).justifyContent(FlexAlign.Center)
+        .padding({ bottom: !CampusLayout.compact(row) && !CampusLayout.large(row) ? 6 : 0 })
+    }
   }
 
   private academicGpa(): string {
@@ -966,7 +1075,8 @@ export struct CampusHome {
           .lineHeight(CampusLayout.compact(row) ? 22 : 36)
       }
       if (CampusLayout.compact(row)) {
-        Text(this.academicCompactCaption()).fontSize(11).lineHeight(14).fontColor(ThemeColors.textSecondary)
+        Text(this.academicCompactCaption()).fontSize(11).minFontSize(9).maxFontSize(11)
+          .heightAdaptivePolicy(TextHeightAdaptivePolicy.MIN_FONT_SIZE_FIRST).lineHeight(14).fontColor(ThemeColors.textSecondary)
           .minFontSize(9).maxFontSize(11).heightAdaptivePolicy(TextHeightAdaptivePolicy.MIN_FONT_SIZE_FIRST)
           .width('100%').maxLines(1).id('campus-academic-compact-counts')
       } else if (!CampusLayout.large(row)) {
@@ -1057,7 +1167,7 @@ export struct CampusHome {
       ForEach(this.preview(row.id).items.slice(0, 2), (item: CampusPreviewItem, index: number) => {
         if (index > 0) { Divider().vertical(true).height(76).color(ThemeColors.divider).strokeWidth(0.5) }
         Column({ space: 3 }) {
-          Text(item.label).draggable(false).fontSize(12).lineHeight(18).fontColor(ThemeColors.textSecondary)
+          Text(ReadableText.keepWords(item.label)).draggable(false).fontSize(12).lineHeight(18).fontColor(ThemeColors.textSecondary)
             .width('100%').maxLines(1).textOverflow({ overflow: TextOverflow.Ellipsis }).id('campus-bus-route-' + index)
           Text(item.value || AppLanguage.text($r('app.string.campus_bus_closed'), this.languageRevision))
             .draggable(false).fontSize(item.value ? 26 : 15).lineHeight(34).fontWeight(FontWeight.Bold)
@@ -1158,6 +1268,7 @@ export struct CampusHome {
 
   private cardFooter(row: CampusModule): string {
     const preview: CampusPreview = this.preview(row.id)
+    if (row.id === 'developer_notice') return preview.secondary
     if (row.id === 'dining' && preview.items.length === 2) return AppLanguage.text($r('app.string.campus_dining_reference'), this.languageRevision)
     if (row.id === 'empty_classroom' && CampusLayout.large(row) && preview.status === 'ready' && preview.total >= 0) {
       return preview.description.split('\n').slice(-1)[0] || preview.secondary
@@ -1173,13 +1284,16 @@ export struct CampusHome {
     Column({ space: 3 }) {
       Text(this.preview(row.id).items[index].label).fontSize(12).minFontSize(10).maxFontSize(12)
         .heightAdaptivePolicy(TextHeightAdaptivePolicy.MIN_FONT_SIZE_FIRST).maxLines(1).lineHeight(17).fontColor(ThemeColors.textSecondary).width('100%')
-      Text(this.preview(row.id).items[index].value).draggable(false).fontSize(CampusLayout.large(row) ? 24 : 18).lineHeight(CampusLayout.large(row) ? 32 : 23)
+      Text(ReadableText.keepWords(this.preview(row.id).items[index].value)).draggable(false).fontSize(CampusLayout.large(row) ? 20 : 18).lineHeight(CampusLayout.large(row) ? 24 : 23)
         .fontWeight(FontWeight.Bold).fontColor(CampusContentStyle.signalColor(this.preview(row.id).items[index].tone, ThemeColors.textPrimary))
-        .minFontSize(14).maxFontSize(CampusLayout.large(row) ? 24 : 18)
-        .heightAdaptivePolicy(TextHeightAdaptivePolicy.MIN_FONT_SIZE_FIRST).maxLines(1).width('100%')
+        .minFontSize(14).maxFontSize(CampusLayout.large(row) ? 20 : 18)
+        .heightAdaptivePolicy(TextHeightAdaptivePolicy.MIN_FONT_SIZE_FIRST).maxLines(CampusLayout.large(row) ? 2 : 1)
+        .lineBreakStrategy(LineBreakStrategy.GREEDY)
+        .textOverflow({ overflow: TextOverflow.Ellipsis }).width('100%')
         .id('campus-dining-relative-' + String(index))
       if (CampusLayout.large(row)) {
         Text(this.preview(row.id).items[index].detail).fontSize(12).lineHeight(18).fontColor(ThemeColors.textSecondary).width('100%')
+          .maxLines(1).textOverflow({ overflow: TextOverflow.Ellipsis })
       }
     }.width('100%').alignItems(HorizontalAlign.Start)
   }
@@ -1246,34 +1360,49 @@ export struct CampusHome {
             .maxFontSize(CampusLayout.compact(row) ? 14 : 17).heightAdaptivePolicy(TextHeightAdaptivePolicy.MIN_FONT_SIZE_FIRST)
             .fontColor(this.tint(row.id)).layoutWeight(1).maxLines(1)
             .textOverflow({ overflow: TextOverflow.Ellipsis })
-        if (CampusLayout.compact(row) && !this.editing && !catalog) { this.CardRefresh(row) }
-        else if (catalog) {
+        if (row.id === 'timetable' && CampusLayout.compact(row) && this.preview(row.id).items.length > 0) {
+          Text($r('app.string.campus_course_periods', this.preview(row.id).items[0].value)).fontSize(10)
+            .fontColor(ThemeColors.textSecondary).maxLines(1).id('campus-course-period-header')
+            .transition(TransitionEffect.OPACITY.animation({ duration: 180, curve: Curve.EaseInOut }))
+        }
+        if (catalog) {
           Stack() {
             SymbolGlyph(this.selected(row) ? $r('sys.symbol.checkmark') : $r('sys.symbol.plus'))
               .fontSize(CampusLayout.compact(row) ? 14 : 10).fontColor([this.selected(row) ? Color.White : ThemeColors.primary])
-          }.width(CampusLayout.compact(row) ? 28 : 14).height(CampusLayout.compact(row) ? 28 : 14)
-            .borderRadius(CampusLayout.compact(row) ? 14 : 7).backgroundColor(this.selected(row) ? ThemeColors.primary : Color.Transparent)
+          }.width(14).height(14)
+            .borderRadius(7).backgroundColor(this.selected(row) ? ThemeColors.primary : Color.Transparent)
             .id('campus-catalog-marker-' + row.id + '-' + CampusLayout.size(row)).hitTestBehavior(HitTestMode.None)
         }
-        else if (this.loadingIds.includes(row.id)) { LoadingProgress().width(18).height(18).color(ThemeColors.primary) }
-        else { SymbolGlyph($r('sys.symbol.chevron_right')).fontSize(14).fontColor([ThemeColors.textSecondary]) }
+        else { SymbolGlyph($r('sys.symbol.chevron_right')).fontSize(14).fontColor([ThemeColors.textSecondary])
+          .width(14)
+          .id('campus-card-detail-' + row.id) }
       }.width('100%').height(CampusLayout.compact(row) ? 28 : 24)
         .alignItems(VerticalAlign.Center).padding({ right: this.editing && !catalog ? 26 : 0 })
-      if (!catalog && !this.editing && this.preview(row.id).status === 'error') {
+      Stack({ alignContent: Alignment.TopStart }) {
+      ForEach([this.informationKey(row)], (_key: string) => {
+      Column() {
+      if (this.preview(row.id).status === 'error') {
         if (CampusLayout.compact(row)) {
           Column() {
             Text(DiagnosticNavigation.brief(this.previewFailures.get(row.id) ?? AppLanguage.text($r('app.string.campus_preview_failed'), this.languageRevision)))
               .fontSize(11).lineHeight(14).fontColor(ThemeColors.textSecondary).maxLines(1).width('100%').textOverflow({ overflow: TextOverflow.Ellipsis })
             DiagnosticLink({ message: this.previewFailures.get(row.id) ?? 'Error: Campus preview unavailable',
-              controlId: 'campus-card-' + row.id + '-diagnostics', controlHeight: 24 })
+              controlId: 'campus-card-' + row.id + '-diagnostics', controlHeight: 24, interactive: !catalog && !this.editing })
           }.width('100%').alignItems(HorizontalAlign.Start)
         } else {
-          ErrorNotice({ message: this.previewFailures.get(row.id) ?? 'Error: Campus preview unavailable',
-            controlId: 'campus-card-' + row.id + '-diagnostics' }).layoutWeight(1)
+          Column() {
+            ErrorNotice({ message: this.previewFailures.get(row.id) ?? 'Error: Campus preview unavailable',
+              controlId: 'campus-card-' + row.id + '-diagnostics', textMaxLines: 2, diagnosticHeight: 24,
+              diagnosticInteractive: !catalog && !this.editing })
+          }.width('100%').layoutWeight(1).justifyContent(FlexAlign.Center)
         }
       } else if (this.previewUnavailable(row)) {
         this.WaitingPreview(row)
-      } else if ((row.id === 'announcement' || row.id === 'timetable') && !CampusLayout.compact(row)) {
+      } else if (row.id === 'timetable') {
+        this.TimetablePreview(row)
+      } else if (row.id === 'developer_notice') {
+        this.DeveloperNoticePreview(row)
+      } else if (row.id === 'announcement' && !CampusLayout.compact(row)) {
         this.NoticePreview(row, catalog)
       } else if (row.id === 'academic' && this.preview(row.id).gpa && this.preview(row.id).credits) {
         this.AcademicPreview(row)
@@ -1289,34 +1418,66 @@ export struct CampusHome {
       } else if (row.id === 'dining' && !CampusLayout.compact(row) && this.preview(row.id).status === 'ready' && this.preview(row.id).items.length === 2) {
         this.DiningPreview(row)
       } else {
-      Column({ space: CampusLayout.compact(row) ? 7 : 6 }) {
-      Text(this.keyValue(row.id) || AppLanguage.text(catalog ? $r('app.string.campus_preview_open') : $r('app.string.campus_preview_loading'), this.languageRevision))
+      Column({ space: row.id === 'dining' && CampusLayout.compact(row) && this.cardKeyValue(row).length > 10 ? 1 : CampusLayout.compact(row) ? 7 : 6 }) {
+      Text(ReadableText.keepWords(this.cardKeyValue(row) || AppLanguage.text(catalog ? $r('app.string.campus_preview_open') : $r('app.string.campus_preview_loading'), this.languageRevision)))
         .draggable(false).fontSize(CampusLayout.keyFont(row, this.keyValue(row.id))).fontWeight(FontWeight.Bold)
-        .minFontSize(14)
-        .maxFontSize(CampusLayout.keyFont(row, this.keyValue(row.id)))
+        .minFontSize(row.id === 'dining' && CampusLayout.compact(row) ? 11 : 14)
+        .maxFontSize(row.id === 'dining' && CampusLayout.compact(row) && this.cardKeyValue(row).length > 10 ? 13 : CampusLayout.keyFont(row, this.keyValue(row.id)))
         .heightAdaptivePolicy(TextHeightAdaptivePolicy.MIN_FONT_SIZE_FIRST)
-        .lineHeight(CampusLayout.compact(row) ? 22 : CampusLayout.keyFont(row, this.keyValue(row.id)) + 8).fontColor(this.keyColor(row.id))
-        .maxLines(1).textOverflow({ overflow: TextOverflow.Ellipsis }).width('100%')
+        .lineHeight(row.id === 'dining' && CampusLayout.compact(row) && this.cardKeyValue(row).length > 10 ? 14 : CampusLayout.compact(row) ? 22 : CampusLayout.keyFont(row, this.keyValue(row.id)) + 8).fontColor(this.keyColor(row.id))
+        .maxLines(row.id === 'dining' && CampusLayout.compact(row) && this.cardKeyValue(row).length > 10 ? 2 : 1)
+        .lineBreakStrategy(LineBreakStrategy.GREEDY).textOverflow({ overflow: TextOverflow.Ellipsis }).width('100%')
       if (CampusLayout.compact(row) && !(row.id === 'campus_access' && this.preview(row.id).status === 'ready')) {
-        Text(this.compactCaption(row.id)).draggable(false).fontSize(11).lineHeight(14).fontColor(ThemeColors.textSecondary)
+        Text(this.compactCaption(row.id)).draggable(false).fontSize(11).minFontSize(9).maxFontSize(11)
+          .heightAdaptivePolicy(TextHeightAdaptivePolicy.MIN_FONT_SIZE_FIRST).lineHeight(14).fontColor(ThemeColors.textSecondary)
           .width('100%').maxLines(1).textOverflow({ overflow: TextOverflow.Ellipsis })
       } else if (row.id === 'campus_access' && this.preview(row.id).status === 'ready' && !CampusLayout.compact(row) && this.preview(row.id).description) {
         this.AccessAccountStatus(row)
+      } else if (row.id === 'academic' && this.preview(row.id).calculation === 'local-v1' && !CampusLayout.large(row)) {
+        Column({ space: 2 }) {
+          Text(this.academicCaption(true)).fontSize(12).lineHeight(16).fontColor(ThemeColors.textSecondary).maxLines(1)
+          Text(this.academicCaption(false)).fontSize(12).lineHeight(16).fontColor(ThemeColors.textSecondary).maxLines(1)
+        }.width('100%').alignItems(HorizontalAlign.Start)
+      } else if (row.id === 'sports' && !CampusLayout.large(row)) {
+        Text($r('app.string.campus_sports_short_hint')).fontSize(12).minFontSize(10).maxFontSize(12)
+          .heightAdaptivePolicy(TextHeightAdaptivePolicy.MIN_FONT_SIZE_FIRST).lineHeight(20)
+          .fontColor(ThemeColors.textSecondary).width('100%').maxLines(1)
       } else if (this.preview(row.id).description && !(row.id === 'campus_access' && this.preview(row.id).status === 'ready')) {
-        Text(row.id === 'empty_classroom' ? this.preview(row.id).description.split(' · ')[0] : this.preview(row.id).description).draggable(false).fontSize(13).lineHeight(22).fontColor(ThemeColors.textSecondary).width('100%')
+        Text(ReadableText.keepWords(row.id === 'empty_classroom' ? this.preview(row.id).description.split(' · ')[0] : this.preview(row.id).description)).draggable(false).fontSize(13).lineHeight(22).fontColor(ThemeColors.textSecondary).width('100%')
           .maxLines(CampusLayout.large(row) ? 3 : 2).textOverflow({ overflow: TextOverflow.Ellipsis })
       }
       }.width('100%').alignItems(HorizontalAlign.Start).layoutWeight(1)
         .justifyContent(CampusLayout.compact(row) ? FlexAlign.Start : FlexAlign.Center)
       }
+      }.width('100%').height('100%').alignItems(HorizontalAlign.Start)
+        .transition(TransitionEffect.OPACITY.animation({ duration: 180, curve: Curve.EaseInOut }))
+      }, (key: string) => key)
+      }.width('100%').layoutWeight(1).clip(true).id('campus-information-' + row.id)
+        // Match the normal card's refresh clearance in the catalogue as well.
+        .padding({ right: CampusLayout.compact(row) && row.id !== 'timetable' ? 24 : 0 })
       if (!CampusLayout.compact(row)) {
-      Row({ space: 6 }) {
-        Text(this.cardFooter(row))
-          .draggable(false).fontSize(11).lineHeight(17).fontColor(ThemeColors.textSecondary).maxLines(1).layoutWeight(1)
-        if (!this.editing && !catalog) {
-          this.CardRefresh(row)
+      Stack({ alignContent: Alignment.Start }) {
+        ForEach([this.cardFooter(row)], (caption: string) => {
+        if (row.id === 'sports') {
+          Column() {
+            ForEach(caption.split(' · ').slice(0, 2), (name: string) => {
+              Text(name).draggable(false).fontSize(11).minFontSize(9).maxFontSize(11)
+                .heightAdaptivePolicy(TextHeightAdaptivePolicy.MIN_FONT_SIZE_FIRST)
+                .lineHeight(14).maxLines(1).textOverflow({ overflow: TextOverflow.Ellipsis })
+                .fontColor(ThemeColors.textSecondary).width('100%')
+            }, (name: string) => name)
+          }.width('100%').alignItems(HorizontalAlign.Start)
+            .transition(TransitionEffect.OPACITY.animation({ duration: 180, curve: Curve.EaseInOut }))
+        } else {
+        Text(ReadableText.keepWords(caption))
+          .draggable(false).fontSize(11).lineHeight(14)
+          .lineBreakStrategy(LineBreakStrategy.GREEDY)
+          .fontColor(ThemeColors.textSecondary).maxLines(2).textOverflow({ overflow: TextOverflow.Ellipsis }).width('100%')
+          .transition(TransitionEffect.OPACITY.animation({ duration: 180, curve: Curve.EaseInOut }))
         }
-      }.width('100%').height(28).alignItems(VerticalAlign.Center)
+        }, (caption: string) => caption)
+      }.width('100%').height(28).clip(true).id('campus-footer-' + row.id)
+        .padding({ right: 28 })
       }
     }.width('100%').height('100%').constraintSize({ minHeight: CampusLayout.compact(row) ? CampusLayout.HALF_HEIGHT : CampusLayout.FULL_HEIGHT,
       maxHeight: CampusLayout.compact(row) ? CampusLayout.HALF_HEIGHT : CampusLayout.FULL_HEIGHT })
@@ -1333,6 +1494,11 @@ export struct CampusHome {
   CardBody(row: CampusModule) {
     Stack({ alignContent: Alignment.TopEnd }) {
       this.CardContent(row)
+      if (!this.editing) {
+        // A 14vp control radius shares the card's corner centre: R - 14 inset.
+        Row() { this.CardRefresh(row) }.width(28).height(28)
+          .position({ right: CampusLayout.compact(row) ? 6 : 10, bottom: CampusLayout.compact(row) ? 6 : 10 })
+      }
       if (this.editing) {
         Button({ type: ButtonType.Circle }) {
           SymbolGlyph($r('sys.symbol.xmark')).fontSize(14).fontColor([Color.White])

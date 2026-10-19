@@ -1,0 +1,4 @@
+GPA formula and symbol SVG glyphs generated from MathJax 3.2.2 TeX font data.
+Copyright (c) 2017-2022 The MathJax Consortium. Licensed under Apache License 2.0.
+See MathJax-LICENSE.txt. https://github.com/mathjax/MathJax-src
+MathJax is used offline to generate paths and is not bundled as a runtime engine.

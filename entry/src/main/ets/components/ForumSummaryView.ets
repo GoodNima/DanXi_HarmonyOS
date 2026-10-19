@@ -1,3 +1,4 @@
+import { ReadableText } from '../common/ReadableText'
 import { ErrorNotice } from './ErrorNotice'
 import { AppLanguage } from '../common/AppLanguage'
 import { ThemeColors } from '../common/Theme'
@@ -113,7 +114,7 @@ export struct ForumSummaryView {
           }.width('100%')
           if (this.count > 0) Text(this.text($r('app.string.summary_count')).replace('%s', String(this.count)))
             .fontSize(13).fontColor(ThemeColors.textSecondary).width('100%')
-          Text($r('app.string.summary_wait_note')).fontSize(12).fontColor(ThemeColors.textHint).width('100%')
+          Text(ReadableText.resource($r('app.string.summary_wait_note'))).fontSize(12).lineHeight(20).fontColor(ThemeColors.textHint).width('100%').lineBreakStrategy(LineBreakStrategy.GREEDY)
           if (!ForumSummaryRules.hasContent(this.value)) {
             ForEach([92, 76, 58], (width: number) => {
               Row() {}.width(String(width) + '%').height(10).borderRadius(5).backgroundColor($r('app.color.input_surface'))

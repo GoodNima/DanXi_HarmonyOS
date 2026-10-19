@@ -1,3 +1,4 @@
+import { ReadableText } from '../common/ReadableText'
 import { SheetTransitionGuard } from '../common/SheetTransitionGuard'
 import { router } from '@kit.ArkUI'
 import { AppLanguage } from '../common/AppLanguage'
@@ -20,7 +21,6 @@ import { ScheduleTimelineGrid } from '../components/ScheduleTimelineGrid'
 import { TopFade } from '../components/TopFade'
 import { ErrorNotice } from '../components/ErrorNotice'
 import { CenterLoadingProgress } from '../components/CenterLoadingProgress'
-import { EmptyRefreshIndicator, FeedRefreshProgress } from '../components/FeedRefreshProgress'
 import { settleScrollTouch } from '../common/ScrollTouch'
 
 class ClassroomGridSource implements IDataSource {
@@ -60,7 +60,6 @@ export struct ClassroomSchedulePage {
   @State private verifying: boolean = false
   @State private verification: boolean = false
   @State private refreshing: boolean = false
-  @State private pullOffset: number = 0
   @State private detail: boolean = false
   @State private selected: ClassroomSchedule = new ClassroomSchedule()
   @State private selectedRoom: ScheduledClassroom = new ScheduledClassroom()
@@ -70,31 +69,38 @@ export struct ClassroomSchedulePage {
   private flightKey: string = ''
   private flight: Promise<void> | null = null
   private resume: boolean = false
+  private resumeRead: boolean = false
+  private initialized: boolean = false
   private campusScope: string = ''
 
   aboutToAppear(): void { this.active = true; this.initialize() }
   private async initialize(): Promise<void> {
+    this.initialized = false
     this.campusScope = CampusPreference.current(); this.campus = this.campusScope
     const revision: number = this.revision
     const saved: string = await ClassroomPreference.building(this.campus).catch(() => ClassroomPresentation.buildings(this.campus)[0])
     if (!this.active || revision !== this.revision) return
+    this.initialized = true
     this.building = ClassroomScheduleParser.normalizeBuilding(saved); this.campus = ClassroomScheduleParser.campus(this.building); this.load(false)
   }
   onPageShow(): void {
     this.active = true
     if (this.campusScope && this.campusScope !== CampusPreference.current()) { this.systemCampusChanged(); return }
+    if (!this.initialized) { this.initialize(); return }
     if (this.resume) { this.resume = false; this.load(true) }
+    else if (this.resumeRead) { this.resumeRead = false; this.load(false) }
     else if (this.owner && this.owner !== this.source.owner()) this.accountChanged()
   }
   systemCampusChanged(): void {
     if (!this.active || this.campusScope === CampusPreference.current()) return
     this.revision++; this.rooms = []; this.updateGrid(); this.detail = false; this.initialize()
   }
-  onPageHide(): void { this.active = false; this.refreshing = false }
+  onPageHide(): void { this.resumeRead = this.resumeRead || this.loading; this.active = false; this.refreshing = false }
   aboutToDisappear(): void { this.active = false; this.revision++; this.loading = false; this.refreshing = false; this.flight = null }
   accountChanged(): void { if (!this.active || this.owner === this.source.owner()) return; this.rooms = []; this.updateGrid(); this.detail = false; this.load(false) }
   private load(force: boolean): Promise<void> {
     if (!this.active || this.verifying) return Promise.resolve()
+    this.resumeRead = false
     const key: string = this.source.owner() + '/' + this.building + '/' + this.day
     if (this.flight !== null && key === this.flightKey) return this.flight
     this.flightKey = key
@@ -254,11 +260,10 @@ export struct ClassroomSchedulePage {
   }
   build() {
     Stack({ alignContent: Alignment.Top }) {
-      Refresh({ refreshing: $$this.refreshing, builder: EmptyRefreshIndicator }) {
         Scroll(this.scroller) {
           Column({ space: 14 }) {
             this.Filters()
-            Text($r('app.string.classroom_schedule_hint')).fontSize(12).lineHeight(19).fontColor(ThemeColors.textSecondary).width('100%')
+            Text(ReadableText.resource($r('app.string.classroom_schedule_hint'))).fontSize(12).lineHeight(20).fontColor(ThemeColors.textSecondary).width('100%').lineBreakStrategy(LineBreakStrategy.GREEDY)
             if (this.error) Column({ space: 14 }) {
               ErrorNotice({ message: this.error, controlId: 'classroom-diagnostics' })
               if (this.verification) FloatingActionButton({ label: this.source instanceof DefaultClassroomScheduleSource && !AppState.isLoggedIn() ? $r('app.string.ui_log_in_to_campus_account') : $r('app.string.campus_verify_continue'), actionEnabled: !this.verifying, onAction: () => { this.verify() } }).width(176)
@@ -268,10 +273,8 @@ export struct ClassroomSchedulePage {
           }.width('100%').padding({ left: ThemeDimens.cardGutter, right: ThemeDimens.cardGutter, top: px2vp(this.topPx) + 76, bottom: Math.max(20, px2vp(this.bottomPx)) + 24 })
         }.width('100%').height('100%').align(Alignment.Top).scrollBar(BarState.Off).edgeEffect(EdgeEffect.Spring, { alwaysEnabled: true })
           .onTouch((event: TouchEvent) => { settleScrollTouch(this.scroller, event) })
-      }.width('100%').height('100%').onRefreshing(() => { this.load(true) }).onOffsetChange((offset: number) => { this.pullOffset = offset })
-      CenterLoadingProgress({ busy: this.loading && !this.refreshing })
+      CenterLoadingProgress({ busy: this.loading })
       TopFade({ extent: px2vp(this.topPx) + 62 })
-      FeedRefreshProgress({ topInset: px2vp(this.topPx) + 82, pullOffset: this.pullOffset, refreshing: this.refreshing })
       Row({ space: 12 }) {
         FloatingActionButton({ label: $r('app.string.settings_back'), icon: 'back', controlHeight: 44, onAction: () => { router.back() } }).width(44)
         Text($r('app.string.feature_empty_classroom')).fontSize(20).fontWeight(FontWeight.Bold).fontColor(ThemeColors.textPrimary).layoutWeight(1).textAlign(TextAlign.Center)

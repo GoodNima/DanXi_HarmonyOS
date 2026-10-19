@@ -1,3 +1,4 @@
+import { ReadableText } from '../common/ReadableText'
 import { ErrorNotice } from '../components/ErrorNotice'
 import { settleScrollTouch } from '../common/ScrollTouch'
 import { util } from '@kit.ArkTS'
@@ -123,7 +124,7 @@ export struct SettingsUtilitiesPage {
   }
   @Builder
   Paragraph(text: ResourceStr) {
-    Text(text).fontSize(14).lineHeight(22).fontColor(ThemeColors.textSecondary).width('100%')
+    Text(ReadableText.resource(text)).fontSize(14).lineHeight(22).lineBreakStrategy(LineBreakStrategy.GREEDY).fontColor(ThemeColors.textSecondary).width('100%')
   }
   @Builder
   Link(label: ResourceStr, action: () => void, icon: string = 'license') {
@@ -199,7 +200,7 @@ export struct SettingsUtilitiesPage {
       Column({ space: 2 }) {
         Text(person.name).fontSize(14).lineHeight(20).fontColor(ThemeColors.textPrimary)
           .width('100%').textAlign(TextAlign.Start).wordBreak(WordBreak.BREAK_ALL)
-        Text(this.platforms(person.flutter, person.ios)).fontSize(11).lineHeight(16).fontWeight(FontWeight.Medium)
+        Text(this.platforms(person.flutter, person.ios, person.harmony)).fontSize(11).lineHeight(16).fontWeight(FontWeight.Medium)
           .fontColor(ThemeColors.primary).width('100%').id('about-platform-' + person.identity)
         if (person.design) {
           Text(person.design === 'icon' ? $r('app.string.settings_credit_icon_design') : $r('app.string.settings_credit_art_design'))
@@ -208,7 +209,13 @@ export struct SettingsUtilitiesPage {
       }.alignItems(HorizontalAlign.Start).layoutWeight(1)
     }.width('100%').alignItems(VerticalAlign.Center)
   }
-  private platforms(flutter: boolean, ios: boolean): string { return flutter && ios ? 'Flutter · iOS' : flutter ? 'Flutter' : 'iOS' }
+  private platforms(flutter: boolean, ios: boolean, harmony: boolean = false): string {
+    const platforms: string[] = []
+    if (flutter) platforms.push('Android')
+    if (ios) platforms.push('iOS')
+    if (harmony) platforms.push('HarmonyOS')
+    return platforms.join(' · ')
+  }
   @Builder
   Credits() {
     Column({ space: 10 }) {
@@ -218,8 +225,9 @@ export struct SettingsUtilitiesPage {
         router.pushUrl({ url: 'pages/SettingsUtilitiesPage', params: new SettingsRouteParams('credits') })
       })
       Divider().color(ThemeColors.divider).margin({ top: 2, bottom: 2 })
-      this.Heading($r('app.string.settings_developers'))
-      Text($r('app.string.settings_contributors_merged')).fontSize(13).lineHeight(20)
+      this.Heading($r('app.string.settings_app_developers'))
+      Text(ReadableText.keepWords(AppLanguage.text($r('app.string.settings_contributors_merged'), this.languageRevision))).fontSize(13).lineHeight(20)
+        .lineBreakStrategy(LineBreakStrategy.GREEDY)
         .fontColor(ThemeColors.textSecondary).width('100%')
       Flex({ wrap: FlexWrap.Wrap }) {
         ForEach(this.contributors, (person: ContributorCredit) => {
@@ -227,7 +235,7 @@ export struct SettingsUtilitiesPage {
             Button({ type: ButtonType.Normal }) { this.ContributorIdentity(person) }
               .width('50%').constraintSize({ minHeight: 80 }).padding({ top: 6, bottom: 6, left: 4, right: 4 })
               .id('about-contributor-' + person.identity).backgroundColor(Color.Transparent).stateEffect(false)
-              .accessibilityText(person.name + ', ' + this.platforms(person.flutter, person.ios))
+              .accessibilityText(person.name + ', ' + this.platforms(person.flutter, person.ios, person.harmony))
               .onClick(() => { HapticFeedback.selection(); this.open(person.url) })
           } else {
             Column() { this.ContributorIdentity(person) }
@@ -242,6 +250,26 @@ export struct SettingsUtilitiesPage {
   @Builder
   OriginalNotes() {
     Column({ space: 10 }) {
+      this.Heading($r('app.string.settings_harmony_platform'))
+      this.Link($r('app.string.settings_harmony_project'), () => { this.open(AboutCredits.HARMONY_PROJECT_URL) }, 'proxy')
+      this.Link($r('app.string.settings_harmony_contributors'), () => { this.open(AboutCredits.HARMONY_CONTRIBUTORS_URL) }, 'person')
+      Divider().color(ThemeColors.divider)
+      Column({ space: 6 }) {
+        Row({ space: 8 }) {
+          Text(Constant.APP_VERSION).fontSize(16).lineHeight(22).fontWeight(FontWeight.Bold)
+            .fontColor(ThemeColors.textPrimary).maxLines(1).copyOption(CopyOptions.LocalDevice).id('about-harmony-version')
+          Text(Constant.APP_RELEASE_STAGE).fontSize(11).lineHeight(16).fontColor(ThemeColors.textSecondary).maxLines(1)
+            .padding({ left: 8, right: 8, top: 3, bottom: 3 }).borderRadius(6)
+            .backgroundColor($r('app.color.input_surface')).id('about-harmony-stage')
+        }.width('100%').justifyContent(FlexAlign.End).alignItems(VerticalAlign.Center)
+        Text($r('app.string.settings_harmony_build', Constant.APP_BUILD_VERSION)).fontSize(12).lineHeight(18)
+          .fontColor(ThemeColors.textSecondary).width('100%').textAlign(TextAlign.End).id('about-harmony-build')
+        Text($r('app.string.settings_harmony_upgrade', Constant.APP_VERSION_CODE)).fontSize(12).lineHeight(18)
+          .fontColor(ThemeColors.textSecondary).width('100%').textAlign(TextAlign.End).id('about-harmony-upgrade')
+        Text($r('app.string.settings_harmony_note')).fontSize(12).lineHeight(18)
+          .fontColor(ThemeColors.textSecondary).width('100%').textAlign(TextAlign.End).id('about-harmony-note')
+      }.width('100%').id('about-harmony-footer')
+      Divider().color(ThemeColors.divider).margin({ top: 8, bottom: 8 })
       this.Heading($r('app.string.settings_original_flutter'))
       Divider().color(ThemeColors.divider).margin({ top: 4 })
       this.Link($r('app.string.settings_original_project'), () => { this.open(AboutCredits.PROJECT_URL) }, 'proxy')
@@ -320,7 +348,9 @@ export struct SettingsUtilitiesPage {
     Column({ space: 8 }) {
       this.Heading($r('app.string.settings_contact'))
       Text('dev@danta.tech').fontSize(16).fontColor(ThemeColors.primary).copyOption(CopyOptions.LocalDevice).width('100%')
-      this.Paragraph($r('app.string.settings_contact_hint'))
+      Text(ReadableText.keepWords(AppLanguage.text($r('app.string.settings_contact_hint'), this.languageRevision)))
+        .fontSize(14).lineHeight(23).fontColor(ThemeColors.textSecondary).width('100%')
+        .lineBreakStrategy(LineBreakStrategy.GREEDY)
       this.Link($r('app.string.settings_email'), () => { this.contact() }, 'mail')
       this.Link($r('app.string.settings_copy_email'), () => { this.copyEmail() }, 'copy')
       Divider().color(ThemeColors.divider)

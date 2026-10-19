@@ -1,3 +1,4 @@
+import { ReadableText } from '../common/ReadableText'
 import { ErrorNotice } from '../components/ErrorNotice'
 import { settleScrollTouch } from '../common/ScrollTouch'
 import { AppLanguage } from '../common/AppLanguage'
@@ -136,7 +137,7 @@ struct AppSettingsPage {
                 Column() {
                   this.Choice($r('app.string.account_undergraduate'), this.group === 'undergraduate', () => { this.saveGroup('undergraduate') })
                   this.Choice($r('app.string.account_postgraduate'), this.group === 'postgraduate', () => { this.saveGroup('postgraduate') })
-                  Text($r('app.string.account_choice_hint')).fontSize(13).fontColor(ThemeColors.textSecondary).padding(12)
+                  Text(ReadableText.resource($r('app.string.account_choice_hint'))).fontSize(13).lineHeight(21).fontColor(ThemeColors.textSecondary).padding(12).lineBreakStrategy(LineBreakStrategy.GREEDY)
                   CalendarSettings({ authenticationVisible: this.visible })
                 }.borderRadius(20).backgroundColor($r('app.color.surface_fallback')).systemMaterial(adaptiveMaterial(this.materialRevision))
               }
@@ -146,7 +147,7 @@ struct AppSettingsPage {
                 Text(this.permissionKnown ? (this.notificationsAllowed ? $r('app.string.notification_allowed') : $r('app.string.notification_denied')) : $r('app.string.notification_unknown'))
                   .fontColor(ThemeColors.textSecondary).padding(12)
                 Button($r('app.string.notification_permission')).enabled(!this.permissionPending).onClick(() => { this.permission() }).margin(8)
-                Text($r('app.string.notification_system_hint')).fontSize(13).fontColor(ThemeColors.textSecondary).padding(12)
+                Text(ReadableText.resource($r('app.string.notification_system_hint'))).fontSize(13).lineHeight(21).fontColor(ThemeColors.textSecondary).padding(12).lineBreakStrategy(LineBreakStrategy.GREEDY)
                 if (!this.sessionActive) { Text($r('app.string.notification_login')).fontColor(ThemeColors.textSecondary).padding(12) }
                 this.NotificationRow($r('app.string.notification_mention'), 'mention')
                 this.NotificationRow($r('app.string.notification_favorite'), 'favorite')

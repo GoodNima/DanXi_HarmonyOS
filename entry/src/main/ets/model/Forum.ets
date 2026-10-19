@@ -1,5 +1,5 @@
 /**
- * Forum (树洞) wire models for the fduhole.com API.
+ * Forum (茶楼) wire models for the fduhole.com API.
  *
  * Field-for-field with the server payload. Upstream proof that the Dart field
  * names ARE the JSON keys: every model in lib/model/forum/ uses a bare

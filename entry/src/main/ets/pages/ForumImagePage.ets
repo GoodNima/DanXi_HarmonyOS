@@ -662,16 +662,11 @@ export struct ForumImageView {
   private finishPinch(): void { this.pinchInProgress = false; this.drainQueuedImage() }
   private cancelPan(): void { this.panInProgress = false; this.panSuppressed = false; this.drainQueuedImage() }
 
-  private handleSaveResult(result: SaveButtonOnClickResult): void {
-        if (result === SaveButtonOnClickResult.SUCCESS) this.saveOriginal()
-        else if (result !== SaveButtonOnClickResult.CANCELED_BY_USER) {
-          DiagnosticNavigation.feedback(this.getUIContext(), new Error('SaveButton authentication failed'),
-            AppLanguage.text($r('app.string.ui_could_not_save_check_your_connection_and_storage')))
-        }
-  }
-
   private async saveOriginal(): Promise<void> {
     if (this.saving || !this.source) return
+    // Keep the exact current image pose beneath the system permission dialog;
+    // a fling/zoom must not continue behind it and jump on return.
+    this.stopMotion()
     this.saving = true
     const source: string = this.source
     const context = this.getUIContext().getHostContext() as common.UIAbilityContext
@@ -679,8 +674,8 @@ export struct ForumImageView {
     try {
       await this.download.download(source, cache)
       if (!this.active) return
-      await GalleryImageSave.save(context, cache)
-      if (!this.active) return
+      const saved: string = await GalleryImageSave.save(context, cache)
+      if (!this.active || !saved) return
       promptAction.showToast({ message: AppLanguage.text($r('app.string.ui_original_image_saved'), this.languageRevision) })
     } catch (e) {
       if (this.active) DiagnosticNavigation.feedback(this.getUIContext(), e as Object, AppLanguage.text($r('app.string.ui_could_not_save_check_your_connection_and_storage'), this.languageRevision))
@@ -807,14 +802,17 @@ export struct ForumImageView {
               .id('gallery-back')
             Blank()
             if (GalleryImageSave.supported()) {
-            GallerySaveControl({ actionEnabled: !this.saving && this.source.length > 0,
-              onResult: (result: SaveButtonOnClickResult) => { this.handleSaveResult(result) } })
+            // saveOriginal owns single-flight input. Keep the material/outline
+            // stable instead of disabling and rebuilding the native control.
+            GallerySaveControl({ actionEnabled: this.source.length > 0,
+              onSave: () => { this.saveOriginal() } })
               .width(48).height(48)
               .accessibilityText(AppLanguage.text($r('app.string.ui_download_original'), this.languageRevision))
             }
           }.width('100%')
           if (this.saving) {
             Text($r('app.string.ui_saving')).fontSize(12).fontColor($r('app.color.gallery_foreground'))
+              .transition(TransitionEffect.OPACITY.animation({ duration: 180, curve: Curve.EaseOut }))
           } else if (this.originalLoading && this.displayed) {
             Row({ space: 8 }) {
               LoadingProgress().width(16).height(16).color($r('app.color.gallery_accent'))

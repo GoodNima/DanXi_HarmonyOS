@@ -23,9 +23,9 @@ import { ErrorDiagnostics } from '../model/ErrorDiagnostics'
 import { FloatingActionButton } from '../components/FloatingActionButton'
 import { CampusActionLabel } from '../components/CampusActionLabel'
 import { TopFade } from '../components/TopFade'
+import { TopFadeMetrics } from '../common/TopFadeMetrics'
 import { ErrorNotice } from '../components/ErrorNotice'
 import { CenterLoadingProgress } from '../components/CenterLoadingProgress'
-import { EmptyRefreshIndicator, FeedRefreshProgress } from '../components/FeedRefreshProgress'
 import { settleScrollTouch } from '../common/ScrollTouch'
 
 class BookingVenueList implements IDataSource {
@@ -77,7 +77,6 @@ export struct SportsBookingPage {
   @State private error: string = ''
   @State private verification: boolean = false
   @State private refreshing: boolean = false
-  @State private pullOffset: number = 0
   @State private sheet: boolean = false
   @State private sheetKind: string = ''
   @State private period: BookingPeriod = { id: 0, str_time: '', start_time: '', end_time: '' }
@@ -199,8 +198,19 @@ export struct SportsBookingPage {
     if (view === 'list') {
       if (!this.catalogueLoaded) this.load(false)
       else {
-        this.filterChanged(); this.switching = false
-        this.getUIContext().animateTo({ duration: 200, curve: Curve.EaseOut }, () => { this.contentOpacity = 1 })
+        this.filterChanged(); this.pendingView = view
+        const revision: number = this.revision
+        // The old detail still supplies the scroll extent until the lazy list
+        // is laid out. Restore only then, before revealing the existing rows.
+        this.getUIContext().postFrameCallback({ onFrame: () => {
+          if (!this.active || revision !== this.revision || this.pendingView !== view) return
+          this.getUIContext().postFrameCallback({ onFrame: () => {
+            if (!this.active || revision !== this.revision || this.pendingView !== view) return
+            this.scroller.scrollTo({ xOffset: 0, yOffset: this.savedOffset })
+            this.pendingView = ''; this.switching = false
+            this.getUIContext().animateTo({ duration: 200, curve: Curve.EaseOut }, () => { this.contentOpacity = 1 })
+          }, onIdle: () => {} })
+        }, onIdle: () => {} })
       }
     } else { this.appointments = []; this.calendar = new BookingCalendar(); this.load(false) }
   }
@@ -311,7 +321,7 @@ export struct SportsBookingPage {
   }
   @Builder
   VenueDetail() {
-    BookingVenueImage({ token: this.detail.image, name: this.detail.name, large: true, imageReader: this.imageReader }).width('100%').height(180)
+    BookingVenueImage({ token: this.detail.image, name: this.detail.name, large: true, imageReader: this.imageReader }).width('100%').height(180).id('booking-detail-image')
     if (this.detail.introduction || this.detail.rules) Column({ space: 12 }) {
       if (this.detail.introduction) Text(this.detail.introduction).fontSize(14).lineHeight(23).fontColor(ThemeColors.textSecondary).width('100%')
       if (this.detail.rules) Button() { CampusActionLabel({ label: $r('app.string.booking_rules'), symbol: getSymbolIcon('license') }) }
@@ -377,12 +387,11 @@ export struct SportsBookingPage {
   build() {
     Stack({ alignContent: Alignment.Top }) {
       if (this.source instanceof SportsBookingRepository) BookingBrowserSession()
-      Refresh({ refreshing: $$this.refreshing, builder: EmptyRefreshIndicator }) {
         List({ scroller: this.scroller, space: 12 }) {
-          ListItem() { Column({ space: 12 }) {
+          if (this.view === 'list' || this.error) ListItem() { Column({ space: 12 }) {
             if (this.view === 'list') this.Filters()
             if (this.error) { ErrorNotice({ message: this.error, controlId: 'booking-diagnostics' }); if (this.verification) FloatingActionButton({ label: $r('app.string.campus_verify_continue'), actionEnabled: !this.loading, onAction: () => { this.verify() } }).width(160) }
-          }.width('100%').padding({ top: px2vp(this.topPx) + 76 }) }
+          }.width('100%') }
           if (this.view === 'list') {
             LazyForEach(this.venueList, (row: BookingVenue) => { ListItem() { this.Venue(row) } }, (row: BookingVenue): string => JSON.stringify(row))
             if (!this.loading && !this.error && this.visibleCount === 0) ListItem() { Text($r('app.string.booking_no_venues')).width('100%').padding(24).fontColor(ThemeColors.textSecondary) }
@@ -393,20 +402,21 @@ export struct SportsBookingPage {
             if (this.more) ListItem() { Button($r('app.string.books_load_more')).enabled(!this.paging).onClick(() => { this.nextAppointments() }) }
           }
         }.width('100%').height('100%').padding({ left: ThemeDimens.cardGutter, right: ThemeDimens.cardGutter })
+          // Keep the first row below the entire fade even when filters/errors
+          // are absent. Empty list items do not retain their padding height.
+          .contentStartOffset(TopFadeMetrics.height(px2vp(this.topPx) + 62) + 12)
           // A viewport bottom padding clips every scrolling row behind a fixed
           // blank strip. Reserve the safe gap only at the end of the content.
           .contentEndOffset(Math.max(20, px2vp(this.bottomPx)) + 24)
           .opacity(this.contentOpacity).enabled(!this.switching && !this.verifying)
           .cachedCount(3).scrollBar(BarState.Off).edgeEffect(EdgeEffect.Spring, { alwaysEnabled: true }).onReachEnd(() => { this.nextAppointments() }).onTouch((event: TouchEvent) => { settleScrollTouch(this.scroller, event) })
-      }.width('100%').height('100%').onRefreshing(() => { this.load(true) }).onOffsetChange((offset: number) => { this.pullOffset = offset })
-      CenterLoadingProgress({ busy: (this.loading || this.verifying) && !this.refreshing })
+      CenterLoadingProgress({ busy: (this.loading || this.verifying) })
       TopFade({ extent: px2vp(this.topPx) + 62 })
-      FeedRefreshProgress({ topInset: px2vp(this.topPx) + 82, pullOffset: this.pullOffset, refreshing: this.refreshing })
       Row({ space: 12 }) {
         FloatingActionButton({ label: $r('app.string.settings_back'), icon: 'back', controlHeight: 44, onAction: () => { this.back() } }).width(44)
         Text(this.view === 'detail' ? this.detail.name : this.view === 'appointments' ? $r('app.string.booking_my_reservations') : $r('app.string.feature_sports')).fontSize(20).fontWeight(FontWeight.Bold).fontColor(ThemeColors.textPrimary).maxLines(2).layoutWeight(1).textAlign(TextAlign.Center)
         FloatingActionButton({ label: $r('app.string.ui_reload'), icon: 'refresh', zeroContentPadding: true, controlHeight: 44, controlId: 'booking-refresh', actionEnabled: !this.loading && !this.verifying && !this.switching, onAction: () => { this.verification ? this.verify() : this.load(true) } }).width(44)
-      }.height(56).width('100%').padding({ left: ThemeDimens.cardGutter, right: ThemeDimens.cardGutter }).margin({ top: px2vp(this.topPx) }).hitTestBehavior(HitTestMode.Transparent)
+      }.height(56).width('100%').padding({ left: ThemeDimens.cardGutter, right: ThemeDimens.cardGutter }).margin({ top: px2vp(this.topPx) }).hitTestBehavior(HitTestMode.Transparent).id('booking-header')
       Row().width(0).height(0).bindSheet($$this.webSheet, this.WebContent(), this.webSheetTransition.options(this.webSheet, { height: '90%', showClose: true, onDisappear: () => { this.load(true) } }))
     }.width('100%').height('100%').backgroundColor(ThemeColors.bgEnd).expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP, SafeAreaEdge.BOTTOM])
       .bindSheet($$this.sheet, this.SheetContent(), this.sheetTransition.options(this.sheet, { height: SheetSize.FIT_CONTENT, showClose: true, dragBar: false, keyboardAvoidMode: SheetKeyboardAvoidMode.RESIZE_ONLY }))

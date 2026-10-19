@@ -199,10 +199,9 @@ export struct FloatingSurface {
         // A fixed control's icon is in vp. Scaling an fp glyph inside the vp
         // frame would reintroduce clipping when accessibility text is enlarged.
         SymbolGlyph(this.iconResource ?? getSymbolIcon(this.iconName)).fontSize(String(this.fittedIconSize()) + 'vp')
-          .width(this.fittedIconSize() + 2).height(this.fittedIconSize() + 2)
-          // SymbolGlyph aligns its font cell at the content's leading edge.
-          // Split the safety frame equally around that cell so its centre,
-          // not only the enclosing node's centre, matches the capsule centre.
+          .height(this.fittedIconSize() + 2)
+          // Keep the symbol's intrinsic advance width: narrow chevrons do not
+          // fill a square font cell. The enclosing Row centres the actual glyph.
           .padding(1)
           .fontColor([this.iconColor]).hitTestBehavior(HitTestMode.None).accessibilityLevel('no')
       } else {

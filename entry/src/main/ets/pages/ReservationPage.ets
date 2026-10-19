@@ -1,3 +1,4 @@
+import { ReadableText } from '../common/ReadableText'
 import { SheetTransitionGuard } from '../common/SheetTransitionGuard'
 import { router } from '@kit.ArkUI'
 import { webview } from '@kit.ArkWeb'
@@ -20,7 +21,6 @@ import { FloatingActionButton } from '../components/FloatingActionButton'
 import { TopFade } from '../components/TopFade'
 import { ErrorNotice } from '../components/ErrorNotice'
 import { CenterLoadingProgress } from '../components/CenterLoadingProgress'
-import { EmptyRefreshIndicator, FeedRefreshProgress } from '../components/FeedRefreshProgress'
 import { settleScrollTouch } from '../common/ScrollTouch'
 
 @Entry
@@ -45,7 +45,6 @@ export struct ReservationPage {
   @State private availableOnly: boolean = false
   @State private loading: boolean = false
   @State private refreshing: boolean = false
-  @State private pullOffset: number = 0
   @State private error: string = ''
   @State private verification: boolean = false
   @State private verifying: boolean = false
@@ -342,7 +341,7 @@ export struct ReservationPage {
         FloatingActionButton({ label: $r('app.string.settings_back'), icon: 'back', controlHeight: 44,
           controlId: 'reservation-browser-close', onAction: () => { this.cancelBrowser('ReservationBrowserCancelled') } }).width(44)
       }.width('100%')
-      Text($r('app.string.reservation_browser_hint')).fontSize(13).lineHeight(21).fontColor(ThemeColors.textSecondary).width('100%')
+      Text(ReadableText.resource($r('app.string.reservation_browser_hint'))).fontSize(13).lineHeight(21).fontColor(ThemeColors.textSecondary).width('100%').lineBreakStrategy(LineBreakStrategy.GREEDY)
       if (this.browserError) ErrorNotice({ message: this.browserError, controlId: 'reservation-browser-diagnostics' }).width('100%')
       Stack() {
         Web({ src: this.browserUrl || 'about:blank', controller: this.browserController }).javaScriptAccess(true).domStorageAccess(true)
@@ -394,7 +393,6 @@ export struct ReservationPage {
 
   build() {
     Stack({ alignContent: Alignment.Top }) {
-      Refresh({ refreshing: $$this.refreshing, builder: EmptyRefreshIndicator }) {
         List({ space: 12, scroller: this.scroller }) {
           ListItem() { Row().height(this.headerExtent() + 12) }
           ListItem() { if (this.selected === undefined) { this.Filters() } else { this.DateFilters() } }
@@ -420,15 +418,12 @@ export struct ReservationPage {
             ListItem() { Text(this.selected === undefined ? $r('app.string.reservation_no_places') : $r('app.string.reservation_no_slots'))
               .fontSize(14).lineHeight(22).fontColor(ThemeColors.textSecondary).padding(18).width('100%') }
           }
-          ListItem() { Text($r('app.string.reservation_booking_hint')).fontSize(12).lineHeight(18)
-            .fontColor(ThemeColors.textSecondary).width('100%').padding({ top: 8, bottom: 24 }) }
+          ListItem() { Text(ReadableText.resource($r('app.string.reservation_booking_hint'))).fontSize(12).lineHeight(20)
+            .fontColor(ThemeColors.textSecondary).width('100%').padding({ top: 8, bottom: 24 }).lineBreakStrategy(LineBreakStrategy.GREEDY) }
           ListItem() { Row().height(this.getUIContext().px2vp(this.bottomPx) + 20) }
         }.width('100%').height('100%').padding({ left: ThemeDimens.cardGutter, right: ThemeDimens.cardGutter })
           .onTouch((event: TouchEvent) => { settleScrollTouch(this.scroller, event) })
-      }.width('100%').height('100%').onOffsetChange((value: number) => { this.pullOffset = value })
-        .onRefreshing(() => { this.load(true) })
-      FeedRefreshProgress({ pullOffset: this.pullOffset, refreshing: this.refreshing, topInset: this.headerExtent() })
-      CenterLoadingProgress({ busy: this.loading && !this.refreshing })
+      CenterLoadingProgress({ busy: this.loading })
       TopFade({ extent: this.headerExtent(), trailingEdge: 24 })
       Row({ space: 14 }) {
         FloatingActionButton({ label: $r('app.string.settings_back'), icon: 'back', controlHeight: 44, onAction: () => { this.back() } }).width(44)

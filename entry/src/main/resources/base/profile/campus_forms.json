@@ -1,0 +1,70 @@
+{
+  "forms": [
+    {
+      "name": "timetable",
+      "displayName": "$string:desktop_forms_timetable",
+      "description": "$string:desktop_forms_description",
+      "src": "./ets/widget/pages/CampusWidget.ets",
+      "uiSyntax": "arkts",
+      "isDefault": true,
+      "colorMode": "auto",
+      "updateEnabled": true,
+      "updateDuration": 1,
+      "defaultDimension": "2*2",
+      "supportDimensions": [
+        "1*2",
+        "2*2",
+        "2*4"
+      ]
+    },
+    {
+      "name": "card",
+      "displayName": "$string:desktop_forms_card",
+      "description": "$string:desktop_forms_description",
+      "src": "./ets/widget/pages/CampusWidget.ets",
+      "uiSyntax": "arkts",
+      "isDefault": false,
+      "colorMode": "auto",
+      "updateEnabled": true,
+      "updateDuration": 1,
+      "defaultDimension": "2*2",
+      "supportDimensions": [
+        "1*2",
+        "2*2"
+      ]
+    },
+    {
+      "name": "electricity",
+      "displayName": "$string:desktop_forms_electricity",
+      "description": "$string:desktop_forms_description",
+      "src": "./ets/widget/pages/CampusWidget.ets",
+      "uiSyntax": "arkts",
+      "isDefault": false,
+      "colorMode": "auto",
+      "updateEnabled": true,
+      "updateDuration": 1,
+      "defaultDimension": "2*2",
+      "supportDimensions": [
+        "1*2",
+        "2*2"
+      ]
+    },
+    {
+      "name": "bus",
+      "displayName": "$string:desktop_forms_bus",
+      "description": "$string:desktop_forms_description",
+      "src": "./ets/widget/pages/CampusWidget.ets",
+      "uiSyntax": "arkts",
+      "isDefault": false,
+      "colorMode": "auto",
+      "updateEnabled": true,
+      "updateDuration": 1,
+      "defaultDimension": "2*2",
+      "supportDimensions": [
+        "1*2",
+        "2*2",
+        "2*4"
+      ]
+    }
+  ]
+}

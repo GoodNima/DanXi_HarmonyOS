@@ -1,3 +1,4 @@
+import { ReadableText } from '../common/ReadableText'
 import { webview } from '@kit.ArkWeb'
 import { LibraryAccountSession } from '../repository/LibraryAccountRepository'
 import { ThemeColors } from '../common/Theme'
@@ -29,7 +30,7 @@ export struct LibraryVerification {
   }
   build() {
     Column({ space: 8 }) {
-      Text($r('app.string.library_verify_hint')).fontSize(13).lineHeight(21).fontColor(ThemeColors.textSecondary).width('100%').padding({ left: 20, right: 20, top: 40 })
+      Text(ReadableText.resource($r('app.string.library_verify_hint'))).fontSize(13).lineHeight(21).fontColor(ThemeColors.textSecondary).width('100%').padding({ left: 20, right: 20, top: 40 }).lineBreakStrategy(LineBreakStrategy.GREEDY)
       if (this.error) ErrorNotice({ message: this.error, controlId: 'library-verification-diagnostics' }).padding({ left: 20, right: 20 })
       Web({ src: LibraryAccountSession.PAGE, controller: this.controller }).javaScriptAccess(true).domStorageAccess(true).width('100%').layoutWeight(1).onPageEnd(() => { this.check() })
     }.width('100%').height('100%')

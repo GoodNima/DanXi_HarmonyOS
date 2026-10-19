@@ -89,6 +89,22 @@
           "when": "always"
         }
       }
+    ],
+    "extensionAbilities": [
+      {
+        "name": "CampusFormAbility",
+        "srcEntry": "./ets/widget/CampusFormAbility.ets",
+        "label": "$string:EntryAbility_label",
+        "description": "$string:desktop_forms_description",
+        "type": "form",
+        "exported": true,
+        "metadata": [
+          {
+            "name": "ohos.extension.form",
+            "resource": "$profile:campus_forms"
+          }
+        ]
+      }
     ]
   }
 }

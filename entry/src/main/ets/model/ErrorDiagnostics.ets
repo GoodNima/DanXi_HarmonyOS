@@ -35,6 +35,7 @@ export class ErrorDiagnostics {
     if (summary) return ErrorDiagnostics.safe(summary, 240)
     let brief: string = value.split(/\n+(?:详细信息\s*[／/]\s*Details|Details)\s*\n/i)[0].split(/\nPrevious request/i)[0]
     brief = brief.replace(/^(?:[A-Za-z]\w*(?:\s*\([^)]*\))?:\s*)+/, '')
+    brief = brief.replace(/^Authentication required\s*[·:：]?\s*/i, '')
     if (/^网络(?:请求|连接)(?:失败|错误)/.test(brief)) return '网络连接失败，请检查网络后重新加载。'
     brief = brief.replace(/\s*(?:Operation timeout|Failed to resolve|Parameter error|HTTP\s+\d{3}|\(?code\s*[=:]?\s*\d+|phase=)[\s\S]*$/i, '')
       .replace(/\s*[（(]?\s*https?:\/\/[\s\S]*$/i, '')

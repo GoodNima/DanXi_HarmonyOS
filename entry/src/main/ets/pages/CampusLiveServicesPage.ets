@@ -1,3 +1,4 @@
+import { ReadableText } from '../common/ReadableText'
 import { SheetTransitionGuard } from '../common/SheetTransitionGuard'
 import { ErrorNotice } from '../components/ErrorNotice'
 import { DiagnosticNavigation } from '../common/DiagnosticNavigation'
@@ -27,7 +28,6 @@ import { FloatingActionButton } from '../components/FloatingActionButton'
 import { getSymbolIcon } from '../common/DanXiIcons'
 import { DiningPresentation } from '../common/DiningPresentation'
 import { CampusCategory } from '../common/CampusCategory'
-import { EmptyRefreshIndicator, FeedRefreshProgress } from '../components/FeedRefreshProgress'
 
 /** Materialize a region before entering ArkUI builders. Nested list callbacks
  * must not capture the campus/region iterator while filtering live rows. */
@@ -71,7 +71,6 @@ export struct CampusLiveServicesPage {
   @State private contentOpacity: number = 1
   private contentRevision: number = 0
   @State refreshing: boolean = false
-  @State pullOffset: number = 0
   @State allNotices: boolean = false
   @State noticeSheet: boolean = false
   @State selectedNotice: DeveloperNotice = new DeveloperNotice()
@@ -232,10 +231,10 @@ export struct CampusLiveServicesPage {
 
   @Builder
   Hint() {
-    Text(AppLanguage.text(this.feature === 'dining' ? $r('app.string.live_dining_hint') :
+    Text(ReadableText.keepWords(AppLanguage.text(this.feature === 'dining' ? $r('app.string.live_dining_hint') :
       this.feature === 'library' ? $r('app.string.live_library_hint') : this.feature === 'electricity' ?
-        $r('app.string.live_electricity_hint') : $r('app.string.live_developer_hint'), this.languageRevision))
-      .fontSize(12).lineHeight(19).fontColor(ThemeColors.textSecondary).width('100%')
+        $r('app.string.live_electricity_hint') : $r('app.string.live_developer_hint'), this.languageRevision)))
+      .fontSize(12).lineHeight(20).lineBreakStrategy(LineBreakStrategy.GREEDY).fontColor(ThemeColors.textSecondary).width('100%')
   }
 
   @Builder
@@ -448,7 +447,6 @@ export struct CampusLiveServicesPage {
       this.ElectricitySheet()
     } else {
     Stack({ alignContent: Alignment.Top }) {
-      Refresh({ refreshing: $$this.refreshing, builder: EmptyRefreshIndicator }) {
         Scroll(this.touchScroller) {
           Column({ space: 12 }) {
             this.Hint()
@@ -460,10 +458,8 @@ export struct CampusLiveServicesPage {
           }.width('100%').padding({ left: ThemeDimens.cardGutter, right: ThemeDimens.cardGutter, top: px2vp(this.topPx) + 84, bottom: Math.max(20, px2vp(this.bottomPx)) + 24 })
         }.width('100%').height('100%').align(Alignment.Top).edgeEffect(EdgeEffect.Spring, { alwaysEnabled: true }).scrollBar(BarState.Off).onTouch((event: TouchEvent) => { settleScrollTouch(this.touchScroller, event) })
           .renderGroup(true).opacity(this.contentOpacity * (this.readPending && !this.refreshing ? 0.45 : 1)).animation({ duration: 220, curve: Curve.EaseOut })
-      }.width('100%').height('100%').onOffsetChange((offset: number) => { this.pullOffset = offset }).onRefreshing(() => { this.load(true) })
-      CenterLoadingProgress({ busy: this.readPending && !this.refreshing })
+      CenterLoadingProgress({ busy: this.readPending })
       TopFade({ extent: px2vp(this.topPx) + 64 })
-      FeedRefreshProgress({ topInset: px2vp(this.topPx) + 88, pullOffset: this.pullOffset, refreshing: this.refreshing })
       Row({ space: 12 }) {
         FloatingActionButton({ label: $r('app.string.settings_back'), icon: 'back', controlHeight: 48, onAction: () => { router.back() }  }).width(48)
         Text(this.title()).fontSize(20).minFontSize(15).maxFontSize(20).maxLines(1).lineHeight(28).fontWeight(FontWeight.Bold)

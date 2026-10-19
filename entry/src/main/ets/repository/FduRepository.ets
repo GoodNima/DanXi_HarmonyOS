@@ -536,7 +536,7 @@ export class FduRepository extends BaseRepository {
   async ensureSession(service: string, deadline?: number): Promise<string> {
     if (this.credentialId.length === 0 && !this.cookiesFor(service)) {
       throw new HttpError(-2, 0,
-        '请先登录复旦账号，再查询校园服务。树洞账号与校园账号分别登录。', '')
+        '请先登录复旦账号，再查询校园服务。茶楼账号与校园账号分别登录。', '')
     }
     const epoch = this.sessionEpoch
     const browser = await CampusCookies.read(CampusService.cookieUrl(service))

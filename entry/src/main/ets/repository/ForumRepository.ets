@@ -1,6 +1,6 @@
 import { ErrorDiagnostics } from '../model/ErrorDiagnostics'
 /**
- * Forum (树洞) repository — real HTTP against fduhole.com.
+ * Forum (茶楼) repository — real HTTP against fduhole.com.
  *
  * Replaces the previous hardcoded mock lists. Endpoint shapes and paging
  * parameters are taken from the upstream Flutter client; the extracted
@@ -375,7 +375,7 @@ export class ForumRepository implements ForumPageRepository {
 
   private requireLogin(): void {
     if (!this.isLoggedIn()) {
-      throw new Error('尚未登录树洞账号')
+      throw new Error('尚未登录茶楼账号')
     }
   }
 
@@ -388,12 +388,12 @@ export class ForumRepository implements ForumPageRepository {
     const generation: number = this.sessionGeneration
     const response = await this.network.get(this.base() + '/users/me')
     const user = ForumUser.fromJson(parseObject(response.data))
-    if (generation !== this.sessionGeneration) throw new Error('树洞账号已切换，请重试')
+    if (generation !== this.sessionGeneration) throw new Error('茶楼账号已切换，请重试')
     if (revision === this.preferenceRevision) await this.saveFoldBehavior(user.showFolded, generation, revision)
-    if (generation !== this.sessionGeneration) throw new Error('树洞账号已切换，请重试')
+    if (generation !== this.sessionGeneration) throw new Error('茶楼账号已切换，请重试')
     this.publishSession(user.userId)
     await this.persistSession(generation)
-    if (generation !== this.sessionGeneration) throw new Error('树洞账号已切换，请重试')
+    if (generation !== this.sessionGeneration) throw new Error('茶楼账号已切换，请重试')
     return user
   }
 
@@ -424,7 +424,7 @@ export class ForumRepository implements ForumPageRepository {
     params['not_read'] = String(unreadOnly)
     params['start_time'] = new Date(startTime).toISOString()
     const response = await this.network.get(this.base() + '/messages', params)
-    if (generation !== this.sessionGeneration) throw new Error('树洞账号已切换，请重试')
+    if (generation !== this.sessionGeneration) throw new Error('茶楼账号已切换，请重试')
     return parseObjectArray(response.data).map((row: Record<string, Object>) => ForumMessage.fromJson(row))
   }
 
@@ -434,14 +434,14 @@ export class ForumRepository implements ForumPageRepository {
     if (!Number.isSafeInteger(messageId) || messageId <= 0) throw new Error('消息编号无效')
     const generation: number = this.sessionGeneration
     await this.network.delete(this.base() + '/messages/' + messageId, JSON.stringify(new MessageReadBody()))
-    if (generation !== this.sessionGeneration) throw new Error('树洞账号已切换，请重试')
+    if (generation !== this.sessionGeneration) throw new Error('茶楼账号已切换，请重试')
   }
 
   async clearMessages(): Promise<void> {
     this.requireLogin()
     const generation: number = this.sessionGeneration
     await this.network.patch(this.base() + '/messages/_webvpn', JSON.stringify(new MessageClearBody()))
-    if (generation !== this.sessionGeneration) throw new Error('树洞账号已切换，请重试')
+    if (generation !== this.sessionGeneration) throw new Error('茶楼账号已切换，请重试')
   }
 
   private async saveFoldBehavior(mode: string, generation: number = this.sessionGeneration,
@@ -464,17 +464,17 @@ export class ForumRepository implements ForumPageRepository {
     const generation: number = this.sessionGeneration
     if (!['mention', 'favorite', 'report'].includes(type)) throw new Error('未知通知类型')
     const current = await this.network.get(this.base() + '/users/me')
-    if (generation !== this.sessionGeneration) throw new Error('树洞账号已切换，请重试')
+    if (generation !== this.sessionGeneration) throw new Error('茶楼账号已切换，请重试')
     const profile = parseObject(current.data)
     const user = ForumUser.fromJson(profile)
-    if (user.userId <= 0) throw new Error('无法读取树洞设置')
+    if (user.userId <= 0) throw new Error('无法读取茶楼设置')
     const config: Record<string, Object> = jsonObject(profile, 'config') ?? {}
     const notify = user.notify.filter((key: string) => key !== type)
     if (enabled) notify.push(type)
     config['notify'] = notify
     profile['config'] = config
     const response = await this.network.patch(this.base() + '/users/' + user.userId + '/_webvpn', JSON.stringify(profile))
-    if (generation !== this.sessionGeneration) throw new Error('树洞账号已切换，请重试')
+    if (generation !== this.sessionGeneration) throw new Error('茶楼账号已切换，请重试')
     const updated = ForumUser.fromJson(parseObject(response.data))
     if (updated.notify.includes(type) !== enabled) throw new Error('服务器未保存通知设置，请重试')
     return updated
@@ -487,15 +487,15 @@ export class ForumRepository implements ForumPageRepository {
     const revision: number = this.preferenceRevision
     const generation: number = this.sessionGeneration
     const current = await this.network.get(this.base() + '/users/me')
-    if (generation !== this.sessionGeneration) throw new Error('树洞账号已切换，请重试')
+    if (generation !== this.sessionGeneration) throw new Error('茶楼账号已切换，请重试')
     const profile = parseObject(current.data)
     const user = ForumUser.fromJson(profile)
-    if (user.userId <= 0) throw new Error('无法读取树洞设置，请重试')
+    if (user.userId <= 0) throw new Error('无法读取茶楼设置，请重试')
     const config: Record<string, Object> = jsonObject(profile, 'config') ?? {}
     config['show_folded'] = ForumPresentation.foldMode(mode)
     profile['config'] = config
     const response = await this.network.patch(this.base() + '/users/' + user.userId + '/_webvpn', JSON.stringify(profile))
-    if (generation !== this.sessionGeneration) throw new Error('树洞账号已切换，请重试')
+    if (generation !== this.sessionGeneration) throw new Error('茶楼账号已切换，请重试')
     const updated = ForumUser.fromJson(parseObject(response.data))
     if (updated.showFolded !== mode) throw new Error('服务器未保存该设置，请重试')
     await this.saveFoldBehavior(updated.showFolded, generation, revision)
@@ -571,7 +571,7 @@ export class ForumRepository implements ForumPageRepository {
 
   private async fetchDivisions(generation: number, revision: number): Promise<ForumDivision[]> {
     const response = await this.network.get(this.base() + '/divisions')
-    if (generation !== this.sessionGeneration || !this.isLoggedIn()) throw new Error('树洞账号已切换，请重试')
+    if (generation !== this.sessionGeneration || !this.isLoggedIn()) throw new Error('茶楼账号已切换，请重试')
     if (revision !== this.divisionsRevision) throw new Error('分区资料已更新，请重试')
     if (!Array.isArray(JSON.parse(response.data))) throw new Error('服务器返回了非预期的分区格式')
     const out: ForumDivision[] = []
@@ -893,7 +893,7 @@ export class ForumRepository implements ForumPageRepository {
    * Prefers the server's own message over a generic status string.
    */
   static describeError(error: Object): string {
-    if (error instanceof HttpError && error.isUnauthorized()) return ErrorDiagnostics.message(error, '登录已过期，请重新登录树洞账号')
+    if (error instanceof HttpError && error.isUnauthorized()) return ErrorDiagnostics.message(error, '登录已过期，请重新登录茶楼账号')
     return ErrorDiagnostics.message(error)
 
   }

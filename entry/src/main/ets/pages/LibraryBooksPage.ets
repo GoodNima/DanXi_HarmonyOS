@@ -1,3 +1,4 @@
+import { ReadableText } from '../common/ReadableText'
 import { SheetTransitionGuard } from '../common/SheetTransitionGuard'
 import { router } from '@kit.ArkUI'
 import { AppLanguage } from '../common/AppLanguage'
@@ -15,7 +16,6 @@ import { LibraryRequestEditor } from '../components/LibraryRequestEditor'
 import { TopFade } from '../components/TopFade'
 import { ErrorNotice } from '../components/ErrorNotice'
 import { CenterLoadingProgress } from '../components/CenterLoadingProgress'
-import { EmptyRefreshIndicator, FeedRefreshProgress } from '../components/FeedRefreshProgress'
 import { settleScrollTouch } from '../common/ScrollTouch'
 
 class BookListSource implements IDataSource {
@@ -62,7 +62,6 @@ export struct LibraryBooksPage {
   @State private more: boolean = false
   @State private pinPending: boolean = false
   @State private refreshing: boolean = false
-  @State private pullOffset: number = 0
   @State private error: string = ''
   @State private holdingsError: string = ''
   private active: boolean = false
@@ -187,7 +186,7 @@ export struct LibraryBooksPage {
       if (this.query) Button({ type: ButtonType.Circle }) { SymbolGlyph($r('sys.symbol.xmark_circle_fill')).fontSize(20).fontColor([ThemeColors.textSecondary]) }
         .width(38).height(38).backgroundColor(Color.Transparent).id('books-search-clear').onClick(() => { this.searchChanged('') })
     }.width('100%').padding({ left: 4, right: 8 }).backgroundColor($r('app.color.campus_search_surface')).borderRadius(24)
-    Text(this.submittedQuery ? $r('app.string.books_results_hint') : $r('app.string.books_pinned_hint')).fontSize(12).lineHeight(19).fontColor(ThemeColors.textSecondary).width('100%')
+    Text(ReadableText.resource(this.submittedQuery ? $r('app.string.books_results_hint') : $r('app.string.books_pinned_hint'))).fontSize(12).lineHeight(20).lineBreakStrategy(LineBreakStrategy.GREEDY).fontColor(ThemeColors.textSecondary).width('100%')
   }
   @Builder
   BookCard(book: LibraryBook) {
@@ -216,7 +215,7 @@ export struct LibraryBooksPage {
     }.width('100%').padding(ThemeDimens.cardInset).backgroundColor($r('app.color.surface_fallback')).borderRadius(22)
     Text($r('app.string.books_holdings')).fontSize(18).fontWeight(FontWeight.Bold).fontColor(ThemeColors.textPrimary).width('100%').margin({ top: 6 })
     if (this.holdingsError) ErrorNotice({ message: this.holdingsError, controlId: 'books-holdings-diagnostics' })
-    Text($r('app.string.books_holdings_hint')).fontSize(12).lineHeight(19).fontColor(ThemeColors.textSecondary).width('100%')
+    Text(ReadableText.resource($r('app.string.books_holdings_hint'))).fontSize(12).lineHeight(20).fontColor(ThemeColors.textSecondary).width('100%').lineBreakStrategy(LineBreakStrategy.GREEDY)
     if (!this.loading && !this.holdingsError && this.holdings.length === 0) Text($r('app.string.books_no_holdings')).fontSize(14).fontColor(ThemeColors.textSecondary).padding(20)
   }
   @Builder
@@ -240,10 +239,9 @@ export struct LibraryBooksPage {
   RequestEditor() { LibraryRequestEditor({ holding: this.requestHolding, onCompleted: () => { this.requestSheet = false; this.getUIContext().getPromptAction().showToast({ message: AppLanguage.text($r('app.string.library_request_success')) }) } }) }
   build() {
     Stack({ alignContent: Alignment.Top }) {
-      Refresh({ refreshing: $$this.refreshing, builder: EmptyRefreshIndicator }) {
         List({ scroller: this.scroller, space: 12 }) {
           ListItem() { Column({ space: 12 }) { if (this.selected === undefined) this.Search(); else this.BookDetail()
-            if (this.error) ErrorNotice({ message: this.error, controlId: 'books-diagnostics' })
+            if (this.error) ErrorNotice({ message: this.error, controlId: 'books-diagnostics' }).padding({ left: 12, right: 12 })
             if ((this.error || this.holdingsError) && !this.loading) FloatingActionButton({ label: $r('app.string.ui_reload'), icon: 'refresh', zeroContentPadding: true, controlHeight: 44, onAction: () => { this.reload() } }).width(44)
           }.width('100%').padding({ top: px2vp(this.topPx) + 76 }) }
           if (this.selected === undefined) {
@@ -262,10 +260,8 @@ export struct LibraryBooksPage {
         }.width('100%').height('100%').padding({ left: ThemeDimens.cardGutter, right: ThemeDimens.cardGutter, bottom: Math.max(20, px2vp(this.bottomPx)) + 24 })
           .scrollBar(BarState.Off).edgeEffect(EdgeEffect.Spring, { alwaysEnabled: true }).cachedCount(3)
           .onReachEnd(() => { this.next() }).onTouch((event: TouchEvent) => { settleScrollTouch(this.scroller, event) })
-      }.width('100%').height('100%').onRefreshing(() => { this.reload() }).onOffsetChange((offset: number) => { this.pullOffset = offset })
-      CenterLoadingProgress({ busy: this.loading && !this.refreshing })
+      CenterLoadingProgress({ busy: this.loading })
       TopFade({ extent: px2vp(this.topPx) + 62 })
-      FeedRefreshProgress({ topInset: px2vp(this.topPx) + 82, pullOffset: this.pullOffset, refreshing: this.refreshing })
       Row({ space: 12 }) {
         Row({ space: 12 }) {
           FloatingActionButton({ label: $r('app.string.settings_back'), icon: 'back', controlHeight: 44, onAction: () => { this.back() } }).width(44)

@@ -1,3 +1,4 @@
+import { ReadableText } from '../common/ReadableText'
 import { common } from '@kit.AbilityKit'
 import { AppLanguage } from '../common/AppLanguage'
 import { ThemeColors } from '../common/Theme'
@@ -49,7 +50,7 @@ export struct TimetableCalendarSheet {
             actionEnabled: !this.busy, onAction: () => { this.selected = this.selected.length === this.groups().length ? [] :
               this.groups().map((course: Course) => TimetableCalendar.group(course)); this.result = '' } }).width(88)
         }.width('100%').padding({ right: 52 })
-        Text(AppLanguage.text($r('app.string.timetable_calendar_hint'), 0, this.monday)).fontSize(13).lineHeight(21).fontColor(ThemeColors.textSecondary).width('100%')
+        Text(ReadableText.keepWords(AppLanguage.text($r('app.string.timetable_calendar_hint'), 0, this.monday))).fontSize(13).lineHeight(21).lineBreakStrategy(LineBreakStrategy.GREEDY).fontColor(ThemeColors.textSecondary).width('100%')
         List({ space: 10 }) {
           ForEach(this.groups(), (course: Course) => {
             ListItem() {

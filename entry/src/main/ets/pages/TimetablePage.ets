@@ -1,3 +1,4 @@
+import { ReadableText } from '../common/ReadableText'
 import { SheetTransitionGuard } from '../common/SheetTransitionGuard'
 import { DiagnosticNavigation } from '../common/DiagnosticNavigation'
 import { ErrorNotice } from '../components/ErrorNotice'
@@ -376,7 +377,7 @@ export struct TimetablePage {
 
   @Builder
   LocalNote() {
-    Text($r('app.string.timetable_local_hint')).fontSize(12).lineHeight(18).fontColor(ThemeColors.textSecondary).padding(16)
+    Text(ReadableText.resource($r('app.string.timetable_local_hint'))).fontSize(12).lineHeight(20).fontColor(ThemeColors.textSecondary).padding(16).lineBreakStrategy(LineBreakStrategy.GREEDY)
   }
 
   @Builder
@@ -540,7 +541,7 @@ export struct TimetablePage {
       Text(this.dayLabel(this.selected.weekday) + ' · ' + TimetableHelper.getSlotStartTime(this.selected.startUnit) + ' – ' +
         TimetableSchedule.endTime(this.selected.endUnit)).fontSize(15).fontColor(ThemeColors.textPrimary)
       Text(AppLanguage.text($r('app.string.timetable_weeks'), this.languageRevision) + ' ' + this.selected.weekIndexes.join(', ')).fontSize(13).fontColor(ThemeColors.textSecondary)
-      Text($r('app.string.timetable_local_hint')).fontSize(12).lineHeight(18).fontColor(ThemeColors.textSecondary)
+      Text(ReadableText.resource($r('app.string.timetable_local_hint'))).fontSize(12).lineHeight(20).fontColor(ThemeColors.textSecondary).lineBreakStrategy(LineBreakStrategy.GREEDY)
       Row({ space: 12 }) {
         Button($r('app.string.timetable_edit')).onClick(() => { this.edit(this.selected) }).layoutWeight(1)
         Button($r('app.string.timetable_remove')).fontColor(ThemeColors.error)
@@ -641,7 +642,7 @@ export struct TimetablePage {
       Column({ space: 4 }) {
         this.EditorTextField($r('app.string.timetable_weeks'), this.weeks, $r('app.string.timetable_editor_weeks_placeholder'),
           'timetable-course-weeks', (text: string) => { this.weeks = text })
-        Text($r('app.string.timetable_weeks_hint')).fontSize(12).lineHeight(18).fontColor(ThemeColors.textSecondary).width('100%')
+        Text(ReadableText.resource($r('app.string.timetable_weeks_hint'))).fontSize(12).lineHeight(20).fontColor(ThemeColors.textSecondary).width('100%').lineBreakStrategy(LineBreakStrategy.GREEDY)
       }.alignItems(HorizontalAlign.Start).width('100%')
       if (this.editorError) {
         ErrorNotice({ message: this.editorError, controlId: 'timetablepage-diagnostics', textSize: 12, textColor: ThemeColors.error }).id('timetable-course-error')
@@ -649,7 +650,7 @@ export struct TimetablePage {
       }
       Button($r('app.string.timetable_save')).id('timetable-save-course').width('100%').constraintSize({ minHeight: 44 })
         .backgroundColor(ThemeColors.primary).fontColor(Color.White).enabled(!this.saving).onClick(() => { this.saveCourse() })
-      Text($r('app.string.timetable_editor_local_note')).fontSize(12).lineHeight(18).fontColor(ThemeColors.textSecondary).width('100%')
+      Text(ReadableText.resource($r('app.string.timetable_editor_local_note'))).fontSize(12).lineHeight(20).fontColor(ThemeColors.textSecondary).width('100%').lineBreakStrategy(LineBreakStrategy.GREEDY)
     }.padding({ left: 20, right: 20, top: 8, bottom: 16 }).width('100%').alignItems(HorizontalAlign.Start)
   }
 
@@ -665,14 +666,14 @@ export struct TimetablePage {
                 onAction: () => { this.verifyAndReload() } }).margin({ left: 12, bottom: 12 })
             }
             if (!TeachingCalendar.validMonday(this.start())) {
-              Text($r('app.string.timetable_date_hint')).fontSize(13).fontColor(ThemeColors.primary).padding(12).width('100%')
-                .onClick(() => { this.openSheet(() => { this.showCalendar = true }) })
+              Text(ReadableText.resource($r('app.string.timetable_date_hint'))).fontSize(13).lineHeight(21).fontColor(ThemeColors.primary).padding(12).width('100%')
+                .onClick(() => { this.openSheet(() => { this.showCalendar = true }) }).lineBreakStrategy(LineBreakStrategy.GREEDY)
             } else if (TeachingCalendar.week(this.start()) < 1 || TeachingCalendar.week(this.start()) > this.maxWeek()) {
               Text($r('app.string.timetable_outside_term')).fontSize(12).fontColor(ThemeColors.textSecondary).padding(12)
             }
             if (this.historicalDiary) {
-              Text($r('app.string.timetable_history_diary_hint')).fontSize(12).lineHeight(20).fontColor(ThemeColors.textSecondary)
-                .padding({ left: 8, right: 8, top: 4, bottom: 12 }).width('100%')
+              Text(ReadableText.resource($r('app.string.timetable_history_diary_hint'))).fontSize(12).lineHeight(20).fontColor(ThemeColors.textSecondary)
+                .padding({ left: 8, right: 8, top: 4, bottom: 12 }).width('100%').lineBreakStrategy(LineBreakStrategy.GREEDY)
             }
             if (!this.courses.length && !this.loading) {
               Text(AppState.isLoggedIn() ? $r('app.string.timetable_empty') : $r('app.string.timetable_guest')).fontSize(13).lineHeight(20).fontColor(ThemeColors.textSecondary).padding({ left: 8, right: 8, top: 2, bottom: 8 })

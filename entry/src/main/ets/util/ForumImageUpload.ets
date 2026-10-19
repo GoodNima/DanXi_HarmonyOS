@@ -13,7 +13,7 @@ export class ForumImageUpload {
     if (!ForumImageUpload.isLocalPath(filePath)) throw new Error('图片文件地址无效')
     if (!ForumImageUpload.isSafeFilename(filename)) throw new Error('图片文件名无效')
     if (!token || token.length > 8192 || !/^[A-Za-z0-9._~+\/-]+=*$/.test(token)) {
-      throw new Error('请先登录树洞后再上传图片')
+      throw new Error('请先登录茶楼后再上传图片')
     }
     try {
       const file: fs.Stat = await fs.stat(filePath)

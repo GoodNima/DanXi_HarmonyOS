@@ -1,3 +1,4 @@
+import { ReadableText } from '../common/ReadableText'
 import { pasteboard, BusinessError } from '@kit.BasicServicesKit'
 import { Constant } from '../common/Constant'
 import { AppLanguage } from '../common/AppLanguage'
@@ -85,8 +86,8 @@ export struct DiagnosticPanel {
   build() {
     Column({ space: 12 }) {
       Row({ space: 12 }) {
-        Text($r('app.string.diagnostics_hint')).fontSize(13).lineHeight(21)
-          .fontColor(ThemeColors.textSecondary).layoutWeight(1)
+        Text(ReadableText.resource($r('app.string.diagnostics_hint'))).fontSize(13).lineHeight(21)
+          .fontColor(ThemeColors.textSecondary).layoutWeight(1).lineBreakStrategy(LineBreakStrategy.GREEDY)
         FloatingActionButton({ label: $r('app.string.live_history_diagnostics_copy'), icon: 'copy', controlHeight: 44,
           controlId: 'diagnostics-copy', actionEnabled: this.report !== null && !this.copyPending,
           onAction: () => { this.copy() } }).width(44)

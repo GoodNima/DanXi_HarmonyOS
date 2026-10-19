@@ -1,3 +1,4 @@
+import { ReadableText } from '../common/ReadableText'
 import { SheetTransitionGuard } from '../common/SheetTransitionGuard'
 import { DiagnosticNavigation } from '../common/DiagnosticNavigation'
 import { ForumImageTransition } from '../common/ForumImageTransition'
@@ -1400,7 +1401,7 @@ export struct ForumDetailView {
           .backgroundColor($r('app.color.input_surface')).fontColor(this.subscribed ? ThemeColors.primary : ThemeColors.textPrimary)
           .stateEffect(false).clickEffect({ level: ClickEffectLevel.LIGHT, scale: 0.97 })
           .enabled(!this.sheetBusy && !this.subscriptionPending).onClick(() => { this.togglePreference(false) })
-        Text($r('app.string.detail_subscription_note')).fontColor(ThemeColors.textHint).fontSize(12)
+        Text(ReadableText.resource($r('app.string.detail_subscription_note'))).fontColor(ThemeColors.textHint).fontSize(12).lineHeight(20).lineBreakStrategy(LineBreakStrategy.GREEDY)
         this.SheetAction(this.filterAuthor ? $r('app.string.detail_show_all') : $r('app.string.detail_only_op'),
           () => { this.selectAuthor(this.filterAuthor ? '' : this.openingFloor?.anonyname ?? '') })
         this.SheetAction($r('app.string.detail_to_top'), () => {
@@ -1412,7 +1413,7 @@ export struct ForumDetailView {
           this.selectedIds = this.openingFloor === null ? [] : [this.openingFloor.floorId]; this.sheetKind = 'share'
         })
         this.SheetAction($r('app.string.detail_hide'), () => { this.hideHole().catch((e: Object) => { this.sheetError = ForumRepository.describeError(e) }) })
-        Text($r('app.string.detail_hide_note')).fontColor(ThemeColors.textHint).fontSize(12)
+        Text(ReadableText.resource($r('app.string.detail_hide_note'))).fontColor(ThemeColors.textHint).fontSize(12).lineHeight(20).lineBreakStrategy(LineBreakStrategy.GREEDY)
       } else if (this.sheetKind === 'floor' && this.selectedFloor !== null) {
         Text() {
           Span(this.selectedFloor.anonyname + ' · ').fontWeight(FontWeight.Bold)
@@ -1443,9 +1444,9 @@ export struct ForumDetailView {
           .copyOption(CopyOptions.LocalDevice).width('100%').textAlign(TextAlign.Start)
           .constraintSize({ minHeight: 40 }).padding({ right: 48 })
       } else if (this.sheetKind === 'compose') {
-        Text(this.composeMode === 'feedback' ? $r('app.string.summary_feedback_note') :
-          this.composeMode === 'report' ? $r('app.string.detail_report_note') : $r('app.string.detail_markdown_note'))
-          .fontSize(12).fontColor(ThemeColors.textSecondary).width('100%')
+        Text(ReadableText.resource(this.composeMode === 'feedback' ? $r('app.string.summary_feedback_note') :
+          this.composeMode === 'report' ? $r('app.string.detail_report_note') : $r('app.string.detail_markdown_note')))
+          .fontSize(12).lineHeight(20).lineBreakStrategy(LineBreakStrategy.GREEDY).fontColor(ThemeColors.textSecondary).width('100%')
           .constraintSize({ minHeight: 40 }).padding({ right: 48 })
         if (this.replyTarget !== null && this.composeMode === 'reply') {
           Text() {
@@ -1500,7 +1501,7 @@ export struct ForumDetailView {
           onHelpful: () => { this.upvoteSummary() }, onUnhelpful: () => { this.openCompose('feedback', null) },
           onCopy: (value: string) => { this.copyText(value) } })
       } else if (this.sheetKind === 'share') {
-        Text($r('app.string.detail_share_note')).fontSize(12).fontColor(ThemeColors.textSecondary)
+        Text(ReadableText.resource($r('app.string.detail_share_note'))).fontSize(12).lineHeight(20).fontColor(ThemeColors.textSecondary).lineBreakStrategy(LineBreakStrategy.GREEDY)
         ForEach(this.openingFloor === null ? this.replies() : [this.openingFloor].concat(this.replies()), (floor: ForumFloor) => {
           Row({ space: 10 }) {
             Checkbox().select(this.selectedIds.includes(floor.floorId)).onChange((checked: boolean) => {
@@ -1513,8 +1514,8 @@ export struct ForumDetailView {
         this.SheetAction($r('app.string.detail_copy_selected'), () => { this.exportSelection() }, false, this.selectedIds.length > 0)
         if (this.hasMore) this.SheetAction($r('app.string.detail_load_more'), () => { this.loadMore() }, false, !this.isLoadingMore)
       } else if (this.sheetKind === 'admin') {
-        Text($r('app.string.detail_admin_note')).fontColor(ThemeColors.textSecondary).fontSize(12)
-          .width('100%').constraintSize({ minHeight: 40 }).padding({ right: 48 })
+        Text(ReadableText.resource($r('app.string.detail_admin_note'))).fontColor(ThemeColors.textSecondary).fontSize(12).lineHeight(20)
+          .width('100%').constraintSize({ minHeight: 40 }).padding({ right: 48 }).lineBreakStrategy(LineBreakStrategy.GREEDY)
         this.SheetAction($r('app.string.detail_lock'), () => { this.manage('lock') })
         this.SheetAction($r('app.string.detail_freeze'), () => { this.manage('frozen') })
         this.SheetAction($r('app.string.detail_hide_server'), () => { this.manage(this.hole?.hidden ? 'unhidden' : 'delete') }, true)
@@ -1528,8 +1529,8 @@ export struct ForumDetailView {
         this.SheetAction($r('app.string.detail_unmark_sensitive'), () => { this.manage('sensitive'); this.draft = 'false' })
         this.SheetAction($r('app.string.detail_penalty'), () => { this.manage('penalty') }, true)
       } else if (this.sheetKind === 'management') {
-        Text($r('app.string.detail_admin_note')).fontSize(12).fontColor(ThemeColors.error)
-          .width('100%').constraintSize({ minHeight: 40 }).padding({ right: 48 })
+        Text(ReadableText.resource($r('app.string.detail_admin_note'))).fontSize(12).lineHeight(20).fontColor(ThemeColors.error)
+          .width('100%').constraintSize({ minHeight: 40 }).padding({ right: 48 }).lineBreakStrategy(LineBreakStrategy.GREEDY)
         if (this.managementAction === 'tags') {
           ForEach(this.divisions, (division: ForumDivision) => {
             Button(division.name).backgroundColor(this.chosenDivision === division.divisionId ? ThemeColors.primary : $r('app.color.input_surface'))

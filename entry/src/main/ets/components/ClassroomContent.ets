@@ -1,3 +1,4 @@
+import { ReadableText } from '../common/ReadableText'
 import { DiagnosticNavigation } from '../common/DiagnosticNavigation'
 import { ErrorNotice } from './ErrorNotice'
 import { EmptyClassroom } from '../model/Academic'
@@ -171,8 +172,8 @@ export struct ClassroomContent {
   @Builder
   SettingsNote() {
     Column() {
-      Text($r('app.string.classroom_settings_note')).fontSize(12).lineHeight(18).fontColor(ThemeColors.textSecondary)
-        .width('100%').padding({ top: 6, bottom: 12 })
+      Text(ReadableText.resource($r('app.string.classroom_settings_note'))).fontSize(12).lineHeight(20).fontColor(ThemeColors.textSecondary)
+        .width('100%').padding({ top: 6, bottom: 12 }).lineBreakStrategy(LineBreakStrategy.GREEDY)
     }.width(256).alignItems(HorizontalAlign.Start)
   }
 
@@ -210,7 +211,7 @@ export struct ClassroomContent {
           Text($r('app.string.classroom_display_settings')).fontSize(12).fontColor(ThemeColors.primary).padding(8)
             .bindMenu(this.Settings).accessibilityRole(AccessibilityRoleType.BUTTON)
         }.width('100%')
-        Text($r('app.string.classroom_filter_note')).fontSize(12).lineHeight(18).fontColor(ThemeColors.textSecondary).width('100%')
+        Text(ReadableText.resource($r('app.string.classroom_filter_note'))).fontSize(12).lineHeight(20).fontColor(ThemeColors.textSecondary).width('100%').lineBreakStrategy(LineBreakStrategy.GREEDY)
       }.width('100%').padding(14).backgroundColor($r('app.color.surface_fallback'))
         .borderRadius(ThemeDimens.radiusLarge)
       Row({ space: 8 }) {
@@ -219,7 +220,7 @@ export struct ClassroomContent {
         Text($r('app.string.classroom_free')).fontSize(11).fontColor($r('app.color.campus_text_available'))
         Text($r('app.string.classroom_occupied')).fontSize(11).fontColor($r('app.color.campus_text_attention'))
       }.width('100%')
-      Text($r('app.string.classroom_matrix_note')).fontSize(11).lineHeight(17).fontColor(ThemeColors.textHint).width('100%')
+      Text(ReadableText.resource($r('app.string.classroom_matrix_note'))).fontSize(11).lineHeight(19).fontColor(ThemeColors.textHint).width('100%').lineBreakStrategy(LineBreakStrategy.GREEDY)
       if (this.loading && !this.loadingOverlay) {
         Row({ space: 8 }) {
           LoadingProgress().width(22).height(22).color(ThemeColors.primary)

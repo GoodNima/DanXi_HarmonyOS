@@ -110,9 +110,14 @@ export class CampusLayout {
   /** Only an untouched previous recommendation is upgraded. Any saved move,
    * visibility, size or explicit blank-cell placement remains the user's. */
   private static previousDefaults(rows: CampusModule[]): boolean {
+    const prior: string[] = ['timetable', 'academic', 'empty_classroom', 'library', 'library_books',
+      'announcement', 'card', 'electricity', 'dining', 'sports', 'bus', 'campus_access', 'life_code', 'developer_notice']
+    if (rows.length === prior.length && rows.every((row: CampusModule, index: number) =>
+      row.id === prior[index] && row.enabled && row.row === undefined && row.column === undefined &&
+      row.size === CampusLayout.defaultSize(row.id))) return true
     // The v112 recommendation predates the new books card. Do not move a
     // customized layout when introducing that feature.
-    const recent: string[] = Constant.DEFAULT_DASHBOARD_ORDER.filter((id: string) => id !== 'library_books')
+    const recent: string[] = prior.filter((id: string) => id !== 'library_books')
     if (rows.length === recent.length && rows.every((row: CampusModule, index: number) =>
       row.id === recent[index] && row.enabled && row.row === undefined && row.column === undefined &&
       row.size === (row.id === 'empty_classroom' ? 'compact' : CampusLayout.defaultSize(row.id)))) return true
@@ -123,7 +128,7 @@ export class CampusLayout {
       const id: string = ids[i]
       const size: string = id === 'timetable' || id === 'announcement' ? 'large' :
         ['bus', 'empty_classroom', 'academic', 'sports'].includes(id) ? 'small' : 'compact'
-      if (rows[i].id !== id || !rows[i].enabled || rows[i].size !== size ||
+      if (rows[i].id !== id || !rows[i].enabled || rows[i].size !== (id === 'developer_notice' ? 'large' : size) ||
         rows[i].row !== undefined || rows[i].column !== undefined) return false
     }
     return true
@@ -152,7 +157,7 @@ export class CampusLayout {
             continue
           }
           const row: CampusModule = { id: id, enabled: enabled }
-          if (typeof entry !== 'string' && CampusLayout.validSize(entry.size)) row.size = CampusLayout.supportsSize(id, entry.size ?? '') ? entry.size : 'small'
+          if (typeof entry !== 'string' && CampusLayout.validSize(entry.size)) row.size = CampusLayout.supportsSize(id, entry.size ?? '') ? entry.size : (id === 'announcement' || id === 'developer_notice' ? 'large' : 'small')
           if (typeof entry !== 'string' && CampusLayout.positioned(entry)) {
             row.row = entry.row; row.column = entry.column
           }
@@ -182,7 +187,7 @@ export class CampusLayout {
 
   static copy(row: CampusModule): CampusModule {
     const copy: CampusModule = { id: row.id, enabled: row.enabled }
-    if (CampusLayout.validSize(row.size)) copy.size = CampusLayout.supportsSize(row.id, row.size ?? '') ? row.size : 'small'
+    if (CampusLayout.validSize(row.size)) copy.size = CampusLayout.supportsSize(row.id, row.size ?? '') ? row.size : (row.id === 'announcement' || row.id === 'developer_notice' ? 'large' : 'small')
     if (CampusLayout.positioned(row)) { copy.row = row.row; copy.column = row.column }
     return copy
   }
@@ -214,12 +219,13 @@ export class CampusLayout {
   }
 
   static supportsSize(id: string, size: string): boolean {
-    return CampusLayout.validSize(size) && (size !== 'large' || !['campus_access', 'life_code', 'card', 'electricity'].includes(id))
+    if (id === 'announcement' || id === 'developer_notice') return size === 'large'
+    return CampusLayout.validSize(size) && (size !== 'large' || !['campus_access', 'life_code', 'card', 'electricity', 'library_books', 'sports'].includes(id))
   }
 
   /** Missing or invalid preferences retain each module's original default size. */
   static size(row: CampusModule): string {
-    if (row.size !== undefined && CampusLayout.validSize(row.size)) return CampusLayout.supportsSize(row.id, row.size) ? row.size : 'small'
+    if (row.size !== undefined && CampusLayout.validSize(row.size)) return CampusLayout.supportsSize(row.id, row.size) ? row.size : (row.id === 'announcement' || row.id === 'developer_notice' ? 'large' : 'small')
     return ['announcement', 'timetable', 'academic', 'developer_notice', 'evaluation'].includes(row.id) ? 'large' : 'small'
   }
 

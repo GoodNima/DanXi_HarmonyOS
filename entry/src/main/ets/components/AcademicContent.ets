@@ -1,3 +1,4 @@
+import { ReadableText } from '../common/ReadableText'
 import { ErrorNotice } from './ErrorNotice'
 import { FloatingActionButton } from './FloatingActionButton'
 import { CourseGrade, ExamSchedule, GpaListItem, SemesterInfo } from '../model/Academic'
@@ -9,6 +10,7 @@ import { adaptiveMaterial } from '../common/AdaptiveMaterial'
 import { TabSegmentButtonV2, SegmentButtonV2Items } from '@ohos.arkui.advanced.SegmentButtonV2'
 import { ColorMetrics } from '@kit.ArkUI'
 import { CampusContentStyle } from '../common/CampusContentStyle'
+import { SheetTransitionGuard } from '../common/SheetTransitionGuard'
 
 /** ForEach retains nodes with an unchanged key, including their derived scope values. */
 export function academicRankKey(row: AcademicRankRow, index: number, sameMajor: boolean): string {
@@ -56,6 +58,8 @@ export struct AcademicContent {
   @StorageLink(AppLanguage.KEY_REVISION) languageRevision: number = 0
   @Prop view: number = 0
   @State private sameMajor: boolean = false
+  @State private showGpaExplanation: boolean = false
+  private gpaSheet: SheetTransitionGuard = new SheetTransitionGuard()
   private viewItems: SegmentButtonV2Items = new SegmentButtonV2Items([
     { text: $r('app.string.academic_overview') }, { text: $r('app.string.academic_grades') },
     { text: $r('app.string.academic_ranking') }
@@ -86,10 +90,10 @@ export struct AcademicContent {
   }
 
   @Builder
-  ErrorNote(message: string) {
-    if (message.length > 0) {
+  ErrorNote(message: () => string) {
+    if (message().length > 0) {
       Row({ space: 10 }) {
-        ErrorNotice({ message: message, controlId: 'academiccontent-diagnostics', textSize: 13, textColor: CampusContentStyle.attention }).layoutWeight(1)
+        ErrorNotice({ message: message(), controlId: 'academiccontent-diagnostics', textSize: 13, textColor: CampusContentStyle.attention }).layoutWeight(1)
         FloatingActionButton({ label: $r('app.string.academic_retry'), icon: 'refresh', onCard: true, controlHeight: 48,
           actionEnabled: !this.loading, onAction: () => { this.onReload() } }).width(48)
       }.width('100%').padding(12).backgroundColor($r('app.color.input_surface')).borderRadius(12)
@@ -147,9 +151,24 @@ export struct AcademicContent {
   }
 
   @Builder
+  GpaSymbol(symbol: Resource, description: Resource) {
+    Row({ space: 6 }) {
+      Image(symbol).width(18).height(18).objectFit(ImageFit.Contain)
+        .fillColor(ThemeColors.textSecondary).accessibilityLevel('no')
+      Text(description).layoutWeight(1).fontSize(11).lineHeight(18).fontColor(ThemeColors.textSecondary)
+    }.width('100%').alignItems(VerticalAlign.Center)
+  }
+
+  @Builder
   MyGpa() {
     Column({ space: 8 }) {
-      Text($r('app.string.academic_my_gpa')).fontSize(15).fontWeight(FontWeight.Medium).fontColor(ThemeColors.textPrimary).width('100%')
+      Row({ space: 8 }) {
+        Text($r('app.string.academic_my_gpa')).fontSize(15).fontWeight(FontWeight.Medium).fontColor(ThemeColors.textPrimary).layoutWeight(1)
+        Button($r('app.string.academic_gpa_explanation')).fontSize(13).fontColor(CampusContentStyle.accent)
+          .backgroundColor($r('app.color.input_surface'))
+          .height(32).padding({ left: 12, right: 12 }).id('academic-gpa-explanation')
+          .onClick(() => { this.gpaSheet.open(() => { this.showGpaExplanation = true }, () => this.getUIContext()) })
+      }.width('100%')
       if (LocalGpa.calculate(this.grades, this.graduate).gpa) {
         Row({ space: 14 }) {
           this.Metric($r('app.string.academic_gpa'), LocalGpa.calculate(this.grades, this.graduate).gpa)
@@ -158,20 +177,41 @@ export struct AcademicContent {
       } else {
         Text($r('app.string.academic_my_gpa_unavailable')).width('100%').fontSize(14).fontColor(ThemeColors.textSecondary)
       }
-      Text($r('app.string.academic_gpa_note')).width('100%').fontSize(12).lineHeight(18).fontColor(ThemeColors.textSecondary)
+      Text($r('app.string.academic_gpa_brief')).width('100%').fontSize(12).lineHeight(18).fontColor(ThemeColors.textSecondary)
+      if (!this.graduate && !this.fallback) {
+        Button($r('app.string.academic_ranking')).height(28).fontSize(13).padding(0)
+          .backgroundColor(Color.Transparent).fontColor(CampusContentStyle.accent)
+          .onClick(() => { this.view = 2 })
+      }
+    }.width('100%').alignItems(HorizontalAlign.Start).padding({ left: 16, right: 16, top: 10, bottom: 12 }).margin({ top: 4 })
+      .backgroundColor($r('app.color.theme_card_bg'))
+      .borderRadius(ThemeDimens.radiusLarge)
+      .bindSheet($$this.showGpaExplanation, this.GpaExplanation(), this.gpaSheet.options(this.showGpaExplanation, {
+        height: SheetSize.FIT_CONTENT, showClose: true, dragBar: true,
+        backgroundColor: $r('app.color.surface_fallback'), systemMaterial: adaptiveMaterial(this.materialRevision)
+      }))
+  }
+
+  @Builder
+  GpaExplanation() {
+    Column({ space: 9 }) {
+      Text($r('app.string.academic_gpa_explanation')).fontSize(20).fontWeight(FontWeight.Bold)
+        .fontColor(ThemeColors.textPrimary).width('100%').padding({ right: 40 })
+      Image($r('app.media.academic_gpa_formula')).width('100%').height(108).objectFit(ImageFit.Contain)
+        .fillColor(ThemeColors.textPrimary).id('academic-gpa-formula')
+        .accessibilityText($r('app.string.academic_gpa_formula_description'))
+      Column({ space: 1 }) {
+        this.GpaSymbol($r('app.media.academic_gpa_symbol_n'), $r('app.string.academic_gpa_symbol_courses'))
+        this.GpaSymbol($r('app.media.academic_gpa_symbol_g'), $r('app.string.academic_gpa_symbol_points'))
+        this.GpaSymbol($r('app.media.academic_gpa_symbol_c'), $r('app.string.academic_gpa_symbol_credits'))
+      }.width('100%').accessibilityGroup(true).accessibilityText($r('app.string.academic_gpa_symbols'))
+      Text(ReadableText.resource($r('app.string.academic_gpa_note'))).width('100%').fontSize(12).lineHeight(20).fontColor(ThemeColors.textSecondary).lineBreakStrategy(LineBreakStrategy.GREEDY)
       Text(AppLanguage.text($r('app.string.academic_local_scope'), this.languageRevision)
         .replace('{included}', String(LocalGpa.calculate(this.grades, this.graduate).included))
         .replace('{excluded}', String(LocalGpa.calculate(this.grades, this.graduate).excluded))
         .replace('{incomplete}', String(LocalGpa.calculate(this.grades, this.graduate).incomplete)))
         .width('100%').fontSize(12).lineHeight(19).fontColor(ThemeColors.textSecondary)
-      if (!this.graduate && !this.fallback) {
-      Button($r('app.string.academic_ranking')).height(32).fontSize(13).padding(0)
-        .backgroundColor(Color.Transparent).fontColor(CampusContentStyle.accent)
-        .onClick(() => { this.view = 2 })
-      }
-    }.width('100%').alignItems(HorizontalAlign.Start).padding(16).margin({ top: 4 })
-      .backgroundColor(CampusContentStyle.highlight).systemMaterial(adaptiveMaterial(this.materialRevision))
-      .borderRadius(ThemeDimens.radiusLarge)
+    }.width('100%').alignItems(HorizontalAlign.Start).padding({ left: 24, right: 24, top: 12, bottom: 20 })
   }
 
   @Builder
@@ -185,11 +225,11 @@ export struct AcademicContent {
 
   build() {
     Column({ space: 8 }) {
-      this.ErrorNote(this.semesterError)
+      this.ErrorNote(() => this.semesterError)
       if (this.graduate) {
-        Text($r('app.string.graduate_scores_note')).width('100%').fontSize(13).lineHeight(20).fontColor(ThemeColors.textSecondary)
+        Text(ReadableText.resource($r('app.string.graduate_scores_note'))).width('100%').fontSize(13).lineHeight(21).fontColor(ThemeColors.textSecondary).lineBreakStrategy(LineBreakStrategy.GREEDY)
       } else if (this.fallback) {
-        Text($r('app.string.academic_fallback_note')).width('100%').fontSize(13).fontColor(ThemeColors.textSecondary)
+        Text(ReadableText.resource($r('app.string.academic_fallback_note'))).width('100%').fontSize(13).lineHeight(21).fontColor(ThemeColors.textSecondary).lineBreakStrategy(LineBreakStrategy.GREEDY)
       } else {
         if (this.semesters.length > 0) {
           Button(this.semesters.find((row: SemesterInfo) => row.id === this.semesterId)?.name ??
@@ -208,14 +248,14 @@ export struct AcademicContent {
       this.MyGpa()
       if (this.loading && !this.loadingOverlay) LoadingProgress().width(32).height(32).color(ThemeColors.primary)
       if (this.graduate || this.view === 1 || this.fallback) {
-        this.ErrorNote(this.gradeError)
+        this.ErrorNote(() => this.gradeError)
         ForEach(this.grades, (grade: CourseGrade) => { this.Grade(grade) },
           (grade: CourseGrade, index: number) => academicGradeKey(grade, index, this.graduate, this.fallback))
         if (!this.loading && this.gradeError.length === 0 && this.grades.length === 0) {
           Text($r('app.string.academic_empty_grades')).width('100%').padding(16).fontColor(ThemeColors.textSecondary)
         }
       } else if (this.view === 2) {
-        this.ErrorNote(this.rankError)
+        this.ErrorNote(() => this.rankError)
         TabSegmentButtonV2({ items: this.scopeItems, selectedIndex: this.sameMajor ? 1 : 0,
           $selectedIndex: (index: number) => { this.sameMajor = index === 1 },
           enableStateAnimation: true, itemFontColor: ColorMetrics.resourceColor(ThemeColors.textPrimary),
@@ -248,8 +288,8 @@ export struct AcademicContent {
           Text($r('app.string.academic_empty_rank')).width('100%').padding(16).fontColor(ThemeColors.textSecondary)
         }
       } else {
-        this.ErrorNote(this.examError)
-        this.ErrorNote(this.gradeError)
+        this.ErrorNote(() => this.examError)
+        this.ErrorNote(() => this.gradeError)
         if (this.exams.length > 0) Button($r('app.string.academic_export_exams')).onClick(() => { this.onExport() })
         ForEach(this.exams.filter((row: ExamSchedule) => !AcademicPresentation.otherExam(row)), (exam: ExamSchedule) => { this.Exam(exam) },
           (exam: ExamSchedule, index: number) => academicExamKey(exam, this.grades, index))

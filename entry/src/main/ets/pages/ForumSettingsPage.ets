@@ -1,3 +1,4 @@
+import { ReadableText } from '../common/ReadableText'
 import { SheetTransitionGuard } from '../common/SheetTransitionGuard'
 import { DiagnosticNavigation } from '../common/DiagnosticNavigation'
 import { ErrorNotice } from '../components/ErrorNotice'
@@ -221,7 +222,7 @@ export struct ForumSettingsPage {
   @Builder
   FoldNote() {
     Column() {
-      Text($r('app.string.caution_choice_hint')).fontSize(12).lineHeight(18).fontColor(ThemeColors.textSecondary).width('100%')
+      Text(ReadableText.resource($r('app.string.caution_choice_hint'))).fontSize(12).lineHeight(20).fontColor(ThemeColors.textSecondary).width('100%').lineBreakStrategy(LineBreakStrategy.GREEDY)
     }.width(248).padding({ left: 8, right: 8, top: 8, bottom: 8 }).alignItems(HorizontalAlign.Start)
   }
   @Builder
@@ -289,7 +290,7 @@ export struct ForumSettingsPage {
   @Builder
   TagsSheet() {
     Column({ space: 12 }) {
-      Text($r('app.string.forum_hidden_tags_hint')).fontSize(13).lineHeight(20).fontColor(ThemeColors.textSecondary).width('100%')
+      Text(ReadableText.resource($r('app.string.forum_hidden_tags_hint'))).fontSize(13).lineHeight(21).fontColor(ThemeColors.textSecondary).width('100%').lineBreakStrategy(LineBreakStrategy.GREEDY)
       Row({ space: 8 }) {
         TextInput({ text: this.tagQuery, placeholder: $r('app.string.forum_tag_search') }).layoutWeight(1).height(44)
           .cancelButton({ style: CancelButtonStyle.INVISIBLE }).id('hidden-tag-input')
@@ -333,7 +334,7 @@ export struct ForumSettingsPage {
                 SymbolGlyph(getSymbolIcon('forum')).fontSize(32).fontColor([ThemeColors.primary])
                 Column({ space: 4 }) {
                   Text(this.status()).fontSize(18).fontWeight(FontWeight.Bold).fontColor(ThemeColors.textPrimary)
-                  Text($r('app.string.forum_account_hint')).fontSize(12).lineHeight(18).fontColor(ThemeColors.textSecondary)
+                  Text(ReadableText.resource($r('app.string.forum_account_hint'))).fontSize(12).lineHeight(20).fontColor(ThemeColors.textSecondary).lineBreakStrategy(LineBreakStrategy.GREEDY)
                 }.layoutWeight(1).alignItems(HorizontalAlign.Start)
                 if (this.loading) { LoadingProgress().width(22).height(22) }
               }.width('100%')

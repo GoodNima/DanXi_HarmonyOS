@@ -13,6 +13,8 @@ import { ForumLocalState } from '../common/ForumLocalState';
 import { NetworkProxy } from '../common/NetworkProxy';
 import { HapticFeedback } from '../common/HapticFeedback';
 import { ClassroomPreference } from '../common/ClassroomPreference';
+import { CampusFormStore } from '../widget/CampusFormStore';
+import { CampusFormData } from '../widget/CampusFormData';
 
 const DOMAIN = 0x0000;
 
@@ -45,8 +47,17 @@ export default class EntryAbility extends UIAbility {
     AppStorage.setOrCreate<number>(Constant.KEY_BOTTOM_BAR_INSET_PX, bottom);
   };
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
+    CampusFormStore.init(this.context);
+    this.acceptDesktopRequest(want);
     AppStorage.setOrCreate<number>('app_font_scale', this.context.config.fontSizeScale ?? 1);
     hilog.info(DOMAIN, 'testTag', '%{public}s', 'Ability onCreate');
+  }
+
+  onNewWant(want: Want, launchParam: AbilityConstant.LaunchParam): void { this.acceptDesktopRequest(want); }
+
+  private acceptDesktopRequest(want: Want): void {
+    const feature = String(want.parameters?.desktopFeature ?? '');
+    if (CampusFormData.supports(feature)) AppStorage.setOrCreate<string>('desktop_feature_request', feature);
   }
 
   onWindowStageCreate(windowStage: window.WindowStage): void {
@@ -122,6 +133,7 @@ export default class EntryAbility extends UIAbility {
     await ForumLocalState.restore();
     CalendarRepository.init(this.context.cacheDir);
     await AppState.init();
+    if (!AppState.isLoggedIn()) CampusFormStore.clear();
     await AppLanguage.init(this.context);
     if (this.mainWindow !== null) await Appearance.init(this.context, this.mainWindow);
     hilog.info(DOMAIN, 'testTag', 'App state initialized (prefs ready: %{public}s)',

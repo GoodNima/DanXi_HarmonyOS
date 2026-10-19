@@ -4,8 +4,7 @@ import { fileIo as fs, fileUri } from '@kit.CoreFileKit'
 import { photoAccessHelper } from '@kit.MediaLibraryKit'
 import { ForumImage } from '../model/ForumImage'
 
-/** Called only from a successfully authorized native SaveButton. Commit original
- * bytes as one media change request; never create a blank gallery asset first. */
+/** System confirmation grants only the selected destination URI. No broad album permission. */
 export class GalleryImageSave {
   // ArkUI-X's documented runtime platform boundary. Gallery and SaveButton
   // are native HarmonyOS capabilities, so never invoke them on Android/iOS.
@@ -43,12 +42,13 @@ export class GalleryImageSave {
     const helper: photoAccessHelper.PhotoAccessHelper = photoAccessHelper.getPhotoAccessHelper(context)
     try {
       await fs.copyFile(path, staged)
-      const request: photoAccessHelper.MediaAssetChangeRequest =
-        photoAccessHelper.MediaAssetChangeRequest.createImageAssetRequest(context, fileUri.getUriFromPath(staged))
-      await helper.applyChanges(request)
-      const asset: photoAccessHelper.PhotoAsset = request.getAsset()
-      if (!asset || !asset.uri) throw new Error('Gallery save failed')
-      return asset.uri
+      const uris: string[] = await helper.showAssetsCreationDialog([fileUri.getUriFromPath(staged)],
+        [{ title: 'DanTa-' + Date.now(), fileNameExtension: extension, photoType: photoAccessHelper.PhotoType.IMAGE }])
+      if (uris.length === 0) return ''
+      const destination: fs.File = await fs.open(uris[0], fs.OpenMode.WRITE_ONLY)
+      try { await fs.copyFile(staged, destination.fd) }
+      finally { await fs.close(destination) }
+      return uris[0]
     } finally {
       try { await fs.unlink(staged) } catch (e) {}
       try { await helper.release() } catch (e) {}

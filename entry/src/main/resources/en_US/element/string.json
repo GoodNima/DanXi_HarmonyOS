@@ -2,15 +2,15 @@
   "string": [
     {
       "name": "module_desc",
-      "value": "DanXi - Fudan campus assistant"
+      "value": "DanTa - Fudan campus assistant"
     },
     {
       "name": "EntryAbility_desc",
-      "value": "DanXi"
+      "value": "DanTa"
     },
     {
       "name": "EntryAbility_label",
-      "value": "DanXi"
+      "value": "DanTa"
     },
     {
       "name": "bus_weekday",
@@ -150,7 +150,7 @@
     },
     {
       "name": "notification_system_hint",
-      "value": "Adjust sound, vibration and notification access in System settings → Notifications & status bar → DanXi."
+      "value": "Adjust sound, vibration and notification access in System settings → Notifications & status bar → DanTa."
     },
     {
       "name": "notification_login",
@@ -230,7 +230,7 @@
     },
     {
       "name": "forum_settings",
-      "value": "Forum settings"
+      "value": "Teahouse settings"
     },
     {
       "name": "forum_compose",
@@ -262,7 +262,7 @@
     },
     {
       "name": "ui_adjust_permission_sound_and_vibration_in_system_",
-      "value": "Adjust permission, sound and vibration in System settings → Notifications & status bar → DanXi"
+      "value": "Adjust permission, sound and vibration in System settings → Notifications & status bar → DanTa"
     },
     {
       "name": "ui_handan",
@@ -642,7 +642,7 @@
     },
     {
       "name": "ui_enter_your_forum_email",
-      "value": "Enter your forum email"
+      "value": "Enter your teahouse email"
     },
     {
       "name": "ui_enter_your_password",
@@ -654,11 +654,11 @@
     },
     {
       "name": "ui_log_in_to_forum",
-      "value": "Log in to forum"
+      "value": "Log in to teahouse"
     },
     {
       "name": "ui_use_your_danxi_forum_account_separate_from_uis",
-      "value": "Use your DanXi forum account (separate from UIS)"
+      "value": "Use your DanTa teahouse account (separate from UIS)"
     },
     {
       "name": "ui_email",
@@ -678,7 +678,7 @@
     },
     {
       "name": "ui_register_on_the_forum_website_this_is_separate_f",
-      "value": "Register on the forum website. This is separate from your Fudan UIS account."
+      "value": "Register on the teahouse website. This is separate from your Fudan UIS account."
     },
     {
       "name": "ui_could_not_open_post_please_retry",
@@ -690,7 +690,7 @@
     },
     {
       "name": "ui_log_in_to_browse_the_forum",
-      "value": "Log in to browse the forum"
+      "value": "Log in to browse the teahouse"
     },
     {
       "name": "ui_a_fduhole_com_account_is_required_please_log_in",
@@ -698,7 +698,7 @@
     },
     {
       "name": "ui_search_forum",
-      "value": "Search forum"
+      "value": "Search teahouse"
     },
     {
       "name": "ui_clear",
@@ -722,7 +722,7 @@
     },
     {
       "name": "ui_forum",
-      "value": "Forum"
+      "value": "Teahouse"
     },
     {
       "name": "ui_could_not_open_editor_please_retry",
@@ -742,7 +742,7 @@
     },
     {
       "name": "ui_please_log_in_to_the_forum_first",
-      "value": "Please log in to the forum first"
+      "value": "Please log in to the teahouse first"
     },
     {
       "name": "ui_me",
@@ -818,7 +818,7 @@
     },
     {
       "name": "ui_welcome_to_danxi",
-      "value": "Welcome to DanXi"
+      "value": "Welcome to DanTa"
     },
     {
       "name": "ui_log_in_to_view_grades_timetables_and_campus_serv",
@@ -850,7 +850,7 @@
     },
     {
       "name": "ui_system_permission_forum_notification_types",
-      "value": "System permission & forum notification types"
+      "value": "System permission & teahouse notification types"
     },
     {
       "name": "ui_dashboard_order",
@@ -866,11 +866,11 @@
     },
     {
       "name": "ui_about_danxi",
-      "value": "About DanXi"
+      "value": "About DanTa"
     },
     {
       "name": "ui_danxi_for_harmonyos_v",
-      "value": "DanXi for HarmonyOS v"
+      "value": "DanTa for HarmonyOS v"
     },
     {
       "name": "ui_open_source_licenses",
@@ -1086,7 +1086,7 @@
     },
     {
       "name": "forum_webvpn_login_required",
-      "value": "The forum is not reachable directly on this network. Off-campus access uses Fudan WebVPN. Sign in to your Fudan account; your forum login is retained."
+      "value": "The teahouse is not reachable directly on this network. Off-campus access uses Fudan WebVPN. Sign in to your Fudan account; your teahouse login is retained."
     },
     {
       "name": "webvpn_auto",
@@ -1606,7 +1606,7 @@
     },
     {
       "name": "academic_gpa_note",
-      "value": "Calculated locally: Σ(published course GP × credits) ÷ included credits, for the retrieved list only, not a degree audit or cumulative GPA. P/NP, marked undergraduate transfer grades and identified graduate remedial, compulsory-component or assessment-only courses are excluded. Missing GP or credits are not estimated."
+      "value": "Calculated locally using the formula above, for the retrieved list only, not a degree audit or cumulative GPA. P/NP, marked undergraduate transfer grades and identified graduate remedial, compulsory-component or assessment-only courses are excluded. Missing GP or credits are not estimated."
     },
     {
       "name": "academic_rank_all",
@@ -1754,7 +1754,7 @@
     },
     {
       "name": "campus_welcome_guest",
-      "value": "Welcome to DanXi"
+      "value": "Welcome to DanTa"
     },
     {
       "name": "campus_no_notices",
@@ -2026,19 +2026,19 @@
     },
     {
       "name": "forum_signed_in",
-      "value": "Signed in to the forum"
+      "value": "Signed in to the teahouse"
     },
     {
       "name": "forum_signed_out",
-      "value": "Not signed in to the forum"
+      "value": "Not signed in to the teahouse"
     },
     {
       "name": "forum_account_hint",
-      "value": "Forum and Fudan campus accounts are separate."
+      "value": "Teahouse and Fudan campus accounts are separate."
     },
     {
       "name": "forum_logout_hint",
-      "value": "Sign out of the forum. Campus services remain available."
+      "value": "Sign out of the teahouse. Campus services remain available."
     },
     {
       "name": "forum_browsing_settings",
@@ -2090,7 +2090,7 @@
     },
     {
       "name": "forum_account_content",
-      "value": "My forum activity"
+      "value": "My teahouse activity"
     },
     {
       "name": "forum_my_posts",
@@ -2130,7 +2130,7 @@
     },
     {
       "name": "forum_background",
-      "value": "Forum background"
+      "value": "Teahouse background"
     },
     {
       "name": "forum_background_hint",
@@ -2234,7 +2234,7 @@
     },
     {
       "name": "forum_activities_hint",
-      "value": "Show official activities in the forum feed. Tap for details. The area collapses when there are no activities; turning this off hides it."
+      "value": "Show official activities in the teahouse feed. Tap for details. The area collapses when there are no activities; turning this off hides it."
     },
     {
       "name": "forum_activities_cached",
@@ -2274,7 +2274,7 @@
     },
     {
       "name": "forum_activities_source",
-      "value": "Official DanXi activities"
+      "value": "Official DanTa activities"
     },
     {
       "name": "forum_activities_empty",
@@ -2349,6 +2349,10 @@
       "value": "Outside dining service hours"
     },
     {
+      "name": "campus_dining_outside_hint",
+      "value": "Window activity and relative crowding are available during meal hours."
+    },
+    {
       "name": "live_dining_hint",
       "value": "All reported windows are grouped by campus and canteen. Counts indicate dining activity, not a live queue. Relative crowding compares each canteen’s count against its peak reference."
     },
@@ -2362,7 +2366,7 @@
     },
     {
       "name": "live_developer_hint",
-      "value": "Original DanXi developer announcements with publication dates. Switch between current and historical notices."
+      "value": "Original DanTa developer announcements with publication dates. Switch between current and historical notices."
     },
     {
       "name": "live_no_notices",
@@ -2470,7 +2474,7 @@
     },
     {
       "name": "utility_forum_login_hint",
-      "value": "Use your forum account to view reviews"
+      "value": "Use your teahouse account to view reviews"
     },
     {
       "name": "utility_campus_login_hint",
@@ -2682,7 +2686,7 @@
     },
     {
       "name": "utility_login_forum",
-      "value": "Sign in to forum"
+      "value": "Sign in to teahouse"
     },
     {
       "name": "utility_course_details",
@@ -2834,11 +2838,11 @@
     },
     {
       "name": "forum_webvpn_verification_hint",
-      "value": "The forum cannot be reached directly. Continue campus WebVPN verification, then use your separate forum email and password."
+      "value": "The teahouse cannot be reached directly. Continue campus WebVPN verification, then use your separate teahouse email and password."
     },
     {
       "name": "forum_login_timeout_hint",
-      "value": "Forum login timed out (2300028). Server receipt is uncertain. Tap Log in again shortly; your password will not be resubmitted automatically."
+      "value": "Teahouse login timed out (2300028). Server receipt is uncertain. Tap Log in again shortly; your password will not be resubmitted automatically."
     },
     {
       "name": "live_load_usage_history",
@@ -2934,7 +2938,7 @@
     },
     {
       "name": "settings_harmony_intro",
-      "value": "This is the internal-test HarmonyOS adaptation of DanXi. Thanks to the original project and all contributors."
+      "value": "This is the internal-test HarmonyOS adaptation of DanTa. Thanks to the original project and all contributors."
     },
     {
       "name": "settings_legal",
@@ -2942,7 +2946,7 @@
     },
     {
       "name": "settings_legal_text",
-      "value": "By logging in, you confirm that you have read and agree to the privacy policy and terms. DanXi is licensed under GNU GPL v3. Third-party licenses are available offline below."
+      "value": "By logging in, you confirm that you have read and agree to the privacy policy and terms. DanTa is licensed under GNU GPL v3. Third-party licenses are available offline below."
     },
     {
       "name": "settings_privacy",
@@ -3650,11 +3654,11 @@
     },
     {
       "name": "timetable_calendar_name",
-      "value": "DanXi Courses · %s"
+      "value": "DanTa Courses · %s"
     },
     {
       "name": "timetable_calendar_hint",
-      "value": "Choose courses to write into “DanXi Courses · %s” in the system calendar. Re-exporting updates existing events without duplicates."
+      "value": "Choose courses to write into “DanTa Courses · %s” in the system calendar. Re-exporting updates existing events without duplicates."
     },
     {
       "name": "timetable_calendar_done",
@@ -3662,11 +3666,11 @@
     },
     {
       "name": "timetable_calendar_permission_reason",
-      "value": "Write selected courses to the system calendar and recognise previously exported DanXi events to prevent duplicates."
+      "value": "Write selected courses to the system calendar and recognise previously exported DanTa events to prevent duplicates."
     },
     {
       "name": "timetable_calendar_permission_denied",
-      "value": "Calendar permission is required. Allow calendar access for DanXi in system settings."
+      "value": "Calendar permission is required. Allow calendar access for DanTa in system settings."
     },
     {
       "name": "timetable_export_empty",
@@ -3978,7 +3982,7 @@
     },
     {
       "name": "settings_original_flutter",
-      "value": "Original Flutter project"
+      "value": "Original Android project"
     },
     {
       "name": "settings_ios_developers",
@@ -4010,7 +4014,7 @@
     },
     {
       "name": "settings_thanks_merged",
-      "value": "Thanks to the developers, designers and open-source communities of the original Flutter and iOS projects."
+      "value": "Thanks to the developers, designers and open-source communities of the original Android and iOS projects."
     },
     {
       "name": "settings_contributors_merged",
@@ -4018,11 +4022,11 @@
     },
     {
       "name": "settings_credit_icon_design",
-      "value": "Flutter icon design"
+      "value": "Android icon design"
     },
     {
       "name": "settings_credit_art_design",
-      "value": "Flutter emoticon design"
+      "value": "Android emoticon design"
     },
     {
       "name": "settings_original_ios",
@@ -4034,7 +4038,171 @@
     },
     {
       "name": "settings_original_libraries_hint",
-      "value": "Open-source software credited by the original Flutter and iOS projects, sorted by name with its source platform and original license information."
+      "value": "Open-source software credited by the original Android and iOS projects, sorted by name with its source platform and original license information."
+    },
+    {
+      "name": "card_identity_required",
+      "value": "Campus card access requires campus identity confirmation. Tap Continue Verification."
+    },
+    {
+      "name": "settings_app_developers",
+      "value": "Developers and contributors"
+    },
+    {
+      "name": "settings_harmony_platform",
+      "value": "HarmonyOS edition"
+    },
+    {
+      "name": "settings_harmony_project",
+      "value": "Project website"
+    },
+    {
+      "name": "settings_harmony_contributors",
+      "value": "Contribution history"
+    },
+    {
+      "name": "settings_harmony_version",
+      "value": "HarmonyOS %s · build %s"
+    },
+    {
+      "name": "settings_harmony_upgrade",
+      "value": "Upgrade code %d"
+    },
+    {
+      "name": "settings_harmony_note",
+      "value": "Native ArkTS / ArkUI\nAdapted from Android / iOS"
+    },
+    {
+      "name": "settings_harmony_build",
+      "value": "Build %s"
+    },
+    {
+      "name": "forum_campus_login_brief",
+      "value": "Sign in to your campus account to continue browsing."
+    },
+    {
+      "name": "forum_campus_verify_brief",
+      "value": "Verify your campus identity to continue browsing."
+    },
+    {
+      "name": "academic_gpa_formula_description",
+      "value": "GPA equals the sum of grade points times credits, divided by included credits."
+    },
+    {
+      "name": "academic_gpa_symbols",
+      "value": "n is the number of eligible courses, gᵢ the official grade point, and cᵢ the credits of course i."
+    },
+    {
+      "name": "desktop_forms_description",
+      "value": "Campus information on your home screen. Tap for details."
+    },
+    {
+      "name": "desktop_forms_hint",
+      "value": "Tap to open and update"
+    },
+    {
+      "name": "desktop_forms_empty",
+      "value": "Not loaded"
+    },
+    {
+      "name": "desktop_forms_saved",
+      "value": "Updated"
+    },
+    {
+      "name": "desktop_forms_old",
+      "value": "Out of date · tap to update"
+    },
+    {
+      "name": "desktop_forms_timetable",
+      "value": "Timetable"
+    },
+    {
+      "name": "desktop_forms_card",
+      "value": "Campus card"
+    },
+    {
+      "name": "desktop_forms_electricity",
+      "value": "Electricity"
+    },
+    {
+      "name": "desktop_forms_bus",
+      "value": "Campus bus"
+    },
+    {
+      "name": "academic_gpa_explanation",
+      "value": "Calculation"
+    },
+    {
+      "name": "academic_gpa_brief",
+      "value": "Based on retrieved courses only, not the full-program GPA."
+    },
+    {
+      "name": "desktop_forms_following",
+      "value": "Later %s"
+    },
+    {
+      "name": "desktop_forms_balance",
+      "value": "Balance"
+    },
+    {
+      "name": "desktop_forms_remaining",
+      "value": "Remaining"
+    },
+    {
+      "name": "academic_gpa_symbol_courses",
+      "value": "Number of included courses"
+    },
+    {
+      "name": "academic_gpa_symbol_points",
+      "value": "Official grade point for each course"
+    },
+    {
+      "name": "academic_gpa_symbol_credits",
+      "value": "Credits for that course"
+    },
+    {
+      "name": "campus_course_periods",
+      "value": "P. %s"
+    },
+    {
+      "name": "desktop_bus_direction",
+      "value": "Route"
+    },
+    {
+      "name": "desktop_bus_next",
+      "value": "Next"
+    },
+    {
+      "name": "desktop_bus_later",
+      "value": "Later"
+    },
+    {
+      "name": "campus_academic_gpa_pending",
+      "value": "GPA pending"
+    },
+    {
+      "name": "campus_dining_outside_short",
+      "value": "Outside meal hours"
+    },
+    {
+      "name": "campus_sports_short_hint",
+      "value": "Venues & time slots"
+    },
+    {
+      "name": "campus_dining_compact_hint",
+      "value": "Check at meal times"
+    },
+    {
+      "name": "campus_notice_read_full",
+      "value": "Read full notice"
+    },
+    {
+      "name": "campus_notice_updated",
+      "value": "Updated %s"
+    },
+    {
+      "name": "campus_notice_more",
+      "value": "%d more notices"
     }
   ]
 }

@@ -30,7 +30,6 @@ import { CourseReviewGroup, CourseReview, CourseReviewDraft, ReviewCourse, Revie
 import { TopFade } from '../components/TopFade'
 import { FloatingActionButton } from '../components/FloatingActionButton'
 import { getSymbolIcon } from '../common/DanXiIcons'
-import { FeedRefreshProgress, EmptyRefreshIndicator } from '../components/FeedRefreshProgress'
 import { ForumContentView } from '../components/ForumContentView'
 import { ForumListSource } from '../common/ForumListSource'
 import { CourseReviewSummaryLoader } from '../common/CourseReviewSummaryLoader'
@@ -67,7 +66,6 @@ export struct CampusUtilityPage {
   @State feature: string = 'sports'
   @State refreshing: boolean = false
   @State loading: boolean = false
-  @State pullOffset: number = 0
   @State error: string = ''
   @State termsRequired: boolean = false
   @State verificationRequired: boolean = false
@@ -1065,16 +1063,9 @@ export struct CampusUtilityPage {
   @Builder
   PageContent() {
     Stack({ alignContent: Alignment.Top }) {
-      if (this.feature === 'evaluation') {
-        this.PageBody()
-      } else {
-        Refresh({ refreshing: $$this.refreshing, builder: EmptyRefreshIndicator }) { this.PageBody() }
-          .width('100%').height('100%').onRefreshing(() => { this.reload() }).onOffsetChange((offset: number) => { this.pullOffset = offset })
-      }
-      CenterLoadingProgress({ busy: (this.readPending || this.navigationLoading || (this.feature === 'evaluation' && !this.loaded && !this.error)) && !this.refreshing })
+      this.PageBody()
+      CenterLoadingProgress({ busy: (this.readPending || this.navigationLoading || (this.feature === 'evaluation' && !this.loaded && !this.error)) })
       TopFade({ extent: this.headerExtent(), trailingEdge: 16 })
-      if (this.feature !== 'evaluation') FeedRefreshProgress({ topInset: px2vp(this.topPx) + 82,
-        refreshing: this.refreshing, pullOffset: this.pullOffset })
       Row({ space: 12 }) {
         if (!this.mainTab || this.group !== null) {
           Row() { FloatingActionButton({ label: $r('app.string.settings_back'), icon: 'back', controlHeight: 48,
