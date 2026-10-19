@@ -3,8 +3,8 @@
   <h1>旦挞 · HarmonyOS</h1>
   <p>面向复旦大学学生的校园服务应用，使用 ArkTS / ArkUI 适配 HarmonyOS。</p>
   <p>
-    <a href="https://danxi.fduhole.com">官方网站（原项目）</a> ·
-    <a href="https://github.com/DanXi-Dev/DanXi">原项目</a> ·
+    <a href="https://danxi.fduhole.com">官方网站</a> ·
+    <a href="https://github.com/DanXi-Dev/DanXi">移植参考项目</a> ·
     <a href="https://github.com/GoodNima/DanXi_HarmonyOS/releases">下载 Alpha 内测包</a> ·
     <a href="docs/INSTALLATION.md">安装与签名</a> ·
     <a href="CONTRIBUTING.md">参与开发</a> ·
@@ -47,11 +47,11 @@
 
 ## 界面示例
 
-以下为 0.1.35.3 鸿蒙版的校园、茶楼、课评界面示例。截图来自虚拟机，课程、金额、帖子与评价均为模拟数据，不代表真实账号或线上服务验证。
+以下展示校园卡片、茶楼信息流和课评列表的常规使用界面，保留当前版本的原生底部导航。截图由正式页面组件渲染；课程、金额、帖子和评分采用演示数据，不含真实账号资料。
 
 | 校园 | 茶楼 | 课评 |
 | :---: | :---: | :---: |
-| <img src="docs/images/campus.jpeg" width="230" alt="校园页，模拟数据" /> | <img src="docs/images/teahouse.jpeg" width="230" alt="茶楼页，模拟数据" /> | <img src="docs/images/reviews.jpeg" width="230" alt="课评页，模拟数据" /> |
+| <img src="docs/images/campus.jpeg" width="230" alt="校园页，演示数据" /> | <img src="docs/images/teahouse.jpeg" width="230" alt="茶楼页，演示数据" /> | <img src="docs/images/reviews.jpeg" width="230" alt="课评页，演示数据" /> |
 
 ## 开发
 
@@ -81,11 +81,11 @@ docs/              安装、版本、许可与多人维护文档
 
 ## 来源、参考与许可
 
-原项目官方网站：[danxi.fduhole.com](https://danxi.fduhole.com)。
+官方网站：[danxi.fduhole.com](https://danxi.fduhole.com)。
 
-本项目源自 [DanXi-Dev/DanXi](https://github.com/DanXi-Dev/DanXi)，并在功能流程和原项目贡献记录适配时参考 [DanXi-Dev/DanXi-swift](https://github.com/DanXi-Dev/DanXi-swift)。其他平台的下载与开发情况请参阅对应原项目；本仓库首页与 Release 专注鸿蒙版本。
+移植参考项目：[DanXi-Dev/DanXi](https://github.com/DanXi-Dev/DanXi)，并在功能流程和原项目贡献记录适配时参考 [DanXi-Dev/DanXi-swift](https://github.com/DanXi-Dev/DanXi-swift)。其他平台的下载与开发情况请参阅对应原项目；本仓库首页与 Release 专注鸿蒙版本。
 
 
-原 Flutter 文件树保留在本仓库的 [upstream-flutter-baseline](https://github.com/GoodNima/DanXi_HarmonyOS/tree/upstream-flutter-baseline) 快照分支，Git 历史继续保留。`main` 用于鸿蒙版维护；上游改动应经评审后按功能移植，维护流程见 [贡献指南](CONTRIBUTING.md)。
+经历史净化的 Flutter 来源快照保留在本仓库的 [upstream-flutter-baseline](https://github.com/GoodNima/DanXi_HarmonyOS/tree/upstream-flutter-baseline) 快照分支，提交关系、作者与日期继续保留；净化后的编号与版本对应见 [历史净化记录](docs/HISTORY_CLEANUP.md)。`main` 用于鸿蒙版维护；上游改动应经评审后按功能移植，维护流程见 [贡献指南](CONTRIBUTING.md)。
 
 保留 DanXi 上游 [GPL-3.0 许可全文](LICENSE)、原作者与资源致谢。iOS 参考项目及第三方资源的各自许可说明随应用保留，见 [第三方材料说明](docs/THIRD_PARTY_NOTICES.md)。原项目标识、贡献者头像、字体、表情和渲染依赖分别注明来源；新增或替换资源须核对其许可。

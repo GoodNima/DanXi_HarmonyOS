@@ -13,7 +13,7 @@
 | `feat/*`、`fix/*`、`docs/*` | 并行开发与审阅，向 main 提交 PR |
 | `vA.B.C.D-alpha` | 已公开 Alpha 包对应的来源提交，正常发布后不移动；授权历史净化例外见下文 |
 
-原 Flutter 基线为 [551a88c7](https://github.com/GoodNima/DanXi_HarmonyOS/commit/551a88c7bda36fe48f5fb92b478c0bcc72b4c3c9)，保存在 [快照分支](https://github.com/GoodNima/DanXi_HarmonyOS/tree/upstream-flutter-baseline)。工作树整理之后，2026-10-14 按项目所有者授权净化两次鸿蒙提交并调整 Alpha tag。3403 个上游原始提交及其基线编号保持不变；同版本源码、作者、日期和安装包摘要保留。新旧编号与操作边界见当前 main 的 [历史净化记录](https://github.com/GoodNima/DanXi_HarmonyOS/blob/main/docs/HISTORY_CLEANUP.md)。
+Flutter 来源快照保存在 [upstream-flutter-baseline](https://github.com/GoodNima/DanXi_HarmonyOS/tree/upstream-flutter-baseline)。2026-10-20 对全部分支、标签及可达历史统一净化，保留作者、日期与提交关系，提交编号已改变；完整映射、版本来源和协作者迁移要求见 [历史净化记录](HISTORY_CLEANUP.md)。
 
 不要用 GitHub **Sync fork** 更新原生 main，不直接合并 Flutter 的根构建文件和平台目录。需要新的比较快照时使用单独参考分支。推送前确认所有者和目标分支；本 fork 的提交不会自动修改上游项目。
 
@@ -57,7 +57,7 @@ LICENSE                           上游许可全文
 
 GitHub 文件列表的备注来自对应路径最近一次变更的提交标题。采用 `短前缀: 英文动作与结果`，按内容选用 `app:`、`docs:`、`history:` 或 `release:`，前缀不带括号模块名；源码、配置、资源和文档按实际修改范围概括。实例和审阅要求见 [贡献指南](../CONTRIBUTING.md)。
 
-已推送提交的说明调整会生成新提交编号，应保留映射及协作者迁移记录。2026-10-14 的英文短前缀规范化只调整本项目 main 的提交说明，已发布 tag 保持原净化编号，详见 [追溯记录](HISTORY_CLEANUP.md#文件列表提交备注规范化)。
+已推送提交的说明调整或历史净化会改变提交编号，必须保留映射及协作者迁移记录。2026-10-20 的统一净化同时更新了两个 Alpha 标签，安装包保持不变；详见 [追溯记录](HISTORY_CLEANUP.md)。
 
 ## 环境基线
 
@@ -179,3 +179,7 @@ README 保持鸿蒙用户视角：功能、支持条件、截图、下载、侧�
 安装方式变化更新 INSTALLATION；构建或协作变化更新本手册、CONTRIBUTING 和模板；应用发布更新 RELEASE_NOTES 与 VERSION_HISTORY。相对链接必须在当前树有效，不指向个人档案或私人绝对路径。
 
 资源替换、依赖引入和功能移植均更新 [第三方材料说明](THIRD_PARTY_NOTICES.md)，保留 [LICENSE](../LICENSE) 及随应用打包的许可全文。
+
+## 首页展示维护
+
+README 保留官方网站、移植参考项目入口及校园、茶楼、课评三页常规界面。截图使用当前页面组件及导航；演示数据须在说明中注明，不发布真实账号、私密帖子或个人成绩。仅保留实际应用依赖和移植来源的引用及许可证，不添加无关项目介绍。

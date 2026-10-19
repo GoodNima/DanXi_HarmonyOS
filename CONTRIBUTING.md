@@ -62,3 +62,5 @@ git switch -c fix/short-description
 `upstream-flutter-baseline` 保存移植前的 Flutter 基线。不要用 GitHub **Sync fork** 覆盖原生 `main`，或直接合并 Flutter 平台目录来更新鸿蒙工程。上游变化应记录具体仓库、提交或 PR，并按功能、协议和资源选择必要适配；步骤见 [上游变化的移植流程](docs/MAINTAINING.md#上游变化的移植流程)。
 
 本仓库提交不会自动修改 DanXi 上游；向上游贡献须另行提出 PR，并遵守目标项目规范。引入源码、图标、字体、头像、表情或其他资源时，分别核对来源和许可，保留版权与署名。贡献须遵守 [LICENSE](LICENSE) 和 [第三方材料说明](docs/THIRD_PARTY_NOTICES.md)。
+
+2026-10-20 已统一净化全部历史。持有旧克隆的协作者应先阅读 [迁移要求](docs/HISTORY_CLEANUP.md#协作者迁移)，重新克隆后迁移必要代码，不合并或推送旧历史。
