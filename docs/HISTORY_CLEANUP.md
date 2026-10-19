@@ -45,6 +45,8 @@ git clone https://github.com/GoodNima/DanXi_HarmonyOS.git
 
 本次清理覆盖本仓库可控制的分支和标签。上游仓库、外部 fork、他人克隆、GitHub 按旧编号提供的对象和缓存不受此次推送控制；不能将可达历史净化表述为旧对象已从互联网永久删除。
 
+2026-10-20 推送后实测：GitHub 按旧编号读取旧提交和一个历史敏感文件对象仍返回 HTTP 200。它们已经不在当前四个引用的可达历史中，但服务端仍保留对象。远端当前 main 的 442 个文件已逐个核对，两个 Release 的四个附件重新下载后校验值与原包相同；仓库没有 Pull Request、Actions 运行、构建附件或缓存等待清理。
+
 凭据删除不等于撤销权限。历史凭据的所有者仍需在对应服务撤销或轮换可能有效的值；本次没有其服务端管理权限，也未测试有效性。真正敏感的 GitHub 缓存与只读引用可通过 GitHub Support 申请处理；是否受理取决于其政策及上游/fork 残留情况。非敏感旧文件通常不属于支持团队清除缓存的范围。
 
 依据：[GitHub 敏感数据删除说明](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository)。
