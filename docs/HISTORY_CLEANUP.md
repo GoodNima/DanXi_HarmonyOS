@@ -50,3 +50,7 @@ git clone https://github.com/GoodNima/DanXi_HarmonyOS.git
 凭据删除不等于撤销权限。历史凭据的所有者仍需在对应服务撤销或轮换可能有效的值；本次没有其服务端管理权限，也未测试有效性。真正敏感的 GitHub 缓存与只读引用可通过 GitHub Support 申请处理；是否受理取决于其政策及上游/fork 残留情况。非敏感旧文件通常不属于支持团队清除缓存的范围。
 
 依据：[GitHub 敏感数据删除说明](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository)。
+
+## Support 处理进度
+
+2026-10-20，维护者已向 GitHub Support 提交历史敏感对象与缓存清理请求，工单当前为 Open，等待支持团队审核。请求保留现有仓库、分支、版本标签和 Release 安装包。提交成功不代表服务端对象已删除；清理完成后仍需按旧编号重新验证访问结果。工单正文、敏感对象定位信息与账户信息仅在私有维护记录中保留。
