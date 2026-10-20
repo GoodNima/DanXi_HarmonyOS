@@ -12,9 +12,11 @@
   </p>
 </div>
 
-[![阶段](https://img.shields.io/badge/阶段-Alpha-orange)](docs/RELEASE_NOTES.md)
-[![HarmonyOS](https://img.shields.io/badge/HarmonyOS-API%2026-blue)](build-profile.json5)
-[![源码许可](https://img.shields.io/badge/上游许可-GPL--3.0-blue)](LICENSE)
+<p align="center">
+  <a href="docs/RELEASE_NOTES.md"><img src="https://img.shields.io/badge/阶段-Alpha-orange" alt="阶段" /></a>
+  <a href="build-profile.json5"><img src="https://img.shields.io/badge/HarmonyOS-API%2026-blue" alt="HarmonyOS" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/上游许可-GPL--3.0-blue" alt="源码许可" /></a>
+</p>
 
 本仓库维护 **旦挞（DanTa）——基于 DanXi 的原生鸿蒙移植版本**。当前版本为 **0.1.35.3 Alpha**，升级编号 `1000154`，构建号 `155`。应用仍处于内部测试阶段；功能清单表示当前源码已实现的范围，实际服务可用性取决于账号权限、校园网络及服务端状态。
 
