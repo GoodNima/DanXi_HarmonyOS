@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="AppScope/resources/base/media/launcher.png" width="100" alt="旦挞应用图标" />
+  <img src="docs/images/app-icon.svg" width="100" alt="旦挞应用图标" />
   <h1>旦挞 · HarmonyOS</h1>
   <p>面向复旦大学学生的校园服务应用，使用 ArkTS / ArkUI 适配 HarmonyOS。</p>
   <p>
