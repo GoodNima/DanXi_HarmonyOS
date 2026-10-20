@@ -51,9 +51,18 @@
 
 以下展示校园卡片、茶楼信息流和课评列表的常规使用界面，保留当前版本的原生底部导航。截图由正式页面组件渲染；课程、金额、帖子和评分采用演示数据，不含真实账号资料。
 
+**浅色模式**
+
 | 校园 | 茶楼 | 课评 |
 | :---: | :---: | :---: |
 | <img src="docs/images/campus.jpeg" width="230" alt="校园页，演示数据" /> | <img src="docs/images/teahouse.jpeg" width="230" alt="茶楼页，演示数据" /> | <img src="docs/images/reviews.jpeg" width="230" alt="课评页，演示数据" /> |
+
+
+**深色模式**
+
+| 校园 | 茶楼 | 课评 |
+| :---: | :---: | :---: |
+| <img src="docs/images/campus-dark.jpeg" width="230" alt="校园页，深色模式，演示数据" /> | <img src="docs/images/teahouse-dark.jpeg" width="230" alt="茶楼页，深色模式，演示数据" /> | <img src="docs/images/reviews-dark.jpeg" width="230" alt="课评页，深色模式，演示数据" /> |
 
 ## 开发
 
