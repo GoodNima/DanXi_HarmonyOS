@@ -58,6 +58,14 @@ export interface CampusPreviewSource {
 /** Preview payloads contain summaries only, scoped to account, role and campus. */
 export class CampusPreviewStore {
   static readonly REVISION: string = 'campus_preview_revision'
+  /** Exact historical cache values, not displayed UI strings. Keep all
+   * released translations so a language change cannot restore this footer. */
+  private static readonly LEGACY_ACADEMIC_NOTES: string[] = [
+    '研究生：课程成绩与单科绩点（原版研究生系统不提供本科生 GPA 排名或考试安排）',
+    '研究生：課程成績與單科績點（原版研究生系統不提供本科生 GPA 排名或考試安排）',
+    'Graduate course grades and per-course GPA (the graduate service does not provide undergraduate GPA rankings or exam schedules)',
+    '大学院の科目成績と科目ごとのGPA（大学院システムには学部生のGPA順位・試験日程はありません）'
+  ]
   private static readonly memory: Map<string, CampusPreview> = new Map<string, CampusPreview>()
   static owner(): string {
     return (AppState.getPerson().getStudentId() || 'guest') + ':' + String(AppStorage.get<boolean>(AppState.KEY_IS_LOGGED_IN) !== false) +
@@ -119,7 +127,11 @@ export class CampusPreviewStore {
   }
   private static copy(row: CampusPreview): CampusPreview {
     const value = new CampusPreview(); value.id = row.id; value.value = row.value
-    value.description = row.description; value.secondary = row.secondary
+    value.description = row.description
+    // Older cold-start summaries used the detail page's graduate explanation
+    // as their footer. Keep restored cards identical to live/detail updates.
+    value.secondary = row.id === 'academic' && (CampusPreviewStore.LEGACY_ACADEMIC_NOTES.includes(row.secondary) ||
+      row.secondary === AppLanguage.text($r('app.string.graduate_scores_note'))) ? '' : row.secondary
     value.updatedAt = row.updatedAt; value.status = row.status; value.tone = row.tone || (row.id === 'card' ? CampusSignal.amount(row.value) : ''); value.gpa = row.gpa ?? ''; value.credits = row.credits ?? ''
     if (value.gpa && Number.isFinite(Number(value.gpa))) value.gpa = Number(value.gpa).toFixed(2)
     value.examCount = CampusPreviewStore.academicCount(row, true)
@@ -153,8 +165,8 @@ export class CampusPreviewStore {
   static greetingText(now: Date, revision: number): string { return CampusGreeting.text(now, revision) }
 }
 
-/** Summary refresh does not open an authentication window for every card.
- * Existing sessions are read directly; the explicit detail page owns renewal. */
+/** Summary refresh may silently resume an existing ID session, but only an
+ * explicit verification action can open an authentication window. */
 export class DefaultCampusPreviewSource implements CampusPreviewSource {
   cached(id: string): Promise<CampusPreview | undefined> {
     if (id !== 'electricity') return CampusPreviewStore.cached(id)
@@ -168,6 +180,7 @@ export class DefaultCampusPreviewSource implements CampusPreviewSource {
   publish(row: CampusPreview, owner: string): Promise<void> { return CampusPreviewStore.publish(row, owner) }
   async read(id: string, force: boolean): Promise<CampusPreview> {
     const capturedPerson: Person = AppState.getPerson()
+    const signedIn: boolean = capturedPerson.isLoggedIn() && AppStorage.get<boolean>(AppState.KEY_IS_LOGGED_IN) !== false
     // These services apply their own account/session scopes and short live
     // TTLs. Bypass the generic persisted TTL so visitor counts remain current
     // and an independent forum logout immediately invalidates DanKe previews.
@@ -201,9 +214,9 @@ export class DefaultCampusPreviewSource implements CampusPreviewSource {
         row.description = AppLanguage.text($r('app.string.campus_classroom_outside_period')) + '\n' + ClassroomPresentation.previewLabel(building, day)
         row.secondary = AppLanguage.campus(campus); row.updatedAt = Date.now(); return row
       }
-      // A passive preview uses only an existing WebVPN cookie. It never starts
-      // authentication; without one the direct campus endpoint remains usable.
-      const rooms = ClassroomScheduleParser.preview(await ClassroomScheduleRepository.read(building, day, force, false))
+      // Signed-in previews share silent service recovery with details. Guests
+      // retain the direct campus endpoint without starting verification.
+      const rooms = ClassroomScheduleParser.preview(await ClassroomScheduleRepository.read(building, day, force, signedIn))
       row.items = CampusCardInformation.classrooms(rooms, slot)
       row.total = CampusCardInformation.classroomTotal(rooms, slot)
       row.value = AppLanguage.text($r('app.string.campus_classroom_count')).replace('{count}',
@@ -216,14 +229,22 @@ export class DefaultCampusPreviewSource implements CampusPreviewSource {
       row.value = pinned.length > 0 ? AppLanguage.text($r('app.string.books_pinned_count'), 0, pinned.length) : AppLanguage.text($r('app.string.books_search_short'))
       row.description = AppLanguage.text($r('app.string.books_preview_hint'))
       row.secondary = pinned[0]?.title ?? AppLanguage.text($r('app.string.books_public_hint'))
-    } else if (id === 'academic' && AcademicAccount.group() !== 'unknown' && repo.cookiesFor(CampusService.GPA)) {
+    } else if (id === 'academic' && signedIn && AcademicAccount.group() !== 'unknown') {
       const graduate: boolean = AcademicAccount.isGraduate()
       const semester = graduate ? undefined : await repo.getCurrentSemester().catch(() => undefined)
       // Independent summaries share one fan-out; a missing semester list or
       // exam endpoint must not erase available local grade calculations.
-      const gradeTask = repo.getCourseGrades(semester?.id ?? '').catch(() => undefined)
-      const examTask = graduate ? Promise.resolve(undefined) : repo.getExamSchedules().catch(() => undefined)
+      const failures: Error[] = []
+      const gradeTask = repo.getCourseGrades(semester?.id ?? '').catch((error: Object) => { failures[0] = error as Error; return undefined })
+      const examTask = graduate ? Promise.resolve(undefined) : repo.getExamSchedules().catch((error: Object) => { failures[1] = error as Error; return undefined })
       const grades = await gradeTask; const exams = await examTask
+      // A wholly failed read must keep its real network/auth diagnostics,
+      // rather than publishing a ready snapshot that hides recovery for 5 min.
+      if (grades === undefined && exams === undefined) {
+        const failure: Error | undefined = failures[0] ?? failures[1]
+        if (failure !== undefined) throw failure
+        throw new Error(AppLanguage.text($r('app.string.live_load_error')))
+      }
       const local = LocalGpa.calculate(grades ?? [], graduate)
       row.gpa = local.gpa; row.credits = local.credits; row.calculation = 'local-v1'
       row.examCount = exams === undefined ? -1 : exams.length
@@ -231,7 +252,7 @@ export class DefaultCampusPreviewSource implements CampusPreviewSource {
       row.value = local.gpa ? 'GPA ' + local.gpa : AppLanguage.text($r('app.string.academic_my_gpa_unavailable'))
       row.description = AppLanguage.text($r('app.string.campus_academic_summary')).replace('{exams}', exams === undefined ? '—' : String(exams.length))
         .replace('{grades}', grades === undefined ? '—' : String(grades.length))
-      row.secondary = semester?.name ?? AppLanguage.text($r('app.string.graduate_scores_note'))
+      row.secondary = semester?.name ?? ''
     } else if (id === 'announcement') {
       const notices = await repo.getAnnouncements()
       row.value = notices[0]?.title ?? AppLanguage.text($r('app.string.campus_no_notices'))
@@ -263,23 +284,28 @@ export class DefaultCampusPreviewSource implements CampusPreviewSource {
       })
       row.secondary = semester.name
       row.updatedAt = snapshot?.updatedAt ?? now.getTime()
-    } else if (id === 'card' && repo.cookiesFor(CampusService.ECARD)) {
+    } else if (id === 'card' && signedIn) {
       const card = CardRepository.getInstance()
-      card.setSession(repo.cookiesFor(CampusService.ECARD))
       if (force) card.invalidate()
-      const balance = await card.getCardInfo(-1)
+      const balance = await repo.withService(CampusService.ECARD, async (cookies: string) => {
+        card.setSession(cookies)
+        return card.getCardInfo(-1)
+      })
       row.tone = CampusSignal.amount(balance.cash)
       row.value = CardPresentation.balance(balance.cash)
       row.description = AppLanguage.text($r('app.string.ui_card_balance'))
       row.secondary = balance.name
       AccountIdentity.publishName(capturedPerson, balance.name)
-    } else if (id === 'bus' && repo.cookiesFor(CampusService.BUS)) {
+    } else if (id === 'bus' && signedIn) {
       const buses = ZlappRepository.getInstance()
-      buses.setSession(repo.cookiesFor(CampusService.BUS))
       const now: Date = new Date()
       const start: string = await CampusFilterPreference.read('bus_start')
       const end: string = await CampusFilterPreference.read('bus_end', start === '江湾' ? '邯郸' : '江湾')
-      row.items = CampusCardInformation.buses(await buses.getBusSchedules(now.getDay() === 0 || now.getDay() === 6), start, end, now)
+      const schedules = await repo.withService(CampusService.BUS, async (cookies: string) => {
+        buses.setSession(cookies)
+        return buses.getBusSchedules(now.getDay() === 0 || now.getDay() === 6)
+      })
+      row.items = CampusCardInformation.buses(schedules, start, end, now)
       row.value = row.items[0].value || AppLanguage.text($r('app.string.bus_empty'))
       row.description = start + ' → ' + end
       row.secondary = AppLanguage.text(now.getDay() === 0 || now.getDay() === 6 ? $r('app.string.bus_holiday') : $r('app.string.bus_weekday'))

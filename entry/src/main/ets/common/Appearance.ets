@@ -78,14 +78,17 @@ export class Appearance {
   }
 
   /** Serialize animated status-bar changes so a late hide cannot outlive a gallery. */
-  static setStatusBarVisible(visible: boolean): Promise<void> {
+  static setStatusBarVisible(visible: boolean, animated: boolean = true): Promise<void> {
     Appearance.statusVisible = visible
     const win = Appearance.win
     const lifecycle: number = Appearance.lifecycle
     const task: Promise<void> = Appearance.statusApplying.then(async () => {
       if (!Appearance.ready || win === undefined || lifecycle !== Appearance.lifecycle ||
-        visible !== Appearance.statusVisible || Appearance.statusApplied === visible) return
-      await win.setSpecificSystemBarEnabled('status', visible, true)
+        visible !== Appearance.statusVisible || (animated && Appearance.statusApplied === visible)) return
+      // A completed native promise does not mean its visibility animation has
+      // finished. An explicit non-animated handoff must settle that animation
+      // even when its requested endpoint matches the cached visible value.
+      await win.setSpecificSystemBarEnabled('status', visible, animated)
       if (lifecycle === Appearance.lifecycle) Appearance.statusApplied = visible
     })
     Appearance.statusApplying = task.catch(() => { console.warn('Appearance: status visibility update failed') })
@@ -148,12 +151,12 @@ export class Appearance {
     return { width: rect?.width ?? 0, height: rect?.height ?? 0 }
   }
 
-  static setBarAppearance(mode: string): void {
+  static setBarAppearance(mode: string, animated: boolean = false): void {
     Appearance.barOverride = mode
-    Appearance.updateBars().catch(() => {})
+    Appearance.updateBars(animated).catch(() => {})
   }
 
-  static async updateBars(): Promise<void> {
+  static async updateBars(animated: boolean = false): Promise<void> {
     const context = Appearance.context
     const win = Appearance.win
     if (context === undefined || win === undefined) return
@@ -183,10 +186,12 @@ export class Appearance {
     const task: Promise<void> = Appearance.barApplying.then(async (): Promise<void> => {
       if (lifecycle !== Appearance.lifecycle || revision !== Appearance.barRevision ||
         context !== Appearance.context || win !== Appearance.win || color === Appearance.barColor) return
-      await win.setWindowSystemBarProperties({
+      const properties: window.SystemBarProperties = {
         statusBarColor: '#00000000', navigationBarColor: '#00000000',
         statusBarContentColor: color, navigationBarContentColor: color
-      })
+      }
+      if (animated) properties.enableStatusBarAnimation = true
+      await win.setWindowSystemBarProperties(properties)
       if (lifecycle === Appearance.lifecycle && context === Appearance.context && win === Appearance.win) {
         Appearance.barColor = color
       }

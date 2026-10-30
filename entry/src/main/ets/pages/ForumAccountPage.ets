@@ -1,4 +1,5 @@
 import { SheetTransitionGuard } from '../common/SheetTransitionGuard'
+import { CenterLoadingProgress } from '../components/CenterLoadingProgress'
 import { DiagnosticNavigation } from '../common/DiagnosticNavigation'
 import { ErrorNotice } from '../components/ErrorNotice'
 import { ForumTagChip } from '../components/ForumTagChip'
@@ -33,7 +34,7 @@ import { ForumMessage } from '../model/ForumMessage'
 @Component
 struct ForumAccountPage {
   private showMessageTransition: SheetTransitionGuard = new SheetTransitionGuard()
-  private touchScroller: Scroller = new Scroller()
+  private touchScroller: ListScroller = new ListScroller()
   @StorageLink(AppLanguage.KEY_REVISION) languageRevision: number = 0
   @StorageLink('ui_material_revision') materialRevision: number = 0
   @StorageLink('app_dark_mode') darkMode: boolean = false
@@ -64,6 +65,7 @@ struct ForumAccountPage {
   @State verifying: boolean = false
   @State moreError: string = ''
   @State pullOffset: number = 0
+  @State removingCollectionIds: number[] = []
   private active: boolean = false
   private generation: number = 0
   private cursor: number = Date.now()
@@ -75,6 +77,8 @@ struct ForumAccountPage {
   private reloadFlight: Promise<void> | null = null
   private reloadKey: string = ''
   private readingMessages: Set<string> = new Set<string>()
+  private collectionWrites: Set<string> = new Set<string>()
+  private removedCollectionIds: number[] = []
 
   aboutToAppear(): void {
     this.active = true
@@ -97,7 +101,7 @@ struct ForumAccountPage {
     if (this.section === 'punishments') return $r('app.string.forum_punishments')
     return $r('app.string.forum_my_posts')
   }
-  onSessionChanged(): void { if (this.active) { this.showMessage = false; this.reload() } }
+  onSessionChanged(): void { if (this.active) { this.showMessage = false; this.removingCollectionIds = []; this.reload() } }
   onOrderChanged(): void { if (this.active && this.section === 'tag') this.reload() }
   private current(version: number): boolean {
     return this.active && version === this.generation && this.scope === this.repo.sessionRevision()
@@ -125,6 +129,7 @@ struct ForumAccountPage {
     this.cursor = Date.now()
     this.revealed = []
     this.readError = ''
+    this.removedCollectionIds = []
     try {
       if (!await this.repo.restoreSession()) throw new Error(AppLanguage.text($r('app.string.ui_please_log_in_to_the_forum_first'), this.languageRevision))
       if (!this.active || version !== this.generation) return
@@ -148,8 +153,8 @@ struct ForumAccountPage {
     } catch (e) {
       if (this.active && version === this.generation) {
         this.verificationRequired = e instanceof HttpError && e.statusCode === -2
-        this.error = ErrorDiagnostics.message(e as Object, this.verificationRequired ?
-          AppLanguage.text($r('app.string.forum_webvpn_verification_hint'), this.languageRevision) : '')
+        this.error = this.verificationRequired ? ForumRepository.describeError(e as Object,
+          AppLanguage.text($r('app.string.forum_webvpn_verification_hint'), this.languageRevision)) : ErrorDiagnostics.message(e as Object)
       }
     } finally {
       if (this.active && version === this.generation) { this.loading = false; this.refreshing = false }
@@ -214,7 +219,7 @@ struct ForumAccountPage {
       // Append locally in small batches without re-reading each favorite hole.
       const batch: ForumHole[] = this.collectionHoles.slice(this.pageOffset, this.pageOffset + 10)
       this.pageOffset += batch.length
-      this.holes = this.holes.concat(batch)
+      this.holes = this.holes.concat(batch.filter((hole: ForumHole) => !this.removedCollectionIds.includes(hole.holeId)))
       this.hasMore = this.pageOffset < this.collectionHoles.length
     } else {
       const batch = this.ids.slice(this.pageOffset, this.pageOffset + 10)
@@ -231,7 +236,7 @@ struct ForumAccountPage {
       }
       if (!this.current(version)) return
       this.pageOffset += batch.length
-      this.holes = this.holes.concat(rows)
+      this.holes = this.holes.concat(rows.filter((hole: ForumHole) => !this.removedCollectionIds.includes(hole.holeId)))
       this.hasMore = this.pageOffset < this.ids.length
     }
   }
@@ -267,6 +272,49 @@ struct ForumAccountPage {
   }
   private open(hole: number, floor: number = 0): void {
     if (hole > 0) router.pushUrl({ url: 'pages/ForumDetailPage', params: new HoleRouteParams(hole, floor) })
+  }
+  private async removeCollection(holeId: number): Promise<void> {
+    if (!this.active || !['favorites', 'subscriptions'].includes(this.section)) return
+    const owner: number = this.repo.sessionRevision()
+    const section: string = this.section
+    const key: string = owner + '/' + section + '/' + holeId
+    if (this.collectionWrites.has(key)) return
+    this.collectionWrites.add(key)
+    this.removingCollectionIds = this.removingCollectionIds.concat([holeId])
+    this.readError = ''
+    try {
+      if (section === 'favorites') await this.repo.setFavorite(holeId, false)
+      else await this.repo.setSubscription(holeId, false)
+      if (!this.active || owner !== this.repo.sessionRevision() || section !== this.section) return
+      // Keep source offsets stable while a next-page request is in flight.
+      // Its late response must not reinsert an item that was just removed.
+      this.removedCollectionIds = this.removedCollectionIds.concat([holeId])
+      this.touchScroller.closeAllSwipeActions()
+      this.getUIContext().animateTo({ duration: 220, curve: Curve.EaseOut }, () => {
+        this.holes = this.holes.filter((hole: ForumHole) => hole.holeId !== holeId)
+      })
+    } catch (e) {
+      if (this.active && owner === this.repo.sessionRevision() && section === this.section) {
+        this.readError = ForumRepository.describeError(e)
+      }
+    } finally {
+      this.collectionWrites.delete(key)
+      if (owner === this.repo.sessionRevision()) this.removingCollectionIds = this.removingCollectionIds.filter((id: number) => id !== holeId)
+    }
+  }
+  @Builder
+  CollectionRemoveAction(hole: ForumHole) {
+    Button({ type: ButtonType.Normal }) {
+      Column({ space: 8 }) {
+        SymbolGlyph(getSymbolIcon('delete')).fontSize(22).fontColor([Color.White])
+        Text(this.section === 'favorites' ? $r('app.string.detail_unfavorite') : $r('app.string.detail_unsubscribe'))
+          .fontSize(13).fontWeight(FontWeight.Medium).fontColor(Color.White).textAlign(TextAlign.Center)
+      }.width('100%').padding({ left: 10, right: 10 })
+    }.id('forum-collection-remove-' + hole.holeId).width(88).height('100%').borderRadius(20)
+      .backgroundColor(ThemeColors.error).margin({ left: 8 })
+      .enabled(!this.removingCollectionIds.includes(hole.holeId))
+      .accessibilityText(this.section === 'favorites' ? $r('app.string.detail_unfavorite') : $r('app.string.detail_unsubscribe'))
+      .onClick(() => { this.removeCollection(hole.holeId) })
   }
   private clearHistory(): void {
     this.getUIContext().showAlertDialog({ title: this.title(), message: $r('app.string.forum_clear_history_hint'),
@@ -414,20 +462,25 @@ struct ForumAccountPage {
       Refresh({ refreshing: $$this.refreshing, builder: EmptyRefreshIndicator }) {
         List({ space: 12, scroller: this.touchScroller }) {
           if (this.section === 'tags') { ListItem() { this.TagsSearch() } }
-          if (this.loading) { ListItem() { LoadingProgress().width(32).height(32).margin({ top: 24 }) } }
-          else if (this.error) {
+          if (!this.loading && this.error) {
             ListItem() { Column({ space: 12 }) {
               ErrorNotice({ message: this.error, controlId: 'forumaccountpage-diagnostics', textSize: 14, textColor: ThemeColors.error }).width('100%')
               FloatingActionButton({ label: this.verificationRequired ? $r('app.string.campus_verify_continue') : $r('app.string.ui_retry'),
                 actionEnabled: !this.verifying, onAction: () => { this.manualReload() } }).width(160)
             }.width('100%').padding(24) }
-          } else {
+          } else if (!this.loading) {
             if (this.readError) { ListItem() { ErrorNotice({ message: this.readError,
-              summary: AppLanguage.text($r('app.string.forum_message_ack_failed'), this.languageRevision), controlId: 'forum-message-diagnostics' }).padding(12) } }
+              summary: this.section === 'messages' ? AppLanguage.text($r('app.string.forum_message_ack_failed'), this.languageRevision) : '',
+              controlId: 'forum-account-action-diagnostics' }).padding(12) } }
             if (this.section === 'tags') {
               ForEach(this.visibleTags(), (tag: ForumTag) => { ListItem() { this.TagRow(tag) } }, (tag: ForumTag) => String(tag.tagId) + tag.name)
             }
-            ForEach(this.holes, (hole: ForumHole) => { ListItem() { this.HoleCard(hole) } }, (hole: ForumHole) => String(hole.holeId))
+            ForEach(this.holes, (hole: ForumHole) => {
+              if (this.section === 'favorites' || this.section === 'subscriptions') {
+                ListItem() { this.HoleCard(hole) }
+                  .swipeAction({ end: () => { this.CollectionRemoveAction(hole) }, edgeEffect: SwipeEdgeEffect.Spring })
+              } else { ListItem() { this.HoleCard(hole) } }
+            }, (hole: ForumHole) => String(hole.holeId))
             ForEach(this.replies, (floor: ForumFloor) => { ListItem() { this.ReplyCard(floor) } }, (floor: ForumFloor) => String(floor.floorId))
             ForEach(this.punishments, (item: ForumPunishment) => { ListItem() { this.PunishmentCard(item) } }, (item: ForumPunishment) => String(item.id))
             ForEach(this.messages, (item: ForumMessage) => { ListItem() { this.MessageCard(item) } }, (item: ForumMessage) => String(item.messageId) + ':' + String(item.read))
@@ -450,6 +503,7 @@ struct ForumAccountPage {
           .edgeEffect(EdgeEffect.Spring, { alwaysEnabled: true }).scrollBar(BarState.Off).onTouch((event: TouchEvent) => { settleScrollTouch(this.touchScroller, event) })
           .onScrollIndex((_start: number, end: number) => { if (!this.moreError && end >= this.holes.length + this.replies.length + this.messages.length - 3) this.more() })
       }.width('100%').height('100%').onRefreshing(() => { this.reload() }).onOffsetChange((offset: number) => { this.pullOffset = offset })
+      CenterLoadingProgress({ busy: this.loading || this.verifying })
       TopFade({ extent: px2vp(this.topPx) + 56 })
       FeedRefreshProgress({ topInset: px2vp(this.topPx) + 88, pullOffset: this.pullOffset, refreshing: this.refreshing })
       Column() {

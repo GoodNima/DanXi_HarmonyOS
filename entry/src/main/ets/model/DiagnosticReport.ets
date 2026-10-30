@@ -34,10 +34,17 @@ export class DiagnosticReports {
     report.summary = ErrorDiagnostics.brief(message, summary)
     report.error = ErrorDiagnostics.technical(message)
     report.source = /^[a-zA-Z/._-]{0,100}$/.test(source) ? source : ''
-    const requests: string = RequestDiagnostics.report(epoch)
-    const images: string = ForumImageDiagnostics.report(epoch)
-    const transport: string = logs + (images ? (logs ? '\n\n' : '') + 'Image transfers\n' + images : '')
-    report.logs = ErrorDiagnostics.safe((transport + (transport && requests ? '\n\nRecent requests\n' : '') + requests).trim(), 16000)
+    const associated: string = ErrorDiagnostics.associated(message)
+    if (associated) {
+      // Keep the failed operation's own snapshot, not whichever requests ran while
+      // the user was reading the error or opening this sheet minutes later.
+      report.logs = ErrorDiagnostics.safe((logs ? logs + '\n\n' : '') + 'Associated request\n' + associated, 16000)
+    } else {
+      const requests: string = RequestDiagnostics.report(epoch)
+      const images: string = ForumImageDiagnostics.report(epoch)
+      const transport: string = logs + (images ? (logs ? '\n\n' : '') + 'Image transfers\n' + images : '')
+      report.logs = ErrorDiagnostics.safe((transport + (requests ? (transport ? '\n\n' : '') + 'Recent requests\n' + requests : '')).trim(), 16000)
+    }
     DiagnosticReports.reports.push(report)
     if (DiagnosticReports.reports.length > 8) DiagnosticReports.reports.shift()
     return report

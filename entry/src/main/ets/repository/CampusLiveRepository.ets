@@ -61,7 +61,8 @@ export class CampusLiveRepository extends BaseRepository {
     } catch (error) {
       if (error instanceof HttpError && error.statusCode >= 500) {
         throw new HttpError(error.statusCode, error.code,
-          '食堂排队人数服务暂时异常（HTTP ' + String(error.statusCode) + '），请稍后刷新。', error.body)
+          '食堂排队人数服务暂时异常（HTTP ' + String(error.statusCode) + '），请稍后刷新。', error.body,
+          error.transportPhase, error.authenticationRecovery, error.diagnostics)
       }
       throw error as Error
     }

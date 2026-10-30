@@ -36,6 +36,8 @@
 import { BaseRepository } from './BaseRepository'
 import { HttpError, HttpUtil, HttpResponse } from '../util/HttpUtil'
 import { CardInfo, CardRecord } from '../model/Card'
+import { FduAuthPolicy } from '../model/FduAuth'
+import { CampusHtml, CampusHtmlNode } from '../model/CampusHtml'
 
 interface RecordCacheEntry { days: number; date: string; saved: number; rows: CardRecord[] }
 
@@ -298,10 +300,9 @@ export class CardRepository extends BaseRepository {
    *   = 0  the latest records (upstream fetches 30 days, one page)
    *   < 0  no records at all, identity only
    *
-   * An empty name is treated as a failed session, matching upstream's
-   * `throw Exception("Unable to get user name")`. That page is only served to a
-   * live session, so an empty name means we were handed the login shell — which
-   * must not be rendered as an account with no name and no balance.
+   * An empty name is invalid data, matching upstream's "Unable to get user
+   * name" failure. Only a proven login document establishes session rejection;
+   * a maintenance/error page must not start another authentication attempt.
    */
   async getCardInfo(logDays: number = 0): Promise<CardInfo> {
     if (!this.hasSession()) throw this.sessionError()
@@ -321,11 +322,56 @@ export class CardRepository extends BaseRepository {
   private async loadBalance(generation: number): Promise<CardInfo> {
     const response = await this.httpUtil.get(CardRepository.USER_DETAIL_URL, undefined, this.sessionHeaders())
     this.assertCurrent(generation)
+    if (FduAuthPolicy.isLoginDocument(response.data)) throw new HttpError(-2, 0, '一卡通会话已失效，请重新登录。', '', '', false,
+      'stage=card-profile; proof=login-document' + (response.diagnostics ? '\n' + response.diagnostics : ''))
     const info = CardRepository.parseCardInfo(response.data)
-    if (!info.name) throw new HttpError(-2, 0, '一卡通会话已失效，请重新登录。', '')
+    if (!info.name) throw new HttpError(200, 0, '一卡通账户资料暂时无法读取，请稍后重新加载。', '', '', false,
+      'stage=card-profile; CardProfileProtocolError; reason=missing-name' + (response.diagnostics ? '\n' + response.diagnostics : ''))
+    // iOS reads the latest transactions from this same authenticated overview.
+    // Reuse only its exact #all table; date-range queries still fetch all pages.
+    const records: CardRecord[] | undefined = CardRepository.overviewRecords(response.data)
+    if (records !== undefined) {
+      this.recordCache = this.recordCache.filter((item: RecordCacheEntry) => item.days !== 0)
+      this.recordCache.push({ days: 0, date: CardRepository.formatDate(new Date()), saved: Date.now(), rows: records })
+    }
     this.balance = info
     this.balanceAt = Date.now()
     return info
+  }
+
+  private static overviewBody(node: CampusHtmlNode): CampusHtmlNode | undefined {
+    if (node.tag === 'tbody') return node
+    for (const child of node.children) {
+      const body: CampusHtmlNode | undefined = CardRepository.overviewBody(child)
+      if (body !== undefined) return body
+    }
+    return undefined
+  }
+
+  private static overviewRecords(html: string): CardRecord[] | undefined {
+    const section: CampusHtmlNode | undefined = CampusHtml.parse(html).findId('all')
+    if (section === undefined) return undefined
+    const body: CampusHtmlNode | undefined = CardRepository.overviewBody(section)
+    if (body === undefined) return undefined
+    const result: CardRecord[] = []
+    const rows: CampusHtmlNode[] = body.direct('tr')
+    for (const row of rows) {
+      const cells: CampusHtmlNode[] = row.direct('td')
+      if (cells.length === 0) continue
+      if (rows.length === 1 && cells.length === 1 && /暂无.*记录|无交易记录|查询结果为空/.test(cells[0].orderedText())) return []
+      if (cells.length < 4) return undefined
+      const time: string = cells[0].orderedText()
+      const date = /([0-9]{4})[.\-/]([0-9]{1,2})[.\-/]([0-9]{1,2})/.exec(time)
+      const clock = /([0-9]{1,2}:[0-9]{2})/.exec(time)
+      // An unexpected table must fall back to the proven query API, never be
+      // cached as an empty successful list or discard malformed rows silently.
+      if (date === null || clock === null) return undefined
+      const month: string = date[2].length === 1 ? '0' + date[2] : date[2]
+      const day: string = date[3].length === 1 ? '0' + date[3] : date[3]
+      result.push({ time: date[1] + '-' + month + '-' + day + 'T' + clock[1], type: cells[1].orderedText(),
+        location: cells[2].orderedText(), payment: cells[3].orderedText() })
+    }
+    return result
   }
 
   /** CSRF token required by the consume endpoint. */
@@ -372,8 +418,9 @@ export class CardRepository extends BaseRepository {
     if (!this.hasSession()) throw this.sessionError()
     const today = CardRepository.formatDate(new Date())
     const cutoff = CardRepository.formatDate(new Date(Date.now() - (logDays || 30) * 86400000))
-    const cached = this.recordCache.find((item: RecordCacheEntry) => item.date === today &&
+    const cached = this.recordCache.filter((item: RecordCacheEntry) => item.date === today &&
       Date.now() - item.saved < 300000 && (item.days === logDays || (item.days > 0 && item.days >= (logDays || 30))))
+      .sort((left: RecordCacheEntry, right: RecordCacheEntry): number => right.saved - left.saved)[0]
     if (cached !== undefined) {
       let rows = cached.rows.filter((row: CardRecord) => row.time.substring(0, 10) >= cutoff)
       if (logDays === 0) rows = rows.slice(0, 10)

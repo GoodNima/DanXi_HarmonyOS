@@ -61,7 +61,7 @@ export class CampusFormStore {
     const encoded = JSON.stringify(data)
     if (CampusFormStore.read(data.feature) === encoded) return
     CampusFormStore.write(data.feature, encoded)
-    const snapshot = CampusFormStore.snapshot(data.feature)
+    const snapshot = CampusFormData.read(encoded, data.feature)
     for (const row of CampusFormStore.registrations()) if (row.feature === data.feature) CampusFormStore.deliver(row.id, snapshot, row.dimension)
   }
   static clear(): void {

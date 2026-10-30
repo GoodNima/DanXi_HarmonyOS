@@ -13,11 +13,12 @@ import { DormHistoryQuery } from '../model/DormHistoryDiagnostics'
 import { DormRequestPolicy } from '../model/DormRequestPolicy'
 import { Person, PersonInfo } from '../model/Person'
 import { ErrorDiagnostics } from '../model/ErrorDiagnostics'
-import { FduLogin, FduLoginError, FduLoginFailure } from './FduLogin'
+import { FduLogin, FduLoginError, FduLoginFailure, FduSession } from './FduLogin'
 import { CampusService } from '../common/CampusService'
 import { FduWebAuth, FduAuthCancelledError } from '../common/FduWebAuth'
 import { FduAuthPolicy, FduAuthChallenge } from '../model/FduAuth'
 import { CampusCookies } from '../common/CampusCookies'
+import { CampusCredentialStore } from '../common/CampusCredentialStore'
 import {
   Course, CourseGrade, ExamSchedule, GpaListItem, ElectricityInfo,
   EmptyClassroom, BusSchedule, Announcement, TimeTableEntry, SemesterInfo
@@ -73,6 +74,10 @@ export class FduRepository extends BaseRepository {
   private silentFlights: Map<string, Promise<string>> = new Map<string, Promise<string>>()
   private silentRetryAfter: Map<string, number> = new Map<string, number>()
   private silentErrors: Map<string, Error> = new Map<string, Error>()
+  private recoveryDiagnostics: Map<string, string> = new Map<string, string>()
+  private credentialRetryAfter: number = 0
+  private credentialBlocked: boolean = false
+  private credentialFailure: Error | null = null
   private graduateVerificationService: string = GraduateRepository.TIMETABLE_HOSTS[0] + GraduateRepository.TIMETABLE_PATH
   private sessionEpoch: number = 0
   /** Cancelling a verification batch must not invalidate unrelated successful
@@ -92,6 +97,10 @@ export class FduRepository extends BaseRepository {
       this.rejectedSessions.clear()
       this.silentRetryAfter.clear()
       this.silentErrors.clear()
+      this.recoveryDiagnostics.clear()
+      this.credentialRetryAfter = 0
+      this.credentialBlocked = false
+      this.credentialFailure = null
       this.classroomDirectRetryAfter = 0
       ClassroomRepository.invalidate()
       JwglRepository.getInstance().forgetSession()
@@ -100,9 +109,12 @@ export class FduRepository extends BaseRepository {
     }
     const epoch: number = this.sessionEpoch
     this.credentialId = person.getStudentId()
+    CampusCredentialStore.bind(this.credentialId)
     this.campusCookies = person.getToken()
     this.httpUtil.setPerson(person)
     CampusCookies.resume()
+    await CampusCookies.restore(this.credentialId)
+    if (epoch !== this.sessionEpoch) return
     // Old releases stored the dining service's token in Person. Do not label
     // it as ehall after changing the main entry: persisted per-origin sessions
     // and the browser jar supply their actual owners below.
@@ -144,9 +156,9 @@ export class FduRepository extends BaseRepository {
    * lazily when a service is first touched), rather than logging in to every
    * known service up front.
    *
-   * These are held in memory ONLY, never written to Preferences, and cleared by
-   * forgetCredentials(). Password is a plain field because ArkTS has no secure
-   * erase; the honest mitigation is a short lifetime, not a longer comment.
+   * The current login may retain memory credentials. Successful login also
+   * saves an account-bound OS AssetStore item for restart recovery; no password
+   * enters Preferences, route parameters, diagnostics or the cookie snapshot.
    */
   private credentialId: string = ''
   private credentialPw: string = ''
@@ -170,6 +182,8 @@ export class FduRepository extends BaseRepository {
     }
 
     this.forgetCredentials()
+    CampusCookies.bind(studentId)
+    CampusCredentialStore.bind(studentId)
     const epoch = this.sessionEpoch
     try {
       const cookies: string = await this.loginForService(
@@ -180,6 +194,8 @@ export class FduRepository extends BaseRepository {
       // without a second prompt. See the field comment for why.
       this.credentialId = studentId
       this.credentialPw = password
+      try { await CampusCredentialStore.save(studentId, password) } catch (e) {}
+      if (epoch !== this.sessionEpoch) throw new FduAuthCancelledError('登录已取消，请重新登录')
       await this.saveSessions()
       if (epoch !== this.sessionEpoch) throw new FduAuthCancelledError('登录已取消，请重新登录')
 
@@ -247,6 +263,15 @@ export class FduRepository extends BaseRepository {
       if (epoch !== this.sessionEpoch || authenticationEpoch !== this.authenticationEpoch) throw new Error('登录已取消，请重新登录')
       this.serviceSessions.set(CampusService.sessionKey(service), cookies)
       this.clearRejectedOrigin(service)
+      // An explicit completed authentication may renew shared ID SSO. Let
+      // sibling services redeem it once instead of retaining their old MFA
+      // cooldown; rejected business cookies remain marked until validated.
+      this.silentRetryAfter.clear()
+      this.silentErrors.clear()
+      this.recoveryDiagnostics.clear()
+      this.credentialRetryAfter = 0
+      this.credentialBlocked = false
+      this.credentialFailure = null
       await this.saveSessions()
       this.requireAuthentication(epoch, authenticationEpoch)
       await CampusCookies.persist()
@@ -317,6 +342,7 @@ export class FduRepository extends BaseRepository {
     // A completed main login is reused by the other services before asking for
     // any further interaction. No fresh password exchange replaces its SSO.
     const sharedId = this.credentialId === studentId ? await CampusCookies.hasIdSession() : false
+    let existingChallenge: FduAuthChallenge | null = null
     this.requireAuthentication(epoch, authenticationEpoch)
     if (sharedId) {
       try {
@@ -326,12 +352,25 @@ export class FduRepository extends BaseRepository {
       } catch (e) {
         this.requireAuthentication(epoch, authenticationEpoch)
         if (!(e instanceof FduLoginError) || e.failure !== FduLoginFailure.ENHANCED_AUTH_REQUIRED) throw e as Error
-        return this.authenticateService(login, e.challenge ?? new FduAuthChallenge(this.authenticationEntry(service), service, []), studentId, '')
+        existingChallenge = e.challenge
       }
     }
-    if (!password) return this.authenticateService(login, new FduAuthChallenge(this.authenticationEntry(service), service, []), studentId, '')
+    const availablePassword = password || await CampusCredentialStore.load(studentId)
+    this.requireAuthentication(epoch, authenticationEpoch)
+    if (!availablePassword) {
+      let challenge = existingChallenge ?? new FduAuthChallenge(this.authenticationEntry(service), service, [])
+      // ArkWeb can stall before its first document when it starts at WebVPN.
+      // Obtain ID's real context through one native GET instead; never invent
+      // its fragment or restart a complete/MFA challenge already in progress.
+      if (FduAuthPolicy.isServiceUrl(challenge.loginUrl, service) ||
+        FduAuthPolicy.isIncompleteIdLoginUrl(challenge.loginUrl)) {
+        challenge = await login.browserChallenge(service)
+        this.requireAuthentication(epoch, authenticationEpoch)
+      }
+      return this.authenticateService(login, challenge, studentId, '')
+    }
     try {
-      const result = await login.login(service, studentId, password)
+      const result = await login.login(service, studentId, availablePassword)
       this.requireAuthentication(epoch, authenticationEpoch)
       if (result.serviceCookies) return result.serviceCookies
       const redeemed = await login.resume(service, result.targetUrl)
@@ -341,7 +380,7 @@ export class FduRepository extends BaseRepository {
       this.requireAuthentication(epoch, authenticationEpoch)
       if (!(e instanceof FduLoginError) || e.challenge === null ||
         (e.failure !== FduLoginFailure.ENHANCED_AUTH_REQUIRED && e.failure !== FduLoginFailure.CAPTCHA_REQUIRED)) throw e as Error
-      return this.authenticateService(login, e.challenge, studentId, password)
+      return this.authenticateService(login, e.challenge, studentId, availablePassword)
     }
   }
 
@@ -370,12 +409,14 @@ export class FduRepository extends BaseRepository {
     return service === CampusService.LIFE_CODE ? service : CampusService.sessionKey(service)
   }
 
-  /** A missing service session may silently redeem shared SSO once. Failed
-   * attempts remain local for five minutes; explicit verification bypasses it.
+  /** A missing service session may silently redeem shared SSO once. Identity
+   * and protocol backoff remains five minutes; transient read transport errors
+   * receive a short cooldown instead of freezing a recovered network.
    * The same queue prevents competing CAS contexts and the same-origin flight
-   * coalesces dashboard cards. No password or UI is used here. */
+   * coalesces dashboard cards. Safe reads may renew a rejected ID session with
+   * OS-protected credentials once; this path never presents UI. */
   private async resumeService(service: string, refreshExisting: boolean = false,
-    readOptions?: CampusSsoReadOptions): Promise<string> {
+    readOptions?: CampusSsoReadOptions, recoverCredentials: boolean = true): Promise<string> {
     const key = this.verificationKey(service)
     const active = this.silentFlights.get(key)
     if (active !== undefined) return active
@@ -389,7 +430,15 @@ export class FduRepository extends BaseRepository {
     }
     // A valid portal session can outlive the ID session. The history recovery
     // must check its protected page before deciding whether SSO is needed.
-    if (readOptions === undefined && !await CampusCookies.hasIdSession()) return ''
+    if (readOptions === undefined && !await CampusCookies.hasIdSession()) {
+      const available = recoverCredentials ? this.credentialPw || await CampusCredentialStore.load(this.credentialId) : ''
+      if (!available) {
+        this.recoveryDiagnostics.set(key, 'sso=unavailable; idCandidate=false; credentialCandidate=false\n' +
+          (typeof CampusCookies.diagnostics === 'function' ? CampusCookies.diagnostics() : 'cookieRestore=unavailable') + '\n' +
+          CampusCredentialStore.diagnostics())
+        return ''
+      }
+    }
     if (epoch !== this.sessionEpoch || authEpoch !== this.authenticationEpoch) return ''
     const joined = this.silentFlights.get(key)
     if (joined !== undefined) return joined
@@ -399,8 +448,18 @@ export class FduRepository extends BaseRepository {
       if (!refreshExisting && existing && !this.needsVerification(service)) return existing
       this.silentRetryAfter.set(key, Date.now() + 300000)
       this.silentErrors.delete(key)
+      this.recoveryDiagnostics.delete(key)
       try {
-        const result = await new FduLogin(this.httpUtil).resume(service, this.authenticationEntry(service), readOptions)
+        const login = new FduLogin(this.httpUtil)
+        let result: FduSession
+        try { result = await login.resume(service, this.authenticationEntry(service), readOptions) }
+        catch (e) {
+          if (!(e instanceof FduLoginError) || e.failure !== FduLoginFailure.ENHANCED_AUTH_REQUIRED) throw e as Error
+          this.recoveryDiagnostics.set(key, e.diagnostics)
+          const renewed = recoverCredentials ? await this.recoverWithCredential(login, service, epoch, authEpoch) : null
+          if (renewed === null) throw e
+          result = renewed
+        }
         if (epoch !== this.sessionEpoch || authEpoch !== this.authenticationEpoch) return ''
         const cookies = result.serviceCookies ?? ''
         if (cookies) {
@@ -423,9 +482,13 @@ export class FduRepository extends BaseRepository {
             // transport timeout alone must never create a verification storm.
             const previous: string = this.cookiesFor(service)
             if (previous) this.rejectedSessions.set(service, new RejectedCampusSession(previous))
-            throw new HttpError(-2, 0, this.verificationMessage(service, true), '')
+            throw this.verificationFailure(service, true, e as Error)
           }
           return ''
+        }
+        if (e instanceof HttpError && e.isNetworkFailure() && !e.authenticationRecovery &&
+          this.credentialFailure !== e && [0, 2300005, 2300006, 2300007, 2300028, 2300052, 2300055, 2300056, 2300999].includes(e.code)) {
+          this.silentRetryAfter.set(key, Date.now() + 5000)
         }
         this.silentErrors.set(key, e as Error)
         throw e as Error
@@ -434,6 +497,66 @@ export class FduRepository extends BaseRepository {
     this.silentFlights.set(key, task)
     this.authQueue = task.then(() => {}, () => {})
     try { return await task } finally { if (this.silentFlights.get(key) === task) this.silentFlights.delete(key) }
+  }
+
+  /** Called only after the protected SSO read reached an official login page.
+   * The shared auth queue and account-wide cooldown bound password submissions
+   * across sibling services. This path never presents Web UI or replays writes. */
+  private async recoverWithCredential(login: FduLogin, service: string,
+    epoch: number, authEpoch: number): Promise<FduSession | null> {
+    const key = this.verificationKey(service)
+    const previous = this.recoveryDiagnostics.get(key) ?? ''
+    if (this.credentialBlocked || Date.now() < this.credentialRetryAfter) {
+      this.recoveryDiagnostics.set(key, previous + '\ncredentialRecovery=account-backoff')
+      // A sibling's password-renewal transport/protocol failure is still that
+      // exact failure, not proof that this service now requires user MFA.
+      if (this.credentialFailure !== null) throw this.credentialFailure
+      return null
+    }
+    const owner = this.credentialId
+    const password = this.credentialPw || await CampusCredentialStore.load(owner)
+    this.requireAuthentication(epoch, authEpoch)
+    if (!password) {
+      this.recoveryDiagnostics.set(key, previous + '\ncredentialRecovery=unavailable; ' + CampusCredentialStore.diagnostics())
+      return null
+    }
+    this.credentialRetryAfter = Date.now() + 300000
+    this.credentialFailure = null
+    this.recoveryDiagnostics.set(key, previous + '\ncredentialRecovery=attempt; candidate=true')
+    try {
+      const result = await login.login(service, owner, password)
+      this.requireAuthentication(epoch, authEpoch)
+      const renewed = result.serviceCookies ? result : await login.resume(service, result.targetUrl)
+      this.requireAuthentication(epoch, authEpoch)
+      this.recoveryDiagnostics.set(key, previous + '\ncredentialRecovery=completed')
+      return renewed
+    } catch (e) {
+      this.requireAuthentication(epoch, authEpoch)
+      if (e instanceof FduLoginError) {
+        e.diagnostics = previous + '\ncredentialRecovery=failed; failure=' + String(e.failure) +
+          (e.diagnostics ? '\n' + e.diagnostics : '')
+        this.recoveryDiagnostics.set(key, e.diagnostics)
+        if (e.failure === FduLoginFailure.CREDENTIALS_INVALID || e.failure === FduLoginFailure.ACCOUNT_ACTION_REQUIRED) {
+          this.credentialBlocked = true
+          this.credentialPw = ''
+          // Captcha, rate limits and temporary account actions do not prove
+          // that the saved password is invalid. Stop automatic submissions,
+          // but retain its OS item for a later explicit verification.
+          if (e.failure === FduLoginFailure.CREDENTIALS_INVALID) CampusCredentialStore.clear().catch(() => {})
+        }
+        if (e.failure === FduLoginFailure.ENHANCED_AUTH_REQUIRED || e.failure === FduLoginFailure.CAPTCHA_REQUIRED) return null
+      }
+      this.credentialFailure = e as Error
+      throw e as Error
+    }
+  }
+
+  private verificationFailure(service: string, expired: boolean, source?: Error): HttpError {
+    const error = new HttpError(-2, 0, this.verificationMessage(service, expired), '')
+    const sourceDetails = source instanceof FduLoginError || source instanceof HttpError ? source.diagnostics : ''
+    const recoveryDetails = this.recoveryDiagnostics.get(this.verificationKey(service)) ?? ''
+    error.diagnostics = recoveryDetails + (sourceDetails && sourceDetails !== recoveryDetails ? '\n' + sourceDetails : '')
+    return error
   }
 
   /** Called only after a completed history upload stalled before response
@@ -448,15 +571,15 @@ export class FduRepository extends BaseRepository {
       timeoutMs: 5000, freshConnection: true, fallbackCookies: failedCookies,
       historyQuery: { id: query.id, attempt: query.attempt, stage: 'portal-session' }
     }
-    const recovered: string = await this.resumeService(CampusService.MY_FUDAN, true, options)
+    const recovered: string = await this.resumeService(CampusService.MY_FUDAN, true, options, false)
     if (epoch !== this.sessionEpoch) throw new Error('校园账号已切换，请重新加载')
     return recovered || current || failedCookies
   }
 
   async withService<T>(service: string, action: (cookies: string) => Promise<T>,
-    renewOnUnauthorized: boolean = true, deadline?: number): Promise<T> {
+    renewOnUnauthorized: boolean = true, deadline?: number, renewOnVerification: boolean = false): Promise<T> {
     const epoch = this.sessionEpoch
-    let cookies = await this.ensureSession(service, deadline)
+    let cookies = await this.ensureSession(service, deadline, renewOnUnauthorized || renewOnVerification)
     if (epoch !== this.sessionEpoch) throw new Error('校园账号已切换，请重新加载')
     try {
       const result = await action(cookies)
@@ -465,14 +588,18 @@ export class FduRepository extends BaseRepository {
     } catch (e) {
       // Only renew an actually rejected session, never turn a genuine HTTP 500
       // or a parser failure into an endless sequence of verification windows.
-      if (epoch !== this.sessionEpoch || !(e instanceof HttpError) ||
+      if (epoch !== this.sessionEpoch || !(e instanceof HttpError) || e.authenticationRecovery ||
         (e.statusCode !== -2 && (e.statusCode !== 401 || !renewOnUnauthorized))) throw e as Error
+      let rejection: HttpError = e as HttpError
       // A concurrent browser completion may have rotated this path's cookies.
       // Retry only a read with a genuinely different local session, never open
       // verification or replay mutations from a response handler.
       const current = await CampusCookies.read(CampusService.cookieUrl(service))
       if (epoch !== this.sessionEpoch) throw new Error('校园账号已切换，请重新加载')
-      if (current && current !== cookies && renewOnUnauthorized) {
+      // Forum HTTP 401 belongs to JWT refresh, while -2 is a VPN login
+      // redirect. Allow safe reads to recover the latter independently.
+      const recoverRead: boolean = renewOnUnauthorized || (renewOnVerification && e.statusCode === -2)
+      if (current && current !== cookies && recoverRead) {
         cookies = current
         this.serviceSessions.set(CampusService.sessionKey(service), current)
         try {
@@ -481,18 +608,22 @@ export class FduRepository extends BaseRepository {
           this.rejectedSessions.delete(service)
           return result
         } catch (retryError) {
-          if (!(retryError instanceof HttpError) || (retryError.statusCode !== -2 && retryError.statusCode !== 401)) throw retryError as Error
+          if (epoch !== this.sessionEpoch) throw new Error('校园账号已切换，请重新加载')
+          if (!(retryError instanceof HttpError) || retryError.authenticationRecovery || (retryError.statusCode !== -2 && retryError.statusCode !== 401) ||
+            (retryError.statusCode === 401 && !renewOnUnauthorized)) throw retryError as Error
+          rejection = retryError as HttpError
           if (this.cookiesFor(service) === current) this.rejectedSessions.set(service, new RejectedCampusSession(current))
-          throw new HttpError(-2, 0, this.verificationMessage(service, true), '')
+          // A rotated auxiliary/session Cookie can still be unauthenticated.
+          // Continue this safe read through the one existing SSO repair below.
         }
       }
       // Keep sibling sessions and newer completions intact. Repeated lifecycle
       // reads now return locally during backoff instead of making login storms.
       if (this.cookiesFor(service) === cookies) this.rejectedSessions.set(service, new RejectedCampusSession(cookies))
-      // A read may redeem an existing ID/CAS session once without credentials
-      // or navigation. A successful handshake permits exactly one read retry;
+      // A read may redeem existing ID/CAS SSO, then use a protected credential
+      // once if ID explicitly requires login. No navigation occurs. Success permits one read retry;
       // mutations pass false and never enter this path.
-      if (renewOnUnauthorized) {
+      if (recoverRead) {
         const resumed = await this.resumeBefore(service, deadline)
         if (epoch !== this.sessionEpoch) throw new Error('校园账号已切换，请重新加载')
         if (resumed) {
@@ -502,13 +633,21 @@ export class FduRepository extends BaseRepository {
             return result
           }
           catch (retryError) {
-            if (!(retryError instanceof HttpError) || (retryError.statusCode !== -2 && retryError.statusCode !== 401)) throw retryError as Error
+            if (epoch !== this.sessionEpoch) throw new Error('校园账号已切换，请重新加载')
+            if (!(retryError instanceof HttpError) || retryError.authenticationRecovery || (retryError.statusCode !== -2 && retryError.statusCode !== 401) ||
+            (retryError.statusCode === 401 && !renewOnUnauthorized)) throw retryError as Error
+            rejection = retryError as HttpError
             if (this.cookiesFor(service) === resumed) this.rejectedSessions.set(service, new RejectedCampusSession(resumed))
             this.silentRetryAfter.set(this.verificationKey(service), Date.now() + 300000)
           }
         }
       }
-      throw new HttpError(-2, 0, this.verificationMessage(service, true), '')
+      const failure = this.verificationFailure(service, true, rejection as Error)
+      if (rejection !== e) {
+        failure.diagnostics = 'Latest request rejection (status=' + String(rejection.statusCode) + '; code=' + String(rejection.code) + ')\n' +
+          failure.diagnostics + '\nInitial request rejection (status=' + String(e.statusCode) + '; code=' + String(e.code) + ')\n' + e.diagnostics
+      }
+      throw failure
     }
   }
 
@@ -525,15 +664,15 @@ export class FduRepository extends BaseRepository {
   }
 
   /** Local-only lookup. Refresh, theme changes and navigation never open login. */
-  private async resumeBefore(service: string, deadline?: number): Promise<string> {
-    if (deadline === undefined) return this.resumeService(service)
+  private async resumeBefore(service: string, deadline?: number, recoverCredentials: boolean = true): Promise<string> {
+    if (deadline === undefined) return this.resumeService(service, false, undefined, recoverCredentials)
     const timeoutMs: number = DormRequestPolicy.remaining(deadline)
     if (timeoutMs <= 0) throw new HttpError(-1, 2300028,
       '寝室电费读取超时，请稍后重新加载。 Operation timeout (phase=dorm-budget; totalBudgetMs=60000)', '', 'dorm-budget')
-    return this.resumeService(service, false, { timeoutMs, freshConnection: false, fallbackCookies: '' })
+    return this.resumeService(service, false, { timeoutMs, freshConnection: false, fallbackCookies: '' }, recoverCredentials)
   }
 
-  async ensureSession(service: string, deadline?: number): Promise<string> {
+  async ensureSession(service: string, deadline?: number, recoverCredentials: boolean = true): Promise<string> {
     if (this.credentialId.length === 0 && !this.cookiesFor(service)) {
       throw new HttpError(-2, 0,
         '请先登录复旦账号，再查询校园服务。茶楼账号与校园账号分别登录。', '')
@@ -556,14 +695,14 @@ export class FduRepository extends BaseRepository {
       // Do not resend a known rejected cookie when the short lifecycle backoff
       // expires. Shared SSO can repair it once; unsuccessful SSO has its own
       // five-minute cooldown and explicit verification always bypasses it.
-      const repaired = await this.resumeBefore(service, deadline)
+      const repaired = await this.resumeBefore(service, deadline, recoverCredentials)
       if (repaired) return repaired
-      throw new HttpError(-2, 0, this.verificationMessage(service, true), '')
+      throw this.verificationFailure(service, true)
     }
     if (existing) return existing
-    const resumed = await this.resumeBefore(service, deadline)
+    const resumed = await this.resumeBefore(service, deadline, recoverCredentials)
     if (resumed) return resumed
-    throw new HttpError(-2, 0, this.verificationMessage(service, false), '')
+    throw this.verificationFailure(service, false)
   }
 
   private verificationMessage(service: string, expired: boolean): string {
@@ -578,8 +717,8 @@ export class FduRepository extends BaseRepository {
   /**
    * Drop every session and the retained credentials.
    *
-   * Call on logout. The credentials have no other lifetime: nothing persists
-   * them, so a process restart clears them too.
+   * Call on logout. Invalidate in-flight secure reads/writes synchronously,
+   * then remove the account's OS-protected credential without touching siblings.
    */
   forgetCredentials(): void {
     this.sessionEpoch++
@@ -592,12 +731,17 @@ export class FduRepository extends BaseRepository {
     ZlappRepository.getInstance().forgetSession()
     this.credentialId = ''
     this.credentialPw = ''
+    CampusCredentialStore.clear().catch(() => {})
     this.campusCookies = ''
     this.serviceSessions.clear()
     this.authFlights.clear()
     this.silentFlights.clear()
     this.silentRetryAfter.clear()
     this.silentErrors.clear()
+    this.recoveryDiagnostics.clear()
+    this.credentialRetryAfter = 0
+    this.credentialBlocked = false
+    this.credentialFailure = null
     this.rejectedSessions.clear()
     this.graduateVerificationService = GraduateRepository.TIMETABLE_HOSTS[0] + GraduateRepository.TIMETABLE_PATH
     this.saveSessions().catch(() => {})
@@ -901,9 +1045,21 @@ export class FduRepository extends BaseRepository {
       if (remaining <= 0) throw error as Error
       if (this.dormRepairEpoch === epoch && Date.now() < this.dormRepairRetryAfter) throw error as Error
       this.dormRepairEpoch = epoch; this.dormRepairRetryAfter = Date.now() + 300000
-      const cookies: string = await this.resumeService(CampusService.DORM, true, {
-        timeoutMs: remaining, freshConnection: true, fallbackCookies: ''
-      })
+      let cookies: string
+      try {
+        cookies = await this.resumeService(CampusService.DORM, true, {
+          timeoutMs: remaining, freshConnection: true, fallbackCookies: ''
+        })
+      } catch (recoveryError) {
+        // Unexpected HTML at a JSON endpoint is not evidence of expired ID.
+        // Keep the original concrete read failure and attach the failed proof.
+        if (error instanceof ZlappDataFormatError && recoveryError instanceof FduLoginError &&
+          recoveryError.failure === FduLoginFailure.PROTOCOL_ERROR) {
+          error.diagnostics = recoveryError.diagnostics
+          throw error
+        }
+        throw recoveryError as Error
+      }
       if (epoch !== this.sessionEpoch) throw new Error('校园账号已切换，请重新加载')
       if (!cookies) throw error as Error
       repository.setSession(cookies)

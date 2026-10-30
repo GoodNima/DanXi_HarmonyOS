@@ -114,7 +114,79 @@ export class ForumContentParser {
   }
 
   static needsRich(content: string): boolean {
-    return /\$[^$]|[`*_~]|^\s*(?:#{1,6}\s|>|[-+]\s|\d+\.\s)|^(?: {4}|\t)\S|\\[!#*_`]|\[[^\]]+\]\(|https?:\/\/|<audit>|\|.*\|/m.test(content)
+    // A URL is data, not Markdown decoration. In particular underscores,
+    // query strings and fragment IDs inside it must not start an ArkWeb host.
+    const prose: string = ForumContentParser.nativeLinks(content).map((part: ForumContentPart): string =>
+      part.kind === 'link' ? (part.text === part.source ? '' : part.text) : part.text).join('')
+    return /\$[^$]|[`*_~]|^\s*(?:#{1,6}\s|>|[-+]\s|\d+\.\s)|^(?: {4}|\t)\S|\\[!#*_`]|\[[^\]]*\]\(|<audit>|\|.*\|/m.test(prose)
+  }
+
+  /** Plain public links remain native text; complex Markdown is still rich. */
+  static nativeLinks(content: string): ForumContentPart[] {
+    const result: ForumContentPart[] = []
+    const pattern = /```[\s\S]*?```|~~~[\s\S]*?~~~|``[^\n]*?``|`[^`\n]*`|\$\$[\s\S]+?\$\$|\$[^$\n]+?\$|\[([^\]\n]+)\]\(\s*(https?:\/\/[^\s()]+)(?:\s+["'][^"'\n]*["'])?\s*\)|https?:\/\/[^\s<>\u3000，。！？；：、…]+/gi
+    let offset: number = 0
+    let match: RegExpExecArray | null = pattern.exec(content)
+    while (match !== null) {
+      if (match.index > offset) result.push(new ForumContentPart('text', content.substring(offset, match.index)))
+      if (!match[2] && !/^https?:\/\//i.test(match[0])) {
+        result.push(new ForumContentPart('text', match[0]))
+        offset = match.index + match[0].length
+        match = pattern.exec(content)
+        continue
+      }
+      const raw: string = match[2] || match[0]
+      const address: string = match[2] ? raw : ForumContentParser.linkAddress(raw)
+      const label: string = match[1] || address
+      // Keep credential-bearing addresses readable, without offering a link
+      // that BrowserLink would reject on click.
+      if (address && !/^https?:\/\/[^/?#]*@/i.test(address)) {
+        result.push(new ForumContentPart('link', label, address))
+        if (!match[2] && address.length < raw.length) result.push(new ForumContentPart('text', raw.substring(address.length)))
+      } else result.push(new ForumContentPart('text', match[0]))
+      offset = match.index + match[0].length
+      match = pattern.exec(content)
+    }
+    if (offset < content.length) result.push(new ForumContentPart('text', content.substring(offset)))
+    return result
+  }
+
+  private static linkAddress(value: string): string {
+    let address: string = value.replace(/[.,!?;:，。！？；：、。\u201d\u2019"']+$/g, '')
+    const pairs: string[][] = [['(', ')'], ['[', ']'], ['（', '）'], ['【', '】'], ['《', '》'], ['「', '」'], ['『', '』']]
+    let changed: boolean = true
+    while (changed && address.length > 0) {
+      changed = false
+      for (const pair of pairs) {
+        if (address.endsWith(pair[1]) && address.split(pair[1]).length > address.split(pair[0]).length) {
+          address = address.substring(0, address.length - 1); changed = true
+        }
+      }
+    }
+    return address
+  }
+
+  /** Preserve an entire URL target even when its visible text crosses the
+   * bounded native paragraphs used for very long floors. */
+  static nativeBlocks(content: string): ForumContentPart[][] {
+    const runs: ForumContentPart[] = ForumContentParser.nativeLinks(content)
+    const blocks: string[] = ForumContentParser.textBlocks(runs.map((run: ForumContentPart): string => run.text).join(''))
+    const result: ForumContentPart[][] = []
+    let start: number = 0
+    for (const block of blocks) {
+      const end: number = start + block.length
+      const row: ForumContentPart[] = []
+      let offset: number = 0
+      for (const run of runs) {
+        const last: number = offset + run.text.length
+        if (last > start && offset < end) row.push(new ForumContentPart(run.kind,
+          run.text.substring(Math.max(0, start - offset), Math.min(run.text.length, end - offset)), run.source))
+        offset = last
+        if (offset >= end) break
+      }
+      result.push(row); start = end
+    }
+    return result
   }
 
   static summary(content: string, includeReferences: boolean = true): string {

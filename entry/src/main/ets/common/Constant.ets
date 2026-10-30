@@ -6,9 +6,9 @@
 export class Constant {
   // App info
   static readonly APP_NAME: string = '旦挞'
-  static readonly APP_VERSION: string = '0.1.35.3'
-  static readonly APP_VERSION_CODE: number = 1000154
-  static readonly APP_BUILD_VERSION: string = '155'
+  static readonly APP_VERSION: string = '0.1.43.6'
+  static readonly APP_VERSION_CODE: number = 1000186
+  static readonly APP_BUILD_VERSION: string = '187'
   static readonly APP_RELEASE_STAGE: string = 'Alpha'
   static readonly APP_DISPLAY_VERSION: string = Constant.APP_VERSION + ' ' + Constant.APP_RELEASE_STAGE
   static readonly APP_DIAGNOSTIC_HEADER: string = 'DanTa HarmonyOS ' + Constant.APP_DISPLAY_VERSION +

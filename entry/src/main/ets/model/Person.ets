@@ -79,6 +79,7 @@ export class Person {
   }
 
   static fromJson(json: string): Person {
+    if (typeof json !== 'string' || !json.trim()) return new Person()
     try {
       const data: PersonData = JSON.parse(json) as PersonData
       const person = new Person(data.info ?? undefined, data.token)

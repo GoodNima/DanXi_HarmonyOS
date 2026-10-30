@@ -25,10 +25,11 @@
  */
 
 import { cryptoFramework } from '@kit.CryptoArchitectureKit'
-import { util } from '@kit.ArkTS'
+import { util, url } from '@kit.ArkTS'
 import { HttpUtil, HttpResponse, HttpError, CampusSsoReadOptions } from '../util/HttpUtil'
 import { FduAuthChallenge, FduAuthPolicy } from '../model/FduAuth'
 import { CasTicket } from '../model/CasTicket'
+import { CampusSsoForm } from '../model/CampusSsoForm'
 import { CampusCookies } from '../common/CampusCookies'
 import { DormRequestPolicy } from '../model/DormRequestPolicy'
 
@@ -90,6 +91,7 @@ export enum FduLoginFailure {
 export class FduLoginError extends Error {
   readonly failure: FduLoginFailure
   readonly detail: string
+  diagnostics: string = ''
   challenge: FduAuthChallenge | null = null
 
   constructor(failure: FduLoginFailure, message: string, detail: string) {
@@ -117,6 +119,8 @@ export class FduLogin {
   private readonly cookies: Map<string, string> = new Map<string, string>()
   private readonly idCookieRecords: Map<string, string> = new Map<string, string>()
   private loginUrl: string = ''
+  private serviceEntry: string = ''
+  private loginHops: Record<string, string>[] = []
 
   constructor(http: HttpUtil) {
     this.http = http
@@ -150,6 +154,7 @@ export class FduLogin {
     }
     const chunks: string[] = FduAuthPolicy.splitSetCookies(raw)
     for (const chunk of chunks) {
+      if (!FduAuthPolicy.cookieMatchesUrl(chunk, FduAuthPolicy.ID_ORIGIN)) continue
       const pair: string = chunk.split(';')[0]
       const eq: number = pair.indexOf('=')
       if (eq > 0) {
@@ -190,6 +195,8 @@ export class FduLogin {
     const cookieEpoch = CampusCookies.generation()
     const response: HttpResponse = await this.http.hop(service, this.browserHeaders())
     const hops: Record<string, string>[] = response.hopHeaders ?? this.http.lastHopHeaders()
+    this.serviceEntry = service
+    this.loginHops = hops
     await CampusCookies.absorb(service, hops, cookieEpoch)
 
     // Cookies are not only set on the last response — CAS sets REQID on the very
@@ -198,51 +205,52 @@ export class FduLogin {
       this.absorbCookieHeader(cookie)
     }
 
-    // The SPA entry URL is a redirect target, so it shows up as some hop's
-    // `location`. Scan in order; the final response's own `location` is kept as
-    // a fallback because the SDK also leaves the last hop's value there.
+    // The SPA entry URL is a redirect target. Resolve each Location against
+    // the response that issued it; the last valid context belongs to the
+    // latest ID cookies collected above, rather than an earlier transaction.
     const candidates: string[] = []
+    let current: string = service
     for (let i = 0; i < hops.length; i++) {
       const loc: string = hops[i]['location']
       if (loc !== undefined && loc !== null && loc.length > 0) {
-        candidates.push(loc)
+        current = FduLogin.resolve(loc, current)
+        candidates.push(current)
       }
     }
     const finalLocation: string = response.headers['location']
-    if (finalLocation !== undefined && finalLocation !== null && finalLocation.length > 0) {
-      candidates.push(finalLocation)
+    if (candidates.length === 0 && finalLocation !== undefined && finalLocation !== null && finalLocation.length > 0) {
+      candidates.push(FduLogin.resolve(finalLocation, response.finalUrl ?? current))
     }
 
-    for (let i = 0; i < candidates.length; i++) {
-      const url: string = candidates[i]
-      if (!FduAuthPolicy.isIdUrl(url) || url.indexOf('/ac/') < 0) {
+    for (let i = candidates.length - 1; i >= 0; i--) {
+      const candidate: string = candidates[i]
+      if (!FduAuthPolicy.isIdUrl(candidate) || !/^https:\/\/id\.fudan\.edu\.cn(?::443)?\/ac(?:-h5)?\/?(?:[?#]|$)/i.test(candidate)) {
         continue
       }
-      const params: Record<string, string> = FduLogin.fragmentParams(url)
-      if (params['lck'] && params['entityId']) {
-        this.loginUrl = url
+      const params: Record<string, string> = FduLogin.fragmentParams(candidate)
+      if ((params['lck'] ?? '').trim().length > 0 && (params['entityId'] ?? '').trim().length > 0) {
+        this.loginUrl = candidate
         return params
       }
     }
 
-    throw new FduLoginError(
+    const error = new FduLoginError(
       FduLoginFailure.PROTOCOL_ERROR,
       '登录服务未按预期跳转',
       'status ' + response.code + '; hops=' + hops.length +
-        '; lastLocation=' + (hops.length > 0 ? hops[hops.length - 1]['location'] : 'none')
+        '; lastLocationOrigin=' + (hops.length > 0 ? FduAuthPolicy.origin(hops[hops.length - 1]['location'] ?? '') : 'none')
     )
+    error.diagnostics = 'stage=browser-challenge; validContext=false; hops=' + String(hops.length) +
+      (response.diagnostics ? '\n' + response.diagnostics : '')
+    throw error
   }
 
   /** Resolve a possibly-relative Location against the URL it came from. */
   private static resolve(location: string, base: string): string {
-    if (location.indexOf('//') === 0) {
-      const scheme: string = base.substring(0, base.indexOf(':'))
-      return scheme + ':' + location
-    }
-    const colon: number = base.indexOf('://')
-    const slash: number = base.indexOf('/', colon + 3)
-    const origin: string = slash < 0 ? base : base.substring(0, slash)
-    return location.indexOf('/') === 0 ? origin + location : origin + '/' + location
+    // Keep an absolute challenge byte-for-byte. Official URL resolution is
+    // needed only for relative paths, query/fragment redirects and ../ hops.
+    if (/^https?:\/\//i.test(location)) return location
+    return url.URL.parseURL(location, base).toString()
   }
   /**
    * `#/index?lck=...&entityId=...` — a route followed by a query string, so
@@ -515,40 +523,113 @@ export class FduLogin {
     const scoped: CampusSsoReadOptions | undefined = options ?? (DormRequestPolicy.isDorm(service) ? {
       timeoutMs: DormRequestPolicy.WAIT_MS, freshConnection: false, fallbackCookies: ''
     } : undefined)
+    const epoch = CampusCookies.generation()
     const deadline: number = Date.now() + (scoped?.timeoutMs ?? 15000)
     let response = await this.http.getCampusSso(entry, scoped)
+    FduLogin.requireEpoch(epoch)
+    return this.completeSsoResponse(service, entry, response, scoped, deadline, epoch, response.hopHeaders ?? [])
+  }
+
+  /** Complete returned result forms, whether reached by an existing ID session
+   * or by authnEngine after an explicit credential exchange. */
+  private async completeSsoResponse(service: string, entry: string, initial: HttpResponse,
+    scoped: CampusSsoReadOptions | undefined, deadline: number, epoch: number,
+    initialHops: Record<string, string>[]): Promise<FduSession> {
+    let response = initial
     let finalUrl = response.finalUrl ?? CasTicket.finalUrl(entry, response.hopHeaders ?? [])
-    const ticket = CasTicket.fromHtml(response.data, finalUrl, service)
-    if (ticket) {
-      if (scoped !== undefined) {
-        const remaining: number = deadline - Date.now()
-        if (remaining <= 0) throw new HttpError(-1, 2300028,
-          DormRequestPolicy.isDorm(service) ? '寝室电费身份会话接续超时，请稍后重新加载。' : '门户会话检查超时，请稍后重新加载。',
-          '', DormRequestPolicy.isDorm(service) ? 'dorm-sso' : '')
-        const ticketOptions: CampusSsoReadOptions = {
-          timeoutMs: remaining, freshConnection: scoped.freshConnection,
-          fallbackCookies: FduAuthPolicy.origin(ticket) === FduAuthPolicy.origin(service) ? scoped.fallbackCookies : '',
-          historyQuery: scoped.historyQuery
-        }
-        response = await this.http.getCampusSso(ticket, ticketOptions)
-      } else {
-        response = await this.http.getCampusSso(ticket)
-      }
-      finalUrl = response.finalUrl ?? CasTicket.finalUrl(ticket, response.hopHeaders ?? [])
-    }
+    let hops: Record<string, string>[] = initialHops
+    let diagnostics: string = response.diagnostics ?? ''
+    const consumed: Set<string> = new Set<string>()
+    let formSteps: number = 0
+    let ticketObserved: boolean = false
+    let usedBridge: boolean = false
+    let returnedToService: boolean = false
+    let continuationFailure: string = ''
+    let cookies: string = ''
     const requiresQr = service.split(/[?#]/)[0].endsWith('/wxpage/fudan/zfm/qrcode')
-    const savedCookies: string = await CampusCookies.read(finalUrl)
-    const cookies: string = savedCookies || (FduAuthPolicy.isServiceUrl(finalUrl, service) ? options?.fallbackCookies ?? '' : '')
-    if ((!requiresQr || FduAuthPolicy.isLifeCodeDocument(finalUrl, response.data)) &&
-      FduAuthPolicy.isServiceDocument(finalUrl, service, response.data, cookies)) {
-      if (DormRequestPolicy.isDorm(service)) return {
-        targetUrl: finalUrl, cookies: '', serviceCookies: cookies, dormResponse: response
+    while (true) {
+      FduLogin.requireEpoch(epoch)
+      const savedCookies: string = await CampusCookies.read(finalUrl)
+      FduLogin.requireEpoch(epoch)
+      cookies = savedCookies || (FduAuthPolicy.isServiceUrl(finalUrl, service) ? scoped?.fallbackCookies ?? '' : '')
+      if ((!requiresQr || FduAuthPolicy.isLifeCodeDocument(finalUrl, response.data)) &&
+        FduAuthPolicy.isServiceDocument(finalUrl, service, response.data, cookies)) {
+        if (DormRequestPolicy.isDorm(service)) return {
+          targetUrl: finalUrl, cookies: '', serviceCookies: cookies, dormResponse: response
+        }
+        return { targetUrl: finalUrl, cookies: '', serviceCookies: cookies }
       }
-      return { targetUrl: finalUrl, cookies: '', serviceCookies: cookies }
+      const form = CampusSsoForm.fromHtml(response.data, finalUrl, service, entry, hops)
+      let target: string = ''
+      let post: boolean = false
+      if (form !== null) {
+        // Codes/tickets are one-use even if the same form reorders its hidden
+        // fields or changes auxiliary values. Never log this in-memory key.
+        const identity: string = form.method + '\n' + form.targetUrl.split(/[?#]/)[0] + '\n' +
+          (form.method === 'POST' ? 'code:' + form.fields['code'] : 'ticket:' + form.fields['ticket'])
+        if (formSteps >= 4 || consumed.has(identity)) {
+          continuationFailure = formSteps >= 4 ? 'form-limit' : 'repeated-form'
+          break
+        }
+        consumed.add(identity)
+        formSteps++
+        ticketObserved = ticketObserved || (form.fields['ticket'] ?? '').length > 0
+        target = form.targetUrl
+        post = form.method === 'POST'
+        usedBridge = usedBridge || FduAuthPolicy.origin(target) === 'https://workflow1.fudan.edu.cn'
+      } else if (usedBridge && !returnedToService && !FduAuthPolicy.isLoginDocument(response.data) &&
+        (FduAuthPolicy.isServiceUrl(finalUrl, service) || FduAuthPolicy.origin(finalUrl) === 'https://workflow1.fudan.edu.cn')) {
+        // A broker landing is not the requested QR/business page. Read the
+        // original protected endpoint once; only its existing proof may finish.
+        returnedToService = true
+        target = service
+      } else break
+      const remaining: number = deadline - Date.now()
+      if (remaining <= 0) throw new HttpError(-1, 2300028,
+        DormRequestPolicy.isDorm(service) ? '寝室电费身份会话接续超时，请稍后重新加载。' : '校园服务会话接续超时，请稍后重新加载。',
+        '', DormRequestPolicy.isDorm(service) ? 'dorm-sso' : 'campus-sso', false, diagnostics)
+      const nextOptions: CampusSsoReadOptions = {
+        timeoutMs: remaining, freshConnection: scoped?.freshConnection ?? false,
+        fallbackCookies: FduAuthPolicy.origin(target) === FduAuthPolicy.origin(service) ? scoped?.fallbackCookies ?? '' : '',
+        historyQuery: scoped?.historyQuery
+      }
+      FduLogin.requireEpoch(epoch)
+      response = post && form !== null ? await this.http.postCampusSso(target, form.fields, nextOptions) :
+        await this.http.getCampusSso(target, nextOptions)
+      FduLogin.requireEpoch(epoch)
+      const nextHops: Record<string, string>[] = response.hopHeaders ?? []
+      const formHop: Record<string, string> = {}
+      formHop['location'] = target
+      hops = hops.concat([formHop], nextHops)
+      finalUrl = response.finalUrl ?? CasTicket.finalUrl(target, nextHops)
+      diagnostics = (diagnostics + (diagnostics && response.diagnostics ? '\n\n' : '') + (response.diagnostics ?? '')).slice(-20000)
     }
-    const error = new FduLoginError(FduLoginFailure.ENHANCED_AUTH_REQUIRED,
-      '该校园服务需要继续身份验证，请点击继续验证', '')
-    error.challenge = new FduAuthChallenge(FduAuthPolicy.isIdUrl(finalUrl) ? finalUrl : entry, service, [])
+    const loginLanding: boolean = !continuationFailure && (FduAuthPolicy.isWebVpnLoginUrl(finalUrl) ||
+      FduAuthPolicy.isLoginDocument(response.data))
+    const idSpaEntry: boolean = /^https:\/\/id\.fudan\.edu\.cn(?::443)?\/ac(?:-h5)?\/?(?:[?#]|$)/i.test(finalUrl)
+    const fragment = FduLogin.fragmentParams(finalUrl)
+    const lckPresent: boolean = (fragment['lck'] ?? '').trim().length > 0
+    const entityIdPresent: boolean = (fragment['entityId'] ?? '').trim().length > 0
+    // A bare ID SPA renders its shell but has no authentication transaction.
+    // Re-enter the actual service in the browser instead of inventing context
+    // or spending a callback's one-use ticket for a second time.
+    const challengeFromServiceEntry: boolean = loginLanding && FduAuthPolicy.isIncompleteIdLoginUrl(finalUrl)
+    const browserEntry: string = FduAuthPolicy.isServiceUrl(entry, service) && !/[?&](?:ticket|loginToken)=/i.test(entry) ? entry : service
+    const error = new FduLoginError(loginLanding ? FduLoginFailure.ENHANCED_AUTH_REQUIRED : FduLoginFailure.PROTOCOL_ERROR,
+      loginLanding ? '该校园服务需要继续身份验证，请点击继续验证' : '校园服务会话接续未返回有效业务页面，请稍后重试。',
+      loginLanding ? 'Campus SSO ended at an official login document' : 'Campus SSO service proof is incomplete')
+    error.diagnostics = 'sso=read; landing=' + (FduAuthPolicy.isIdUrl(finalUrl) ? loginLanding ? 'id-login' : 'id-unproven' :
+      FduAuthPolicy.isWebVpnLoginUrl(finalUrl) ? 'webvpn-login' : loginLanding ? 'login-document' : 'service-unproven') +
+      '; cookieCandidate=' + String(cookies.length > 0) + '; casTicket=' + String(ticketObserved) +
+      '; idSpaEntry=' + String(idSpaEntry) + '; lckPresent=' + String(lckPresent) + '; entityIdPresent=' + String(entityIdPresent) +
+      '; challengeFromServiceEntry=' + String(challengeFromServiceEntry) +
+      '; formSteps=' + String(formSteps) + '; brokerUsed=' + String(usedBridge) +
+      '; returnedToService=' + String(returnedToService) + '; continuation=' + (continuationFailure || 'unproven') + '\n' +
+      CampusSsoForm.diagnostics(response.data, finalUrl, service, entry, hops) +
+      (diagnostics ? '\n' + diagnostics : '') + '\n' +
+      (typeof CampusCookies.diagnostics === 'function' ? CampusCookies.diagnostics() : 'cookieRestore=unavailable')
+    if (loginLanding) error.challenge = new FduAuthChallenge(challengeFromServiceEntry ? browserEntry :
+      FduAuthPolicy.isIdUrl(finalUrl) ? finalUrl : entry, service, [])
     throw error
   }
 
@@ -562,12 +643,15 @@ export class FduLogin {
 
   /** Step 5 — trade the login token for a ticket-bearing URL. */
   private async exchangeTokenForTicket(loginToken: string, service: string): Promise<FduSession> {
+    const epoch = CampusCookies.generation()
+    const deadline = Date.now() + 15000
     const engineUrl = FduLogin.ID_HOST + '/idp/authCenter/authnEngine'
     const response: HttpResponse = await this.http.postForm(
       engineUrl,
       { 'loginToken': loginToken },
       this.browserHeaders({ 'Referer': FduLogin.ID_HOST + '/ac/' })
     )
+    FduLogin.requireEpoch(epoch)
     const hops: Record<string, string>[] = response.hopHeaders ?? []
     if (hops.length === 0) this.absorbCookies(response)
     for (const cookie of FduAuthPolicy.cookiesForOrigin(engineUrl, hops, FduAuthPolicy.ID_ORIGIN)) {
@@ -584,13 +668,25 @@ export class FduLogin {
     }
     const target = CasTicket.fromHtml(response.data, finalUrl, service)
     if (!target) {
-      // A server-side redirect or another authentication step must continue in
-      // the official browser, rather than leave every campus card unusable.
-      throw new FduLoginError(
-        FduLoginFailure.ENHANCED_AUTH_REQUIRED,
-        '请在官方页面完成校园服务登录',
+      const engineHop: Record<string, string> = {}
+      engineHop['location'] = engineUrl
+      const proofHops = this.loginHops.concat([engineHop], hops)
+      const form = CampusSsoForm.fromHtml(response.data, finalUrl, service, this.serviceEntry, proofHops)
+      if (form !== null) {
+        return this.completeSsoResponse(service, this.serviceEntry, response, undefined,
+          deadline, epoch, proofHops)
+      }
+      // Missing CAS markup alone is not evidence of another authentication step.
+      const loginDocument: boolean = FduAuthPolicy.isLoginDocument(response.data)
+      const error = new FduLoginError(
+        loginDocument ? FduLoginFailure.ENHANCED_AUTH_REQUIRED : FduLoginFailure.PROTOCOL_ERROR,
+        loginDocument ? '请在官方页面完成校园服务登录' : '校园服务登录未返回有效票据，请稍后重试。',
         'CAS form not found after authnEngine'
       )
+      error.diagnostics = 'stage=authn-engine; landing=' + (loginDocument ? 'login-document' : 'unproven') +
+        '; casTicket=false\n' + CampusSsoForm.diagnostics(response.data, finalUrl, service, this.serviceEntry, proofHops) +
+        (response.diagnostics ? '\n' + response.diagnostics : '')
+      throw error
     }
     return { targetUrl: target, cookies: this.cookieHeader() }
   }
@@ -612,6 +708,8 @@ export class FduLogin {
     this.cookies.clear()
     this.idCookieRecords.clear()
     this.loginUrl = ''
+    this.serviceEntry = ''
+    this.loginHops = []
     const epoch = CampusCookies.generation()
     try {
       const params: Record<string, string> = await this.walkToLogin(service)

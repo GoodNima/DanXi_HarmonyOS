@@ -50,7 +50,7 @@ export struct LibraryRequestEditor {
     finally { this.loading = false }
   }
   @Builder
-  Verification() { LibraryVerification({ onVerified: () => { this.webSheet = false; this.load() } }) }
+  Verification() { LibraryVerification({ onVerified: () => { this.webSheet = false; this.load() }, onClose: () => { this.webSheet = false } }) }
   build() {
     Stack() {
       Scroll() { Column({ space: 18 }) {
@@ -74,7 +74,7 @@ export struct LibraryRequestEditor {
         }
       }.width('100%').padding({ left: 20, right: 20, top: 48, bottom: 24 }).alignItems(HorizontalAlign.Start) }.width('100%').constraintSize({ maxHeight: 600 }).align(Alignment.Top)
       CenterLoadingProgress({ busy: this.loading }).width(36).height(36)
-      Row().width(0).height(0).bindSheet($$this.webSheet, this.Verification(), this.webSheetTransition.options(this.webSheet, { height: '90%', showClose: true, dragBar: false }))
+      Row().width(0).height(0).bindSheet($$this.webSheet, this.Verification(), this.webSheetTransition.options(this.webSheet, { height: '94%', showClose: false, dragBar: true }))
     }.width('100%')
   }
 }

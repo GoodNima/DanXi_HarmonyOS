@@ -14,8 +14,9 @@ export class AcademicCalendar {
   static async init(): Promise<void> {
     const prefs = PreferencesUtil.getInstance()
     const old = await prefs.getString('graduate_semester_start', '')
-    const mode = await prefs.getString(AcademicCalendar.KEY_MODE, 'manual')
-    let manual = await prefs.getString('calendar_manual_start', old)
+    const mode = await prefs.getString(AcademicCalendar.KEY_MODE, '')
+    const savedManual = await prefs.getString('calendar_manual_start', '__missing_calendar_start__')
+    let manual = savedManual === '__missing_calendar_start__' ? old : savedManual
     try {
       const cache = JSON.parse(await prefs.getString('official_calendar_cache', '{}')) as CalendarCache
       AcademicCalendar.terms = Array.isArray(cache.terms) ? cache.terms.filter((row: CalendarTerm) =>
@@ -26,8 +27,9 @@ export class AcademicCalendar {
     // a local migration; subsequent foregrounds never choose a new semester.
     if (mode === 'auto') manual = TeachingCalendar.current(AcademicCalendar.terms)?.startDate ?? manual
     if (!TeachingCalendar.validMonday(manual)) manual = ''
-    await prefs.putString('calendar_manual_start', manual)
-    await prefs.putString(AcademicCalendar.KEY_MODE, 'manual')
+    // Persist migrations/repairs once. Stable launches need no put/flush IPC.
+    if (savedManual !== manual) await prefs.putString('calendar_manual_start', manual)
+    if (mode !== 'manual') await prefs.putString(AcademicCalendar.KEY_MODE, 'manual')
     AppStorage.setOrCreate<string>('calendar_manual_start', manual)
     AppStorage.setOrCreate<string>(AcademicCalendar.KEY_MODE, 'manual')
     AppStorage.setOrCreate<string>('calendar_manual_source', await prefs.getString('calendar_manual_source', ''))

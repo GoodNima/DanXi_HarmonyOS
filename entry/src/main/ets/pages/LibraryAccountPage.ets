@@ -225,8 +225,8 @@ export struct LibraryAccountPage {
         FloatingActionButton({ label: $r('app.string.ui_reload'), icon: 'refresh', zeroContentPadding: true, controlHeight: 44, actionEnabled: !this.loading && !this.paging, controlId: 'library-account-refresh', onAction: () => { this.verification ? this.verify() : this.load(true) } }).width(44)
       }.height(56).width('100%').padding({ left: ThemeDimens.cardGutter, right: ThemeDimens.cardGutter }).margin({ top: px2vp(this.topPx) }).hitTestBehavior(HitTestMode.Transparent)
     }.width('100%').height('100%').backgroundColor(ThemeColors.bgEnd).expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP, SafeAreaEdge.BOTTOM])
-      .bindSheet($$this.webSheet, this.Verification(), this.webSheetTransition.options(this.webSheet, { height: '90%', showClose: true, dragBar: false }))
+      .bindSheet($$this.webSheet, this.Verification(), this.webSheetTransition.options(this.webSheet, { height: '94%', showClose: false, dragBar: true }))
   }
   @Builder
-  Verification() { LibraryVerification({ onVerified: () => { this.webSheet = false; this.load(true) } }) }
+  Verification() { LibraryVerification({ onVerified: () => { this.webSheet = false; this.load(true) }, onClose: () => { this.webSheet = false } }) }
 }

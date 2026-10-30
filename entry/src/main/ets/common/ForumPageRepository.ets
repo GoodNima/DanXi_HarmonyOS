@@ -5,7 +5,7 @@ export interface ForumPageRepository {
   restoreSession(): Promise<boolean>
   sessionRevision(): number
   peekCachedDivisions(): ForumDivision[]
-  getMe(): Promise<ForumUser>
+  getMe(force?: boolean): Promise<ForumUser>
   getDivisions(force?: boolean): Promise<ForumDivision[]>
   getHomepageHoles(startTimeMs: number, size?: number, order?: string): Promise<ForumHole[]>
   getDivisionHoles(startTimeMs: number, divisionId: number, tag: string, length?: number,

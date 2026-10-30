@@ -78,7 +78,7 @@ struct AppSettingsPage {
     try {
       const repo = ForumRepository.getInstance()
       this.sessionActive = await repo.restoreSession()
-      if (this.sessionActive) this.notify = (await repo.getMe()).notify
+      if (this.sessionActive) this.notify = (await repo.getMe(true)).notify
     } catch (e) { this.error = ForumRepository.describeError(e) }
     finally { this.refreshing = false; this.loadingPreferences = false }
   }

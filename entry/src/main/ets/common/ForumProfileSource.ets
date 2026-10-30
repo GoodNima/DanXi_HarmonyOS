@@ -7,5 +7,5 @@ export class ForumProfileSource {
   sessionRevision(): number { return ForumRepository.getInstance().sessionRevision() }
   restoreSession(): Promise<boolean> { return ForumRepository.getInstance().restoreSession() }
   isLoggedIn(): boolean { return ForumRepository.getInstance().isLoggedIn() }
-  getMe(): Promise<ForumUser> { return ForumRepository.getInstance().getMe() }
+  getMe(force: boolean = false): Promise<ForumUser> { return ForumRepository.getInstance().getMe(force) }
 }

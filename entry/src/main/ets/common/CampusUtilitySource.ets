@@ -9,6 +9,7 @@ export interface CampusUtilityPageSource {
   load(feature: string, force?: boolean): Promise<CampusUtilitySnapshot>
   random(): Promise<CourseReview>
   search(query: string, page: number, force?: boolean): Promise<CourseReviewSearch>
+  summary(id: number): Promise<CourseReviewGroup>
   group(id: number, force?: boolean, previewOnly?: boolean): Promise<CourseReviewGroup>
   add(draft: CourseReviewDraft): Promise<CourseReview>
   modify(review: CourseReview, draft: CourseReviewDraft): Promise<void>
@@ -20,6 +21,7 @@ export class DefaultCampusUtilityPageSource implements CampusUtilityPageSource {
   load(feature: string, force: boolean = false): Promise<CampusUtilitySnapshot> { return CampusUtilities.load(feature, force) }
   random(): Promise<CourseReview> { return CourseReviewRepository.random() }
   search(query: string, page: number, force: boolean = false): Promise<CourseReviewSearch> { return CourseReviewRepository.search(query, page, force) }
+  summary(id: number): Promise<CourseReviewGroup> { return CourseReviewRepository.summary(id) }
   group(id: number, force: boolean = false, previewOnly: boolean = false): Promise<CourseReviewGroup> {
     return CourseReviewRepository.group(id, force, previewOnly)
   }

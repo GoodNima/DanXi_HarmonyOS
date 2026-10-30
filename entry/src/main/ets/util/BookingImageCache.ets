@@ -50,9 +50,11 @@ export class BookingImageCache {
     try {
       if (owner !== BookingImageCache.owner()) throw new Error('Venue image account changed')
       await NetworkProxy.init()
+      if (owner !== BookingImageCache.owner()) throw new Error('Venue image account changed')
       const url = SportsBooking.ORIGIN + '/reservation/api/file/down?token=' + encodeURIComponent(token) + '&view=1'
       const headers: Record<string, string> = {}
       headers['Cookie'] = await CampusCookies.read(url); headers['Referer'] = SportsBooking.TOPIC
+      if (owner !== BookingImageCache.owner()) throw new Error('Venue image account changed')
       headers['Accept'] = 'image/*'; headers['User-Agent'] = HttpUtil.BROWSER_UA
       const options: http.HttpRequestOptions = { method: http.RequestMethod.GET, header: headers,
         expectDataType: http.HttpDataType.ARRAY_BUFFER, connectTimeout: 5000, readTimeout: 12000, maxLimit: 8 * 1024 * 1024 }

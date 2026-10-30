@@ -1,6 +1,10 @@
 {
   "color": [
     {
+      "name": "verification_web_background",
+      "value": "#121212"
+    },
+    {
       "name": "floating_card_tint",
       "value": "#20A7BEDF"
     },

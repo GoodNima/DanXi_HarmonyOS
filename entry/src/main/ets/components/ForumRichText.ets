@@ -170,7 +170,7 @@ export struct ForumRichText {
         .onVisibleAreaChange([0.01], (visible: boolean) => { this.visibilityChanged(visible) })
         .hitTestBehavior(HitTestMode.None)
     } else {
-      Stack({ alignContent: this.preview ? Alignment.TopStart : Alignment.Center }) {
+      Stack({ alignContent: Alignment.TopStart }) {
         // The Web stays visible and sized throughout startup so ArkWeb can
         // paint and report real DOM/font geometry; only the hint overlays it.
         // Short, clamped previews use the platform's asynchronous surface.
@@ -205,10 +205,17 @@ export struct ForumRichText {
             .opacity(1 - this.richOpacity)
             .hitTestBehavior(HitTestMode.None).accessibilityLevel(this.firstLayoutReceived ? 'no-hide-descendants' : 'auto')
         } else if (!this.firstLayoutReceived) {
-          LoadingProgress().width(20).height(20).color(ThemeColors.primary)
-            .hitTestBehavior(HitTestMode.None).accessibilityLevel('no')
+          // Full Markdown/TeX must remain readable even if ArkWeb has not
+          // completed its first layout. Plain URL prose uses native spans and
+          // never enters this host in the first place.
+          Column() {
+            ForEach(ForumContentParser.textBlocks(ForumContentParser.summary(this.content)), (block: string) => {
+              Text(block).fontSize(this.textSize).lineHeight(this.textSize + 10).fontColor(ThemeColors.textPrimary).width('100%')
+            })
+          }.width('100%').alignItems(HorizontalAlign.Start).hitTestBehavior(HitTestMode.None)
+            .accessibilityLevel('auto')
         }
-      }.width('100%').height(this.preview && !this.firstLayoutReceived ? undefined : this.measuredHeight)
+      }.width('100%').height(this.firstLayoutReceived ? this.measuredHeight : undefined)
     }
   }
 }

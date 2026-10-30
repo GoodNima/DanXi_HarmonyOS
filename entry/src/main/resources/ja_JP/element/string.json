@@ -4203,6 +4203,10 @@
     {
       "name": "campus_notice_more",
       "value": "ほか %d 件のお知らせ"
+    },
+    {
+      "name": "ui_verification_form_not_ready",
+      "value": "ログインフォームを表示できませんでした。再試行してください。"
     }
   ]
 }

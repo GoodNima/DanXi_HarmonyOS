@@ -2,6 +2,10 @@ import { ForumRepository } from './ForumRepository'
 import { ForumNetwork } from '../common/ForumNetwork'
 import { Constant } from '../common/Constant'
 import { AppLanguage } from '../common/AppLanguage'
+import { ForumPreferences } from '../common/ForumPreferences'
+import { CourseReviewCatalogStore } from '../common/CourseReviewCatalogStore'
+import { CourseReviewPreview, CourseReviewPreviewParser } from '../common/CourseReviewPreviewParser'
+import { readCourseReviewPreview } from '../common/CourseReviewPreviewTask'
 import { HttpError, HttpResponse } from '../util/HttpUtil'
 import { CourseReviewGroup, CourseReview, CourseReviewDraft, CourseReviewSearch, ReviewRating, ReviewCourse, ReviewVoteBody, CourseReviewSummary } from '../model/CourseReview'
 
@@ -11,20 +15,29 @@ class CourseDetailEntry {
 }
 
 /** Shares DanKe's upstream forum JWT, refresh handler and WebVPN routing.
- * No review payload/cache is persisted, and cross-session completions fail. */
+ * Only account-scoped directory metadata is persisted; reviews remain in memory. */
 export class CourseReviewRepository {
   private static readonly SIZE: number = 20
   private static catalogRevision: number = -1
   private static catalogRows: CourseReviewGroup[] | null = null
   private static catalogHash: string = ''
   private static catalogFlight: Promise<CourseReviewGroup[]> | null = null
+  private static catalogBackground: boolean = false
+  private static catalogReadEpoch: number = 0
+  private static catalogRestored: boolean = false
+  private static catalogRestoreFlight: Promise<void> | null = null
+  private static catalogChecked: boolean = false
+  private static catalogListeners: Set<() => void> = new Set<() => void>()
   private static detailRevision: number = -1
   private static detailCache: Map<number, CourseDetailEntry> = new Map<number, CourseDetailEntry>()
   private static detailFlights: Map<number, Promise<CourseReviewGroup>> = new Map<number, Promise<CourseReviewGroup>>()
+  private static summaryCache: Map<number, CourseDetailEntry> = new Map<number, CourseDetailEntry>()
+  private static summaryFlights: Map<number, Promise<CourseReviewGroup>> = new Map<number, Promise<CourseReviewGroup>>()
   private static detailEpoch: number = 0
   private static invalidateDetails(): void {
     CourseReviewRepository.detailEpoch++
     CourseReviewRepository.detailCache.clear(); CourseReviewRepository.detailFlights.clear()
+    CourseReviewRepository.summaryCache.clear(); CourseReviewRepository.summaryFlights.clear()
   }
   static async random(previewOnly: boolean = false): Promise<CourseReview> {
     const revision = await CourseReviewRepository.session()
@@ -39,6 +52,7 @@ export class CourseReviewRepository {
     if (force && page === 1) CourseReviewRepository.invalidateDetails()
     if (!keyword.trim()) return CourseReviewRepository.catalog(page, force)
     const revision = await CourseReviewRepository.session()
+    if (force && page === 1 && CourseReviewRepository.catalogRevision === revision) CourseReviewRepository.invalidateCatalogSummaries()
     const response = await ForumNetwork.getInstance().get(Constant.DANKE_BASE_URL + '/v3/course_groups/search',
       { 'query': keyword.trim(), 'page': String(page), 'page_size': String(CourseReviewRepository.SIZE) })
     CourseReviewRepository.guard(revision)
@@ -58,48 +72,132 @@ export class CourseReviewRepository {
     if (CourseReviewRepository.catalogRevision !== revision) {
       CourseReviewRepository.catalogRevision = revision
       CourseReviewRepository.catalogRows = null; CourseReviewRepository.catalogHash = ''; CourseReviewRepository.catalogFlight = null
+      CourseReviewRepository.catalogReadEpoch++; CourseReviewRepository.catalogRestored = false
+      CourseReviewRepository.catalogRestoreFlight = null; CourseReviewRepository.catalogChecked = false
     }
+    await CourseReviewRepository.restoreCatalog(revision)
+    CourseReviewRepository.guard(revision)
     if (CourseReviewRepository.catalogRows === null || (force && page === 1)) {
-      let task = CourseReviewRepository.catalogFlight
-      if (task === null) {
-        task = CourseReviewRepository.readCatalog(revision)
-        CourseReviewRepository.catalogFlight = task
-      }
-      try { await task } finally {
+      const previous = CourseReviewRepository.catalogRows
+      const background = CourseReviewRepository.catalogFlight !== null && CourseReviewRepository.catalogBackground
+      let task = CourseReviewRepository.requestCatalog(revision, true, force)
+      try { await task } catch (e) {
+        // An explicit refresh can continue authentication that a passive cached
+        // directory check deliberately did not open. Concurrent taps still join.
+        if (!force || !background) throw e as Error
+        CourseReviewRepository.guard(revision)
         if (CourseReviewRepository.catalogFlight === task) CourseReviewRepository.catalogFlight = null
+        task = CourseReviewRepository.requestCatalog(revision, true, force)
+        await task
       }
-    }
+      if (force && background && previous === CourseReviewRepository.catalogRows) CourseReviewRepository.invalidateCatalogSummaries()
+    } else CourseReviewRepository.revalidateCatalog()
     CourseReviewRepository.guard(revision)
     const result = new CourseReviewSearch(); result.page = page; result.pageSize = CourseReviewRepository.SIZE
     result.items = (CourseReviewRepository.catalogRows ?? []).slice((page - 1) * result.pageSize, page * result.pageSize)
     return result
   }
-  private static async readCatalog(revision: number): Promise<CourseReviewGroup[]> {
+  static subscribeCatalog(listener: () => void): () => void {
+    CourseReviewRepository.catalogListeners.add(listener)
+    return (): void => { CourseReviewRepository.catalogListeners.delete(listener) }
+  }
+  static cachedCatalogPages(pages: number): CourseReviewSearch | null {
+    const forum = ForumRepository.getInstance()
+    if (!forum.isLoggedIn() || forum.sessionRevision() !== CourseReviewRepository.catalogRevision ||
+      CourseReviewRepository.catalogRows === null || !Number.isInteger(pages) || pages < 1) return null
+    const result = new CourseReviewSearch(); result.page = pages; result.pageSize = CourseReviewRepository.SIZE
+    result.items = CourseReviewRepository.catalogRows.slice(0, pages * CourseReviewRepository.SIZE)
+    return result
+  }
+  static revalidateCatalog(): void {
+    const forum = ForumRepository.getInstance()
+    if (!forum.isLoggedIn() || forum.sessionRevision() !== CourseReviewRepository.catalogRevision ||
+      CourseReviewRepository.catalogRows === null || CourseReviewRepository.catalogFlight !== null ||
+      CourseReviewRepository.catalogChecked) return
+    CourseReviewRepository.requestCatalog(forum.sessionRevision(), false, false).catch(() => {})
+  }
+  private static requestCatalog(revision: number, allowAuthentication: boolean, force: boolean): Promise<CourseReviewGroup[]> {
+    if (CourseReviewRepository.catalogFlight !== null) return CourseReviewRepository.catalogFlight
+    CourseReviewRepository.catalogChecked = true; CourseReviewRepository.catalogBackground = !allowAuthentication
+    const task = CourseReviewRepository.readCatalog(revision, allowAuthentication, force)
+    CourseReviewRepository.catalogFlight = task
+    task.finally(() => {
+      if (CourseReviewRepository.catalogFlight === task) CourseReviewRepository.catalogFlight = null
+    }).catch(() => {})
+    return task
+  }
+  private static async restoreCatalog(revision: number): Promise<void> {
+    if (CourseReviewRepository.catalogRestored) return
+    if (CourseReviewRepository.catalogRestoreFlight === null) {
+      const task: Promise<void> = CourseReviewCatalogStore.load(CourseReviewRepository.catalogOwner()).then(snapshot => {
+        CourseReviewRepository.guard(revision)
+        if (snapshot !== null && CourseReviewRepository.catalogRows === null) {
+          CourseReviewRepository.catalogRows = CourseReviewCatalogStore.groups(snapshot)
+          CourseReviewRepository.catalogHash = snapshot.hash
+        }
+        CourseReviewRepository.catalogRestored = true
+      })
+      CourseReviewRepository.catalogRestoreFlight = task
+      task.finally(() => {
+        if (CourseReviewRepository.catalogRestoreFlight === task) CourseReviewRepository.catalogRestoreFlight = null
+      }).catch(() => {})
+    }
+    await CourseReviewRepository.catalogRestoreFlight
+  }
+  private static catalogOwner(): number { return AppStorage.get<number>(ForumPreferences.USER_ID) ?? 0 }
+  private static persistCatalog(rows: CourseReviewGroup[], revision: number, epoch: number): void {
+    const owner = CourseReviewRepository.catalogOwner()
+    CourseReviewCatalogStore.save(owner, rows, CourseReviewRepository.catalogHash, (): boolean => {
+      const forum = ForumRepository.getInstance()
+      return forum.isLoggedIn() && forum.sessionRevision() === revision && CourseReviewRepository.catalogOwner() === owner &&
+        CourseReviewRepository.catalogReadEpoch === epoch && CourseReviewRepository.catalogRows === rows
+    }).catch(() => {})
+  }
+  private static publishCatalog(): void {
+    for (const listener of CourseReviewRepository.catalogListeners) { try { listener() } catch (e) {} }
+  }
+  private static invalidateCatalogSummaries(): void {
+    for (const row of CourseReviewRepository.catalogRows ?? []) {
+      row.reviewCount = undefined; row.summary = new CourseReviewSummary()
+      for (const course of row.courses) { course.reviews = []; course.reviewsLoaded = false }
+    }
+  }
+  private static async readCatalog(revision: number, allowAuthentication: boolean, force: boolean): Promise<CourseReviewGroup[]> {
     const network = ForumNetwork.getInstance()
-    let hashResponse: HttpResponse
-    let catalogResponse: HttpResponse | null = null
+    const epoch: number = ++CourseReviewRepository.catalogReadEpoch
     if (CourseReviewRepository.catalogRows === null) {
-      // On a cold read both responses are needed; avoid two serial round trips.
-      const responses = await Promise.all([network.get(Constant.DANKE_BASE_URL + '/courses/hash'),
-        network.get(Constant.DANKE_BASE_URL + '/courses')])
-      hashResponse = responses[0]; catalogResponse = responses[1]
-    } else hashResponse = await network.get(Constant.DANKE_BASE_URL + '/courses/hash')
+      // Fetch only the directory on a cache miss. A concurrently returned hash
+      // could describe a newer directory and permanently label old rows as fresh.
+      // Leave it unknown until a later hash-then-directory check establishes it.
+      const response = await network.get(Constant.DANKE_BASE_URL + '/courses', undefined, undefined, 15000, allowAuthentication)
+      CourseReviewRepository.guard(revision)
+      const rows = CourseReviewRepository.parseCatalog(response.data)
+      CourseReviewRepository.catalogRows = rows; CourseReviewRepository.catalogHash = ''
+      CourseReviewRepository.persistCatalog(rows, revision, epoch)
+      return rows
+    }
+    let hash: string = ''
+    try {
+      const hashResponse = await network.get(Constant.DANKE_BASE_URL + '/courses/hash', undefined, undefined, 15000, allowAuthentication)
+      hash = CourseReviewRepository.text(CourseReviewRepository.object(hashResponse.data)['hash'])
+    } catch (e) {
+      // An auxiliary hash failure cannot suppress a valid directory response.
+      if (e instanceof HttpError && (e.statusCode === -2 || e.statusCode === 401 || e.statusCode === 403)) throw e as Error
+    }
     CourseReviewRepository.guard(revision)
-    const hash: string = CourseReviewRepository.text(CourseReviewRepository.object(hashResponse.data)['hash'])
-    if (!hash) throw new HttpError(200, 0, AppLanguage.text($r('app.string.utility_invalid_response')), '')
-    if (CourseReviewRepository.catalogRows !== null && hash === CourseReviewRepository.catalogHash) {
+    if (hash && CourseReviewRepository.catalogRows !== null && hash === CourseReviewRepository.catalogHash) {
       // The directory hash does not guarantee unchanged evaluations. An
       // explicit refresh invalidates old review summaries, including zero.
-      for (const row of CourseReviewRepository.catalogRows) {
-        row.reviewCount = undefined; row.summary = new CourseReviewSummary()
-        for (const course of row.courses) { course.reviews = []; course.reviewsLoaded = false }
-      }
+      if (force) CourseReviewRepository.invalidateCatalogSummaries()
+      CourseReviewRepository.persistCatalog(CourseReviewRepository.catalogRows, revision, epoch)
       return CourseReviewRepository.catalogRows
     }
-    const response = catalogResponse ?? await network.get(Constant.DANKE_BASE_URL + '/courses')
+    const response = await network.get(Constant.DANKE_BASE_URL + '/courses', undefined, undefined, 15000, allowAuthentication)
     CourseReviewRepository.guard(revision)
     const rows = CourseReviewRepository.parseCatalog(response.data)
     CourseReviewRepository.catalogRows = rows; CourseReviewRepository.catalogHash = hash
+    CourseReviewRepository.persistCatalog(rows, revision, epoch)
+    CourseReviewRepository.publishCatalog()
     return rows
   }
   static parseCatalog(body: string): CourseReviewGroup[] {
@@ -120,6 +218,78 @@ export class CourseReviewRepository {
       return group
     }).filter(group => { if (ids.has(group.id)) return false; ids.add(group.id); return true })
   }
+  /** Passive list reads retain only compact aggregates, never a partial detail. */
+  static async summary(id: number): Promise<CourseReviewGroup> {
+    CourseReviewRepository.requireId(id)
+    const revision = await CourseReviewRepository.session()
+    if (CourseReviewRepository.detailRevision !== revision) {
+      CourseReviewRepository.detailRevision = revision
+      CourseReviewRepository.invalidateDetails()
+    }
+    const epoch: number = CourseReviewRepository.detailEpoch
+    const detail = CourseReviewRepository.detailCache.get(id)
+    const cached = detail !== undefined && detail.group.summary.ready && Date.now() - detail.at < 120000 ? detail : CourseReviewRepository.summaryCache.get(id)
+    if (cached !== undefined && Date.now() - cached.at < 120000) {
+      CourseReviewRepository.rememberListSummary(cached.group, revision, epoch)
+      return cached.group
+    }
+    const pending = CourseReviewRepository.summaryFlights.get(id)
+    if (pending !== undefined) return pending
+    const task = CourseReviewRepository.readSummary(id, revision, epoch)
+    CourseReviewRepository.summaryFlights.set(id, task)
+    try { return await task } finally {
+      if (CourseReviewRepository.summaryFlights.get(id) === task) CourseReviewRepository.summaryFlights.delete(id)
+    }
+  }
+  private static async readSummary(id: number, revision: number, epoch: number): Promise<CourseReviewGroup> {
+    const network = ForumNetwork.getInstance()
+    let response: HttpResponse
+    try { response = await network.get(Constant.DANKE_BASE_URL + '/group/' + id, undefined, undefined, 15000, false) }
+    catch (e) {
+      if (!(e instanceof HttpError) || (e.statusCode !== 404 && e.statusCode !== 405)) throw e as Error
+      CourseReviewRepository.guard(revision)
+      response = await network.get(Constant.DANKE_BASE_URL + '/v3/course_groups/' + id, undefined, undefined, 15000, false)
+    }
+    CourseReviewRepository.guard(revision)
+    const preview = await readCourseReviewPreview(response.data)
+    CourseReviewRepository.guard(revision)
+    if (preview.id !== id) throw new HttpError(200, 0, AppLanguage.text($r('app.string.utility_invalid_response')), '')
+    if (!preview.summary.ready) {
+      await CourseReviewRepository.hydrateSummary(preview, revision)
+      CourseReviewPreviewParser.summarize(preview)
+    }
+    CourseReviewRepository.guard(revision)
+    const group = new CourseReviewGroup(); group.id = preview.id; group.name = preview.name
+    group.summary = preview.summary; group.reviewCount = preview.summary.count
+    if (epoch === CourseReviewRepository.detailEpoch) {
+      const entry = new CourseDetailEntry(); entry.group = group; entry.at = Date.now()
+      CourseReviewRepository.summaryCache.delete(id); CourseReviewRepository.summaryCache.set(id, entry)
+      while (CourseReviewRepository.summaryCache.size > 128) CourseReviewRepository.summaryCache.delete(CourseReviewRepository.summaryCache.keys().next().value as number)
+      CourseReviewRepository.rememberListSummary(group, revision, epoch)
+    }
+    return group
+  }
+  private static async hydrateSummary(preview: CourseReviewPreview, revision: number): Promise<void> {
+    const courses = preview.courses.filter(course => !course.loaded)
+    let next: number = 0
+    let failed: boolean = false
+    const reader = async (): Promise<void> => {
+      while (!failed && next < courses.length) {
+        const course = courses[next++]
+        try {
+          CourseReviewRepository.guard(revision)
+          const response = await ForumNetwork.getInstance().get(Constant.DANKE_BASE_URL + '/courses/' + course.id + '/reviews',
+            undefined, undefined, 15000, false)
+          CourseReviewRepository.guard(revision)
+          const result = await readCourseReviewPreview(response.data, true)
+          CourseReviewRepository.guard(revision)
+          const aggregate = result.courses[0]
+          course.count = aggregate.count; course.rankCount = aggregate.rankCount; course.rankTotal = aggregate.rankTotal; course.loaded = true
+        } catch (e) { failed = true; throw e as Error }
+      }
+    }
+    await Promise.all([reader(), reader()])
+  }
   static async group(id: number, force: boolean = false, previewOnly: boolean = false): Promise<CourseReviewGroup> {
     CourseReviewRepository.requireId(id)
     const revision = await CourseReviewRepository.session()
@@ -128,26 +298,58 @@ export class CourseReviewRepository {
       CourseReviewRepository.invalidateDetails()
     }
     if (force) CourseReviewRepository.invalidateDetails()
+    const epoch: number = CourseReviewRepository.detailEpoch
     const cached = CourseReviewRepository.detailCache.get(id)
-    if (!force && cached !== undefined && Date.now() - cached.at < 120000) return cached.group
+    if (!force && cached !== undefined && Date.now() - cached.at < 120000) {
+      if (previewOnly) CourseReviewRepository.rememberListSummary(cached.group, revision, epoch)
+      return cached.group
+    }
     const pending = CourseReviewRepository.detailFlights.get(id)
-    if (pending !== undefined) return pending
+    if (pending !== undefined) {
+      const group = await pending
+      CourseReviewRepository.guard(revision)
+      if (previewOnly) CourseReviewRepository.rememberListSummary(group, revision, epoch)
+      return group
+    }
     const task = CourseReviewRepository.readGroup(id, revision, previewOnly, CourseReviewRepository.detailEpoch)
     CourseReviewRepository.detailFlights.set(id, task)
-    try { return await task } finally {
+    try {
+      const group = await task
+      CourseReviewRepository.guard(revision)
+      if (previewOnly) CourseReviewRepository.rememberListSummary(group, revision, epoch)
+      return group
+    } finally {
       if (CourseReviewRepository.detailFlights.get(id) === task) CourseReviewRepository.detailFlights.delete(id)
     }
   }
+  private static rememberListSummary(group: CourseReviewGroup, revision: number, epoch: number): void {
+    if (epoch !== CourseReviewRepository.detailEpoch || CourseReviewRepository.catalogRevision !== revision || !group.summary.ready) return
+    const cached = CourseReviewRepository.catalogRows?.find(row => row.id === group.id)
+    // Only a list's first read may fill its snapshot. Later detail reads keep
+    // their own cache and must not silently replace visible list information.
+    if (cached !== undefined && !cached.summary.ready) { cached.summary = group.summary; cached.reviewCount = group.summary.count }
+  }
   private static async readGroup(id: number, revision: number, previewOnly: boolean, epoch: number): Promise<CourseReviewGroup> {
-    const response = await ForumNetwork.getInstance().get(Constant.DANKE_BASE_URL + '/v3/course_groups/' + id,
-      undefined, undefined, 15000, !previewOnly)
+    const network = ForumNetwork.getInstance()
+    let response: HttpResponse
+    try {
+      // Swift's group response normally includes reviews. Preview readers use
+      // it directly instead of first requesting metadata from v3.
+      response = await network.get(Constant.DANKE_BASE_URL + (previewOnly ? '/group/' : '/v3/course_groups/') + id,
+        undefined, undefined, 15000, !previewOnly)
+    } catch (e) {
+      if (!previewOnly || !(e instanceof HttpError) || (e.statusCode !== 404 && e.statusCode !== 405)) throw e as Error
+      CourseReviewRepository.guard(revision)
+      response = await network.get(Constant.DANKE_BASE_URL + '/v3/course_groups/' + id,
+        undefined, undefined, 15000, false)
+    }
     CourseReviewRepository.guard(revision)
     let group = CourseReviewRepository.parseGroup(CourseReviewRepository.object(response.data), true)
     if (group.id !== id) throw new HttpError(200, 0, AppLanguage.text($r('app.string.utility_invalid_response')), '')
     if (!group.summary.ready) {
       // Some v3 responses only include course metadata. Swift's original group
       // endpoint carries reviewList; missing lists must never become fake zeros.
-      try {
+      if (!previewOnly) try {
         const legacy = await ForumNetwork.getInstance().get(Constant.DANKE_BASE_URL + '/group/' + id,
           undefined, undefined, 15000, !previewOnly)
         CourseReviewRepository.guard(revision)
@@ -156,15 +358,7 @@ export class CourseReviewRepository {
       } catch (e) {
         if (!(e instanceof HttpError) || (e.statusCode !== 404 && e.statusCode !== 405)) throw e as Error
       }
-      // Upstream also exposes per-course reviews. Read only absent arrays,
-      // sequentially per group, within the loader's two-reader limit.
-      for (const course of group.courses) {
-        if (course.reviewsLoaded) continue
-        const reviews = await ForumNetwork.getInstance().get(Constant.DANKE_BASE_URL + '/courses/' + course.id + '/reviews',
-          undefined, undefined, 15000, !previewOnly)
-        CourseReviewRepository.guard(revision)
-        course.reviews = CourseReviewRepository.parseReviews(reviews.data); course.reviewsLoaded = true
-      }
+      await CourseReviewRepository.hydrateReviews(group, revision, previewOnly)
       CourseReviewRepository.attachReviewContext(group)
       group.summary = CourseReviewSummary.from(group)
     }
@@ -172,13 +366,27 @@ export class CourseReviewRepository {
     const entry = new CourseDetailEntry(); entry.group = group; entry.at = Date.now()
     CourseReviewRepository.detailCache.delete(id); CourseReviewRepository.detailCache.set(id, entry)
     while (CourseReviewRepository.detailCache.size > 24) CourseReviewRepository.detailCache.delete(CourseReviewRepository.detailCache.keys().next().value as number)
-    if (CourseReviewRepository.catalogRevision === revision) {
-      const cached = CourseReviewRepository.catalogRows?.find(row => row.id === group.id)
-      // Keep only derived values in the large directory. Full reviews live in
-      // the bounded detail cache, rather than accumulating for every scrolled card.
-      if (cached !== undefined) { cached.summary = group.summary; cached.reviewCount = group.summary.count }
-    }
     return group
+  }
+  private static async hydrateReviews(group: CourseReviewGroup, revision: number, previewOnly: boolean): Promise<void> {
+    const courses = group.courses.filter(course => !course.reviewsLoaded)
+    let next: number = 0
+    let failed: boolean = false
+    // Two groups are scheduled by the viewport loader. Two course readers per
+    // group bound the fallback at four requests, without a directory-wide fan-out.
+    const reader = async (): Promise<void> => {
+      while (!failed && next < courses.length) {
+        const course = courses[next++]
+        try {
+          CourseReviewRepository.guard(revision)
+          const response = await ForumNetwork.getInstance().get(Constant.DANKE_BASE_URL + '/courses/' + course.id + '/reviews',
+            undefined, undefined, 15000, !previewOnly)
+          CourseReviewRepository.guard(revision)
+          course.reviews = CourseReviewRepository.parseReviews(response.data); course.reviewsLoaded = true
+        } catch (e) { failed = true; throw e as Error }
+      }
+    }
+    await Promise.all([reader(), reader()])
   }
   static async add(draft: CourseReviewDraft): Promise<CourseReview> {
     if (!draft.valid()) throw new Error(AppLanguage.text($r('app.string.utility_invalid_review')))

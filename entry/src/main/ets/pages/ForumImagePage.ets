@@ -121,6 +121,9 @@ export struct ForumImageView {
   private pinchInProgress: boolean = false
   @State private controlsVisible: boolean = false
   @State private controlsOpacity: number = 0
+  @State private backdropOpacity: number = 1
+  @State private returnUnderlayOpacity: number = 1
+  @State private returnChromeOpacity: number = 1
   private controlsTopPx: number = 0
   private motion: AnimatorResult | null = null
   private zooming: boolean = false
@@ -146,10 +149,12 @@ export struct ForumImageView {
 
   aboutToAppear(): void {
     this.active = true
-    this.controller?.bind(() => { this.closeGallery() }, () => { this.finishOpening() })
+    this.controller?.bind(() => { this.closeGallery() }, () => { this.finishOpening() },
+      (opacity: number) => { this.updateBackdrop(opacity) })
     this.controlsTopPx = this.topPx
     Appearance.setBarAppearance('dark')
     this.controlsVisible = false; this.controlsOpacity = 0
+    this.returnChromeOpacity = 1
     Appearance.setStatusBarVisible(false).catch(() => {})
     const params = this.initialSource ? new ImageRouteParams(this.initialSource, this.initialSources) :
       router.getParams() as ImageRouteParams
@@ -169,7 +174,7 @@ export struct ForumImageView {
   }
 
   aboutToDisappear(): void {
-    Appearance.setBarAppearance('')
+    Appearance.setBarAppearance('', this.leaving)
     Appearance.setStatusBarVisible(true).catch(() => {})
     this.active = false
     this.controller?.release()
@@ -209,6 +214,7 @@ export struct ForumImageView {
     this.resetFraming()
     this.openingHeld = true
     this.sharedEntryActive = true
+    this.backdropOpacity = 0
     // Completion comes from the route's native animation, not a wall-clock
     // timer started before the first layout. Slow first frames cannot release
     // the thumbnail or enable gestures while the shared flight still owns it.
@@ -221,6 +227,23 @@ export struct ForumImageView {
       this.openingHeld = false; this.sharedEntryActive = false
       this.drainQueuedImage()
     }, onIdle: () => {} })
+  }
+
+  private updateBackdrop(opacity: number): void {
+    if (!this.active || !Number.isFinite(opacity)) return
+    this.backdropOpacity = Math.max(0, Math.min(1, opacity))
+    // The native Exchange moves the paired frame into its shared overlay and
+    // puts it back at its original full-size bounds when the flight finishes.
+    // Keep its ordinary parent hidden for the entire return: otherwise a
+    // pending decoder or the restored full-size frame can flash behind it.
+    // Start only from native exit progress, after back() began the flight,
+    // rather than blanking the image while waiting for its return layout.
+    if (this.leaving) {
+      // Keep this separate from controlsOpacity so an in-flight show/hide
+      // animation is multiplied by the native return instead of interrupted.
+      this.returnChromeOpacity = this.backdropOpacity
+      if (this.returnFrame !== undefined) this.returnUnderlayOpacity = 0
+    }
   }
 
   private sharedFrameId(slot: number): string {
@@ -503,7 +526,7 @@ export struct ForumImageView {
   }
 
   private toggleControls(): void {
-    if (!this.active) return
+    if (!this.active || this.leaving) return
     // The first safe inset may arrive after aboutToAppear on a cold launch.
     // Retain it before hiding the system bar so the fading buttons stay still.
     this.controlsTopPx = Math.max(this.controlsTopPx, this.topPx)
@@ -630,6 +653,11 @@ export struct ForumImageView {
   private closeGallery(): void {
     if (!this.active || this.leaving) return
     this.leaving = true
+    // Hand system chrome to the destination at the start of the committed
+    // return, not after this page is destroyed. Settle an unfinished native
+    // visibility animation; the system animates the icon-color change itself.
+    Appearance.setBarAppearance('', true)
+    Appearance.setStatusBarVisible(true, false).catch(() => {})
     this.stopMotion()
     this.retryVersion++
     this.clearPendingReveal()
@@ -663,7 +691,7 @@ export struct ForumImageView {
   private cancelPan(): void { this.panInProgress = false; this.panSuppressed = false; this.drainQueuedImage() }
 
   private async saveOriginal(): Promise<void> {
-    if (this.saving || !this.source) return
+    if (!this.active || this.leaving || this.saving || !this.source) return
     // Keep the exact current image pose beneath the system permission dialog;
     // a fling/zoom must not continue behind it and jump on return.
     this.stopMotion()
@@ -708,6 +736,10 @@ export struct ForumImageView {
   build() {
     WithTheme({ colorMode: ThemeColorMode.DARK }) {
     Stack() {
+      // Only the backing fades. Fading the whole page also dims the shared
+      // thumbnail, then brightens it again when the native flight hands over.
+      Column().width('100%').height('100%').backgroundColor($r('app.color.gallery_background'))
+        .opacity(this.backdropOpacity).hitTestBehavior(HitTestMode.None)
       Stack() {
         // The keyed URI is also the immutable callback address. Reading the
         // current frameA/frameB in a late completion mislabels the previous decode.
@@ -724,7 +756,11 @@ export struct ForumImageView {
         }.width(this.frameWidth(0)).height(this.frameHeight(0)).position(this.framePosition(0))
           .sharedTransition(this.sharedFrameId(0), { duration: 360, curve: Curve.Friction, zIndex: 10 })
           .hitTestBehavior(HitTestMode.None)
-        }.width('100%').height('100%').backgroundColor($r('app.color.gallery_background'))
+        }.width('100%').height('100%').backgroundColor(this.backdropOpacity < 1 ? Color.Transparent : $r('app.color.gallery_background'))
+          // Fade the image and its black backing as one already-composited
+          // plane. Inherited alpha on separate draws would dim the old image
+          // with the black backing before drawing the clearer image over it.
+          .renderGroup(true)
           .opacity(this.alphaA * (this.failed ? 0.2 : 1)).zIndex(this.stageSlot === 0 ? 1 : 0)
           .hitTestBehavior(HitTestMode.None)
         }, (address: string): string => address)
@@ -741,7 +777,8 @@ export struct ForumImageView {
         }.width(this.frameWidth(1)).height(this.frameHeight(1)).position(this.framePosition(1))
           .sharedTransition(this.sharedFrameId(1), { duration: 360, curve: Curve.Friction, zIndex: 10 })
           .hitTestBehavior(HitTestMode.None)
-        }.width('100%').height('100%').backgroundColor($r('app.color.gallery_background'))
+        }.width('100%').height('100%').backgroundColor(this.backdropOpacity < 1 ? Color.Transparent : $r('app.color.gallery_background'))
+          .renderGroup(true)
           .opacity(this.alphaB * (this.failed ? 0.2 : 1)).zIndex(this.stageSlot === 1 ? 1 : 0)
           .hitTestBehavior(HitTestMode.None)
         }, (address: string): string => address)
@@ -761,6 +798,7 @@ export struct ForumImageView {
           }
         }
       }.width('100%').height('100%').clip(true)
+        .opacity(this.returnUnderlayOpacity)
         .id('gallery-viewport')
         .onTouch((event: TouchEvent) => { this.touchImage(event) })
         .onSizeChange((_oldSize: SizeOptions, size: SizeOptions) => { this.updateViewport(size) })
@@ -778,6 +816,9 @@ export struct ForumImageView {
             TapGesture({ count: 1, fingers: 1 }).onAction(() => { this.toggleControls() })
           )
         ))
+      // Keep the existing tap-driven chrome animation inside an independent
+      // return group; native exit progress must never change the image alpha.
+      Stack() {
       Stack({ alignContent: Alignment.Top }) {
         Column().width('100%').height(px2vp(Math.max(this.topPx, this.controlsTopPx)) + 120)
           .linearGradient({ direction: GradientDirection.Bottom, colors: [
@@ -844,7 +885,9 @@ export struct ForumImageView {
         }.width('100%').height('100%').hitTestBehavior(this.controlsVisible ? HitTestMode.Transparent : HitTestMode.None)
           .enabled(this.controlsVisible).opacity(this.controlsOpacity).zIndex(2).id('gallery-bottom-controls')
       }
-    }.width('100%').height('100%').backgroundColor($r('app.color.gallery_background'))
+      }.width('100%').height('100%').renderGroup(true).opacity(this.returnChromeOpacity)
+        .enabled(!this.leaving).hitTestBehavior(HitTestMode.Transparent)
+    }.width('100%').height('100%').backgroundColor(Color.Transparent)
       .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP, SafeAreaEdge.BOTTOM])
     }
   }
@@ -858,9 +901,13 @@ struct ForumImagePage {
   pageTransition() {
     // These transitions belong exclusively to the image viewer. The forum,
     // post detail and other routes retain their system-default animations.
-    PageTransitionEnter({ duration: 360, curve: Curve.Friction }).opacity(0)
-      .onEnter((_type: RouteType, progress: number) => { if (progress >= 1) this.controller.entered() })
-    PageTransitionExit({ duration: 360, curve: Curve.Friction }).opacity(0)
+    PageTransitionEnter({ duration: 360, curve: Curve.Friction }).opacity(1)
+      .onEnter((_type: RouteType, progress: number) => {
+        this.controller.transition(progress)
+        if (progress >= 1) this.controller.entered()
+      })
+    PageTransitionExit({ duration: 360, curve: Curve.Friction }).opacity(1)
+      .onExit((_type: RouteType, progress: number) => { this.controller.transition(1 - progress) })
   }
   build() {
     Stack() { ForumImageView({ controller: this.controller }) }.width('100%').height('100%')

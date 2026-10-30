@@ -2,14 +2,28 @@ import { FduAuthPolicy } from '../model/FduAuth'
 
 /** Presentation fixes for the official ID pages; never rebuild the CAS context. */
 export class FduAuthWebPage {
+  // Keep verification graphics in their original color space. Automatic dark
+  // conversion may otherwise turn the black paths in an external SVG white.
+  static readonly IMAGE_COLORS_SCRIPT: string = '(function(){' +
+    'if(window.top!==window)return;' +
+    'function apply(){var host=document.head||document.documentElement;' +
+    'if(!host||document.getElementById("danta-verification-image-colors"))return;' +
+    'var style=document.createElement("style");style.id="danta-verification-image-colors";' +
+    'style.textContent="img,svg,canvas{color-scheme:only light!important}";host.appendChild(style);}' +
+    'if(document.head||document.documentElement)apply();else document.addEventListener("DOMContentLoaded",apply,{once:true});})()'
+
   // Only the official decorative backdrop. Captcha/QR images and form controls
   // keep their own backgrounds. The stylesheet survives Vue's delayed rendering.
   static readonly PLAIN_BACKGROUND_SCRIPT: string = '(function(){' +
     'if(location.origin!=="https://id.fudan.edu.cn"||window.top!==window)return;' +
     'function apply(){if(!document.head||document.getElementById("danxi-plain-background"))return;' +
     'const style=document.createElement("style");style.id="danxi-plain-background";' +
-    'style.textContent="html,body,#app,.topicPreview{background-image:none!important;background-color:#fff!important}' +
-    '.topicCarousel{display:none!important}.topicPreview{--box_text_color:#303133;--box_input_text_color:#303133;}";' +
+    'style.textContent="html,body,#app,.topicPreview{background-image:none!important}' +
+    '.topicCarousel{display:none!important}' +
+    '@media(prefers-color-scheme:light){html,body,#app,.topicPreview{background-color:#fff!important}' +
+    '.topicPreview{--box_text_color:#303133;--box_input_text_color:#303133;}}' +
+    '@media(prefers-color-scheme:dark){.topicPreview{--box_text_color:#E5E5EA;--box_input_text_color:#E5E5EA;}' +
+    'input::placeholder{color:#B8B8C0!important;opacity:1!important}}";' +
     'document.head.appendChild(style);}' +
     'if(document.head)apply();else document.addEventListener("DOMContentLoaded",apply,{once:true});})()'
 

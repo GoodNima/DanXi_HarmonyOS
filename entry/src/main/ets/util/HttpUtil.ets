@@ -19,6 +19,7 @@ import { DormHistoryDiagnostics, DormHistoryQuery, DormHistoryTransfer } from '.
 import { RequestDiagnostics } from '../model/RequestDiagnostics'
 import { DormHistoryReceiveDeadline } from './DormHistoryReceiveDeadline'
 import { DormRequestPolicy } from '../model/DormRequestPolicy'
+import { CampusSsoRedirect } from './CampusSsoRedirect'
 
 /** Successful HTTP response body. */
 export interface HttpResponse {
@@ -31,6 +32,8 @@ export interface HttpResponse {
   hopHeaders?: Record<string, string>[]
   /** Final URL of a manually followed campus redirect chain. */
   finalUrl?: string
+  /** Metadata from this exact request chain, never headers, bodies or query values. */
+  diagnostics?: string
 }
 
 /** Bounded, silent portal recovery. Cookies are scoped to the starting host;
@@ -58,14 +61,19 @@ export class HttpError extends Error {
   readonly code: number
   readonly body: string
   readonly transportPhase: string
+  readonly authenticationRecovery: boolean
+  diagnostics: string = ''
 
-  constructor(statusCode: number, code: number, message: string, body: string, transportPhase: string = '') {
+  constructor(statusCode: number, code: number, message: string, body: string, transportPhase: string = '', authenticationRecovery: boolean = false,
+    diagnostics: string = '') {
     super(message)
     this.name = 'HttpError'
     this.statusCode = statusCode
     this.code = code
     this.body = body
     this.transportPhase = transportPhase
+    this.authenticationRecovery = authenticationRecovery
+    this.diagnostics = diagnostics
   }
 
   /** True when the server rejected our credentials. */
@@ -91,6 +99,9 @@ export type UnauthorizedHandler = () => Promise<boolean>
  * of a stale Authorization header.
  */
 export type TokenProvider = (url: string) => string
+
+/** Account generation, stable across a same-account JWT refresh. */
+export type TokenScopeProvider = (url: string) => number
 
 function parseErrorCode(body: string): number {
   if (!body) return 0
@@ -147,6 +158,85 @@ function thrownCode(e: Object): number {
   return typeof code === 'number' && Number.isFinite(code) ? code : 0
 }
 
+/** Observe native progress without changing request lifetimes or disposing an in-flight request. */
+class HttpTransferTrace {
+  private started: number = Date.now()
+  private budget: number
+  private connectBudget: number = 0
+  private readBudget: number = 0
+  private sentBytes: number = 0
+  private uploadBytes: number = 0
+  private receivedBytes: number = 0
+  private expectedBytes: number = 0
+  private sendMs: number = -1
+  private headerMs: number = -1
+  private firstByteMs: number = -1
+  private timing: http.PerformanceTiming | null = null
+  private reused: boolean = false
+  private proxied: boolean = false
+  private connectionKnown: boolean = false
+  private usingProxy: boolean = false
+  private proxyPolicy: string = 'system'
+
+  constructor(request: http.HttpRequest, budget: number) {
+    this.budget = budget
+    request.on('dataSendProgress', (progress: http.DataSendProgressInfo) => {
+      this.sentBytes = Math.max(this.sentBytes, progress.sendSize)
+      this.uploadBytes = Math.max(this.uploadBytes, progress.totalSize)
+      if (progress.sendSize > 0 && this.sendMs < 0) this.sendMs = Date.now() - this.started
+    })
+    request.on('dataReceiveProgress', (progress: http.DataReceiveProgressInfo) => {
+      this.receivedBytes = Math.max(this.receivedBytes, progress.receiveSize)
+      this.expectedBytes = Math.max(this.expectedBytes, progress.totalSize)
+      if (progress.receiveSize > 0 && this.firstByteMs < 0) this.firstByteMs = Date.now() - this.started
+    })
+  }
+
+  headers(): void { if (this.headerMs < 0) this.headerMs = Date.now() - this.started }
+
+  applied(options: http.HttpRequestOptions): void {
+    this.connectBudget = options.connectTimeout ?? 0
+    this.readBudget = options.readTimeout ?? 0
+    this.usingProxy = typeof options.usingProxy === 'object' && options.usingProxy !== null
+    this.proxyPolicy = this.usingProxy ? 'custom' : options.usingProxy === false ? 'disabled' : 'system'
+  }
+
+  complete(result: http.HttpResponse): void {
+    this.timing = result.performanceTiming ?? null
+    if (result.connectionExtraInfo) {
+      this.connectionKnown = true
+      this.reused = result.connectionExtraInfo.isReusedConnection
+      this.proxied = result.connectionExtraInfo.isProxyConnection
+    }
+  }
+
+  phase(code: number = 0): string {
+    if (code === 2300005 || code === 2300006) return 'dns'
+    if (code === 2300035 || code === 2300058 || code === 2300060) return 'tls'
+    if (code === 2300007) return 'connect'
+    if (this.headerMs >= 0) return 'response-body'
+    return this.sentBytes > 0 ? 'await-response-headers' : 'connect-or-send'
+  }
+
+  details(): string {
+    let result = 'budgetMs=' + String(this.budget) + '; connectBudgetMs=' + String(this.connectBudget) +
+      '; readBudgetMs=' + String(this.readBudget) + '; sentBytes=' + String(this.sentBytes) +
+      '; uploadBytes=' + String(this.uploadBytes) + '; receivedBytes=' + String(this.receivedBytes) +
+      '; expectedBytes=' + String(this.expectedBytes) + '; sendMs=' + String(this.sendMs) +
+      '; headerMs=' + String(this.headerMs) + '; firstByteMs=' + String(this.firstByteMs) +
+      '; headersReceived=' + String(this.headerMs >= 0) + '; sendCompleted=' +
+      String(this.uploadBytes > 0 && this.sentBytes >= this.uploadBytes) +
+      '; usingProxy=' + (this.proxyPolicy === 'system' ? 'unknown' : String(this.usingProxy)) +
+      '; proxyPolicy=' + this.proxyPolicy + '; timingAvailable=' + String(this.timing !== null)
+    if (this.timing !== null) {
+      result += '; dnsMs=' + String(this.timing.dnsTiming) + '; tcpMs=' + String(this.timing.tcpTiming) +
+        '; tlsMs=' + String(this.timing.tlsTiming) + '; firstReceiveMs=' + String(this.timing.firstReceiveTiming)
+    } else result += '; dnsMs=unknown; tcpMs=unknown; tlsMs=unknown'
+    if (this.connectionKnown) result += '; reused=' + String(this.reused) + '; proxied=' + String(this.proxied)
+    return result
+  }
+}
+
 export class HttpUtil {
   private static activePortalReads: number = 0
   static requiresCampusLogin(url: string, hops: Record<string, string>[]): boolean {
@@ -177,6 +267,7 @@ export class HttpUtil {
   private person: Person | null = null
   private unauthorizedHandler: UnauthorizedHandler | null = null
   private tokenProvider: TokenProvider | null = null
+  private tokenScopeProvider: TokenScopeProvider | null = null
 
   /**
    * Headers of every response from the most recent `hop()`, in arrival order.
@@ -223,14 +314,68 @@ export class HttpUtil {
    * UIS `Person` token, so services with their own credentials (the forum JWT)
    * can coexist with the campus login.
    */
-  setTokenProvider(provider: TokenProvider): void {
+  setTokenProvider(provider: TokenProvider, scopeProvider?: TokenScopeProvider): void {
     this.tokenProvider = provider
+    this.tokenScopeProvider = scopeProvider ?? null
+  }
+
+  private tokenScope(url: string): number {
+    return this.tokenScopeProvider !== null ? this.tokenScopeProvider(url) : 0
+  }
+
+  /** Route retries belong to the account that started them, even when a
+   * fallback or service authentication introduces another async boundary. */
+  captureTokenScopeGuard(url: string): () => void {
+    const scope: number = this.tokenScope(url)
+    return (): void => { this.requireTokenScope(url, scope) }
+  }
+
+  private ownedToken(url: string, headers: Record<string, string>): string {
+    const token: string = this.tokenProvider !== null ? this.tokenProvider(url) : ''
+    const keys: string[] = Object.keys(headers).filter((key: string): boolean => key.toLowerCase() === 'authorization')
+    return token.length > 0 && keys.length > 0 && keys.every((key: string): boolean => headers[key] === 'Bearer ' + token) ? token : ''
+  }
+
+  private requireTokenScope(url: string, scope: number): void {
+    if (scope !== this.tokenScope(url)) throw new HttpError(401, 0, '茶楼账号已切换或退出，请重新加载。', '')
+  }
+
+  private async renewRejectedToken(url: string, method: http.RequestMethod, sentToken: string, scope: number): Promise<boolean> {
+    if (!sentToken || this.tokenProvider === null || this.unauthorizedHandler === null) return false
+    this.requireTokenScope(url, scope)
+    const current: string = this.tokenProvider(url)
+    if (!current) return false
+    // Another request already refreshed this account. A late old 401 must not
+    // rotate its new token again; only reads gain this additional retry route.
+    if (sentToken !== current) return method === http.RequestMethod.GET
+    let refreshed: boolean = false
+    try { refreshed = await this.unauthorizedHandler() }
+    catch (e) {
+      this.requireTokenScope(url, scope)
+      // The API already answered 401. A failure in its separate credential
+      // recovery must not be mistaken for API-host connectivity and replayed
+      // through another route by ForumNetwork.
+      if (e instanceof HttpError) throw new HttpError(e.statusCode, e.code, e.message, e.body, e.transportPhase, true, e.diagnostics)
+      throw new HttpError(-1, thrownCode(e), '网络请求失败：' + describeThrown(e), '', 'credential-recovery', true)
+    }
+    this.requireTokenScope(url, scope)
+    return refreshed && this.tokenProvider(url).length > 0
+  }
+
+  private static remainingBudget(deadline: number, recovery: boolean = false, diagnostics: string = ''): number {
+    const remaining: number = deadline - Date.now()
+    if (remaining <= 0) throw new HttpError(-1, 2300028, '网络请求超时，请稍后重新加载。', '',
+      recovery ? 'credential-recovery' : 'request-budget', recovery, diagnostics)
+    return remaining
   }
 
   private buildHeaders(url: string, extra?: Record<string, string>): Record<string, string> {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
-      'Accept': 'application/json',
+      // WebVPN's HTML login entry may leave JSON-negotiated requests waiting
+      // without a redirect. Keep JSON for APIs, HTML for this exact entry.
+      'Accept': FduAuthPolicy.isWebVpnLoginUrl(url) ?
+        'text/html,application/xhtml+xml,*/*;q=0.8' : 'application/json',
       'User-Agent': Constant.USER_AGENT,
     }
     // Resolved per attempt, so a retry after a token refresh sends the NEW
@@ -261,7 +406,7 @@ export class HttpUtil {
   }
 
   async get(url: string, params?: Record<string, string>, headers?: Record<string, string>, timeoutMs: number = 15000,
-    freshConnection: boolean = false): Promise<HttpResponse> {
+    freshConnection: boolean = false, allowRetry: boolean = true): Promise<HttpResponse> {
     let fullUrl = url
     if (params) {
       const queryParts: string[] = []
@@ -270,14 +415,18 @@ export class HttpUtil {
         queryParts.push(encodeURIComponent(key) + '=' + encodeURIComponent(params[key]))
       }
       if (queryParts.length > 0) {
-        fullUrl = fullUrl + '?' + queryParts.join('&')
+        const fragment: number = fullUrl.indexOf('#')
+        const suffix: string = fragment >= 0 ? fullUrl.substring(fragment) : ''
+        const address: string = fragment >= 0 ? fullUrl.substring(0, fragment) : fullUrl
+        const separator: string = address.includes('?') ? /[?&]$/.test(address) ? '' : '&' : '?'
+        fullUrl = address + separator + queryParts.join('&') + suffix
       }
     }
-    return this.send(http.RequestMethod.GET, fullUrl, undefined, headers, true, timeoutMs, freshConnection)
+    return this.send(http.RequestMethod.GET, fullUrl, undefined, headers, allowRetry, timeoutMs, freshConnection)
   }
 
-  async post(url: string, body?: string, headers?: Record<string, string>): Promise<HttpResponse> {
-    return this.request(http.RequestMethod.POST, url, body, headers)
+  async post(url: string, body?: string, headers?: Record<string, string>, timeoutMs: number = 15000): Promise<HttpResponse> {
+    return this.request(http.RequestMethod.POST, url, body, headers, timeoutMs)
   }
 
   async put(url: string, body?: string, headers?: Record<string, string>): Promise<HttpResponse> {
@@ -315,10 +464,12 @@ export class HttpUtil {
    */
   async hop(url: string, headers?: Record<string, string>): Promise<HttpResponse> {
     const httpRequest = http.createHttp()
+    const trace = new HttpTransferTrace(httpRequest, 15000)
     const diagnosticEpoch: number = CampusCookies.generation()
     const diagnosticStarted: number = Date.now()
     let diagnosticStatus: number = 0
     let diagnosticCode: number = 0
+    let failure: HttpError | null = null
     try {
       const merged: Record<string, string> = {
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -337,6 +488,7 @@ export class HttpUtil {
       // the whole request with error 2300047 and the error carries no Location.
       const hops: Record<string, string>[] = []
       httpRequest.on('headersReceive', (raw: Object) => {
+        trace.headers()
         const rec = raw as Record<string, string>
         const lower: Record<string, string> = {}
         const recKeys = Object.keys(rec)
@@ -352,11 +504,16 @@ export class HttpUtil {
         expectDataType: http.HttpDataType.STRING,
         connectTimeout: 15000,
         readTimeout: 15000,
+        // A cached redirect can pair a spent login context with a newer Cookie.
+        usingCache: false,
         // Follow the chain to its end: the hops are captured above, so stopping
         // early buys nothing -- and it is not possible anyway.
         maxRedirects: 10,
       }
-      const result = await httpRequest.request(url, NetworkProxy.apply(options))
+      const applied = NetworkProxy.apply(options)
+      trace.applied(applied)
+      const result = await httpRequest.request(url, applied)
+      trace.complete(result)
       this.lastHops = hops
       diagnosticStatus = result.responseCode
 
@@ -375,15 +532,18 @@ export class HttpUtil {
         success: result.responseCode >= 200 && result.responseCode < 400,
         errorMessage: '',
         hopHeaders: hops,
+        diagnostics: RequestDiagnostics.record(diagnosticEpoch, CampusCookies.generation(), 'GET', url, diagnosticStatus, 0,
+          Date.now() - diagnosticStarted, 'complete', trace.details()),
       }
       return out
     } catch (e) {
       diagnosticStatus = -1; diagnosticCode = thrownCode(e as Object)
-      throw new HttpError(-1, thrownCode(e), '网络请求失败：' + describeThrown(e), '')
+      failure = new HttpError(-1, thrownCode(e), '网络请求失败：' + describeThrown(e), '', trace.phase(diagnosticCode))
+      throw failure
     } finally {
       httpRequest.destroy()
-      RequestDiagnostics.record(diagnosticEpoch, CampusCookies.generation(), 'GET', url, diagnosticStatus, diagnosticCode,
-        Date.now() - diagnosticStarted, diagnosticStatus === -1 ? 'connect-or-response' : 'complete')
+      if (failure !== null) failure.diagnostics = RequestDiagnostics.record(diagnosticEpoch, CampusCookies.generation(), 'GET', url,
+        diagnosticStatus, diagnosticCode, Date.now() - diagnosticStarted, trace.phase(diagnosticCode), trace.details()) || ''
     }
   }
 
@@ -405,6 +565,50 @@ export class HttpUtil {
       true, options?.freshConnection ?? false, options?.historyQuery)
   }
 
+  /** One-use authentication result, not a business POST. Only the observed
+   * ecard broker callback is supported; the caller validates its source form
+   * and redirect-chain evidence before invoking this bounded, non-retry path. */
+  async postCampusSso(url: string, fields: Record<string, string>, options?: CampusSsoReadOptions): Promise<HttpResponse> {
+    if (!HttpUtil.isWorkflowAuthResult(url)) {
+      throw new HttpError(0, 0, '无法提交该校园服务认证结果。', '')
+    }
+    const parts: string[] = []
+    for (const key of Object.keys(fields)) parts.push(encodeURIComponent(key) + '=' + encodeURIComponent(fields[key]))
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Accept': 'text/html,application/xhtml+xml,*/*;q=0.8',
+      'User-Agent': HttpUtil.BROWSER_UA
+    }
+    return this.sendCampus(http.RequestMethod.POST, url, parts.join('&'), headers, false,
+      options?.timeoutMs ?? 15000, true, options?.freshConnection ?? false, options?.historyQuery)
+  }
+
+  private static isWorkflowAuthResult(url: string): boolean {
+    return /^https:\/\/workflow1\.fudan\.edu\.cn(?::443)?\/site\/login\/cas-login\/?(?:[?#]|$)/i.test(url)
+  }
+
+  /** A library ID/reader result already bound by its caller to the callback
+   * returned in this transaction. Never used for loan/reservation mutations. */
+  async postLibrarySso(url: string, fields: Record<string, string>, expectedCallback: string,
+    headers?: Record<string, string>, timeoutMs: number = 15000): Promise<HttpResponse> {
+    if (!HttpUtil.isLibraryAuthResult(url) || url !== expectedCallback || url.includes('#')) {
+      throw new HttpError(0, 0, '图书馆认证回调与当前会话不匹配，请重新加载。', '')
+    }
+    const parts: string[] = []
+    for (const key of Object.keys(fields)) parts.push(encodeURIComponent(key) + '=' + encodeURIComponent(fields[key]))
+    const merged: Record<string, string> = {
+      'Authorization': '', 'Accept': 'text/html,application/xhtml+xml,*/*;q=0.8',
+      'User-Agent': HttpUtil.BROWSER_UA
+    }
+    if (headers !== undefined) for (const key of Object.keys(headers)) merged[key] = headers[key]
+    merged['Content-Type'] = 'application/x-www-form-urlencoded'
+    return this.sendCampus(http.RequestMethod.POST, url, parts.join('&'), merged, false, timeoutMs, true)
+  }
+
+  private static isLibraryAuthResult(url: string): boolean {
+    return FduAuthPolicy.origin(url) === 'https://rwsjcas.fudan.edu.cn'
+  }
+
   /**
    * POST an `application/x-www-form-urlencoded` body.
    *
@@ -416,7 +620,8 @@ export class HttpUtil {
   async postForm(
     url: string,
     fields: Record<string, string>,
-    headers?: Record<string, string>
+    headers?: Record<string, string>,
+    timeoutMs: number = 15000
   ): Promise<HttpResponse> {
     const parts: string[] = []
     const keys = Object.keys(fields)
@@ -435,9 +640,9 @@ export class HttpUtil {
       }
     }
     if (HttpUtil.isIdTokenExchange(url)) {
-      return this.sendCampus(http.RequestMethod.POST, url, parts.join('&'), merged, false, 15000, true)
+      return this.sendCampus(http.RequestMethod.POST, url, parts.join('&'), merged, false, timeoutMs, true)
     }
-    return this.send(http.RequestMethod.POST, url, parts.join('&'), merged, false)
+    return this.send(http.RequestMethod.POST, url, parts.join('&'), merged, false, timeoutMs)
   }
 
   private static isIdTokenExchange(url: string): boolean {
@@ -506,9 +711,10 @@ export class HttpUtil {
     method: http.RequestMethod,
     url: string,
     body?: string,
-    extraHeaders?: Record<string, string>
+    extraHeaders?: Record<string, string>,
+    timeoutMs: number = 15000
   ): Promise<HttpResponse> {
-    return this.send(method, url, body, extraHeaders, true)
+    return this.send(method, url, body, extraHeaders, true, timeoutMs)
   }
 
   private async send(
@@ -526,16 +732,24 @@ export class HttpUtil {
     }
     const httpRequest = http.createHttp()
     const headers = this.buildHeaders(url, extraHeaders)
+    const sentToken: string = this.ownedToken(url, headers)
+    const tokenScope: number = this.tokenScope(url)
     const hops: Record<string, string>[] = []
     const cookieEpoch = CampusCookies.generation()
     const diagnosticStarted: number = Date.now()
+    const trace = new HttpTransferTrace(httpRequest, timeoutMs)
     let diagnosticStatus: number = 0
     let diagnosticCode: number = 0
+    let failure: HttpError | null = null
+    let completed: HttpResponse | null = null
 
     try {
       const browserCookies = await CampusCookies.read(url)
+      if (sentToken) this.requireTokenScope(url, tokenScope)
       if (browserCookies) headers['Cookie'] = browserCookies
+      const remaining: number = HttpUtil.remainingBudget(diagnosticStarted + timeoutMs)
       httpRequest.on('headersReceive', (raw: Object) => {
+        trace.headers()
         const source = raw as Record<string, string>
         const row: Record<string, string> = {}
         for (const key of Object.keys(source)) row[key.toLowerCase()] = String(source[key])
@@ -545,15 +759,28 @@ export class HttpUtil {
         method: method,
         header: headers,
         expectDataType: http.HttpDataType.STRING,
-        connectTimeout: timeoutMs,
-        readTimeout: timeoutMs,
-        usingCache: !FduAuthPolicy.isCampusUrl(url),
+        connectTimeout: remaining,
+        readTimeout: remaining,
+        // An explicit refresh must bypass the native cache too, otherwise a
+        // stale public document could be stamped with a new application TTL.
+        usingCache: allowRetry && (method === http.RequestMethod.GET || method === http.RequestMethod.HEAD) &&
+          !FduAuthPolicy.isCampusUrl(url) && !Object.keys(headers).some((key: string): boolean =>
+            /^(?:authorization|cookie|access_token|opentoken)$/i.test(key) && headers[key].length > 0) &&
+          !/\bno-cache\b|\bno-store\b/i.test(headers['Cache-Control'] ?? headers['cache-control'] ?? ''),
       }
       if (body !== undefined && body.length > 0) {
         options.extraData = body
       }
 
-      const result = await httpRequest.request(url, NetworkProxy.apply(options))
+      // API26 may resend a body after a reused socket closes without headers.
+      // Keep pooling for ordinary reads; non-repeatable requests start fresh.
+      if (freshConnection || !allowRetry ||
+        (method !== http.RequestMethod.GET && method !== http.RequestMethod.HEAD)) options.reuseConnections = false
+
+      const applied = NetworkProxy.apply(options)
+      trace.applied(applied)
+      const result = await httpRequest.request(url, applied)
+      trace.complete(result)
       diagnosticStatus = result.responseCode
       const responseHeaders: Record<string, string> = {}
       if (result.header) {
@@ -566,9 +793,9 @@ export class HttpUtil {
       const responseData: string = typeof result.result === 'string' ? result.result as string : ''
       const status: number = result.responseCode
       await CampusCookies.absorb(url, hops.length > 0 ? hops : [responseHeaders], cookieEpoch)
-      if (HttpUtil.requiresCampusLogin(url, hops) ||
-        (status < 400 && FduAuthPolicy.isCampusUrl(url) && !FduAuthPolicy.isIdUrl(url) &&
-          FduAuthPolicy.isLoginDocument(responseData))) {
+      if (status >= 200 && status < 300 && (HttpUtil.requiresCampusLogin(url, hops) ||
+        (FduAuthPolicy.isCampusUrl(url) && !FduAuthPolicy.isIdUrl(url) &&
+          FduAuthPolicy.isLoginDocument(responseData)))) {
         throw new HttpError(-2, 0, '校园服务会话已失效，需要继续身份验证。', '')
       }
       // ArkUI-X has no automatic native cookie jar. A redirect may rotate a
@@ -578,7 +805,8 @@ export class HttpUtil {
         FduAuthPolicy.isCampusUrl(url) && !FduAuthPolicy.isIdUrl(url)) {
         const updatedCookies = await CampusCookies.read(url)
         if (updatedCookies && updatedCookies !== headers['Cookie']) {
-          return this.send(method, url, body, extraHeaders, false, timeoutMs)
+          return this.send(method, url, body, extraHeaders, false,
+            HttpUtil.remainingBudget(diagnosticStarted + timeoutMs), freshConnection)
         }
       }
 
@@ -591,18 +819,17 @@ export class HttpUtil {
           errorMessage: '',
           hopHeaders: hops,
         }
+        completed = ok
         return ok
       }
 
       // Credentials rejected: give the owner one chance to refresh the token.
       // Refresh only a request owned by the token provider. In particular,
       // /refresh itself and campus requests must never recursively refresh.
-      if (status === 401 && allowRetry && this.unauthorizedHandler !== null &&
-        this.tokenProvider !== null && this.tokenProvider(url).length > 0) {
-        const refreshed: boolean = await this.unauthorizedHandler()
-        if (refreshed) {
-          return this.send(method, url, body, extraHeaders, false, timeoutMs)
-        }
+      if (status === 401 && allowRetry && await this.renewRejectedToken(url, method, sentToken, tokenScope)) {
+        this.requireTokenScope(url, tokenScope)
+        return this.send(method, url, body, extraHeaders, false,
+          HttpUtil.remainingBudget(diagnosticStarted + timeoutMs, true), freshConnection)
       }
 
       throw new HttpError(
@@ -615,16 +842,19 @@ export class HttpUtil {
       diagnosticStatus = e instanceof HttpError ? e.statusCode : -1
       diagnosticCode = e instanceof HttpError ? e.code : thrownCode(e as Object)
       if (e instanceof HttpError) {
+        failure = e
         throw e
       }
       // Transport-level failure: no usable status code.
-      throw new HttpError(-1, thrownCode(e), '网络请求失败：' + describeThrown(e), '')
+      failure = new HttpError(-1, thrownCode(e), '网络请求失败：' + describeThrown(e), '', trace.phase(diagnosticCode))
+      throw failure
     } finally {
       httpRequest.destroy()
-      RequestDiagnostics.record(cookieEpoch, CampusCookies.generation(), String(method), url, diagnosticStatus,
+      const record = RequestDiagnostics.record(cookieEpoch, CampusCookies.generation(), String(method), url, diagnosticStatus,
         diagnosticCode, Date.now() - diagnosticStarted, diagnosticStatus >= 200 && diagnosticStatus < 400 ? 'complete' :
-          diagnosticStatus === -2 ? 'authentication' : hops.length > 0 && diagnosticStatus === -1 ? 'response-body' :
-            diagnosticStatus === -1 ? 'connect-or-response' : 'http-error')
+          diagnosticStatus === -2 ? 'authentication' : diagnosticStatus === -1 ? trace.phase(diagnosticCode) : 'http-error', trace.details()) || ''
+      if (completed !== null) completed.diagnostics = record
+      if (failure !== null) failure.diagnostics = (failure.diagnostics + (failure.diagnostics && record ? '\n\n' : '') + record).slice(0, 12000)
     }
   }
 
@@ -636,15 +866,19 @@ export class HttpUtil {
     allowSso: boolean = false, freshConnection: boolean = false, historyQuery?: DormHistoryQuery): Promise<HttpResponse> {
     const epoch = CampusCookies.generation()
     const deadline = Date.now() + timeoutMs
+    const tokenScope: number = this.tokenScope(startUrl)
+    let tokenOwned: boolean = false
     let url = startUrl
     let currentMethod = method
     let currentBody = body
     let previousCookie = ''
     const allHops: Record<string, string>[] = []
+    let chainDiagnostics: string = ''
     for (let step: number = 0; step < 8; step++) {
       if (epoch !== CampusCookies.generation()) throw new HttpError(-2, 0, '校园账号已切换，请重新加载。', '')
-      const remaining = deadline - Date.now()
-      if (remaining <= 0) throw new HttpError(-1, 2300028, '校园服务连接超时，请稍后重试。', '')
+      if (tokenOwned) this.requireTokenScope(startUrl, tokenScope)
+      let remaining: number = deadline - Date.now()
+      if (remaining <= 0) throw new HttpError(-1, 2300028, '校园服务连接超时，请稍后重试。', '', 'connect-or-send', false, chainDiagnostics)
       const headers = this.buildHeaders(startUrl, extraHeaders)
       // A body-free campus GET is not a JSON submission, including its first
       // hop. Authentication callbacks may return either JSON or HTML.
@@ -656,14 +890,24 @@ export class HttpUtil {
         if (FduAuthPolicy.origin(url) !== FduAuthPolicy.origin(startUrl)) {
           headers['Authorization'] = ''
           headers['Referer'] = ''
+          // Reader tokens belong to their exact service origin as well.
+          for (const key of Object.keys(headers)) {
+            if (/^(?:access_token|opentoken)$/i.test(key)) headers[key] = ''
+          }
         }
         if (currentBody === undefined) headers['Content-Type'] = ''
       }
+      const sentToken: string = this.ownedToken(startUrl, headers)
+      if (step === 0) tokenOwned = sentToken.length > 0
       const cookie = await CampusCookies.read(url)
       if (epoch !== CampusCookies.generation()) throw new HttpError(-2, 0, '校园账号已切换，请重新加载。', '')
+      if (tokenOwned) this.requireTokenScope(startUrl, tokenScope)
       if (cookie) headers['Cookie'] = cookie
       if (step === 0) previousCookie = headers['Cookie'] ?? ''
+      remaining = HttpUtil.remainingBudget(deadline, false, chainDiagnostics)
       const request = http.createHttp()
+      const trace = new HttpTransferTrace(request, remaining)
+      let failure: HttpError | null = null
       const received: Record<string, string>[] = []
       let sentBytes: number = 0
       let sendElapsedMs: number = 0
@@ -690,6 +934,7 @@ export class HttpUtil {
         }
       })
       request.on('headersReceive', (raw: Object) => {
+        trace.headers()
         const source = raw as Record<string, string>
         const row: Record<string, string> = {}
         for (const key of Object.keys(source)) row[key.toLowerCase()] = String(source[key])
@@ -705,14 +950,21 @@ export class HttpUtil {
           method: currentMethod, header: this.nonEmptyHeaders(headers), expectDataType: http.HttpDataType.STRING,
           connectTimeout: remaining, readTimeout: remaining, usingCache: false, maxRedirects: 0,
         }
+        if (allowSso && currentMethod === http.RequestMethod.POST &&
+          (HttpUtil.isWorkflowAuthResult(url) || HttpUtil.isLibraryAuthResult(url))) {
+          // API22+ stops at REDIRECTION and returns the actual 3xx. max=0
+          // throws 2300047 before that interceptor on the supported runtime.
+          if (!CampusSsoRedirect.attach(request)) throw new HttpError(0, 0, '无法读取校园认证跳转状态，请稍后重试。', '')
+          options.maxRedirects = 1
+        }
         // Match upstream Dart IO's HTTP/1.1 direct connection for zlapp.
         // Scope to this host; do not alter WebVPN routing or other hosts.
         if (FduAuthPolicy.origin(url) === 'https://zlapp.fudan.edu.cn' || FduAuthPolicy.origin(url) === 'https://my.fudan.edu.cn') {
           options.usingProtocol = http.HttpProtocol.HTTP1_1
           options.usingProxy = false
-          // The dorm backend can be slow before TLS/headers as well. A stale
-          // five-second connection cap would terminate it before its read wait.
-          options.connectTimeout = DormRequestPolicy.isDorm(startUrl) ? remaining : Math.min(5000, remaining)
+          // Bus and portal handshakes share the original remaining budget too;
+          // a separate five-second cap can expire before any upload begins.
+          options.connectTimeout = remaining
         }
         if (currentBody !== undefined && currentBody.length > 0) options.extraData = currentBody
         // API 26 keeps idle connections for 118 seconds by default. Only this
@@ -722,10 +974,15 @@ export class HttpUtil {
           options.inactivityMs = 5000
         }
         if (DormRequestPolicy.isDorm(startUrl)) options.reuseConnections = !freshConnection
+        if (freshConnection || !allowRetry ||
+          (method !== http.RequestMethod.GET && method !== http.RequestMethod.HEAD)) options.reuseConnections = false
         try {
-          const operation: Promise<http.HttpResponse> = request.request(url, NetworkProxy.apply(options))
+          const applied = NetworkProxy.apply(options)
+          trace.applied(applied)
+          const operation: Promise<http.HttpResponse> = request.request(url, applied)
           const result: http.HttpResponse = receiveDeadline === null ? await operation :
             await Promise.race([operation, receiveDeadline.promise])
+          trace.complete(result)
           status = result.responseCode
           transfer.status = status
           const timing = result.performanceTiming
@@ -756,7 +1013,7 @@ export class HttpUtil {
           status = receivedStatus >= 300 && receivedStatus < 400 ? receivedStatus : 0
         }
       } catch (error) {
-        if (error instanceof HttpError) throw error
+        if (error instanceof HttpError) { failure = error; throw error }
         if (historyRead && thrownCode(error as Object) === 2300028) {
           // A partial response may already rotate the session. Preserve those
           // scoped cookies before the next read, even when its body times out.
@@ -767,35 +1024,39 @@ export class HttpUtil {
           console.info('[DormHistoryTransport] phase=' + phase + ' fresh=' + String(freshConnection) +
             ' elapsedMs=' + String(elapsed) + ' totalBudgetMs=' + String(timeoutMs) +
             ' sentBytes=' + String(sentBytes) + ' sendElapsedMs=' + String(sendElapsedMs))
-          throw new HttpError(-1, 2300028, '用电记录读取超时，请稍后重新加载。' +
+          failure = new HttpError(-1, 2300028, '用电记录读取超时，请稍后重新加载。' +
             ' Operation timeout (code 2300028; phase=' + phase + '; fresh=' + String(freshConnection) +
             '; elapsedMs=' + String(elapsed) + '; totalBudgetMs=' + String(timeoutMs) +
             '; sentBytes=' + String(sentBytes) + '; sendElapsedMs=' + String(sendElapsedMs) +
             '; uploadBytes=' + String(uploadBytes) + '; sendCompleted=' + String(sendCompleted) +
             '; firstSendElapsedMs=' + String(firstSendElapsedMs) + '; receiveBudgetMs=' + String(receiveDeadline?.budgetMs ?? 0) +
             '; timeoutSource=' + (receiveDeadline?.expired ? 'receive-deadline' : 'native') + ')', '', phase)
+          throw failure
         }
         if (thrownCode(error as Object) === 2300028 && FduAuthPolicy.origin(startUrl) === 'https://zlapp.fudan.edu.cn' &&
           (/\/fudanelec\//.test(startUrl) || /fudanelec%2F/i.test(startUrl))) {
           const phase: string = allowSso ? '身份会话接续' : '余额读取'
           const progress: string = received.length > 0 ? '已收到响应头，正文未能及时读完' : '连接或等待服务响应未完成'
           console.info('[DormTransport] phase=' + (allowSso ? 'sso' : 'balance') + ' headersReceived=' + String(received.length > 0))
-          throw new HttpError(-1, 2300028, '寝室电费' + phase + '超时（' + progress + '；code 2300028），请稍后重新加载。' +
+          failure = new HttpError(-1, 2300028, '寝室电费' + phase + '超时（' + progress + '；code 2300028），请稍后重新加载。' +
             ' Operation timeout (phase=' + (allowSso ? 'dorm-sso' : 'dorm-balance') +
             '; elapsedMs=' + String(Date.now() - transfer.startedAt) + '; totalBudgetMs=' + String(timeoutMs) +
             '; redirectHop=' + String(step) + '; headersReceived=' + String(received.length > 0) + ')',
             '', allowSso ? 'dorm-sso' : 'dorm-balance')
+          throw failure
         }
-        throw new HttpError(-1, thrownCode(error as Object), '网络请求失败：' + describeThrown(error as Object), '')
+        failure = new HttpError(-1, thrownCode(error as Object), '网络请求失败：' + describeThrown(error as Object), '', trace.phase(transfer.code))
+        throw failure
       } finally {
         receiveDeadline?.cancel()
         request.destroy()
         if (portalRead) HttpUtil.activePortalReads--
-        RequestDiagnostics.record(epoch, CampusCookies.generation(), String(currentMethod), url,
+        const record = RequestDiagnostics.record(epoch, CampusCookies.generation(), String(currentMethod), url,
           transfer.status, transfer.code, Date.now() - transfer.startedAt,
-          redirectError ? 'redirect' : transfer.code === 2300028 ? (received.length > 0 ? 'response-body' :
-            uploadBytes > 0 && sentBytes >= uploadBytes ? 'await-response-headers' : 'connect-or-response') :
-            transfer.code !== 0 ? 'transport-error' : status >= 200 && status < 300 ? 'complete' : 'http-error')
+          redirectError ? 'redirect' : transfer.code !== 0 ? trace.phase(transfer.code) :
+            status >= 200 && status < 300 ? 'complete' : 'http-error', trace.details()) || ''
+        chainDiagnostics = (chainDiagnostics + (chainDiagnostics && record ? '\n\n' : '') + record).slice(-12000)
+        if (failure !== null) failure.diagnostics = chainDiagnostics
         if (historyRead) {
           transfer.elapsedMs = Math.max(0, Date.now() - transfer.startedAt)
           transfer.sentBytes = sentBytes; transfer.uploadBytes = uploadBytes; transfer.sendElapsedMs = sendElapsedMs
@@ -815,11 +1076,11 @@ export class HttpUtil {
       const location = responseHeaders['location'] ?? received[received.length - 1]?.['location'] ?? ''
       if (location && (redirectError || (status >= 300 && status < 400))) {
         const next = FduAuthPolicy.resolve(location, url)
-        if (!FduAuthPolicy.isCampusUrl(next)) throw new HttpError(0, 0, '校园服务返回了不受支持的跳转。', '')
+        if (!FduAuthPolicy.isCampusUrl(next)) throw new HttpError(0, 0, '校园服务返回了不受支持的跳转。', '', '', false, chainDiagnostics)
         // A passive data read stops at authentication. Only verifyService may
         // enter the official browser; downloading its SPA cannot authenticate.
         if (!allowSso && (FduAuthPolicy.isIdUrl(next) || FduAuthPolicy.isWebVpnLoginUrl(next))) {
-          throw new HttpError(-2, 0, '校园服务需要身份验证，请点击继续验证。', '')
+          throw new HttpError(-2, 0, '校园服务需要身份验证，请点击继续验证。', '', '', false, chainDiagnostics)
         }
         if (currentMethod !== http.RequestMethod.GET && currentMethod !== http.RequestMethod.HEAD) {
           // Never replay a POST. Known 303/301/302 becomes GET; 307/308 is
@@ -828,7 +1089,7 @@ export class HttpUtil {
           const tokenRedirect = allowSso && currentMethod === http.RequestMethod.POST &&
             HttpUtil.isIdTokenExchange(url) && redirectError && status === 0
           if (status !== 303 && status !== 301 && status !== 302 && !tokenRedirect) {
-            throw new HttpError(status || 0, 2300047, '校园服务请求需要重新加载，请稍后重试。', '')
+            throw new HttpError(status || 0, 2300047, '校园服务请求需要重新加载，请稍后重试。', '', '', false, chainDiagnostics)
           }
           currentMethod = http.RequestMethod.GET
           currentBody = undefined
@@ -836,26 +1097,28 @@ export class HttpUtil {
         url = next
         continue
       }
-      if (!allowSso && (HttpUtil.requiresCampusLogin(startUrl, allHops) ||
+      // A server/WAF error page is not evidence of an expired session, even
+      // when its HTML mentions login. Actual auth redirects stop above.
+      if (!allowSso && status >= 200 && status < 300 && (HttpUtil.requiresCampusLogin(startUrl, allHops) ||
         (FduAuthPolicy.isLoginDocument(responseData) && !FduAuthPolicy.isLifeCodeDocument(url, responseData)))) {
-        throw new HttpError(-2, 0, '校园服务需要身份验证，请点击继续验证。', '')
+        throw new HttpError(-2, 0, '校园服务需要身份验证，请点击继续验证。', '', '', false, chainDiagnostics)
       }
       if (allowRetry && method === http.RequestMethod.GET && status >= 500) {
         const updated = await CampusCookies.read(startUrl)
         if (updated && updated !== previousCookie) return this.sendCampus(method, startUrl, body, extraHeaders, false,
-          DormRequestPolicy.isDorm(startUrl) ? DormRequestPolicy.remaining(deadline) : timeoutMs)
+          HttpUtil.remainingBudget(deadline, false, chainDiagnostics), allowSso, freshConnection, historyQuery)
       }
       if (status >= 200 && status < 300) return {
         code: status, data: responseData, headers: responseHeaders, success: true, errorMessage: '', hopHeaders: allHops,
-        finalUrl: url,
+        finalUrl: url, diagnostics: chainDiagnostics,
       }
-      if (status === 401 && allowRetry && this.unauthorizedHandler !== null && this.tokenProvider !== null &&
-        this.tokenProvider(startUrl).length > 0 && await this.unauthorizedHandler()) {
+      if (status === 401 && allowRetry && await this.renewRejectedToken(startUrl, method, sentToken, tokenScope)) {
+        this.requireTokenScope(startUrl, tokenScope)
         return this.sendCampus(method, startUrl, body, extraHeaders, false,
-          DormRequestPolicy.isDorm(startUrl) ? DormRequestPolicy.remaining(deadline) : timeoutMs)
+          HttpUtil.remainingBudget(deadline, true, chainDiagnostics), allowSso, freshConnection, historyQuery)
       }
-      throw new HttpError(status, parseErrorCode(responseData), parseErrorMessage(responseData, 'HTTP ' + status), responseData)
+      throw new HttpError(status, parseErrorCode(responseData), parseErrorMessage(responseData, 'HTTP ' + status), responseData, '', false, chainDiagnostics)
     }
-    throw new HttpError(-1, 2300047, '校园服务跳转次数过多，请稍后重试。', '')
+    throw new HttpError(-1, 2300047, '校园服务跳转次数过多，请稍后重试。', '', '', false, chainDiagnostics)
   }
 }

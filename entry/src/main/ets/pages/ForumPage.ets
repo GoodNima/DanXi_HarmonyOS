@@ -155,7 +155,7 @@ export struct ForumPage {
     if (!this.active || !this.sessionActive) return
     if (!this.loadContent()) return
     this.loadDivisions(forceDivisions)
-    this.repo.getMe().catch(() => {})
+    this.repo.getMe(true).catch(() => {})
     this.loadActivities(true)
   }
 
@@ -500,7 +500,7 @@ export struct ForumPage {
     this.errorMessage = ForumRepository.describeError(error)
     this.verificationRequired = error instanceof HttpError && error.statusCode === -2
     this.campusLoginRequired = this.verificationRequired && !FduRepository.getInstance().canLoginOnDemand()
-    if (this.verificationRequired) this.errorMessage = ErrorDiagnostics.message(error,
+    if (this.verificationRequired) this.errorMessage = ForumRepository.describeError(error,
       AppLanguage.text($r('app.string.forum_webvpn_verification_hint'), this.languageRevision))
     this.displayedKeyword = this.activeKeyword
     this.isLoading = false
@@ -508,8 +508,7 @@ export struct ForumPage {
   }
 
   private prefetch(): void {
-    const count: number = this.activeKeyword.length > 0 ? this.searchResults.length :
-      ForumPresentation.visibleHoles(this.holes, this.foldMode).length
+    const count: number = this.activeKeyword.length > 0 ? this.searchSource.totalCount() : this.holeSource.totalCount()
     // One single-flight page ahead, with room for fast native flings. Cached
     // page rows are reused; this does not fetch the whole feed or preload tabs.
     if (!this.moreError && (count === 0 || shouldPrefetch(this.visibleEnd, count, 8))) this.loadMore()

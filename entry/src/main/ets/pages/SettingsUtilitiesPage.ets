@@ -17,6 +17,8 @@ import { FloatingActionButton } from '../components/FloatingActionButton'
 import { TopFade } from '../components/TopFade'
 import { getSymbolIcon } from '../common/DanXiIcons'
 import { AboutCredits, ContributorCredit, LibraryCredit } from '../common/AboutCredits'
+import { SheetTransitionGuard } from '../common/SheetTransitionGuard'
+import { adaptiveMaterial, nativeFloatingBackground } from '../common/AdaptiveMaterial'
 
 class LicenseItem {
   name: string
@@ -28,6 +30,8 @@ class LicenseItem {
 @Component
 export struct SettingsUtilitiesPage {
   private touchScroller: Scroller = new Scroller()
+  private contributorsScroller: Scroller = new Scroller()
+  private contributorsTransition: SheetTransitionGuard = new SheetTransitionGuard()
   @StorageLink(AppLanguage.KEY_REVISION) languageRevision: number = 0
   @StorageLink('ui_material_revision') materialRevision: number = 0
   @StorageLink(Constant.KEY_STATUS_BAR_INSET_PX) topPx: number = 0
@@ -41,6 +45,7 @@ export struct SettingsUtilitiesPage {
   @State error: string = ''
   @State licenseName: string = ''
   @State licenseText: string[] = []
+  @State contributorsSheet: boolean = false
   private licenseRequest: number = 0
   private readonly contributors: ContributorCredit[] = AboutCredits.contributors()
   private readonly originalLibraries: LibraryCredit[] = AboutCredits.libraries()
@@ -60,10 +65,14 @@ export struct SettingsUtilitiesPage {
   }
   aboutToDisappear(): void { this.licenseRequest++ }
   onBackPress(): boolean {
+    if (this.contributorsSheet) { this.contributorsSheet = false; return true }
     if (!this.licenseName) return false
     this.closeLicense(); return true
   }
   private closeLicense(): void { this.licenseRequest++; this.licenseName = ''; this.licenseText = []; this.error = '' }
+  private openContributors(): void {
+    this.contributorsTransition.open(() => { this.contributorsSheet = true }, () => this.getUIContext())
+  }
   private title(): ResourceStr {
     return this.licenseName || (this.section === 'proxy' ? $r('app.string.settings_proxy') :
       this.section === 'licenses' ? $r('app.string.settings_licenses') :
@@ -225,80 +234,60 @@ export struct SettingsUtilitiesPage {
         router.pushUrl({ url: 'pages/SettingsUtilitiesPage', params: new SettingsRouteParams('credits') })
       })
       Divider().color(ThemeColors.divider).margin({ top: 2, bottom: 2 })
-      this.Heading($r('app.string.settings_app_developers'))
-      Text(ReadableText.keepWords(AppLanguage.text($r('app.string.settings_contributors_merged'), this.languageRevision))).fontSize(13).lineHeight(20)
-        .lineBreakStrategy(LineBreakStrategy.GREEDY)
-        .fontColor(ThemeColors.textSecondary).width('100%')
-      Flex({ wrap: FlexWrap.Wrap }) {
-        ForEach(this.contributors, (person: ContributorCredit) => {
-          if (person.url) {
-            Button({ type: ButtonType.Normal }) { this.ContributorIdentity(person) }
-              .width('50%').constraintSize({ minHeight: 80 }).padding({ top: 6, bottom: 6, left: 4, right: 4 })
-              .id('about-contributor-' + person.identity).backgroundColor(Color.Transparent).stateEffect(false)
-              .accessibilityText(person.name + ', ' + this.platforms(person.flutter, person.ios, person.harmony))
-              .onClick(() => { HapticFeedback.selection(); this.open(person.url) })
-          } else {
-            Column() { this.ContributorIdentity(person) }
-              .width('50%').constraintSize({ minHeight: 80 }).padding({ top: 6, bottom: 6, left: 4, right: 4 })
-              .justifyContent(FlexAlign.Center).id('about-contributor-' + person.identity)
-          }
-        }, (person: ContributorCredit) => person.identity)
-      }.width('100%').id('about-developers')
+      this.Link($r('app.string.settings_app_developers'), () => { this.openContributors() }, 'person')
     }.padding(16).width('100%').alignItems(HorizontalAlign.Start)
       .backgroundColor($r('app.color.surface_fallback')).borderRadius(20)
   }
   @Builder
-  OriginalNotes() {
+  ContributorsContent() {
+    Scroll(this.contributorsScroller) {
+      Column({ space: 12 }) {
+        Text(ReadableText.keepWords(AppLanguage.text($r('app.string.settings_contributors_merged'), this.languageRevision))).fontSize(13).lineHeight(20)
+          .lineBreakStrategy(LineBreakStrategy.GREEDY).fontColor(ThemeColors.textSecondary).width('100%')
+        Flex({ wrap: FlexWrap.Wrap }) {
+          ForEach(this.contributors, (person: ContributorCredit) => {
+            if (person.url) {
+              Button({ type: ButtonType.Normal }) { this.ContributorIdentity(person) }
+                .width('50%').constraintSize({ minHeight: 80 }).padding({ top: 6, bottom: 6, left: 4, right: 4 })
+                .id('about-contributor-' + person.identity).backgroundColor(Color.Transparent).stateEffect(false)
+                .accessibilityText(person.name + ', ' + this.platforms(person.flutter, person.ios, person.harmony))
+                .onClick(() => { HapticFeedback.selection(); this.open(person.url) })
+            } else {
+              Column() { this.ContributorIdentity(person) }
+                .width('50%').constraintSize({ minHeight: 80 }).padding({ top: 6, bottom: 6, left: 4, right: 4 })
+                .justifyContent(FlexAlign.Center).id('about-contributor-' + person.identity)
+            }
+          }, (person: ContributorCredit) => person.identity)
+        }.width('100%').id('about-developers')
+      }.width('100%').alignItems(HorizontalAlign.Start)
+        .padding({ left: 20, right: 20, top: 12, bottom: Math.max(20, px2vp(this.bottomPx)) + 12 })
+    }.width('100%').height('100%').scrollBar(BarState.Off)
+      .onTouch((event: TouchEvent) => { settleScrollTouch(this.contributorsScroller, event) })
+  }
+  @Builder
+  HarmonyNotes() {
     Column({ space: 10 }) {
       this.Heading($r('app.string.settings_harmony_platform'))
-      this.Link($r('app.string.settings_harmony_project'), () => { this.open(AboutCredits.HARMONY_PROJECT_URL) }, 'proxy')
-      this.Link($r('app.string.settings_harmony_contributors'), () => { this.open(AboutCredits.HARMONY_CONTRIBUTORS_URL) }, 'person')
-      Divider().color(ThemeColors.divider)
-      Column({ space: 6 }) {
+      Column({ space: 8 }) {
         Row({ space: 8 }) {
           Text(Constant.APP_VERSION).fontSize(16).lineHeight(22).fontWeight(FontWeight.Bold)
             .fontColor(ThemeColors.textPrimary).maxLines(1).copyOption(CopyOptions.LocalDevice).id('about-harmony-version')
           Text(Constant.APP_RELEASE_STAGE).fontSize(11).lineHeight(16).fontColor(ThemeColors.textSecondary).maxLines(1)
             .padding({ left: 8, right: 8, top: 3, bottom: 3 }).borderRadius(6)
             .backgroundColor($r('app.color.input_surface')).id('about-harmony-stage')
-        }.width('100%').justifyContent(FlexAlign.End).alignItems(VerticalAlign.Center)
-        Text($r('app.string.settings_harmony_build', Constant.APP_BUILD_VERSION)).fontSize(12).lineHeight(18)
-          .fontColor(ThemeColors.textSecondary).width('100%').textAlign(TextAlign.End).id('about-harmony-build')
-        Text($r('app.string.settings_harmony_upgrade', Constant.APP_VERSION_CODE)).fontSize(12).lineHeight(18)
-          .fontColor(ThemeColors.textSecondary).width('100%').textAlign(TextAlign.End).id('about-harmony-upgrade')
+        }.width('100%').alignItems(VerticalAlign.Center)
+        Flex({ wrap: FlexWrap.Wrap, alignItems: ItemAlign.Center }) {
+          Text($r('app.string.settings_harmony_build', Constant.APP_BUILD_VERSION)).fontSize(12).lineHeight(20)
+            .fontColor(ThemeColors.textSecondary).margin({ right: 16 }).id('about-harmony-build')
+          Text($r('app.string.settings_harmony_upgrade', Constant.APP_VERSION_CODE)).fontSize(12).lineHeight(20)
+            .fontColor(ThemeColors.textSecondary).id('about-harmony-upgrade')
+        }.width('100%')
         Text($r('app.string.settings_harmony_note')).fontSize(12).lineHeight(18)
-          .fontColor(ThemeColors.textSecondary).width('100%').textAlign(TextAlign.End).id('about-harmony-note')
-      }.width('100%').id('about-harmony-footer')
-      Divider().color(ThemeColors.divider).margin({ top: 8, bottom: 8 })
-      this.Heading($r('app.string.settings_original_flutter'))
-      Divider().color(ThemeColors.divider).margin({ top: 4 })
-      this.Link($r('app.string.settings_original_project'), () => { this.open(AboutCredits.PROJECT_URL) }, 'proxy')
-      this.Link($r('app.string.settings_all_contributors'), () => { this.open(AboutCredits.CONTRIBUTORS_URL) }, 'person')
-      Divider().color(ThemeColors.divider)
-      Column({ space: 4 }) {
-        Text($r('app.string.settings_original_version')).fontSize(12).lineHeight(18).fontWeight(FontWeight.Bold)
-          .fontColor(ThemeColors.textSecondary).width('100%').textAlign(TextAlign.End)
-          .copyOption(CopyOptions.LocalDevice).id('about-original-version')
-        Text($r('app.string.settings_original_developer_motto')).fontSize(13).lineHeight(20)
-          .fontColor(ThemeColors.textSecondary).width('100%').textAlign(TextAlign.End)
-          .copyOption(CopyOptions.LocalDevice).id('about-original-motto')
-      }.width('100%').margin({ top: 4 }).id('about-original-footer')
-      Divider().color(ThemeColors.divider).margin({ top: 8, bottom: 8 })
-      this.Heading($r('app.string.settings_original_ios'))
-      this.Link($r('app.string.settings_ios_project'), () => { this.open(AboutCredits.IOS_PROJECT_URL) }, 'proxy')
-      this.Link($r('app.string.settings_ios_contributors'), () => { this.open(AboutCredits.IOS_CONTRIBUTORS_URL) }, 'person')
-      Divider().color(ThemeColors.divider)
-      Column({ space: 4 }) {
-        Text($r('app.string.settings_ios_version')).fontSize(12).lineHeight(18).fontWeight(FontWeight.Bold)
-          .fontColor(ThemeColors.textSecondary).width('100%').textAlign(TextAlign.End)
-          .copyOption(CopyOptions.LocalDevice).id('about-ios-version')
-        Text($r('app.string.settings_ios_copyright')).fontSize(13).lineHeight(20)
-          .fontColor(ThemeColors.textSecondary).width('100%').textAlign(TextAlign.End)
-          .copyOption(CopyOptions.LocalDevice).id('about-ios-copyright')
-        Text($r('app.string.settings_ios_filing')).fontSize(13).lineHeight(20)
-          .fontColor(ThemeColors.primary).width('100%').textAlign(TextAlign.End)
-          .id('about-ios-filing').onClick(() => { HapticFeedback.selection(); this.open(AboutCredits.IOS_FILING_URL) })
-      }.width('100%').margin({ top: 4 }).id('about-ios-footer')
+          .fontColor(ThemeColors.textSecondary).width('100%').id('about-harmony-note')
+      }.width('100%').alignItems(HorizontalAlign.Start).id('about-harmony-footer')
+      Divider().color(ThemeColors.divider).margin({ top: 2 })
+      this.Link($r('app.string.settings_harmony_project'), () => { this.open(AboutCredits.HARMONY_PROJECT_URL) }, 'proxy')
+      this.Link($r('app.string.settings_harmony_contributors'), () => { this.open(AboutCredits.HARMONY_CONTRIBUTORS_URL) }, 'person')
     }.padding(16).width('100%').alignItems(HorizontalAlign.Start)
       .backgroundColor($r('app.color.surface_fallback')).borderRadius(20)
   }
@@ -336,6 +325,8 @@ export struct SettingsUtilitiesPage {
       this.Paragraph($r('app.string.settings_description'))
       this.Paragraph($r('app.string.settings_harmony_intro'))
     }.padding(16).width('100%').backgroundColor($r('app.color.surface_fallback')).borderRadius(20)
+    this.HarmonyNotes()
+    this.Credits()
     Column({ space: 8 }) {
       this.Heading($r('app.string.settings_legal'))
       this.Paragraph($r('app.string.settings_legal_text'))
@@ -343,8 +334,6 @@ export struct SettingsUtilitiesPage {
       Divider().color(ThemeColors.divider)
       this.Link($r('app.string.settings_licenses'), () => { router.pushUrl({ url: 'pages/SettingsUtilitiesPage', params: new SettingsRouteParams('licenses') }) })
     }.padding(16).width('100%').backgroundColor($r('app.color.surface_fallback')).borderRadius(20)
-    this.Credits()
-    this.OriginalNotes()
     Column({ space: 8 }) {
       this.Heading($r('app.string.settings_contact'))
       Text('dev@danta.tech').fontSize(16).fontColor(ThemeColors.primary).copyOption(CopyOptions.LocalDevice).width('100%')
@@ -392,5 +381,8 @@ export struct SettingsUtilitiesPage {
       }.width('100%').height(56).padding({ left: 16, right: 16 }).margin({ top: px2vp(this.topPx) })
     }.width('100%').height('100%').backgroundColor($r('app.color.theme_bg_start'))
       .expandSafeArea([SafeAreaType.SYSTEM], [SafeAreaEdge.TOP, SafeAreaEdge.BOTTOM])
+      .bindSheet($$this.contributorsSheet, this.ContributorsContent(), this.contributorsTransition.options(this.contributorsSheet, {
+        height: '85%', title: { title: $r('app.string.settings_app_developers') }, showClose: true, dragBar: true,
+        backgroundColor: nativeFloatingBackground(this.materialRevision), systemMaterial: adaptiveMaterial(this.materialRevision) }))
   }
 }

@@ -19,8 +19,8 @@ export class CampusUtilitySnapshot {
   status: string = 'ready'
 }
 
-/** Protected summaries only reuse verified sessions. An explicit detail read
- * acquires/renews its service through the same serialized browser SSO queue. */
+/** Protected reads reuse the shared silent service recovery. Browser identity
+ * verification remains an explicit page action, never a summary side effect. */
 export class CampusUtilities {
   private static cache: Map<string, CampusUtilitySummary> = new Map<string, CampusUtilitySummary>()
   private static pending: Map<string, Promise<CampusUtilitySummary>> = new Map<string, Promise<CampusUtilitySummary>>()
@@ -120,13 +120,14 @@ export class CampusUtilities {
       if (!AppState.getPerson().isLoggedIn()) return CampusUtilities.login(row, false)
       const service = feature === 'campus_access' ? CampusService.MY_FUDAN : feature === 'sports' ? CampusService.SPORTS : CampusService.LIFE_CODE
       const cookies = repo.cookiesFor(service)
-      if (!cookies) return CampusUtilities.login(row, false)
+      if (!cookies && feature !== 'campus_access') return CampusUtilities.login(row, false)
       if (feature === 'life_code') {
         // A rotating payment credential is fetched only in its explicit page.
         row.value = AppLanguage.text($r('app.string.utility_code_entry'))
         row.description = AppLanguage.text($r('app.string.utility_code_preview_hint'))
       } else if (feature === 'campus_access') {
-        const cards = await CampusUtilityRepository.access(cookies)
+        const cards = await repo.withService(CampusService.MY_FUDAN,
+          async (session: string) => CampusUtilityRepository.access(session))
         CampusUtilities.guard(feature, owner)
         if (cards.length === 0) { row.status = 'empty'; row.value = AppLanguage.text($r('app.string.utility_no_access')) }
         else {

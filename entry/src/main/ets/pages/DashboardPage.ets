@@ -209,20 +209,11 @@ export struct DashboardPage {
   private fduRepo: FduRepository = FduRepository.getInstance()
 
   /**
-   * Error.prototype.toString() decorates the message with the error's name, so
-   * String(err) renders as "HttpError: <message>" (HttpError sets this.name) or
-   * "Error: <message>". Strip that prefix so the card shows the sentence the
-   * repository wrote and nothing else.
+   * Keep typed status/code and the failed request's own diagnostics. Visible
+   * prompts remain concise; the diagnostic sheet owns the technical details.
    */
   private static errorText(err: Object): string {
-    const text: string = String(err)
-    const sep: number = text.indexOf(': ')
-    // Only a leading bare identifier counts as a name ("HttpError", "Error",
-    // "TypeError"): no spaces before the colon, and not a long message.
-    if (sep > 0 && sep <= 24 && text.substring(0, sep).indexOf(' ') < 0) {
-      return text.substring(sep + 2)
-    }
-    return text
+    return ErrorDiagnostics.message(err)
   }
 
   /**

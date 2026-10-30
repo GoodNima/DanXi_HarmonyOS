@@ -578,8 +578,8 @@ export struct ForumDetailView {
       if (generation !== this.loadGeneration) return
       this.verificationRequired = e instanceof HttpError && e.statusCode === -2
       this.listOpacity = 1; this.contentSettling = false
-      this.errorMessage = this.verificationRequired ? AppLanguage.text($r('app.string.forum_webvpn_verification_hint'), this.languageRevision) :
-        ForumRepository.describeError(e)
+      this.errorMessage = ForumRepository.describeError(e,
+        this.verificationRequired ? AppLanguage.text($r('app.string.forum_webvpn_verification_hint'), this.languageRevision) : '')
       this.isLoading = false
       this.refreshing = false
       this.loadPendingGeneration = -1
@@ -1552,7 +1552,10 @@ export struct ForumDetailView {
         }
         this.SheetAction($r('app.string.detail_confirm'), () => { this.submitManagement() }, true)
       }
-      if (this.sheetBusy && this.sheetKind !== 'summary') LoadingProgress().width(28).height(28).color(ThemeColors.primary)
+      if (this.sheetBusy && this.sheetKind !== 'summary') {
+        Row() { LoadingProgress().width(28).height(28).color(ThemeColors.primary) }
+          .width('100%').justifyContent(FlexAlign.Center)
+      }
       if (this.sheetError && this.sheetKind !== 'summary') ErrorNotice({ message: this.sheetError, controlId: 'forumdetailview-diagnostics', textSize: 13, textColor: ThemeColors.error }).width('100%')
     }.width('100%').alignItems(HorizontalAlign.Start)
       .padding({ left: 20, right: 20, bottom: this.sheetKind === 'compose' ? 12 : 24 })

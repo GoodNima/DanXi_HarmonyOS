@@ -43,8 +43,12 @@ export class ForumImageTransition {
 export class ForumImageController {
   private action: (() => void) | undefined = undefined
   private enteredAction: (() => void) | undefined = undefined
-  bind(action: () => void, enteredAction: () => void): void { this.action = action; this.enteredAction = enteredAction }
-  release(): void { this.action = undefined; this.enteredAction = undefined }
+  private progressAction: ((opacity: number) => void) | undefined = undefined
+  bind(action: () => void, enteredAction: () => void, progressAction?: (opacity: number) => void): void {
+    this.action = action; this.enteredAction = enteredAction; this.progressAction = progressAction
+  }
+  release(): void { this.action = undefined; this.enteredAction = undefined; this.progressAction = undefined }
+  transition(opacity: number): void { this.progressAction?.(opacity) }
   entered(): void { this.enteredAction?.() }
   back(): boolean {
     if (this.action === undefined) return false

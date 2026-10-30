@@ -59,8 +59,9 @@ struct ForumLoginPage {
       this.isLoading = false
       this.verificationRequired = e instanceof HttpError && e.statusCode === -2
       this.campusLoginRequired = this.verificationRequired && !FduRepository.getInstance().canLoginOnDemand()
-      this.error = ErrorDiagnostics.message(e, this.verificationRequired ? AppLanguage.text($r('app.string.forum_webvpn_verification_hint'), this.languageRevision) :
-        e instanceof HttpError && e.code === 2300028 ? AppLanguage.text($r('app.string.forum_login_timeout_hint'), this.languageRevision) : '')
+      this.error = this.verificationRequired ? ForumRepository.describeError(e,
+        AppLanguage.text($r('app.string.forum_webvpn_verification_hint'), this.languageRevision)) :
+        ErrorDiagnostics.message(e, e instanceof HttpError && e.code === 2300028 ? AppLanguage.text($r('app.string.forum_login_timeout_hint'), this.languageRevision) : '')
       })
   }
 

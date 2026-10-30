@@ -21,6 +21,7 @@ import { PreferencesUtil } from '../util/PreferencesUtil'
 import { ForumImageUpload } from '../util/ForumImageUpload'
 import { ForumPresentation } from '../common/ForumPresentation'
 import { ForumNetwork } from '../common/ForumNetwork'
+import { CourseReviewCatalogStore } from '../common/CourseReviewCatalogStore'
 import { ForumRoute } from '../common/ForumRoute'
 import { ForumPageRepository } from '../common/ForumPageRepository'
 import { ForumPreferences } from '../common/ForumPreferences'
@@ -98,6 +99,7 @@ export class ForumRepository implements ForumPageRepository {
   static readonly KEY_SESSION_REVISION: string = 'forum_session_revision'
   private static readonly DIVISIONS_FRESH_MS: number = 15 * 60 * 1000
   private static readonly DIVISIONS_RETRY_MS: number = 2 * 60 * 1000
+  private static readonly PROFILE_FRESH_MS: number = 60000
   private static instance: ForumRepository | null = null
   private http: HttpUtil = HttpUtil.getInstance()
   private network: ForumNetwork = ForumNetwork.getInstance()
@@ -109,6 +111,12 @@ export class ForumRepository implements ForumPageRepository {
   private sessionGeneration: number = 0
   private authGeneration: number = 0
   private restoring: Promise<boolean> | null = null
+  private profileRequest: Promise<ForumUser> | null = null
+  private profileRequestScope: number = -1
+  private profileRequestRevision: number = -1
+  private profileRevision: number = 0
+  private profileCache: ForumUser | null = null
+  private profileCheckedAt: number = 0
   private divisionsRequest: Promise<ForumDivision[]> | null = null
   private divisionCache: ForumDivision[] = []
   private divisionsCheckedAt: number = 0
@@ -117,11 +125,16 @@ export class ForumRepository implements ForumPageRepository {
   private divisionsRevision: number = 0
   private sessionWrites: Promise<void> = Promise.resolve()
   private preferenceWrites: Promise<void> = Promise.resolve()
+  private profileMutationScope: number = -1
+  private profileMutations: Promise<void> = Promise.resolve()
+  private sessionWriteFailed: boolean = false
+  private preferenceWriteFailed: boolean = false
 
   private constructor() {
     // Route tokens by host: the forum token must never be sent to a UIS
     // endpoint, and /login must not carry a stale Authorization header.
-    this.http.setTokenProvider((url: string): string => this.tokenForUrl(url))
+    this.http.setTokenProvider((url: string): string => this.tokenForUrl(url),
+      (_url: string): number => this.sessionRevision())
     this.http.setUnauthorizedHandler((): Promise<boolean> => this.refresh())
   }
 
@@ -182,6 +195,7 @@ export class ForumRepository implements ForumPageRepository {
       this.refreshToken = token.refresh
       this.sessionGeneration++
       this.preferenceRevision++
+      this.invalidateProfile()
       this.divisionCache = this.restoreDivisionCache(entry)
       this.invalidateDivisions()
       this.publishSession(jsonNumber(entry, 'user_id'))
@@ -282,7 +296,17 @@ export class ForumRepository implements ForumPageRepository {
         row.description = division.description
         stored.division_cache.push(row)
       }
-      await PreferencesUtil.getInstance().putString(Constant.KEY_FORUM_TOKEN, JSON.stringify(stored))
+      const value: string = JSON.stringify(stored)
+      const prefs = PreferencesUtil.getInstance()
+      let previous: string | undefined = undefined
+      try { previous = await prefs.getString(Constant.KEY_FORUM_TOKEN, '') } catch (e) {}
+      if (generation !== this.sessionGeneration || (previous === value && !this.sessionWriteFailed)) return
+      // Preferences.get may expose a put whose flush failed; only a successful
+      // write clears that condition, even when the next read already matches.
+      try {
+        await prefs.putString(Constant.KEY_FORUM_TOKEN, value)
+        this.sessionWriteFailed = false
+      } catch (e) { this.sessionWriteFailed = true; throw e as Error }
     })
     this.sessionWrites = pending
     return pending
@@ -310,6 +334,7 @@ export class ForumRepository implements ForumPageRepository {
     this.sessionLoaded = true
     this.sessionGeneration++
     this.preferenceRevision++
+    this.invalidateProfile()
     this.divisionCache = []
     this.invalidateDivisions()
     this.refreshing = null
@@ -341,8 +366,14 @@ export class ForumRepository implements ForumPageRepository {
     try {
       const headers: Record<string, string> = { 'Authorization': 'Bearer ' + this.refreshToken }
       const response: HttpResponse = await this.network.post(this.authBase() + '/refresh', undefined, headers)
-      const token = ForumToken.fromJson(parseObject(response.data))
-      if (!token.isValid()) return false
+      let token = new ForumToken()
+      try {
+        token = ForumToken.fromJson(parseObject(response.data))
+        if (!token.isValid()) throw new Error('InvalidTokenPair')
+      } catch (e) {
+        throw new HttpError(0, 0, '茶楼登录凭证刷新响应不完整，请稍后重试。', '', 'credential-protocol', false,
+          (response.diagnostics ?? '') + '\nrefreshResponseStatus=' + response.code + '; protocol=invalid-token-pair')
+      }
       if (generation !== this.sessionGeneration) return false
       this.accessToken = token.access
       this.refreshToken = token.refresh
@@ -360,9 +391,11 @@ export class ForumRepository implements ForumPageRepository {
   }
 
   async forgetSession(): Promise<void> {
+    CourseReviewCatalogStore.clear().catch(() => {})
     this.authGeneration++
     this.sessionGeneration++
     this.preferenceRevision++
+    this.invalidateProfile()
     this.accessToken = ''
     this.refreshToken = ''
     this.sessionLoaded = true
@@ -381,19 +414,55 @@ export class ForumRepository implements ForumPageRepository {
 
   // ──────────────────────────────── reads ────────────────────────────────
 
-  /** GET /users/me. Also carries the `has_answered_questions` gate. */
-  async getMe(): Promise<ForumUser> {
+  private invalidateProfile(): void {
+    this.profileRevision++
+    this.profileCache = null
+    this.profileCheckedAt = 0
+    this.profileRequest = null
+  }
+
+  private cloneProfile(user: ForumUser): ForumUser {
+    const value = new ForumUser()
+    value.notify = user.notify.slice(); value.showFolded = user.showFolded
+    value.userId = user.userId; value.nickname = user.nickname; value.joinedTime = user.joinedTime
+    value.favorites = user.favorites.slice(); value.subscriptions = user.subscriptions.slice()
+    value.isAdmin = user.isAdmin; value.hasAnsweredQuestions = user.hasAnsweredQuestions
+    return value
+  }
+
+  /** GET /users/me. Reuse the same-session read, not a preceding account's profile. */
+  async getMe(force: boolean = false): Promise<ForumUser> {
     this.requireLogin()
-    const revision: number = this.preferenceRevision
+    const age: number = Date.now() - this.profileCheckedAt
+    if (!force && this.profileCache !== null && age >= 0 && age < ForumRepository.PROFILE_FRESH_MS) {
+      return this.cloneProfile(this.profileCache)
+    }
     const generation: number = this.sessionGeneration
+    const profileRevision: number = this.profileRevision
+    const pending: Promise<ForumUser> = this.profileRequest !== null && this.profileRequestScope === generation &&
+      this.profileRequestRevision === profileRevision ? this.profileRequest : this.fetchMe(generation, profileRevision)
+    this.profileRequest = pending
+    this.profileRequestScope = generation; this.profileRequestRevision = profileRevision
+    try { return this.cloneProfile(await pending) }
+    finally { if (this.profileRequest === pending) this.profileRequest = null }
+  }
+
+  private async fetchMe(generation: number, profileRevision: number): Promise<ForumUser> {
+    const revision: number = this.preferenceRevision
     const response = await this.network.get(this.base() + '/users/me')
     const user = ForumUser.fromJson(parseObject(response.data))
     if (generation !== this.sessionGeneration) throw new Error('茶楼账号已切换，请重试')
-    if (revision === this.preferenceRevision) await this.saveFoldBehavior(user.showFolded, generation, revision)
+    if (profileRevision === this.profileRevision && revision === this.preferenceRevision) {
+      await this.saveFoldBehavior(user.showFolded, generation, revision)
+    }
     if (generation !== this.sessionGeneration) throw new Error('茶楼账号已切换，请重试')
     this.publishSession(user.userId)
     await this.persistSession(generation)
     if (generation !== this.sessionGeneration) throw new Error('茶楼账号已切换，请重试')
+    if (user.userId > 0 && profileRevision === this.profileRevision && revision === this.preferenceRevision) {
+      this.profileCache = this.cloneProfile(user)
+      this.profileCheckedAt = Date.now()
+    }
     return user
   }
 
@@ -449,7 +518,16 @@ export class ForumRepository implements ForumPageRepository {
     const value = ForumPresentation.foldMode(mode)
     const pending: Promise<void> = this.preferenceWrites.catch(() => {}).then(async (): Promise<void> => {
       if (generation !== this.sessionGeneration || revision !== this.preferenceRevision) return
-      await PreferencesUtil.getInstance().putString(Constant.KEY_FORUM_FOLD_BEHAVIOR, value)
+      const prefs = PreferencesUtil.getInstance()
+      let previous: string | undefined = undefined
+      try { previous = await prefs.getString(Constant.KEY_FORUM_FOLD_BEHAVIOR, '') } catch (e) {}
+      if (generation !== this.sessionGeneration || revision !== this.preferenceRevision) return
+      if (previous !== value || this.preferenceWriteFailed) {
+        try {
+          await prefs.putString(Constant.KEY_FORUM_FOLD_BEHAVIOR, value)
+          this.preferenceWriteFailed = false
+        } catch (e) { this.preferenceWriteFailed = true; throw e as Error }
+      }
       if (generation === this.sessionGeneration && revision === this.preferenceRevision) {
         AppStorage.setOrCreate<string>(Constant.KEY_FORUM_FOLD_BEHAVIOR, value)
       }
@@ -463,6 +541,27 @@ export class ForumRepository implements ForumPageRepository {
     this.requireLogin()
     const generation: number = this.sessionGeneration
     if (!['mention', 'favorite', 'report'].includes(type)) throw new Error('未知通知类型')
+    this.invalidateProfile()
+    return this.mutateProfile(generation, (): Promise<ForumUser> => this.writeNotificationType(type, enabled, generation))
+  }
+
+  /** Profile updates send a complete config. Keep each read/write pair together
+   * so a concurrent setting cannot restore an older copy of another setting. */
+  private mutateProfile<T>(generation: number, operation: () => Promise<T>): Promise<T> {
+    if (this.profileMutationScope !== generation) {
+      this.profileMutationScope = generation
+      this.profileMutations = Promise.resolve()
+    }
+    const task: Promise<T> = this.profileMutations.catch(() => {}).then((): Promise<T> => {
+      if (generation !== this.sessionGeneration || !this.isLoggedIn()) throw new Error('茶楼账号已切换，请重试')
+      return operation()
+    })
+    this.profileMutations = task.then((): void => {}, (): void => {})
+    return task
+  }
+
+  private async writeNotificationType(type: string, enabled: boolean, generation: number): Promise<ForumUser> {
+    this.invalidateProfile()
     const current = await this.network.get(this.base() + '/users/me')
     if (generation !== this.sessionGeneration) throw new Error('茶楼账号已切换，请重试')
     const profile = parseObject(current.data)
@@ -477,6 +576,7 @@ export class ForumRepository implements ForumPageRepository {
     if (generation !== this.sessionGeneration) throw new Error('茶楼账号已切换，请重试')
     const updated = ForumUser.fromJson(parseObject(response.data))
     if (updated.notify.includes(type) !== enabled) throw new Error('服务器未保存通知设置，请重试')
+    if (generation === this.sessionGeneration) this.invalidateProfile()
     return updated
   }
 
@@ -484,8 +584,14 @@ export class ForumRepository implements ForumPageRepository {
   async setFoldBehavior(mode: string): Promise<void> {
     this.requireLogin()
     this.preferenceRevision++
+    this.invalidateProfile()
     const revision: number = this.preferenceRevision
     const generation: number = this.sessionGeneration
+    return this.mutateProfile(generation, (): Promise<void> => this.writeFoldBehavior(mode, generation, revision))
+  }
+
+  private async writeFoldBehavior(mode: string, generation: number, revision: number): Promise<void> {
+    this.invalidateProfile()
     const current = await this.network.get(this.base() + '/users/me')
     if (generation !== this.sessionGeneration) throw new Error('茶楼账号已切换，请重试')
     const profile = parseObject(current.data)
@@ -498,7 +604,9 @@ export class ForumRepository implements ForumPageRepository {
     if (generation !== this.sessionGeneration) throw new Error('茶楼账号已切换，请重试')
     const updated = ForumUser.fromJson(parseObject(response.data))
     if (updated.showFolded !== mode) throw new Error('服务器未保存该设置，请重试')
+    if (generation === this.sessionGeneration) this.invalidateProfile()
     await this.saveFoldBehavior(updated.showFolded, generation, revision)
+    if (generation === this.sessionGeneration) this.invalidateProfile()
   }
 
   /**
@@ -680,7 +788,11 @@ export class ForumRepository implements ForumPageRepository {
   /** Upload one selected image without replaying a write after authentication errors. */
   async uploadImage(filePath: string, filename: string): Promise<string> {
     this.requireLogin()
-    return await ForumImageUpload.upload(filePath, filename, this.accessToken)
+    const generation: number = this.sessionGeneration
+    const result: string = await ForumImageUpload.upload(filePath, filename, this.accessToken,
+      (): boolean => generation === this.sessionGeneration && this.isLoggedIn())
+    if (generation !== this.sessionGeneration || !this.isLoggedIn()) throw new Error('茶楼账号已切换，请重试')
+    return result
   }
 
   /**
@@ -747,7 +859,8 @@ export class ForumRepository implements ForumPageRepository {
 
   async getSummary(id: number, refresh: boolean = false): Promise<ForumSummary> {
     this.requireLogin()
-    const response = await this.network.get(this.base() + '/holes/' + id + '/summary', refresh ? { 'force_refresh': 'true' } : undefined)
+    const url: string = this.base() + '/holes/' + id + '/summary'
+    const response = refresh ? await this.network.getOnce(url, { 'force_refresh': 'true' }) : await this.network.get(url)
     return ForumSummary.fromJson(parseObject(response.data))
   }
 
@@ -862,6 +975,7 @@ export class ForumRepository implements ForumPageRepository {
    */
   async setFavorite(holeId: number, favorite: boolean): Promise<void> {
     this.requireLogin()
+    const generation: number = this.sessionGeneration
     const body = new HoleIdBody()
     body.hole_id = holeId
     const url = this.base() + '/user/favorites'
@@ -870,6 +984,7 @@ export class ForumRepository implements ForumPageRepository {
     } else {
       await this.network.delete(url, JSON.stringify(body))
     }
+    if (generation === this.sessionGeneration) this.invalidateProfile()
   }
 
   /**
@@ -878,6 +993,7 @@ export class ForumRepository implements ForumPageRepository {
    */
   async setSubscription(holeId: number, subscribed: boolean): Promise<void> {
     this.requireLogin()
+    const generation: number = this.sessionGeneration
     const body = new HoleIdBody()
     body.hole_id = holeId
     const url = this.base() + '/users/subscriptions'
@@ -886,14 +1002,21 @@ export class ForumRepository implements ForumPageRepository {
     } else {
       await this.network.delete(url, JSON.stringify(body))
     }
+    if (generation === this.sessionGeneration) this.invalidateProfile()
   }
 
   /**
    * Turn a thrown error into something worth showing a user.
    * Prefers the server's own message over a generic status string.
    */
-  static describeError(error: Object): string {
+  static describeError(error: Object, verificationSummary: string = ''): string {
     if (error instanceof HttpError && error.isUnauthorized()) return ErrorDiagnostics.message(error, '登录已过期，请重新登录茶楼账号')
+    // A route-selection failure includes both direct transport and VPN login
+    // causes. Keep that actionable summary while retaining the verification
+    // button; a generic campus hint must not erase its network component.
+    if (error instanceof HttpError && error.statusCode === -2 && error.transportPhase !== 'route-selection') {
+      return ErrorDiagnostics.message(error, verificationSummary)
+    }
     return ErrorDiagnostics.message(error)
 
   }

@@ -150,6 +150,14 @@ export class CampusLiveServices {
     return CampusLiveServices.load('electricity', force, CampusPreference.normalize(campus), true, false)
   }
 
+  private static libraryProjection(data: CampusLiveData, campus: string): CampusLiveData {
+    if (data.campus === campus) return data
+    const projected = new CampusLiveData()
+    projected.feature = 'library'; projected.campus = campus
+    projected.libraries = data.libraries; projected.status = data.status; projected.updatedAt = data.updatedAt
+    return projected
+  }
+
   static cachedElectricityPreview(): CampusLiveSummary | undefined {
     if (!AppState.isLoggedIn()) return undefined
     const key: string = 'electricity:' + CampusPreference.current() + ':' + CampusLiveServices.owner() + ':current'
@@ -181,22 +189,30 @@ export class CampusLiveServices {
     const service: string = feature === 'electricity' ? CampusService.DORM : CampusService.MY_FUDAN
     const cookies: string = fdu.cookiesFor(service)
     // A protected home card is never the trigger for MFA. Opening its detail is.
-    if (!authorized && (feature === 'dining' || feature === 'electricity') && (!AppState.isLoggedIn() || !cookies)) {
+    if (!authorized && (feature === 'dining' || feature === 'electricity') && !AppState.isLoggedIn()) {
       const pending = new CampusLiveData(); pending.feature = feature; pending.campus = campus; pending.status = 'pending'; return pending
     }
     // Session cookie rotation is not a new account or new data. The logout
     // generation already separates owners and prevents private reuse.
-    const key: string = feature + ':' + campus + ':' + (feature === 'developer_notice' || feature === 'library' ? 'public' : owner) + (includeHistory ? '' : ':current')
+    // The public occupancy endpoint returns every library in one response.
+    // Share its 60-second source snapshot across campus/account projections.
+    const key: string = feature === 'library' ? 'library:public' :
+      feature + ':' + campus + ':' + (feature === 'developer_notice' ? 'public' : owner) + (includeHistory ? '' : ':current')
     const cached: CampusLiveData | undefined = CampusLiveServices.cache.get(key)
     if (!force && cached !== undefined && Date.now() - cached.updatedAt < (feature === 'electricity' ? 600000 : feature === 'library' ? 60000 : 300000) &&
       (!includeHistory || !authorized || feature !== 'electricity' ||
         (cached.historyError.length > 0 ? Date.now() - cached.updatedAt < 15000 :
-          cached.historyUpdatedAt > 0 && Date.now() - cached.historyUpdatedAt < 600000))) return cached
+          cached.historyUpdatedAt > 0 && Date.now() - cached.historyUpdatedAt < 600000))) {
+      return feature === 'library' ? CampusLiveServices.libraryProjection(cached, campus) : cached
+    }
     // A verification route can install a new service cookie while the original
     // read is still pending. Its returning page joins that account's flight.
-    const flightKey: string = feature + ':' + campus + ':' + owner + ':' + String(authorized) + (includeHistory ? '' : ':current')
+    const flightKey: string = feature === 'library' ? 'library:public' :
+      feature + ':' + campus + ':' + owner + ':' + String(authorized) + (includeHistory ? '' : ':current')
     const existing: Promise<CampusLiveData> | undefined = CampusLiveServices.flights.get(flightKey)
-    if (existing !== undefined) return existing
+    if (existing !== undefined) {
+      return feature === 'library' ? existing.then((data: CampusLiveData): CampusLiveData => CampusLiveServices.libraryProjection(data, campus)) : existing
+    }
     const task = CampusLiveServices.fetch(feature, campus, authorized, cookies, owner, force, includeHistory).then((data: CampusLiveData): CampusLiveData => {
       if (feature !== 'developer_notice' && feature !== 'library' && owner !== CampusLiveServices.owner()) throw new Error('Campus account changed')
       // Separate passive/detail reads can overlap. An older source result may
@@ -210,7 +226,10 @@ export class CampusLiveServices {
       return data
     })
     CampusLiveServices.flights.set(flightKey, task)
-    try { return await task } finally { if (CampusLiveServices.flights.get(flightKey) === task) CampusLiveServices.flights.delete(flightKey) }
+    try {
+      const data = await task
+      return feature === 'library' ? CampusLiveServices.libraryProjection(data, campus) : data
+    } finally { if (CampusLiveServices.flights.get(flightKey) === task) CampusLiveServices.flights.delete(flightKey) }
   }
 
   private static async fetch(feature: string, campus: string, authorized: boolean, cookies: string, owner: string, force: boolean, includeHistory: boolean = true): Promise<CampusLiveData> {
@@ -257,7 +276,7 @@ export class CampusLiveServices {
         data.updatedAt = Date.now()
         return data
       }
-      // Home previews require an existing session before reaching this branch.
+      // Signed-in home previews can silently resume their existing ID session.
       // Share the account-scoped reader with details so stale service cookies
       // can resume through the existing ID jar without passwords or navigation.
       data.electricity = await fdu.getDormElectricity(force && !includeHistory)
@@ -280,8 +299,9 @@ export class CampusLiveServices {
   private static async readDining(owner: string, cookies: string, authorized: boolean, force: boolean): Promise<DiningSnapshot> {
     const cached = CampusLiveServices.diningSnapshots.get(owner)
     if (!force && cached !== undefined && Date.now() - cached.updatedAt < 300000) return cached
-    // A passive preview cannot join a detail's authentication continuation.
-    // Successful snapshots are shared; in-flight read semantics stay explicit.
+    // Both reads can silently recover their existing ID session. Keep the
+    // preview/detail result and failure ordering independent; completed source
+    // snapshots are shared across campuses without another download.
     const key = owner + ':' + String(authorized)
     const existing = CampusLiveServices.diningFlights.get(key)
     if (existing !== undefined) return existing
@@ -299,13 +319,13 @@ export class CampusLiveServices {
     const readState: DiningReadState = state
     const readVersion = ++readState.version
     const repository = new CampusLiveRepository()
-    const task = (authorized ? FduRepository.getInstance().withService(CampusService.MY_FUDAN,
+    const task = (authorized || AppState.isLoggedIn() ? FduRepository.getInstance().withService(CampusService.MY_FUDAN,
       (session: string): Promise<DiningSnapshot> => repository.diningSnapshot(session)) : repository.diningSnapshot(cookies))
       .then((snapshot: DiningSnapshot): DiningSnapshot => {
         if (owner !== CampusLiveServices.owner()) throw new Error('Campus account changed')
         snapshot.readVersion = readVersion
-        // Reuse only a newer *completed* result. A passive read never waits for
-        // or joins an authorized service's pending authentication continuation.
+        // Reuse only a newer *completed* result, without waiting for a detail's
+        // still-pending source response to settle.
         if (readVersion < readState.settledVersion) {
           if (readState.snapshot !== null) return readState.snapshot
           if (readState.error !== null) throw readState.error

@@ -1,5 +1,6 @@
 import { ReadableText } from '../common/ReadableText'
 import { SheetTransitionGuard } from '../common/SheetTransitionGuard'
+import { CenterLoadingProgress } from '../components/CenterLoadingProgress'
 import { DiagnosticNavigation } from '../common/DiagnosticNavigation'
 import { ErrorNotice } from '../components/ErrorNotice'
 import { settleScrollTouch } from '../common/ScrollTouch'
@@ -29,6 +30,16 @@ import { TimetableCalendarSheet } from '../components/TimetableCalendarSheet'
 import { PeriodTimeAxis } from '../components/PeriodTimeAxis'
 import { ScheduleTimelineGrid } from '../components/ScheduleTimelineGrid'
 
+interface TimetableNotices {
+  error: string
+  verification: boolean
+  dateMissing: boolean
+  outsideTerm: boolean
+  historical: boolean
+  empty: boolean
+  guest: boolean
+}
+
 @Component
 export struct TimetablePage {
   private optionsTransition: SheetTransitionGuard = new SheetTransitionGuard()
@@ -54,6 +65,8 @@ export struct TimetablePage {
   @State private refreshing: boolean = false
   @State private pullOffset: number = 0
   @State private headerHeight: number = 0
+  @State private noticeHeight: number = 0
+  @State private notices: TimetableNotices | undefined = undefined
   @State private loading: boolean = false
   @State private error: string = ''
   @State private updatedAt: number = 0
@@ -90,6 +103,17 @@ export struct TimetablePage {
     return this.headerHeight > 0 ? this.headerHeight : px2vp(this.topPx) + 96
   }
 
+  private noticeOffset(): number { return this.headerExtent() + 20 }
+  private bodyOffset(): number { return this.noticeOffset() + this.noticeHeight }
+
+  private publishNotices(): void {
+    const dateMissing: boolean = !TeachingCalendar.validMonday(this.start())
+    const currentWeek: number = dateMissing ? 0 : TeachingCalendar.week(this.start())
+    this.notices = { error: this.error, verification: !!this.error && this.verificationRequired(), dateMissing: dateMissing,
+      outsideTerm: !dateMissing && (currentWeek < 1 || currentWeek > this.maxWeek()), historical: this.historicalDiary,
+      empty: !this.courses.length, guest: !AppState.isLoggedIn() }
+  }
+
   aboutToAppear(): void {
     this.active = true; this.accountScope = this.currentAccountScope()
     this.activate()
@@ -115,13 +139,15 @@ export struct TimetablePage {
     this.accountScope = scope
     this.resumeVerified = false
     this.epoch++; this.loaded = false; this.loading = false
-    this.official = []; this.courses = []; this.semesters = []; this.updatedAt = 0; this.error = ''
+    this.notices = undefined
+    this.official = []; this.courses = []; this.semesters = []; this.updatedAt = 0; this.error = ''; this.historicalDiary = false
     this.edits = { added: [], hidden: [] }; this.showEditor = false; this.showDetail = false; this.showSheet = false; this.saving = false
     this.semester = { id: 'local', name: '', startDate: '' }; this.activate()
   }
   dateChanged(): void {
     // Invalidate completions for the preceding date before selecting a term.
     this.epoch++; this.loaded = false; this.loading = false; this.refreshing = false
+    this.notices = undefined
     this.official = []; this.courses = []; this.edits = { added: [], hidden: [] }
     this.updatedAt = 0; this.error = ''; this.historicalDiary = false; this.semester = { id: 'local', name: '', startDate: AcademicCalendar.start() }
     if (AppState.isLoggedIn() && AcademicAccount.isGraduate()) {
@@ -216,7 +242,7 @@ export struct TimetablePage {
     } catch (e) {
       if (epoch === this.epoch) this.error = ErrorDiagnostics.message(e as Object)
       if (epoch === this.epoch) this.loaded = true
-    } finally { if (epoch === this.epoch) { this.loading = false; this.refreshing = false } }
+    } finally { if (epoch === this.epoch) { this.loading = false; this.refreshing = false; this.publishNotices() } }
   }
 
   private async selectSemester(semester: SemesterInfo): Promise<void> {
@@ -249,7 +275,7 @@ export struct TimetablePage {
       await this.load(this.semester.id !== 'local' ? this.semester : undefined, true)
     } catch (e) {
       if (this.active && epoch === this.epoch) this.error = ErrorDiagnostics.message(e as Object)
-    } finally { if (epoch === this.epoch) { this.loading = false; this.refreshing = false; if (this.resumeVerified) this.activate() } }
+    } finally { if (epoch === this.epoch) { this.loading = false; this.refreshing = false; this.publishNotices(); if (this.resumeVerified) this.activate() } }
   }
 
   private manualReload(): void {
@@ -323,6 +349,7 @@ export struct TimetablePage {
       await TimetableRepository.saveEdits(semester, draft)
       if (epoch !== this.epoch || owner !== TimetableRepository.owner() || termKey !== TimetableRepository.termKey(this.semester)) return
       this.edits = draft; this.courses = TimetableSchedule.display(this.official, draft); this.showEditor = false; this.showSheet = false
+      this.publishNotices()
     } catch (e) {
       if (epoch === this.epoch && owner === TimetableRepository.owner() && termKey === TimetableRepository.termKey(this.semester)) {
         this.editorError = AppLanguage.text($r('app.string.timetable_save_failed'), this.languageRevision)
@@ -345,6 +372,7 @@ export struct TimetablePage {
       if (epoch !== this.epoch || owner !== TimetableRepository.owner() || termKey !== TimetableRepository.termKey(this.semester)) return
       this.edits = draft
       this.courses = TimetableSchedule.display(this.official, draft); this.showDetail = false; this.showSheet = false
+      this.publishNotices()
     } catch (e) {
       if (epoch === this.epoch && owner === TimetableRepository.owner()) DiagnosticNavigation.feedback(this.getUIContext(), e as Object, AppLanguage.text($r('app.string.timetable_save_failed')))
     } finally { if (epoch === this.epoch && owner === TimetableRepository.owner()) this.saving = false }
@@ -362,6 +390,7 @@ export struct TimetablePage {
       await TimetableRepository.saveEdits(semester, draft)
       if (epoch !== this.epoch || owner !== TimetableRepository.owner() || termKey !== TimetableRepository.termKey(this.semester)) return
       this.edits = draft; this.courses = TimetableSchedule.display(this.official, draft)
+      this.publishNotices()
     } catch (e) {
       if (epoch === this.epoch && owner === TimetableRepository.owner()) DiagnosticNavigation.feedback(this.getUIContext(), e as Object, AppLanguage.text($r('app.string.timetable_save_failed')))
     } finally { if (epoch === this.epoch && owner === TimetableRepository.owner()) this.saving = false }
@@ -451,6 +480,7 @@ export struct TimetablePage {
           }
         }.height(28).justifyContent(FlexAlign.Center).alignItems(VerticalAlign.Center)
           .id('timetable-semester-selector').bindMenu(this.SemesterChoices)
+          .transition(TransitionEffect.OPACITY.animation({ duration: 180, curve: Curve.EaseOut }))
       }
     }.padding({ left: 16, right: 16, top: px2vp(this.topPx) + 8, bottom: 4 }).width('100%')
       .onSizeChange((oldValue: SizeOptions, newValue: SizeOptions) => {
@@ -654,38 +684,74 @@ export struct TimetablePage {
     }.padding({ left: 20, right: 20, top: 8, bottom: 16 }).width('100%').alignItems(HorizontalAlign.Start)
   }
 
+  @Builder
+  Notices() {
+    Column() {
+      if (this.notices !== undefined) {
+            if (this.notices.error) {
+              ErrorNotice({ message: this.notices.error, controlId: 'timetablepage-diagnostics', textSize: 13, textColor: ThemeColors.error }).padding(12).width('100%')
+                .transition(TransitionEffect.OPACITY.animation({ duration: 180, curve: Curve.EaseOut }))
+            }
+            if (this.notices.verification) {
+              FloatingActionButton({ label: $r('app.string.campus_verify_continue'), actionEnabled: !this.loading,
+                onAction: () => { this.verifyAndReload() } }).margin({ left: 12, bottom: 12 })
+                .transition(TransitionEffect.OPACITY.animation({ duration: 180, curve: Curve.EaseOut }))
+            }
+            if (this.notices.dateMissing) {
+              Text(ReadableText.resource($r('app.string.timetable_date_hint'))).fontSize(13).lineHeight(21).fontColor(ThemeColors.primary).padding(12).width('100%')
+                .onClick(() => { this.openSheet(() => { this.showCalendar = true }) }).lineBreakStrategy(LineBreakStrategy.GREEDY)
+                .transition(TransitionEffect.OPACITY.animation({ duration: 180, curve: Curve.EaseOut }))
+            } else if (this.notices.outsideTerm) {
+              Text($r('app.string.timetable_outside_term')).fontSize(12).fontColor(ThemeColors.textSecondary).padding(12)
+                .transition(TransitionEffect.OPACITY.animation({ duration: 180, curve: Curve.EaseOut }))
+            }
+            if (this.notices.historical) {
+              Text(ReadableText.resource($r('app.string.timetable_history_diary_hint'))).fontSize(12).lineHeight(20).fontColor(ThemeColors.textSecondary)
+                .padding({ left: 8, right: 8, top: 4, bottom: 12 }).width('100%').lineBreakStrategy(LineBreakStrategy.GREEDY)
+                .transition(TransitionEffect.OPACITY.animation({ duration: 180, curve: Curve.EaseOut }))
+            }
+            if (this.notices.empty) {
+              Text(this.notices.guest ? $r('app.string.timetable_guest') : $r('app.string.timetable_empty')).fontSize(13).lineHeight(20).fontColor(ThemeColors.textSecondary).padding({ left: 8, right: 8, top: 2, bottom: 8 })
+                .transition(TransitionEffect.OPACITY.animation({ duration: 180, curve: Curve.EaseOut }))
+            }
+      }
+    }.width('100%').alignItems(HorizontalAlign.Start).id('timetable-notices').hitTestBehavior(HitTestMode.Transparent)
+      .onSizeChange((_oldSize: SizeOptions, newSize: SizeOptions) => {
+        const height: number = Number(newSize.height)
+        if (Number.isFinite(height) && height >= 0 && height !== this.noticeHeight) this.noticeHeight = height
+      })
+      .translate({ y: this.noticeOffset() }).animation({ duration: 240, curve: Curve.Friction })
+      .position({ x: 0, y: 0 })
+  }
+
+  @Builder
+  Content() {
+    Column() {
+      Column() {
+        // Positioned notices do not participate in Column's main-flow size.
+        this.Notices()
+        Column() {
+          if (this.agenda) this.Agenda()
+          else this.WeekGrid()
+          if (this.updatedAt > 0) Text(AppLanguage.text($r('app.string.timetable_updated'), this.languageRevision) + ' ' +
+            new Date(this.updatedAt).toLocaleString()).fontSize(12).fontColor(ThemeColors.textSecondary).padding(12)
+        }.width('100%').alignItems(HorizontalAlign.Start).renderGroup(true).id('timetable-course-body')
+          .translate({ y: this.bodyOffset() }).animation({ duration: 240, curve: Curve.Friction })
+      }.width('100%')
+        // Account for the rendered offsets once in scroll extent; only
+        // translate is animated, never the padding or timetable row sizes.
+        .padding({ bottom: this.bodyOffset() + px2vp(this.bottomPx) + 110 })
+    }.width('100%').padding({ left: 12, right: 12 })
+  }
+
   build() {
     Stack({ alignContent: Alignment.TopStart }) {
         Refresh({ refreshing: $$this.refreshing, builder: EmptyRefreshIndicator }) {
         Scroll(this.touchScroller) {
-          Column() {
-            if (this.loading) { Row({ space: 8 }) { LoadingProgress().width(20).height(20); Text($r('app.string.timetable_loading')).fontSize(13) }.padding(12) }
-            if (this.error) { ErrorNotice({ message: this.error, controlId: 'timetablepage-diagnostics', textSize: 13, textColor: ThemeColors.error }).padding(12).width('100%') }
-            if (this.error && this.verificationRequired()) {
-              FloatingActionButton({ label: $r('app.string.campus_verify_continue'), actionEnabled: !this.loading,
-                onAction: () => { this.verifyAndReload() } }).margin({ left: 12, bottom: 12 })
-            }
-            if (!TeachingCalendar.validMonday(this.start())) {
-              Text(ReadableText.resource($r('app.string.timetable_date_hint'))).fontSize(13).lineHeight(21).fontColor(ThemeColors.primary).padding(12).width('100%')
-                .onClick(() => { this.openSheet(() => { this.showCalendar = true }) }).lineBreakStrategy(LineBreakStrategy.GREEDY)
-            } else if (TeachingCalendar.week(this.start()) < 1 || TeachingCalendar.week(this.start()) > this.maxWeek()) {
-              Text($r('app.string.timetable_outside_term')).fontSize(12).fontColor(ThemeColors.textSecondary).padding(12)
-            }
-            if (this.historicalDiary) {
-              Text(ReadableText.resource($r('app.string.timetable_history_diary_hint'))).fontSize(12).lineHeight(20).fontColor(ThemeColors.textSecondary)
-                .padding({ left: 8, right: 8, top: 4, bottom: 12 }).width('100%').lineBreakStrategy(LineBreakStrategy.GREEDY)
-            }
-            if (!this.courses.length && !this.loading) {
-              Text(AppState.isLoggedIn() ? $r('app.string.timetable_empty') : $r('app.string.timetable_guest')).fontSize(13).lineHeight(20).fontColor(ThemeColors.textSecondary).padding({ left: 8, right: 8, top: 2, bottom: 8 })
-            }
-            if (this.agenda) this.Agenda()
-            else this.WeekGrid()
-            if (this.updatedAt > 0) Text(AppLanguage.text($r('app.string.timetable_updated'), this.languageRevision) + ' ' +
-              new Date(this.updatedAt).toLocaleString()).fontSize(12).fontColor(ThemeColors.textSecondary).padding(12)
-          }.width('100%').alignItems(HorizontalAlign.Start)
-            .padding({ left: 12, right: 12, top: this.headerExtent() + 20, bottom: px2vp(this.bottomPx) + 110 })
+          this.Content()
         }.width('100%').height('100%').scrollBar(BarState.Off).onTouch((event: TouchEvent) => { settleScrollTouch(this.touchScroller, event) }).edgeEffect(EdgeEffect.Spring, { alwaysEnabled: true })
       }.width('100%').height('100%').onOffsetChange((offset: number) => { this.pullOffset = offset }).onRefreshing(() => { this.load(this.semester.id !== 'local' ? this.semester : undefined, true) })
+      CenterLoadingProgress({ busy: this.loading && !this.refreshing })
       TopFade({ extent: this.headerExtent() })
       FeedRefreshProgress({ topInset: this.headerExtent() + 16, pullOffset: this.pullOffset, refreshing: this.refreshing })
       this.Header()

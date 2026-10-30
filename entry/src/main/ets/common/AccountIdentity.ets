@@ -92,7 +92,8 @@ export class AccountIdentity {
     } catch (error) {
       // Original login only falls back for a profile format/service problem.
       // Timeout/MFA must not start a second protected-service request.
-      if (error instanceof HttpError && (error.statusCode === -1 || error.statusCode === -2 || error.statusCode === 401)) return ''
+      if (error instanceof HttpError && (error.statusCode === -1 || error.statusCode === -2 || error.statusCode === 401 ||
+        error.name === 'EhallProfileUnavailableError')) return ''
       try { name = await AccountIdentity.verifiedName(person) } catch (fallbackError) { return '' }
     }
     if (await AppState.updateIdentity(person.toJson(), name, department)) return name

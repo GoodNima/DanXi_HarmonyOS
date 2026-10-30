@@ -2,6 +2,9 @@ import { CourseGrade, ExamSchedule, GpaListItem, SemesterInfo } from '../model/A
 import { AcademicPresentation } from './AcademicPresentation'
 import { AppLanguage } from './AppLanguage'
 import { FduAuthCancelledError } from './FduWebAuth'
+import { ErrorDiagnostics } from '../model/ErrorDiagnostics'
+
+interface AcademicFailure { diagnostics?: string }
 
 export interface AcademicSource {
   getSemesters(): Promise<SemesterInfo[]>
@@ -68,6 +71,12 @@ export class AcademicRequest {
   }
 
   private static errorText(error: Object): string {
+    if (error !== null && error !== undefined) {
+      const failure = error as AcademicFailure
+      if (typeof failure.diagnostics === 'string' && failure.diagnostics.trim().length > 0) {
+        return ErrorDiagnostics.message(error)
+      }
+    }
     return String(error).replace(/^[A-Za-z]+Error: /, '').replace(/^Error: /, '')
   }
 }

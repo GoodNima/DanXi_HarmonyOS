@@ -188,6 +188,13 @@ export struct CampusHome {
     if (this.active && !this.editing && this.visible().some((row: CampusModule) => row.id === 'library_books')) this.read('library_books', false)
   }
   languageChanged(): void {
+    // The first window-ready notification can apply the same effective locale
+    // after reads have started. Keep their account-scoped flights and results.
+    if (CampusPreviewStore.owner() === this.boundOwner) {
+      this.cancelGreeting(); this.greetingRotation = 0
+      if (this.active) { this.updateGreeting(false, false); this.restorePreviews() }
+      return
+    }
     this.previewFailures.clear()
     this.epoch++; this.requests.clear(); this.flights.clear(); this.loadingIds = []; this.refreshing = false
     this.boundOwner = CampusPreviewStore.owner()

@@ -8,6 +8,8 @@ import { AppState } from '../common/AppState';
 import { Constant } from '../common/Constant';
 import { AppLanguage } from '../common/AppLanguage';
 import { CalendarRepository } from '../repository/CalendarRepository';
+import { CourseReviewCatalogStore } from '../common/CourseReviewCatalogStore';
+import { ForumRouteHints } from '../common/ForumRouteHints';
 import { AcademicCalendar } from '../common/AcademicCalendar';
 import { ForumLocalState } from '../common/ForumLocalState';
 import { NetworkProxy } from '../common/NetworkProxy';
@@ -15,10 +17,14 @@ import { HapticFeedback } from '../common/HapticFeedback';
 import { ClassroomPreference } from '../common/ClassroomPreference';
 import { CampusFormStore } from '../widget/CampusFormStore';
 import { CampusFormData } from '../widget/CampusFormData';
+import { CampusCookies } from '../common/CampusCookies';
+import { FduAuthSheet } from '../common/FduAuthSheet';
+import { webview } from '@kit.ArkWeb';
 
 const DOMAIN = 0x0000;
 
 export default class EntryAbility extends UIAbility {
+  private static webEngineInitializationAttempted: boolean = false;
   private mainWindow: window.Window | null = null;
   private updateInsets = (): void => {
     if (this.mainWindow === null) return;
@@ -47,6 +53,13 @@ export default class EntryAbility extends UIAbility {
     AppStorage.setOrCreate<number>(Constant.KEY_BOTTOM_BAR_INSET_PX, bottom);
   };
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
+    // ArkWeb recommends this synchronous, once-per-process preload before the
+    // first Web is built. Do not defer it into a Promise or background task.
+    if (!EntryAbility.webEngineInitializationAttempted) {
+      EntryAbility.webEngineInitializationAttempted = true;
+      try { webview.WebviewController.initializeWebEngine(); }
+      catch (e) { hilog.warn(DOMAIN, 'testTag', 'Early Web engine initialization unavailable'); }
+    }
     CampusFormStore.init(this.context);
     this.acceptDesktopRequest(want);
     AppStorage.setOrCreate<number>('app_font_scale', this.context.config.fontSizeScale ?? 1);
@@ -117,6 +130,7 @@ export default class EntryAbility extends UIAbility {
         return;
       }
       hilog.info(DOMAIN, 'testTag', '%{public}s', 'Succeeded in loading the content.');
+      if (this.mainWindow !== null) FduAuthSheet.attach(this.mainWindow.getUIContext());
       AppLanguage.onWindowReady();
       Appearance.onWindowReady().catch((e: BusinessError) => {
         hilog.error(DOMAIN, 'testTag', 'Failed to apply the saved appearance: %{public}s', e.message);
@@ -127,14 +141,19 @@ export default class EntryAbility extends UIAbility {
   private async initAppState(): Promise<void> {
     // Restore local post visibility before any forum feed is constructed.
     await PreferencesUtil.getInstance().init(this.context);
-    await NetworkProxy.init();
-    await HapticFeedback.init();
-    await ClassroomPreference.init();
-    await ForumLocalState.restore();
+    ForumRouteHints.init().catch(() => {});
     CalendarRepository.init(this.context.cacheDir);
-    await AppState.init();
+    CourseReviewCatalogStore.init(this.context.cacheDir);
+    const restores: Promise<void>[] = [NetworkProxy.init(), HapticFeedback.init(), ClassroomPreference.init(),
+      ForumLocalState.restore(), AppState.init(), AppLanguage.init(this.context)];
+    const failures: Error[] = [];
+    // A rejected preference must not release the page while account/cookie or
+    // hidden-post restoration is still pending. Join every independent task.
+    await Promise.all(restores.map((task: Promise<void>): Promise<void> => task.catch((error: Error): void => {
+      failures.push(error);
+    })));
+    if (failures.length > 0) throw new Error(failures[0].message);
     if (!AppState.isLoggedIn()) CampusFormStore.clear();
-    await AppLanguage.init(this.context);
     if (this.mainWindow !== null) await Appearance.init(this.context, this.mainWindow);
     hilog.info(DOMAIN, 'testTag', 'App state initialized (prefs ready: %{public}s)',
       String(PreferencesUtil.getInstance().isReady()));
@@ -145,6 +164,7 @@ export default class EntryAbility extends UIAbility {
   }
 
   onWindowStageDestroy(): void {
+    FduAuthSheet.detach();
     AppLanguage.onWindowDestroyed();
     Appearance.onWindowDestroyed();
     if (this.mainWindow !== null) {
@@ -161,6 +181,7 @@ export default class EntryAbility extends UIAbility {
   }
 
   onForeground(): void {
+    ForumRouteHints.invalidateContext();
     AppStorage.setOrCreate<boolean>('app_foreground', true);
     if (PreferencesUtil.getInstance().isReady()) AcademicCalendar.publish();
     AppLanguage.syncSystem();
@@ -170,6 +191,7 @@ export default class EntryAbility extends UIAbility {
 
   onBackground(): void {
     AppStorage.setOrCreate<boolean>('app_foreground', false);
+    CampusCookies.persist().catch(() => {});
     hilog.info(DOMAIN, 'testTag', '%{public}s', 'Ability onBackground');
   }
 }

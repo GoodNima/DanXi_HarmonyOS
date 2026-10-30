@@ -33,6 +33,7 @@ import { getSymbolIcon } from '../common/DanXiIcons'
 import { ForumContentView } from '../components/ForumContentView'
 import { ForumListSource } from '../common/ForumListSource'
 import { CourseReviewSummaryLoader } from '../common/CourseReviewSummaryLoader'
+import { CourseReviewRepository } from '../repository/CourseReviewRepository'
 import { CourseReviewSummary } from '../model/CourseReview'
 import { CourseReviewSummaryState } from '../model/CourseReviewSummaryState'
 import { CourseReviewSummaryView } from '../components/CourseReviewSummaryView'
@@ -77,10 +78,15 @@ export struct CampusUtilityPage {
   @State @Watch('groupsChanged') groups: CourseReviewGroup[] = []
   private courseGroups: ForumListSource<CourseReviewGroup> = new ForumListSource<CourseReviewGroup>()
   private courseSummaries: Map<number, CourseReviewSummaryState> = new Map<number, CourseReviewSummaryState>()
+  private detailSummary: CourseReviewSummaryState | null = null
+  private detailSummaryId: number = 0
   private summaryFirst: number = 0
   private summaryLast: number = 3
+  private catalogUnsubscribe: (() => void) | null = null
+  private catalogPending: boolean = false
+  private catalogScrolling: boolean = false
   private summaryLoader: CourseReviewSummaryLoader = new CourseReviewSummaryLoader(
-    (id: number) => this.source.group(id, false, true),
+    (id: number) => this.source.summary(id),
     (id: number, value: CourseReviewSummary) => { this.publishSummary(id, value) })
   @State private moreError: string = ''
   private reviewVotes: Map<number, ReviewVoteState> = new Map()
@@ -132,6 +138,11 @@ export struct CampusUtilityPage {
     this.mounted = true
     this.routeVisible = true; this.active = this.foreground
     if (CampusUtilities.supported(this.initialFeature)) this.feature = this.initialFeature
+    if (this.feature === 'evaluation' && this.source instanceof DefaultCampusUtilityPageSource) {
+      this.catalogUnsubscribe = CourseReviewRepository.subscribeCatalog(() => {
+        this.catalogPending = true; this.applyCatalogUpdate()
+      })
+    }
     if (this.mainTab) { this.active = false; this.activate(); return }
     const params = router.getParams() as CampusUtilityParams
     if (!CampusUtilities.supported(this.initialFeature) && params !== undefined && CampusUtilities.supported(params.feature)) this.feature = params.feature
@@ -141,6 +152,8 @@ export struct CampusUtilityPage {
     this.reload(false)
   }
   aboutToDisappear(): void {
+    this.catalogUnsubscribe?.(); this.catalogUnsubscribe = null
+    this.catalogPending = false; this.catalogScrolling = false
     this.liveSearch.cancel()
     this.summaryLoader.pause(); this.summaryLoader.reset()
     this.mounted = false
@@ -153,6 +166,7 @@ export struct CampusUtilityPage {
   onPageHide(): void {
     this.liveSearch.pause()
     this.summaryLoader.pause()
+    this.catalogScrolling = false
     if (this.mainTab) { this.active = false; this.contentRevision++; this.contentOpacity = 1; return }
     this.contentRevision++; this.contentOpacity = 1
     this.routeVisible = false; this.active = false; this.restoreBrightness()
@@ -166,6 +180,7 @@ export struct CampusUtilityPage {
     if (this.boundScope !== this.source.scope(this.feature)) { this.accountChanged(); return }
     this.liveSearch.resume()
     this.loadSummaries()
+    this.applyCatalogUpdate()
     // A service verification route may return before its original read settles.
     // Keep that read alive rather than opening a second verification request.
     if (this.readFlight !== null) return
@@ -191,6 +206,7 @@ export struct CampusUtilityPage {
     if (!visible) {
       this.liveSearch.pause()
       this.summaryLoader.pause()
+      this.catalogScrolling = false
       if (this.active) { this.contentRevision++; this.contentOpacity = 1 }
       this.active = false; return
     }
@@ -200,6 +216,7 @@ export struct CampusUtilityPage {
     if (this.boundScope !== this.source.scope(this.feature)) { this.accountChanged(); return }
     this.liveSearch.resume()
     this.loadSummaries()
+    this.applyCatalogUpdate()
     if (this.readFlight !== null || this.verifying) return
     if (this.needsRead || (!this.loaded && !this.error)) this.reload(false)
   }
@@ -215,8 +232,7 @@ export struct CampusUtilityPage {
       // Never assign a property of the watched @State object here: a pending
       // detail has no reviews yet and would synchronously re-enter this watch.
       this.summaryState(this.group).update(this.group, this.group.summary)
-      this.summaryLoader.remember(this.group)
-    }
+    } else { this.detailSummary = null; this.detailSummaryId = 0 }
     this.reviewsChanged()
     if (this.mainTab) AppStorage.setOrCreate<boolean>('evaluation_detail_open', this.group !== null)
   }
@@ -230,18 +246,33 @@ export struct CampusUtilityPage {
     for (const id of this.courseSummaries.keys()) if (!ids.has(id)) this.courseSummaries.delete(id)
     this.courseGroups.update(this.groups); this.loadSummaries()
   }
+  private applyCatalogUpdate(): void {
+    if (!this.catalogPending || !this.active || !this.mounted || this.feature !== 'evaluation' ||
+      !(this.source instanceof DefaultCampusUtilityPageSource) || this.boundScope !== this.source.scope(this.feature) ||
+      !this.loaded || this.searchKeyword || this.group !== null || this.readPending || this.loading || this.loadingMore ||
+      this.navigationLoading || this.catalogScrolling) return
+    const result = CourseReviewRepository.cachedCatalogPages(this.page)
+    if (result === null) return
+    this.catalogPending = false
+    // Update data in the existing lazy list. Do not restart the page's loading
+    // transition or replace rows while a gesture/retained detail is active.
+    this.groups = result.items
+    this.page = Math.max(1, Math.ceil(result.items.length / result.pageSize))
+    this.more = result.items.length >= result.page * result.pageSize
+  }
   private summaryState(group: CourseReviewGroup): CourseReviewSummaryState {
+    if (this.group !== null && this.group.id === group.id) {
+      if (this.detailSummary === null || this.detailSummaryId !== group.id) {
+        this.detailSummary = new CourseReviewSummaryState(group); this.detailSummaryId = group.id
+      }
+      return this.detailSummary
+    }
     let state = this.courseSummaries.get(group.id)
     if (state === undefined) { state = new CourseReviewSummaryState(group); this.courseSummaries.set(group.id, state) }
     return state
   }
   private loadSummaries(): void {
     if (this.active && this.feature === 'evaluation' && this.group === null) {
-      const start: number = Math.max(0, this.summaryFirst)
-      const end: number = Math.min(this.groups.length, Math.max(start + 4, Math.min(this.summaryLast + 3, start + 8)))
-      for (let index: number = start; index < end; index++) {
-        const row = this.groups[index]; this.summaryState(row).update(row, row.summary)
-      }
       this.summaryLoader.update(this.groups, this.summaryFirst, this.summaryLast, this.source.scope(this.feature))
     } else this.summaryLoader.pause()
   }
@@ -260,6 +291,7 @@ export struct CampusUtilityPage {
     if (this.boundScope === this.source.scope(this.feature)) return
     this.liveSearch.cancel()
     this.summaryLoader.pause(); this.summaryLoader.reset(); this.summaryFirst = 0; this.summaryLast = 3
+    this.catalogPending = false; this.catalogScrolling = false
     this.loaded = false
     this.contentRevision++; this.contentOpacity = 1; this.navigationLoading = false; this.readPending = false; this.listReturnOffset = 0
     this.generation++; this.writeRevision++; this.group = null; this.groups = []; this.randomReview = null; this.recommendations = []; this.reviewVotes.clear()
@@ -298,7 +330,9 @@ export struct CampusUtilityPage {
   }
   private async read(force: boolean): Promise<void> {
     if (this.feature === 'evaluation' && this.group === null) {
-      this.summaryLoader.pause(); this.summaryLoader.reset(); this.summaryFirst = 0; this.summaryLast = 3
+      this.summaryLoader.pause()
+      if (force) this.summaryLoader.reset()
+      this.summaryFirst = 0; this.summaryLast = 3
     }
     const version = ++this.generation; const scope = this.source.scope(this.feature)
     this.readPending = true
@@ -349,6 +383,7 @@ export struct CampusUtilityPage {
       if (this.current(version, scope) || (this.feature === 'life_code' &&
         version === this.generation && scope === this.source.scope(this.feature))) {
         this.loading = false; this.refreshing = false; this.navigationLoading = false; this.readPending = false
+        this.applyCatalogUpdate()
       }
     }
   }
@@ -406,7 +441,7 @@ export struct CampusUtilityPage {
     this.changeContent(() => {
       this.searchKeyword = keyword; this.group = null; this.teacher = ''; this.term = ''
       this.groups = []; this.randomReview = null; this.recommendations = []; this.reviewVotes.clear(); this.page = 1; this.more = false
-      this.navigationLoading = true; this.reload()
+      this.navigationLoading = true; this.reload(false)
     }, 0)
   }
   private async nextPage(): Promise<void> {
@@ -434,6 +469,7 @@ export struct CampusUtilityPage {
       if (version === this.generation) {
         this.loadingMore = false
         if (!this.current(version, scope)) this.needsRead = true
+        this.applyCatalogUpdate()
       }
     }
   }
@@ -458,6 +494,7 @@ export struct CampusUtilityPage {
       this.generation++; this.group = null; this.teacher = ''; this.term = ''
       this.loading = false; this.loadingMore = false; this.navigationLoading = false; this.readPending = false; this.error = ''
       this.loadSummaries()
+      this.applyCatalogUpdate()
     }, this.listReturnOffset)
     else if (!this.mainTab) router.back()
   }
@@ -908,6 +945,11 @@ export struct CampusUtilityPage {
         if (!this.moreError && last >= this.courseGroups.totalCount() - 6) this.nextPage()
       })
       .onReachEnd(() => { if (!this.moreError) this.nextPage() })
+      .onScrollStart(() => { this.catalogScrolling = true; this.summaryLoader.setScrolling(true) })
+      .onScrollStop(() => {
+        this.catalogScrolling = false; this.summaryLoader.setScrolling(false)
+        this.loadSummaries(); this.applyCatalogUpdate()
+      })
   }
   @Builder
   EvaluationHelp() {

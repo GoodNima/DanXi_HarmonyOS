@@ -4203,6 +4203,10 @@
     {
       "name": "campus_notice_more",
       "value": "另有 %d 則公告"
+    },
+    {
+      "name": "ui_verification_form_not_ready",
+      "value": "登入表單未能顯示，請點按重試。"
     }
   ]
 }

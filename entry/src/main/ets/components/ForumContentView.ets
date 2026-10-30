@@ -21,6 +21,8 @@ import { ForumRemoteImage } from './ForumRemoteImage'
 import { ForumPreferences } from '../common/ForumPreferences'
 import { FloatingActionButton } from './FloatingActionButton'
 import { ForumPreviewWork } from '../common/ForumPreviewWork'
+import { BrowserLink } from '../common/BrowserLink'
+import { common } from '@kit.AbilityKit'
 
 @Component
 struct ForumMedia {
@@ -124,6 +126,23 @@ export struct ForumContentView {
     }
   }
 
+  private openLink(address: string): void {
+    BrowserLink.open(this.getUIContext().getHostContext() as common.UIAbilityContext, address)
+      .catch((error: Object) => { DiagnosticNavigation.feedback(this.getUIContext(), error,
+        AppLanguage.text($r('app.string.settings_open_failed'), this.languageRevision)) })
+  }
+
+  @Builder
+  NativeRuns(runs: ForumContentPart[]) {
+    ForEach(runs, (run: ForumContentPart) => {
+      if (run.kind === 'link' && !this.preview) {
+        Span(run.text).fontColor(ThemeColors.primary).onClick(() => { this.openLink(run.source) })
+      } else {
+        Span(run.text).fontColor(run.kind === 'link' ? ThemeColors.primary : ThemeColors.textPrimary)
+      }
+    })
+  }
+
   build() {
     Column({ space: this.preview ? 6 : 10 }) {
       ForEach(this.parts(), (part: ForumContentPart, index: number) => {
@@ -134,7 +153,7 @@ export struct ForumContentView {
           } else {
             Text() {
               ForEach(part.runs, (run: ForumContentPart) => {
-                if (run.kind === 'text') Span(run.text)
+                if (run.kind === 'text') this.NativeRuns(ForumContentParser.nativeLinks(run.text))
                 else if (ForumStickers.resource(run.source) !== undefined) {
                   ImageSpan(ForumStickers.resource(run.source)!).width(36).height(36).verticalAlign(ImageSpanAlignment.CENTER)
                 } else Span('[' + run.text + ']')
@@ -150,14 +169,14 @@ export struct ForumContentView {
               coordinatedPreview: this.coordinatedPreview, onPrepared: this.partReady(index) })
           } else {
             if (this.preview) {
-              Text(part.text.trim()).fontSize(this.textSize).fontColor(ThemeColors.textPrimary)
+              Text() { this.NativeRuns(ForumContentParser.nativeLinks(part.text.trim())) }.fontSize(this.textSize).fontColor(ThemeColors.textPrimary)
                 .lineHeight(this.textSize + 7).width('100%').textAlign(TextAlign.Start)
                 .maxLines(4).textOverflow({ overflow: TextOverflow.Ellipsis })
                 .onAppear(this.partReady(index))
             } else {
               Column() {
-                ForEach(ForumContentParser.textBlocks(part.text), (block: string) => {
-                  Text(block).fontSize(this.textSize).fontColor(ThemeColors.textPrimary)
+                ForEach(ForumContentParser.nativeBlocks(part.text), (block: ForumContentPart[]) => {
+                  Text() { this.NativeRuns(block) }.fontSize(this.textSize).fontColor(ThemeColors.textPrimary)
                     .lineHeight(this.textSize + 10).width('100%').textAlign(TextAlign.Start)
                 })
               }.width('100%').alignItems(HorizontalAlign.Start).onAppear(this.partReady(index))

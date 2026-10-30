@@ -32,18 +32,32 @@ export class NativeFduAuthBrowser implements FduAuthBrowser {
 export class FduAuthNavigator {
   private browser: FduAuthBrowser
   private loginUrl: string
-  private documentReady: boolean = false
+  private serviceEntry: string
+  private attached: boolean = false
   private prepared: boolean = false
   private started: boolean = false
   private cancelled: boolean = false
   private preparing: Promise<void> | null = null
+  private attachCount: number = 0
+  private prepareCount: number = 0
+  private startCount: number = 0
+  private retryCount: number = 0
 
-  constructor(browser: FduAuthBrowser, loginUrl: string) {
+  constructor(browser: FduAuthBrowser, loginUrl: string, serviceEntry: string = loginUrl) {
     this.browser = browser
     this.loginUrl = FduAuthWebPage.mobileLoginUrl(loginUrl)
+    this.serviceEntry = FduAuthPolicy.isCampusUrl(serviceEntry) && !FduAuthPolicy.isIdUrl(serviceEntry) ? serviceEntry : ''
   }
 
-  /** Both the initial blank document and the Cookie import must finish first. */
+  /** The Web uses an empty src, so no initial document can overwrite loadUrl. */
+  onControllerAttached(): void {
+    this.attachCount++
+    if (this.cancelled) return
+    this.attached = true
+    this.startIfReady()
+  }
+
+  /** Both controller attachment and Cookie import must finish first. */
   async prepare(prepareCookies: () => Promise<void>): Promise<void> {
     if (this.cancelled || this.prepared) return
     if (this.preparing !== null) return this.preparing
@@ -56,41 +70,40 @@ export class FduAuthNavigator {
   }
 
   private async prepareOnce(prepareCookies: () => Promise<void>): Promise<void> {
+    this.prepareCount++
     await prepareCookies()
     if (this.cancelled) return
     this.prepared = true
     this.startIfReady()
   }
 
-  onPageEnd(url: string): void {
-    if (url !== 'about:blank' || this.cancelled) return
-    this.documentReady = true
-    this.startIfReady()
-  }
-
   private startIfReady(): void {
-    if (!this.prepared || !this.documentReady || this.started || this.cancelled) return
-    this.browser.loadUrl(this.loginUrl)
+    if (!this.prepared || !this.attached || this.started || this.cancelled) return
     this.started = true
+    this.startCount++
+    try {
+      this.browser.loadUrl(this.loginUrl)
+    } catch (e) {
+      this.started = false
+      throw e as Error
+    }
   }
 
   async retry(prepareCookies: () => Promise<void>): Promise<void> {
-    if (this.cancelled) return
+    if (this.cancelled || !this.attached) return
+    this.retryCount++
     const wasStarted: boolean = this.started
     await this.prepare(prepareCookies)
     if (this.cancelled) return
-    if (!this.documentReady) {
-      // If the engine never completed its initial document, explicitly restart
-      // that document. Its onPageEnd will open the prepared official URL.
-      this.browser.loadUrl('about:blank')
-      return
-    }
     if (!this.started) {
       this.startIfReady()
     } else if (wasStarted) {
       // Reload the current verification step when possible. Never refresh about:blank.
       const currentUrl = this.browser.getUrl()
-      if (/[?&](?:ticket|loginToken)=/i.test(currentUrl) || /\/sso\/login(?:[?#]|$)/i.test(currentUrl)) {
+      if (FduAuthPolicy.isIncompleteIdLoginUrl(currentUrl)) {
+        if (!this.serviceEntry) throw new Error('身份验证缺少登录上下文，请返回原页面重新验证。')
+        this.browser.loadUrl(this.serviceEntry)
+      } else if (/[?&](?:ticket|loginToken)=/i.test(currentUrl) || /\/sso\/login(?:[?#]|$)/i.test(currentUrl)) {
         // A service ticket may already have been consumed before a landing-page
         // error. Restart at the service entry to avoid spending it twice.
         this.browser.loadUrl(this.loginUrl)
@@ -101,5 +114,15 @@ export class FduAuthNavigator {
 
   cancel(): void {
     this.cancelled = true
+  }
+
+  /** Safe startup state only; URLs, credentials and Cookie values are excluded. */
+  diagnostics(): string {
+    return 'navigator: attached=' + this.attached + '; preparing=' + (this.preparing !== null) +
+      '; prepared=' + this.prepared + '; started=' + this.started + '; cancelled=' + this.cancelled +
+      '; attachCount=' + this.attachCount + '; prepareCount=' + this.prepareCount +
+      '; startCount=' + this.startCount + '; retryCount=' + this.retryCount +
+      '; initialIdContextIncomplete=' + FduAuthPolicy.isIncompleteIdLoginUrl(this.loginUrl) +
+      '; serviceReentryAvailable=' + (this.serviceEntry.length > 0)
   }
 }

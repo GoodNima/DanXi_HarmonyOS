@@ -126,6 +126,9 @@ export class ForumImageCache {
   }
 
   private static save(): void {
+    if (ForumImageCache.saveTimer >= 0) {
+      clearTimeout(ForumImageCache.saveTimer); ForumImageCache.saveTimer = -1
+    }
     for (const directory of ForumImageCache.prepared) {
       const rows: ForumImageRecord[] = []
       for (const address of ForumImageCache.files.keys()) {
@@ -181,7 +184,7 @@ export class ForumImageCache {
       ForumImageCache.files.set(flight.address, flight.path)
       ForumImageCache.records.set(flight.address, row)
       ForumImageCache.trim()
-      ForumImageCache.save()
+      ForumImageCache.queueSave()
       return 'file://' + flight.path
     } catch (e) {
       try { await fs.unlink(flight.path) } catch (unlinkError) {}

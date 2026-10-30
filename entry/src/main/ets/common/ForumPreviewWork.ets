@@ -16,8 +16,8 @@ class PreviewJob {
 }
 
 /** A feed-scoped queue, never a per-frame observed State or a gesture owner.
- * Web initialization is expensive even for offline HTML. Start one visible
- * preview in an idle frame, and wait for its first layout before the next one.
+ * Web initialization is expensive even for offline HTML. Start the first
+ * visible host on a frame; later hosts use idle time and wait for first layout.
  * Native List keeps all pan/fling events; this queue only defers optional work.
  */
 export class ForumPreviewWork {
@@ -30,6 +30,7 @@ export class ForumPreviewWork {
   private pointers: Set<number> = new Set<number>()
   private version: number = 0
   private posted: boolean = false
+  private firstHostStarted: boolean = false
 
   request(context: UIContext, start: () => boolean): number {
     const id: number = ++this.nextId
@@ -73,17 +74,35 @@ export class ForumPreviewWork {
     const version: number = this.version
     const job: PreviewJob = this.jobs[0]
     this.posted = true
+    // The first prepared card gates a cold feed's reveal. Do not make that
+    // one visible host depend on an idle budget that startup may never grant.
+    // Further hosts remain idle-only; touches and inertia still cancel work.
+    if (!this.firstHostStarted) {
+      job.context.postFrameCallback({ onFrame: () => { this.startNext(version) }, onIdle: () => {} })
+      return
+    }
     job.context.postDelayedFrameCallback(new PreviewIdleFrame((budget: number) => {
       if (version !== this.version) return
-      this.posted = false
-      if (budget < 5000000) { this.schedule(); return }
-      if (!this.active || this.scrolling || this.pointers.size > 0 || this.running >= 0) return
-      const next: PreviewJob | undefined = this.jobs.shift()
-      if (next === undefined) return
-      this.running = next.id
-      // A failed/removed Web host must never hold up the remaining cards.
-      this.expiry = setTimeout(() => { this.finish(next.id) }, 4000)
-      if (!next.start()) this.finish(next.id)
+      if (budget < 5000000) { this.posted = false; this.schedule(); return }
+      this.startNext(version)
     }), 80)
+  }
+
+  private startNext(version: number): void {
+    if (version !== this.version) return
+    this.posted = false
+    if (!this.active || this.scrolling || this.pointers.size > 0 || this.running >= 0) return
+    const next: PreviewJob | undefined = this.jobs.shift()
+    if (next === undefined) return
+    this.running = next.id
+    const first: boolean = !this.firstHostStarted
+    // Set before invoking start: a synchronous layout completion must schedule
+    // the following host at idle, rather than starting another on this frame.
+    this.firstHostStarted = true
+    this.expiry = setTimeout(() => { this.finish(next.id) }, 4000)
+    if (!next.start()) {
+      if (first) this.firstHostStarted = false
+      this.finish(next.id)
+    }
   }
 }

@@ -87,7 +87,7 @@ export struct SettingsPage {
       if (!force && this.profileReadScope === this.profileScope &&
         (Date.now() - this.profileReadAt < 5 * 60 * 1000 || Date.now() < this.profileRetryAt)) return
       this.profileReadScope = this.profileScope
-      await repo.getMe()
+      await repo.getMe(force)
       if (this.active && generation === this.profileGeneration && this.profileScope === repo.sessionRevision()) {
         this.profileReadAt = Date.now(); this.profileRetryAt = 0
       }

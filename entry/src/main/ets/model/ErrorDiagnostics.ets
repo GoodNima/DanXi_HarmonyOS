@@ -1,21 +1,31 @@
-interface DiagnosticFailure { name?: string; message?: string; statusCode?: number; code?: number }
+interface DiagnosticFailure { name?: string; message?: string; statusCode?: number; code?: number; diagnostics?: string }
 
 /** Safe diagnostic text: never display response bodies, cookies or tokens. */
 export class ErrorDiagnostics {
+  private static readonly REQUEST_MARKER: string = '\n\n[Associated request diagnostics]\n'
+
+  static associated(value: string): string {
+    const index: number = value.indexOf(ErrorDiagnostics.REQUEST_MARKER)
+    return index < 0 ? '' : ErrorDiagnostics.safe(value.substring(index + ErrorDiagnostics.REQUEST_MARKER.length), 12000)
+  }
   static detail(error: Object): string {
     if (error === null || error === undefined) return 'Error: No error information provided'
     const failure = error as DiagnosticFailure
     const name: string = typeof failure.name === 'string' && failure.name.length > 0 ? failure.name : 'Error'
     const code: number = failure.code ?? 0
     const status: number | undefined = failure.statusCode
-    let reason: string = typeof failure.message === 'string' ? failure.message : String(error)
+    const raw: string = typeof failure.message === 'string' ? failure.message : String(error)
+    let reason: string = raw.split(ErrorDiagnostics.REQUEST_MARKER)[0]
     if (code === 2300028 && !reason.includes('Operation timeout')) reason = 'Operation timeout · ' + reason
     else if (code === 2300006 && !reason.includes('Failed to resolve the host name')) reason = 'Failed to resolve the host name · ' + reason
     else if (code === 401 && status === -1 && !reason.includes('Parameter error')) reason = 'Parameter error · ' + reason
     else if (status !== undefined && status >= 400) reason = 'HTTP ' + status + ' · ' + reason
     else if (status === -2) reason = 'Authentication required · ' + reason
-    return name + (status !== undefined ? ' (status=' + status + ', code=' + code + ')' : code ? ' (code=' + code + ')' : '') +
+    const detail: string = name + (status !== undefined ? ' (status=' + status + ', code=' + code + ')' : code ? ' (code=' + code + ')' : '') +
       ': ' + ErrorDiagnostics.safe(reason, 1200)
+    const diagnostics: string = typeof failure.diagnostics === 'string' && failure.diagnostics.trim().length > 0 ?
+      ErrorDiagnostics.safe(failure.diagnostics, 12000) : ErrorDiagnostics.associated(raw)
+    return diagnostics ? detail + ErrorDiagnostics.REQUEST_MARKER + diagnostics : detail
   }
   static safe(value: string, limit: number = 4000): string {
     return value.replace(/(https?:\/\/[^\s?#]+)[?#][^\s）)]*/gi, '$1?[redacted]')
@@ -26,14 +36,15 @@ export class ErrorDiagnostics {
       .substring(0, Math.max(0, Math.min(limit, 20000)))
   }
   static technical(value: string): string {
-    const parts: string[] = value.split(/\n+(?:详细信息\s*[／/]\s*Details|Details)\s*\n/i)
-    const detail: string = parts.length > 1 ? parts.slice(1).join('\n\n') : value
+    const raw: string = value.split(ErrorDiagnostics.REQUEST_MARKER)[0]
+    const parts: string[] = raw.split(/\n+(?:详细信息\s*[／/]\s*Details|Details)\s*\n/i)
+    const detail: string = parts.length > 1 ? parts.slice(1).join('\n\n') : raw
     return ErrorDiagnostics.safe(/^[A-Za-z][A-Za-z0-9_]*(?:Error|Exception)?\s*(?:\(|:)/.test(detail) ? detail : 'Error: ' + detail)
   }
   /** Presentation only: preserve the actionable sentence, keep codes and logs in the diagnostic panel. */
   static brief(value: string, summary: string = ''): string {
     if (summary) return ErrorDiagnostics.safe(summary, 240)
-    let brief: string = value.split(/\n+(?:详细信息\s*[／/]\s*Details|Details)\s*\n/i)[0].split(/\nPrevious request/i)[0]
+    let brief: string = value.split(ErrorDiagnostics.REQUEST_MARKER)[0].split(/\n+(?:详细信息\s*[／/]\s*Details|Details)\s*\n/i)[0].split(/\nPrevious request/i)[0]
     brief = brief.replace(/^(?:[A-Za-z]\w*(?:\s*\([^)]*\))?:\s*)+/, '')
     brief = brief.replace(/^Authentication required\s*[·:：]?\s*/i, '')
     if (/^网络(?:请求|连接)(?:失败|错误)/.test(brief)) return '网络连接失败，请检查网络后重新加载。'
@@ -49,10 +60,13 @@ export class ErrorDiagnostics {
     if (error === null || error === undefined) return (summary || '暂时无法完成操作，请稍后重试。') + '\n\n详细信息 / Details\n' + ErrorDiagnostics.detail(error)
     const value: string | undefined = (error as DiagnosticFailure).message
     const raw: string = typeof value === 'string' ? value : String(error)
-    if (raw.includes('详细信息 / Details')) return raw
+    const original: string = raw.split(ErrorDiagnostics.REQUEST_MARKER)[0]
+    const detail: string = ErrorDiagnostics.detail(error)
     // Keep actionable site messages; English-only failures receive a Chinese
     // summary; presentation moves the original exception to its diagnostic panel.
-    const brief: string = summary || (/[\u3400-\u9fff]/.test(raw) ? ErrorDiagnostics.safe(raw) : '暂时无法完成操作，请稍后重试。')
-    return brief + '\n\n详细信息 / Details\n' + ErrorDiagnostics.detail(error)
+    const brief: string = summary || (/[\u3400-\u9fff]/.test(original) ? ErrorDiagnostics.safe(original) : '暂时无法完成操作，请稍后重试。')
+    const message: string = original.includes('详细信息 / Details') ? original : brief + '\n\n详细信息 / Details\n' + detail.split(ErrorDiagnostics.REQUEST_MARKER)[0]
+    const diagnostics: string = ErrorDiagnostics.associated(detail)
+    return diagnostics ? message + ErrorDiagnostics.REQUEST_MARKER + diagnostics : message
   }
 }

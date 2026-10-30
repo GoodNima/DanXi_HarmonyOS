@@ -81,12 +81,12 @@ export struct ForumSettingsPage {
       return Promise.resolve()
     }
     this.loadScope = scope
-    const task: Promise<void> = this.read()
+    const task: Promise<void> = this.read(force)
     this.loadFlight = task
     task.finally(() => { if (this.loadFlight === task) this.loadFlight = null })
     return task
   }
-  private async read(): Promise<void> {
+  private async read(force: boolean = false): Promise<void> {
     const version: number = ++this.loadVersion
     this.loading = true
     this.error = ''
@@ -96,7 +96,7 @@ export struct ForumSettingsPage {
       this.checkedScope = this.repo.sessionRevision(); this.checkedAt = Date.now()
       // Repository alone publishes identity. An earlier restore return value must
       // never write this StorageLink over a login/logout from another page.
-      if (this.repo.isLoggedIn()) await this.repo.getMe()
+      if (this.repo.isLoggedIn()) await this.repo.getMe(force)
     } catch (e) {
       if (this.active && version === this.loadVersion) this.error = ForumRepository.describeError(e)
     } finally {

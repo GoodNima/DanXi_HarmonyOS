@@ -235,7 +235,8 @@ export class JwglRepository extends BaseRepository {
         const step = url.includes('print-data') ? '课表数据' :
           url.includes('exam-arrange') ? '考试安排' : url.includes('grade') ? '成绩与 GPA' : '学期列表'
         throw new HttpError(e.statusCode, e.code,
-          '教务系统读取' + step + '失败（HTTP ' + e.statusCode + '），请下拉重试。', '')
+          '教务系统读取' + step + '失败（HTTP ' + e.statusCode + '），请下拉重试。', e.body,
+          e.transportPhase, e.authenticationRecovery, e.diagnostics)
       }
       throw e as Error
     }

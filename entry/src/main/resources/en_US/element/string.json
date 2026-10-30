@@ -4203,6 +4203,10 @@
     {
       "name": "campus_notice_more",
       "value": "%d more notices"
+    },
+    {
+      "name": "ui_verification_form_not_ready",
+      "value": "The sign-in form could not be displayed. Tap Retry."
     }
   ]
 }

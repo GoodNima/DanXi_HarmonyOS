@@ -76,7 +76,10 @@ export struct ForumSummaryBranchView {
           }.width('100%').padding(12).borderRadius(12).backgroundColor(ThemeColors.cardBg).stateEffect(false)
             .clickEffect({ level: ClickEffectLevel.LIGHT, scale: 0.98 }).onClick(() => { this.onLocate(floor.floorId) })
         }, (floor: ForumFloor) => String(floor.floorId))
-        if (this.loading) LoadingProgress().width(22).height(22).color(ThemeColors.primary)
+        if (this.loading) {
+          Row() { LoadingProgress().width(22).height(22).color(ThemeColors.primary) }
+            .width('100%').justifyContent(FlexAlign.Center)
+        }
         if (this.error) {
           ErrorNotice({ message: this.error, controlId: 'forumsummarybranchview-diagnostics', textSize: 12, textColor: ThemeColors.error }).width('100%')
           Button($r('app.string.ui_retry')).fontSize(13).height(36).backgroundColor(ThemeColors.cardBg).fontColor(ThemeColors.primary)
